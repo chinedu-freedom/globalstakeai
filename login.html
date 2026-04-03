@@ -1,184 +1,235 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Globalstakeai</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Globalstakeai</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
 
-<style>
-body { font-family: "Poppins", sans-serif; }
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
 
-.gradient-bg {
-  background: linear-gradient(135deg, #4f8cff, #6ee7ff);
-}
+      .gradient-bg {
+        background: linear-gradient(135deg, #4f8cff, #6ee7ff);
+      }
 
-.tab {
-  border-radius: 999px;
-  transition: 0.3s;
-}
+      .tab {
+        border-radius: 999px;
+        transition: 0.3s;
+      }
 
-.tab-active {
-  background: linear-gradient(90deg, #5eead4, #60a5fa);
-  color: white;
-}
+      .tab-active {
+        background: linear-gradient(90deg, #5eead4, #60a5fa);
+        color: white;
+      }
 
-.input {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 12px 16px;
-  width: 100%;
-  border: 1px solid #e5e7eb;
-}
+      .input {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 12px 16px;
+        width: 100%;
+        border: 1px solid #e5e7eb;
+      }
 
-.btn-gradient {
-  background: linear-gradient(90deg, #5eead4, #93c5fd);
-}
-</style>
-</head>
+      .btn-gradient {
+        background: linear-gradient(90deg, #5eead4, #93c5fd);
+      }
+    </style>
+  </head>
 
-<body class="flex flex-col min-h-screen">
+  <body class="flex flex-col min-h-screen">
+    <!-- HEADER -->
+    <div class="gradient-bg text-white text-center py-16">
+      <h1 class="text-xl font-semibold">Globalstakeai</h1>
+    </div>
 
-<!-- HEADER -->
-<div class="gradient-bg text-white text-center py-11">
-  <h1 class="text-xl font-semibold">Globalstakeai</h1>
-</div>
+    <!-- MAIN -->
+    <div class="flex-1 flex justify-center px-4">
+      <div class="bg-white w-full p-6 min-h-[500px]">
+        <!-- Tabs -->
+        <div class="flex bg-gray-100 rounded-full p-1 mb-6">
+          <button id="loginTab" class="flex-1 py-2 rounded-full tab tab-active">
+            Login
+          </button>
+          <button id="registerTab" class="flex-1 py-2 text-gray-500 tab">
+            Register
+          </button>
+        </div>
 
-<!-- MAIN -->
-<div class="flex-1 flex justify-center px-4">
-<div class="bg-white w-full p-6 min-h-[500px]">
+        <!-- ================= LOGIN FORM ================= -->
+        <form id="loginForm" class="space-y-5">
+          <!-- Phone -->
+          <div>
+            <label class="text-sm text-gray-500">Phone Number</label>
+            <input
+              type="text"
+              placeholder="Enter your number"
+              class="input mt-1"
+            />
+          </div>
 
-<!-- Tabs -->
-<div class="flex bg-gray-100 rounded-full p-1 mb-6">
-  <button id="loginTab" class="flex-1 py-2 rounded-full tab tab-active">Login</button>
-  <button id="registerTab" class="flex-1 py-2 text-gray-500 tab">Register</button>
-</div>
+       
+          <div>
+            <label class="text-sm text-gray-500">Password</label>
+            <div class="relative mt-1">
+              <input
+                type="password"
+                class="input pr-10"
+                placeholder="Enter your password"
+              />
+              <i
+                class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"
+              ></i>
+            </div>
+          </div>
+          <div class="flex items-center text-sm text-gray-500">
+            <input type="checkbox" class="mr-2" />
+            I have read and accept the
+            <span class="text-blue-500 ml-1 cursor-pointer"
+              >User Agreement</span
+            >
+          </div>
+             <div class="text-center text-blue-500 text-sm cursor-pointer">
+           <a href="/forgotPassword.html">Forgot Password?</a>
+          </div>
+          <button
+            class="w-full py-3 rounded-xl btn-gradient text-white font-semibold"
+          >
+            Sign In
+          </button>
+        </form>
 
-<!-- ================= LOGIN FORM ================= -->
-<form id="loginForm" class="space-y-5">
+        <!-- ================= REGISTER FORM ================= -->
+        <form id="registerForm" class="space-y-5 hidden">
+          <!-- Phone -->
+          <div>
+            <label class="text-sm text-gray-500">Phone Number</label>
+            <input
+              type="text"
+              placeholder="Enter your number"
+              class="input mt-1"
+            />
+          </div>
 
-  <!-- Phone -->
-  <div>
-    <label class="text-sm text-gray-500">Phone Number</label>
-    <input type="text" placeholder="Enter your number" class="input mt-1">
-  </div>
+          <!-- Email -->
+          <div>
+            <label class="text-sm text-gray-500">Email</label>
+            <input type="email" placeholder="Enter email" class="input mt-1" />
+          </div>
 
-  <!-- Password -->
-  <!-- <div>
-    <label class="text-sm text-gray-500">Password</label>
-    <input type="password" placeholder="Enter your password" class="input mt-1">
-  </div> -->
-  <div>
-  <label class="text-sm text-gray-500">Password</label>
-  <div class="relative mt-1">
-    <input type="password" class="input pr-10" placeholder="Enter your password">
-    <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
-  </div>
-</div>
+          <!-- Username -->
+          <div>
+            <label class="text-sm text-gray-500">Username</label>
+            <input
+              type="text"
+              placeholder="Enter username"
+              class="input mt-1"
+            />
+          </div>
 
-  <button class="w-full py-3 rounded-xl btn-gradient text-white font-semibold">
-    Sign In
-  </button>
-</form>
+          <!-- Password -->
+          <div>
+            <label class="text-sm text-gray-500">Password</label>
+            <div class="relative mt-1">
+              <input
+                type="password"
+                class="input pr-10"
+                placeholder="Enter password"
+              />
+              <i
+                class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"
+              ></i>
+            </div>
+          </div>
 
-<!-- ================= REGISTER FORM ================= -->
-<form id="registerForm" class="space-y-5 hidden">
+          <!-- Confirm Password -->
+          <div>
+            <label class="text-sm text-gray-500">Confirm Password</label>
+            <div class="relative mt-1">
+              <input
+                type="password"
+                class="input pr-10"
+                placeholder="Repeat password"
+              />
+              <i
+                class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"
+              ></i>
+            </div>
+          </div>
 
-  <!-- Phone -->
-  <div>
-    <label class="text-sm text-gray-500">Phone Number</label>
-    <input type="text" placeholder="Enter your number" class="input mt-1">
-  </div>
+          <!-- Invitation Code -->
+          <div>
+            <label class="text-sm text-gray-500">Invitation Code</label>
+            <input
+              type="text"
+              placeholder="Enter referral code"
+              class="input mt-1"
+            />
+          </div>
+ <div class="flex items-center text-sm text-gray-500">
+            <input type="checkbox" class="mr-2" />
+            I have read and accept the
+            <span class="text-blue-500 ml-1 cursor-pointer"
+              >User Agreement</span
+            >
+          </div>
+          <button
+            class="w-full py-3 rounded-xl btn-gradient text-white font-semibold"
+          >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
 
-  <!-- Email -->
-  <div>
-    <label class="text-sm text-gray-500">Email</label>
-    <input type="email" placeholder="Enter email" class="input mt-1">
-  </div>
+    <script>
+      const loginTab = document.getElementById("loginTab");
+      const registerTab = document.getElementById("registerTab");
 
-  <!-- Username -->
-  <div>
-    <label class="text-sm text-gray-500">Username</label>
-    <input type="text" placeholder="Enter username" class="input mt-1">
-  </div>
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
 
-  <!-- Password -->
- <div>
-  <label class="text-sm text-gray-500">Password</label>
-  <div class="relative mt-1">
-    <input type="password" class="input pr-10" placeholder="Enter password">
-    <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
-  </div>
-</div>
+      loginTab.addEventListener("click", () => {
+        loginForm.classList.remove("hidden");
+        registerForm.classList.add("hidden");
 
-  <!-- Confirm Password -->
-  <div>
-  <label class="text-sm text-gray-500">Confirm Password</label>
-  <div class="relative mt-1">
-    <input type="password" class="input pr-10" placeholder="Repeat password">
-    <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
-  </div>
-</div>
+        loginTab.classList.add("tab-active");
+        registerTab.classList.remove("tab-active");
+        registerTab.classList.add("text-gray-500");
+      });
 
-  <!-- Invitation Code -->
-  <div>
-    <label class="text-sm text-gray-500">Invitation Code</label>
-    <input type="text" placeholder="Enter referral code" class="input mt-1">
-  </div>
+      registerTab.addEventListener("click", () => {
+        registerForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
 
-  <button class="w-full py-3 rounded-xl btn-gradient text-white font-semibold">
-    Register
-  </button>
-</form>
+        registerTab.classList.add("tab-active");
+        loginTab.classList.remove("tab-active");
+        loginTab.classList.add("text-gray-500");
+      });
 
-</div>
-</div>
+      // Toggle password visibility
+      document.querySelectorAll(".toggle-password").forEach((icon) => {
+        icon.addEventListener("click", () => {
+          const input = icon.previousElementSibling;
 
-<script>
-const loginTab = document.getElementById("loginTab");
-const registerTab = document.getElementById("registerTab");
-
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
-
-loginTab.addEventListener("click", () => {
-  loginForm.classList.remove("hidden");
-  registerForm.classList.add("hidden");
-
-  loginTab.classList.add("tab-active");
-  registerTab.classList.remove("tab-active");
-  registerTab.classList.add("text-gray-500");
-});
-
-registerTab.addEventListener("click", () => {
-  registerForm.classList.remove("hidden");
-  loginForm.classList.add("hidden");
-
-  registerTab.classList.add("tab-active");
-  loginTab.classList.remove("tab-active");
-  loginTab.classList.add("text-gray-500");
-});
-
-// Toggle password visibility
-document.querySelectorAll(".toggle-password").forEach(icon => {
-  icon.addEventListener("click", () => {
-    const input = icon.previousElementSibling;
-
-    if (input.type === "password") {
-      input.type = "text";
-      icon.classList.remove("fa-eye");
-      icon.classList.add("fa-eye-slash");
-    } else {
-      input.type = "password";
-      icon.classList.remove("fa-eye-slash");
-      icon.classList.add("fa-eye");
-    }
-  });
-});
-
-</script>
-
-</body>
+          if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+          } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
