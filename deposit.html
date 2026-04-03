@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts & Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Recharge Wallet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: { 500: "#0ea5e9", 600: "#0284c7", 700: "#0369a1" },
+            },
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+              roboto: ["Roboto", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        min-height: 100vh;
+        padding-bottom: 80px;
+      }
+      .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .note {
+        background: #3b82f6;
+      }
+      .btn-primary {
+        background: #3b82f6;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: #2563eb;
+        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+      }
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+      .bank-info {
+        background: linear-gradient(135deg, #0c4a6e 0%, #134e4a 100%);
+        color: white;
+      }
+      .copy-btn {
+        transition: all 0.3s ease;
+      }
+      .copy-btn:hover {
+        transform: scale(1.05);
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      .small-loading-spinner {
+        border: 3px solid #f9f8f8;
+        border-top: 3px solid #0ea5e9;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @media (min-width: 768px) {
+        body {
+          padding-bottom: 0;
+        }
+      }
+    </style>
+  </head>
+  <body style="display: none" class="md:pt-2 font-poppins">
+    <div class="lg:p-4 space-y-8 max-w-4xl mx-auto">
+      <div id="header" class="sticky top-0 z-[1000]"></div>
+
+      <!-- Bank Info -->
+      <section class="px-4 lg:px-0">
+        <div class="bank-info rounded-xl shadow-lg mb-6 p-6 space-y-4">
+          <h2 class="text-xl font-bold text-white mb-4 flex items-center">
+            <i class="fas fa-university mr-2"></i> Bank Account Details
+          </h2>
+          <!-- Dynamic bank info will render here -->
+          <div
+            id="bankInfo"
+            class="bg-white bg-opacity-10 p-4 rounded-lg space-y-4"
+          ></div>
+        </div>
+      </section>
+
+      <!-- Recharge Form -->
+      <section class="px-4 lg:px-0">
+        <form
+          id="depositForm"
+          class="bg-white rounded-xl shadow-lg card p-6 space-y-6 mb-16"
+          enctype="multipart/form-data"
+          novalidate
+        >
+          <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
+            <i class="fas fa-bolt text-primary-500 mr-2"></i> Recharge Wallet
+          </h2>
+          <p class="text-gray-600 text-sm">
+            Please fill in the details below to complete your recharge.
+          </p>
+          <p class="note p-2 text-white text-sm font-semibold rounded-lg">
+            Note: Minimum Deposit is ₦3000
+          </p>
+
+          <!-- Amount -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-1"
+              >Deposit Amount (₦)</label
+            >
+            <input
+              type="number"
+              name="amount"
+              min="3000"
+              placeholder="Enter amount to deposit"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+              aria-describedby="amountError"
+              required
+            />
+            <p id="amountError" class="text-red-500 text-sm mt-1 hidden">
+              Please enter a valid amount (minimum ₦3000)
+            </p>
+          </div>
+
+          <!-- Sender -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-1"
+              >Sender Name</label
+            >
+            <input
+              type="text"
+              name="senderName"
+              placeholder="Enter sender name"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+              aria-describedby="senderError"
+              required
+            />
+            <p id="senderError" class="text-red-500 text-sm mt-1 hidden">
+              Please enter sender name
+            </p>
+          </div>
+
+          <!-- Proof -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-1"
+              >Proof of Payment</label
+            >
+            <input
+              type="file"
+              name="file"
+              accept="image/*"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-600 bg-gray-50 cursor-pointer focus:ring-2 focus:ring-primary-500 focus:outline-none"
+              aria-describedby="proofError"
+              required
+            />
+            <p id="proofError" class="text-red-500 text-sm mt-1 hidden">
+              Please upload proof of payment
+            </p>
+          </div>
+
+          <!-- Wallet -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-1"
+              >Select Wallet</label
+            >
+            <select
+              name="balanceType"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500"
+              aria-describedby="walletError"
+              required
+            >
+              <option value="">-- Choose Wallet --</option>
+              <option value="investment">Investment Wallet</option>
+              <option value="welfare">Welfare Wallet</option>
+            </select>
+            <p id="walletError" class="text-red-500 text-sm mt-1 hidden">
+              Please select a wallet
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            class="btn-primary w-full text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center"
+          >
+            <span>Submit to Recharge</span>
+            <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </form>
+      </section>
+
+      <div id="footer" class="fixed w-full md:sticky bottom-0 z-[1000]"></div>
+    </div>
+
+    <script type="module">
+      import { showToast } from "./toast.js";
+
+      import { authFetch, checkAuth } from "./auth.js";
+      import { protectPage } from "./protect.js";
+
+      function waitForHeaderUI() {
+        return new Promise((resolve) => {
+          const interval = setInterval(() => {
+            if (typeof window.updateHeaderUI === "function") {
+              clearInterval(interval);
+              resolve();
+            }
+          }, 100);
+        });
+      }
+
+      checkAuth().then(async (user) => {
+        if (user) {
+          document.body.style.display = "block";
+          protectPage();
+          await waitForHeaderUI();
+          fetchUserDetails();
+        } else {
+          window.location.href = "/login.html";
+        }
+      });
+
+      async function fetchUserDetails() {
+        try {
+          const res = await authFetch(
+            "https://neo-invest-server.onrender.com/api/users/me",
+            { credentials: "include" }
+          );
+          if (!res.ok) throw new Error("Failed to fetch user details");
+          const userData = await res.json();
+          // Update header if function is available
+          if (typeof window.updateHeaderUI === "function") {
+            updateHeaderUI(userData);
+          }
+        } catch (err) {
+          console.error("Error fetching user details:", err);
+        }
+      }
+
+      // Bank account details (editable in one place)
+      const bankDetails = [
+        { label: "Bank Name", value: "Access Bank" },
+        { label: "Account Name", value: "John Chinedu" },
+        { label: "Account Number", value: "0034567890" },
+      ];
+
+      const bankInfoContainer = document.getElementById("bankInfo");
+      bankDetails.forEach((item) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "flex justify-between items-center";
+        wrapper.innerHTML = `
+        <div>
+          <p class="text-sm text-gray-300">${item.label}</p>
+          <p class="font-semibold">${item.value}</p>
+        </div>
+        <button type="button"
+          class="copy-btn bg-white bg-opacity-20 p-2 rounded-lg hover:bg-opacity-30 transition"
+          onclick="copyToClipboard('${item.value}', '${item.label}')">
+          <i class="fas fa-copy"></i>
+        </button>
+      `;
+        bankInfoContainer.appendChild(wrapper);
+      });
+
+      // Copy to clipboard with toast
+      window.copyToClipboard = (text, label) => {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            showToast({
+              icon: "fas fa-copy",
+              message: `${label} copied to clipboard!`,
+              type: "success",
+            });
+          })
+          .catch(() => {
+            showToast({
+              icon: "fas fa-exclamation-circle",
+              message: `Failed to copy ${label}`,
+              type: "error",
+            });
+          });
+      };
+
+      // Form submission
+      const form = document.getElementById("depositForm");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const amount = form.amount.value.trim();
+        const senderName = form.senderName.value.trim();
+        const file = form.file.files[0];
+        const balanceType = form.balanceType.value;
+        const button = document
+          .getElementById("depositForm")
+          .querySelector("button[type='submit']");
+        const originalText = button.innerHTML;
+
+        // Errors
+        const errors = {
+          amount: document.getElementById("amountError"),
+          sender: document.getElementById("senderError"),
+          proof: document.getElementById("proofError"),
+          wallet: document.getElementById("walletError"),
+        };
+        Object.values(errors).forEach((el) => el.classList.add("hidden"));
+
+        let valid = true;
+        if (!amount || Number(amount) < 3000) {
+          errors.amount.classList.remove("hidden");
+          valid = false;
+        }
+        if (!senderName) {
+          errors.sender.classList.remove("hidden");
+          valid = false;
+        }
+        if (!file) {
+          errors.proof.classList.remove("hidden");
+          valid = false;
+        }
+        if (!balanceType) {
+          errors.wallet.classList.remove("hidden");
+          valid = false;
+        }
+        if (!valid) return;
+
+        const formData = new FormData();
+        formData.append("amount", amount);
+        formData.append("senderName", senderName);
+        formData.append("balanceType", balanceType);
+        formData.append("proofOfPayment", file);
+        button.disabled = true;
+        button.innerHTML = `    <div class="small-loading-spinner mr-2"></div>
+ Recharging...`;
+        try {
+          const res = await authFetch(
+            "https://neo-invest-server.onrender.com/api/deposits",
+            {
+              method: "POST",
+              body: formData,
+              credentials: "include",
+            }
+          );
+          const data = await res.json();
+
+          if (!res.ok) {
+            showToast({
+              icon: "fas fa-exclamation-circle",
+              message: data.message || "Failed to submit deposit",
+              type: "error",
+            });
+            return;
+          }
+
+          showToast({
+            icon: "fas fa-check-circle",
+            message: data.message || "Recharge request submitted successfully!",
+            type: "success",
+          });
+          form.reset();
+        } catch (err) {
+          console.error(err);
+          showToast({
+            icon: "fas fa-exclamation-circle",
+            message: "An error occurred while submitting deposit",
+            type: "error",
+          });
+          button.disabled = false;
+          button.innerHTML = originalText;
+        } finally {
+          button.disabled = false;
+          button.innerHTML = originalText;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Details</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+            },
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+              roboto: ["Roboto", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .btn-primary {
+        background: #3b82f6;
+        transition: all 0.3s ease;
+      }
+      .small-loading-spinner {
+        border: 3px solid #f9f8f8;
+        border-top: 3px solid #0ea5e9;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .btn-primary:hover {
+        background: #2563eb;
+        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+      }
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+    </style>
+  </head>
+
+  <body style="display: none" class="font-poppins">
+    <div class="lg:p-4 main-content w-full max-w-4xl mx-auto">
+      <div id="header" class="sticky top-0 z-[1000]"></div>
+
+      <div class="px-4 lg:px-0">
+        <div
+          class="max-w-md mx-auto bg-white rounded-xl shadow-lg card p-6 space-y-6 my-8 mt-10"
+        >
+          <h2
+            class="text-2xl font-bold text-gray-800 mb-2 flex items-center justify-center"
+          >
+            <i class="fas fa-university text-primary-500 mr-2"></i> Bank Details
+          </h2>
+          <p class="text-gray-600 text-sm text-center">
+            Update or enter your bank details correctly to proceed.
+          </p>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-1"
+              >Bank Name</label
+            >
+            <input
+              type="text"
+              id="bankName"
+              placeholder="Enter your bank name"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+            />
+            <p id="bankNameError" class="text-red-500 text-sm mt-1 hidden">
+              Bank name is required
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-1"
+              >Account Number</label
+            >
+            <input
+              type="number"
+              id="accountNumber"
+              placeholder="Enter your account number"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+            />
+            <p id="accountNumberError" class="text-red-500 text-sm mt-1 hidden">
+              Account number must be at least 10 digits
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-medium mb-1"
+              >Account Name</label
+            >
+            <input
+              type="text"
+              id="accountName"
+              placeholder="Enter your account name"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+            />
+            <p id="accountNameError" class="text-red-500 text-sm mt-1 hidden">
+              Account name is required
+            </p>
+          </div>
+
+          <button
+            id="sendBtn"
+            class="btn-primary w-full text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center"
+          >
+            <span>Save</span>
+            <i class="fas fa-paper-plane ml-2"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="footer" class="fixed w-full md:sticky bottom-0 z-[1000]"></div>
+    </div>
+
+    <script type="module">
+      import { showToast } from "./toast.js";
+      import { authFetch, checkAuth } from "./auth.js";
+      import { protectPage } from "./protect.js";
+
+      // checkAuth(); // Redirect if not authenticated
+      function waitForHeaderUI() {
+        return new Promise((resolve) => {
+          const interval = setInterval(() => {
+            if (typeof window.updateHeaderUI === "function") {
+              clearInterval(interval);
+              resolve();
+            }
+          }, 100);
+        });
+      }
+
+      checkAuth().then(async (user) => {
+        if (user) {
+          document.body.style.display = "block";
+          protectPage();
+          await waitForHeaderUI();
+          fetchUserDetails();
+        } else {
+          window.location.href = "/login.html";
+        }
+      });
+
+      const bankName = document.getElementById("bankName");
+      const accountNumber = document.getElementById("accountNumber");
+      const accountName = document.getElementById("accountName");
+      const sendBtn = document.getElementById("sendBtn");
+
+      // Load bank details and prefill
+      async function loadBankDetails() {
+        try {
+          const res = await authFetch(
+            "https://neo-invest-server.onrender.com/api/users/bank-details",
+            { credentials: "include" }
+          );
+          const data = await res.json();
+          if (!res.ok)
+            throw new Error(data.message || "Failed to fetch bank details");
+          if (data.data) {
+            bankName.value = data.data.bankName || "";
+            accountNumber.value = data.data.accountNumber || "";
+            accountName.value = data.data.accountName || "";
+          }
+        } catch (err) {
+          console.error(err);
+          showToast({
+            icon: "fas fa-exclamation-triangle",
+            message: "Failed to load bank details",
+            type: "error",
+          });
+        }
+      }
+
+      loadBankDetails();
+
+      // Submit handler
+      sendBtn.addEventListener("click", async () => {
+        document
+          .querySelectorAll("p[id$='Error']")
+          .forEach((el) => el.classList.add("hidden"));
+
+        let valid = true;
+        if (!bankName.value.trim()) {
+          document.getElementById("bankNameError").classList.remove("hidden");
+          valid = false;
+        }
+        if (!/^\d{10,}$/.test(accountNumber.value.trim())) {
+          document
+            .getElementById("accountNumberError")
+            .classList.remove("hidden");
+          valid = false;
+        }
+        if (!accountName.value.trim()) {
+          document
+            .getElementById("accountNameError")
+            .classList.remove("hidden");
+          valid = false;
+        }
+        if (!valid) return;
+
+        sendBtn.disabled = true;
+        const originalText = sendBtn.innerHTML;
+        sendBtn.innerHTML = `    <div class="small-loading-spinner mr-2"></div>
+ Saving...`;
+        try {
+          const res = await authFetch(
+            "https://neo-invest-server.onrender.com/api/users/bank",
+            {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({
+                bankName: bankName.value.trim(),
+                accountNumber: accountNumber.value.trim(),
+                accountName: accountName.value.trim(),
+              }),
+            }
+          );
+
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message || "Failed to update");
+
+          showToast({
+            icon: "fas fa-check-circle",
+            message: "Bank details updated!",
+            type: "success",
+          });
+        } catch (err) {
+          showToast({
+            icon: "fas fa-times-circle",
+            message: err.message,
+            type: "error",
+          });
+        } finally {
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = originalText;
+        }
+      });
+
+      async function fetchUserDetails() {
+        try {
+          const res = await authFetch(
+            "https://neo-invest-server.onrender.com/api/users/me",
+            { credentials: "include" }
+          );
+          if (!res.ok) throw new Error("Failed to fetch user details");
+          const userData = await res.json();
+          // Update header if function is available
+          if (typeof window.updateHeaderUI === "function") {
+            updateHeaderUI(userData);
+          }
+        } catch (err) {
+          console.error("Error fetching user details:", err);
+        }
+      }
+    </script>
+  </body>
+</html>

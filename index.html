@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+              teal: {
+                50: "#f0fdfa",
+                100: "#ccfbf1",
+                200: "#99f6e4",
+                300: "#5eead4",
+                400: "#2dd4bf",
+                500: "#14b8a6",
+                600: "#0d9488",
+                700: "#0f766e",
+                800: "#115e59",
+                900: "#134e4a",
+              },
+            },
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: linear-gradient(135deg, #f0f7ff 0%, #dbeafe 100%);
+
+        min-height: 100vh;
+      }
+      .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .icon-container {
+        background-color: #3B82F6;
+        border-radius: 12px;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+      }
+      .btn-primary {
+        background-color: #3B82F6;
+
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background-color: #2563EB;
+
+        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+      }
+      .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .status-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+      .status-success {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+      .status-failed {
+        background-color: #fee2e2;
+        color: #b91c1c;
+      }
+      .loading-spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #0ea5e9;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+      .withdrawal-card {
+        border-left: 4px solid;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      .loading-skeleton {
+        background: linear-gradient(
+          90deg,
+          #f0f0f0 25%,
+          #e0e0e0 50%,
+          #f0f0f0 75%
+        );
+
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        border-radius: 2px;
+      }
+
+      @keyframes loading {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      /* Mobile responsive styles */
+      .transaction-table {
+        display: block;
+      }
+      .transaction-cards {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .transaction-table {
+          display: none;
+        }
+        .transaction-cards {
+          display: block;
+        }
+      }
+      @media (max-width: 640px) {
+        .icon-container {
+          width: 40px;
+          height: 40px;
+        }
+        .card-container {
+          height: 700px; /* Fixed height to prevent layout shift */
+        }
+      }
+
+      /* Card slider styles */
+      .card-container {
+        position: relative;
+        height: 220px; /* Fixed height to prevent layout shift */
+        overflow: hidden;
+      }
+
+      .balance-card {
+        position: absolute;
+        width: 100%;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .card-hidden-left {
+        transform: translateX(-100%);
+      }
+
+      .card-hidden-right {
+        transform: translateX(100%);
+      }
+
+      .card-visible {
+        transform: translateX(0);
+      }
+      @media (max-width: 640px) {
+        .card-container {
+          height: 285px;
+        }
+      }
+    </style>
+  </head>
+  <body style="display: none" class="font-poppins">
+    <div class="lg:p-4 space-y-8 max-w-4xl mx-auto">
+      <div id="header" class="sticky top-0 z-[1000]"></div>
+
+      <div class="px-4 lg:px-0">
+        <!-- Card container with fixed height -->
+        <div class="card-container">
+          <!-- First balance card -->
+          <div class="balance-card card-visible" id="card1">
+            <div
+              class="w-full rounded-xl flex flex-col justify-center p-6 bg-white shadow-sm card border border-gray-100"
+            >
+              <div
+                class="flex flex-col md:flex-row md:justify-between md:items-center"
+              >
+                <div>
+                  <p class="font-semibold text-xl text-gray-700">
+                    My Investment Balance
+                  </p>
+                  <p
+                    class="text-3xl font-bold text-gray-800 mt-1"
+                    id="investment-balance"
+                  >
+                    ₦0.00
+                  </p>
+                </div>
+                <a href="/withdrawal.html">
+                  <button
+                    class="btn-primary text-white font-semibold py-3 px-6 rounded-lg mt-4 md:mt-0 flex items-center justify-center"
+                  >
+                    <span>Withdraw Funds</span>
+                    <i class="fas fa-arrow-down ml-2"></i>
+                  </button>
+                </a>
+              </div>
+              <div
+                class="flex items-center bg-teal-50 p-4 mt-5 rounded-lg border border-teal-100"
+              >
+                <div class="bg-teal-100 p-2 rounded-lg mr-3">
+                  <i class="fas fa-wallet text-teal-600 text-xl"></i>
+                </div>
+                <p class="text-teal-800 font-medium">
+                  Recharge Balance:
+                  <span
+                    class="font-bold text-lg"
+                    id="investment-recharge-balance"
+                    >₦0.00</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Second balance card -->
+          <div class="balance-card card-hidden-right" id="card2">
+            <div
+              class="w-full rounded-xl flex flex-col justify-center p-6 bg-white shadow-sm card border border-gray-100"
+            >
+              <div
+                class="flex flex-col md:flex-row md:justify-between md:items-center"
+              >
+                <div>
+                  <p class="font-semibold text-xl text-gray-700">
+                    My Welfare Balance
+                  </p>
+                  <p
+                    class="text-3xl font-bold text-gray-800 mt-1"
+                    id="welfare-balance"
+                  >
+                    ₦0.00
+                  </p>
+                </div>
+
+                <a href="/withdrawal.html">
+                  <button
+                    class="btn-primary text-white font-semibold py-3 px-6 rounded-lg mt-4 md:mt-0 flex items-center justify-center"
+                  >
+                    <span>Withdraw Funds</span>
+                    <i class="fas fa-arrow-down ml-2"></i>
+                  </button>
+                </a>
+              </div>
+              <div
+                class="flex items-center bg-teal-50 p-4 mt-5 rounded-lg border border-teal-100"
+              >
+                <div class="bg-teal-100 p-2 rounded-lg mr-3">
+                  <i class="fas fa-wallet text-teal-600 text-xl"></i>
+                </div>
+                <p class="text-teal-800 font-medium">
+                  Recharge Balance:
+                  <span class="font-bold text-lg" id="welfare-recharge-balance"
+                    >₦0.00</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 lg:px-0">
+        <!-- Quick actions grid -->
+        <div
+          class="bg-white shadow-lg w-full rounded-xl py-8 px-2 md:px-4 space-y-6 card"
+        >
+          <div class="grid grid-cols-4 gap-6 mb-5 px-4">
+            <a
+              href="/deposit.html"
+              class="flex flex-col items-center cursor-pointer group"
+            >
+              <div class="icon-container group-hover:shadow-lg">
+                <i class="fas fa-bolt text-white text-lg"></i>
+              </div>
+              <p
+                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
+              >
+                Recharge
+              </p>
+            </a>
+
+            <a
+              href="/invite.html"
+              class="flex flex-col items-center cursor-pointer group"
+            >
+              <div class="icon-container group-hover:shadow-lg">
+                <i class="fas fa-user-plus text-white text-lg"></i>
+              </div>
+              <p
+                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
+              >
+                Invite
+              </p>
+            </a>
+            <a
+              href="/investment.html"
+              class="flex flex-col items-center cursor-pointer group"
+            >
+              <div class="icon-container group-hover:shadow-lg">
+                <i class="fas fa-chart-line text-white text-lg"></i>
+              </div>
+              <p
+                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
+              >
+                Investment
+              </p>
+            </a>
+            <a
+              href="/welfare.html"
+              class="flex flex-col items-center cursor-pointer group"
+            >
+              <div class="icon-container group-hover:shadow-lg">
+                <i class="fas fa-gift text-white text-lg"></i>
+              </div>
+              <p
+                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
+              >
+                Welfare
+              </p>
+            </a>
+            <a
+              href="/history.html"
+              class="flex flex-col items-center cursor-pointer group"
+            >
+              <div class="icon-container group-hover:shadow-lg">
+                <i class="fas fa-clock text-white text-lg"></i>
+              </div>
+              <p
+                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
+              >
+                History
+              </p>
+            </a>
+
+            <a
+              href="/bankDetails.html"
+              class="flex flex-col items-center cursor-pointer group"
+            >
+              <div class="icon-container group-hover:shadow-lg">
+                <i class="fas fa-university text-white text-lg"></i>
+              </div>
+              <p
+                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
+              >
+                Bank
+              </p>
+            </a>
+            <a
+              href="https://t.me/+K12zbGu3KtYyYmFK"
+              class="flex flex-col items-center cursor-pointer group"
+            >
+              <div class="icon-container group-hover:shadow-lg">
+                <i class="fab fa-telegram text-white text-lg"></i>
+              </div>
+              <p
+                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
+              >
+                Telegram
+              </p>
+            </a>
+            <a
+              href="/withdrawal.html"
+              class="flex flex-col items-center cursor-pointer group"
+            >
+              <div class="icon-container group-hover:shadow-lg">
+                <i class="fas fa-money-bill-wave text-white text-lg"></i>
+              </div>
+              <p
+                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
+              >
+                Cashout
+              </p>
+            </a>
+          </div>
+
+          <!-- Referral section -->
+          <div class="w-full px-2 md:px-4">
+            <p class="text-sm font-semibold mb-3 text-gray-700">
+              Invite new users and get
+              <strong class="text-blue-600">25%</strong> interest
+            </p>
+
+            <div
+              class="flex bg-teal-50 h-12 rounded-lg border border-teal-200 overflow-hidden"
+            >
+              <div class="flex-grow px-3 flex items-center relative">
+                <input
+                  type="text"
+                  class="w-full bg-transparent text-gray-700 focus:outline-none text-sm sm:text-base absolute inset-0 opacity-0"
+                  disabled
+                  readonly
+                  id="referralLink"
+                />
+                <span
+                  class="loading-skeleton inline-block h-4 w-full"
+                  id="referralLinkLoading"
+                ></span>
+              </div>
+              <button
+                class="btn-primary text-white font-semibold px-4 sm:px-6 flex items-center justify-center h-full opacity-50"
+                id="copyBtn"
+                disabled
+              >
+                <span class="hidden sm:inline">Copy Link</span>
+                <i class="fa-solid fa-copy ml-0 sm:ml-2"></i>
+              </button>
+            </div>
+          </div>
+          <div
+            class="fixed inset-0 flex items-center justify-center pointer-events-none"
+          >
+            <div
+              id="toast"
+              class="btn-primary text-white px-4 py-2 rounded shadow-lg opacity-0 transition-opacity duration-300 pointer-events-auto"
+            >
+              Copied!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Withdrawal History Section -->
+      <div class="px-4 lg:px-0">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+          <div
+            class="p-6 border-b border-gray-200 flex justify-between items-center"
+          >
+            <h3 class="text-lg font-semibold text-gray-800">
+              Recent Withdrawals
+            </h3>
+            <span class="hidden md:block text-sm text-gray-500"
+              >Latest transactions</span
+            >
+          </div>
+
+          <!-- Desktop Table View -->
+          <div class="transaction-table">
+            <div class="p-4 md:p-6">
+              <div class="overflow-x-auto">
+                <table class="w-full">
+                  <thead>
+                    <tr class="text-left text-gray-500 border-b">
+                      <th class="py-3 px-6">Wallet</th>
+                      <th class="py-3 px-6">Amount</th>
+                      <th class="py-3 px-6">Status</th>
+                      <th class="py-3 px-6">Date</th>
+                      <th class="py-3 px-6">Time</th>
+                    </tr>
+                  </thead>
+                  <tbody id="withdrawals-table-body">
+                    <tr>
+                      <td colspan="5" class="py-8 px-6 text-center">
+                        <div class="loading-spinner mb-4"></div>
+                        <p>Loading withdrawal history...</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Card View -->
+          <div
+            class="transaction-cards p-4 md:p-6 space-y-4"
+            id="withdrawals-cards-body"
+          >
+            <div class="text-center py-8">
+              <div class="loading-spinner mb-4"></div>
+              <p>Loading withdrawal history...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer" class="sticky bottom-0 z-[1000]"></div>
+    </div>
+
+    <script type="module">
+      import { authFetch, checkAuth } from "./auth.js";
+      import { protectPage } from "./protect.js";
+
+      checkAuth().then(async (user) => {
+        if (!user) {
+          return (window.location.href = "/login.html");
+        }
+
+        document.body.style.display = "block";
+
+        // Fetch header/footer AND user data in parallel
+        const [_, userData] = await Promise.all([
+          protectPage(),
+          fetchUserDetails(),
+        ]);
+
+        // Now safely update the header (if it's ready)
+        if (typeof window.updateHeaderUI === "function") {
+          updateHeaderUI(userData);
+        }
+      });
+
+      // Utility functions
+      const formatCurrency = (amount) => {
+        return new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+        }).format(amount);
+      };
+
+      const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+      };
+
+      const formatTime = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      };
+
+      let cachedUserData = null;
+
+      async function fetchUserDetails() {
+        try {
+          const res = await authFetch(
+            "https://neo-invest-server.onrender.com/api/users/me",
+            { credentials: "include" }
+          );
+          if (!res.ok) throw new Error("Failed to fetch user details");
+          const userData = await res.json();
+          return userData; // return instead of calling updateHeaderUI here
+        } catch (err) {
+          console.error("Error fetching user details:", err);
+          return null;
+        }
+      }
+
+      function updateUserUI(userData) {
+        const rechargeInvestmentBalanceElement = document.getElementById(
+          "investment-recharge-balance"
+        );
+        if (rechargeInvestmentBalanceElement) {
+          const rechargeInvestmentBalance =
+            userData.data.investmentRechargeBalance || 0;
+          rechargeInvestmentBalanceElement.innerHTML = `₦${Number(
+            rechargeInvestmentBalance
+          ).toLocaleString()}`;
+        }
+
+        const investmentBalanceElement =
+          document.getElementById("investment-balance");
+        if (investmentBalanceElement) {
+          const investmentBalance = userData.data.investmentBalance || 0;
+          investmentBalanceElement.innerHTML = `₦${Number(
+            investmentBalance
+          ).toLocaleString()}`;
+        }
+        const rechargeWelfareBalanceElement = document.getElementById(
+          "welfare-recharge-balance"
+        );
+        if (rechargeWelfareBalanceElement) {
+          const rechargeWelfareBalance =
+            userData.data.welfareRechargeBalance || 0;
+          rechargeWelfareBalanceElement.innerHTML = `₦${Number(
+            rechargeWelfareBalance
+          ).toLocaleString()}`;
+        }
+        // Update welfare balance
+        const welfareBalanceElement =
+          document.getElementById("welfare-balance");
+        if (welfareBalanceElement) {
+          const welfareBalance = userData.data.welfareBalance || 0;
+          welfareBalanceElement.innerHTML = `₦${Number(
+            welfareBalance
+          ).toLocaleString()}`;
+        }
+
+        // Update referral link section - REMOVE LOADING STATE
+        const referralLinkContainer = document.querySelector(
+          ".flex-grow.px-3.flex.items-center.relative"
+        );
+        const referralLinkValue = `https://neo-invest.onrender.com/signup.html?ref=${userData.data.referralCode}`;
+
+        if (referralLinkContainer) {
+          // Remove the loading skeleton and show the actual input
+          referralLinkContainer.innerHTML = `
+      <input type="text" class="w-full bg-transparent text-gray-700 focus:outline-none text-sm sm:text-base" disabled readonly id="referralLink" value="${referralLinkValue}" />
+    `;
+        }
+
+        // Enable the copy button
+        const copyBtn = document.getElementById("copyBtn");
+        if (copyBtn) {
+          copyBtn.disabled = false;
+          copyBtn.classList.remove("opacity-50");
+
+          // Re-attach the copy functionality
+          copyBtn.addEventListener("click", () => {
+            const text = referralLinkValue;
+            navigator.clipboard
+              .writeText(text)
+              .then(() => {
+                const toast = document.getElementById("toast");
+                if (toast) {
+                  toast.classList.remove("opacity-0");
+                  toast.classList.add("opacity-100");
+                  setTimeout(() => {
+                    toast.classList.remove("opacity-100");
+                    toast.classList.add("opacity-0");
+                  }, 2000);
+                }
+              })
+              .catch((err) => {
+                console.error("Failed to copy:", err);
+              });
+          });
+        }
+      }
+      // Card slider functionality
+      function initCardSlider() {
+        const card1 = document.getElementById("card1");
+        const card2 = document.getElementById("card2");
+        let currentCard = 1;
+
+        // Function to toggle between cards
+        function toggleCards() {
+          if (currentCard === 1) {
+            // Slide card1 out to the left and card2 in from the right
+            card1.classList.remove("card-visible");
+            card1.classList.add("card-hidden-left");
+
+            card2.classList.remove("card-hidden-right");
+            card2.classList.add("card-visible");
+
+            currentCard = 2;
+          } else {
+            // Slide card2 out to the right and card1 in from the left
+            card2.classList.remove("card-visible");
+            card2.classList.add("card-hidden-right");
+
+            card1.classList.remove("card-hidden-left");
+            card1.classList.add("card-visible");
+
+            currentCard = 1;
+          }
+        }
+
+        // Start the animation cycle (change every 3 seconds)
+        setInterval(toggleCards, 3000);
+      }
+
+      // Call the function when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        fetchUserDetails()
+          .then((userData) => {
+            updateUserUI(userData);
+            initCardSlider(); // Initialize the card slider after data is loaded
+          })
+          .catch((error) => {
+            console.error("Failed to fetch user details:", error);
+            initCardSlider(); // Initialize the card slider even if data fails to load
+          });
+      });
+
+      // Optional: Refresh data every 60 seconds
+      setInterval(fetchUserDetails, 60000);
+      // Fetch withdrawals from API
+      const fetchWithdrawals = async () => {
+        try {
+          const response = await authFetch(
+            "https://neo-invest-server.onrender.com/api/withdrawals",
+            {
+              credentials: "include",
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const withdrawals = data.data.withdrawals.slice(0, 5);
+
+          renderTable(withdrawals);
+          renderCards(withdrawals);
+        } catch (error) {
+          console.error("Error fetching withdrawals:", error);
+          document.getElementById("withdrawals-table-body").innerHTML = `
+          <tr>
+            <td colspan="5" class="py-4 px-6 text-center text-red-600">
+              <i class="fas fa-exclamation-triangle mr-2"></i>
+              Failed to load withdrawal data. Please try again later.
+            </td>
+          </tr>
+        `;
+          document.getElementById("withdrawals-cards-body").innerHTML = `
+          <div class="text-center py-8 text-red-600">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            Failed to load withdrawal data. Please try again later.
+          </div>
+        `;
+        }
+      };
+
+      // Render table with withdrawal data (for desktop)
+      const renderTable = (withdrawals) => {
+        const tableBody = document.getElementById("withdrawals-table-body");
+
+        if (withdrawals.length === 0) {
+          tableBody.innerHTML = `
+    <tr>
+      <td colspan="5" class="py-4 px-6 text-center text-gray-500">
+        No withdrawal history found.
+      </td>
+    </tr>
+  `;
+
+          // hide the "See more" button
+          const seeMoreBtn = document.getElementById("seeMoreBtn");
+          if (seeMoreBtn) {
+            seeMoreBtn.style.display = "none";
+          }
+
+          return;
+        }
+
+        let tableHTML = "";
+
+        withdrawals.forEach((item) => {
+          let statusClass, iconClass;
+          if (item.status.toLowerCase() === "pending") {
+            statusClass = "status-pending";
+            iconClass = "fas fa-clock text-yellow-500";
+          } else if (item.status.toLowerCase() === "successful") {
+            statusClass = "status-success";
+            iconClass = "fas fa-check-circle text-green-500";
+          } else {
+            statusClass = "status-failed";
+            iconClass = "fas fa-times-circle text-red-500";
+          }
+
+          tableHTML += `
+          <tr class="border-b border-gray-100 hover:bg-gray-50">
+            <td class="py-4 px-6">
+              <div class="flex items-center">
+                <span class="font-medium">${item.balanceType || "N/A"}</span>
+              </div>
+            </td>
+            <td class="py-4 px-6 font-semibold">${formatCurrency(
+              item.amount
+            )}</td>
+            <td class="py-4 px-6">
+              <span class="status-badge ${statusClass}">
+                <i class="${iconClass} mr-1"></i>
+                ${item.status}
+              </span>
+            </td>
+            <td class="py-4 px-6">${formatDate(item.withdrawnAt)}</td>
+            <td class="py-4 px-6">${formatTime(item.withdrawnAt)}</td>
+          </tr>
+        `;
+        });
+
+        tableBody.innerHTML = tableHTML;
+      };
+
+      // Render cards with withdrawal data (for mobile) - Updated to match your reference
+      const renderCards = (withdrawals) => {
+        const cardsBody = document.getElementById("withdrawals-cards-body");
+
+        if (withdrawals.length === 0) {
+          cardsBody.innerHTML = `
+          <div class="text-center py-4 text-gray-500">
+            No withdrawal history found.
+          </div>
+        `;
+          return;
+        }
+
+        let cardsHTML = "";
+
+        withdrawals.forEach((item) => {
+          // Determine status class, border color, and icon based on status
+          let statusClass, borderColor, icon, iconColor;
+          if (item.status.toLowerCase() === "pending") {
+            statusClass = "status-pending";
+            borderColor = "border-yellow-400";
+            icon = "fas fa-clock";
+            iconColor = "text-yellow-500";
+          } else if (item.status.toLowerCase() === "successful") {
+            statusClass = "status-success";
+            borderColor = "border-green-400";
+            icon = "fas fa-check-circle";
+            iconColor = "text-green-500";
+          } else {
+            statusClass = "status-failed";
+            borderColor = "border-red-400";
+            icon = "fas fa-times-circle";
+            iconColor = "text-red-500";
+          }
+
+          // Determine wallet icon based on balance type
+          let walletIcon;
+          if (item.balanceType && item.balanceType.includes("BTC")) {
+            walletIcon = "fab fa-bitcoin";
+          } else if (item.balanceType && item.balanceType.includes("USDT")) {
+            walletIcon = "fas fa-dollar-sign";
+          } else if (item.balanceType && item.balanceType.includes("ETH")) {
+            walletIcon = "fab fa-ethereum";
+          } else if (item.balanceType && item.balanceType.includes("Bank")) {
+            walletIcon = "fas fa-university";
+          } else {
+            walletIcon = "fas fa-wallet";
+          }
+
+          cardsHTML += `
+          <div class="withdrawal-card bg-white rounded-lg p-4 flex items-center justify-between ${borderColor}">
+            <div class="flex items-center">
+              <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mr-4 ${iconColor}">
+                <i class="${walletIcon}"></i>
+              </div>
+              <div>
+                <p class="font-semibold">${item.balanceType || "N/A"}</p>
+                <p class="text-sm text-gray-500">${formatDate(
+                  item.withdrawnAt
+                )} ${formatTime(item.withdrawnAt)}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-lg">${formatCurrency(item.amount)}</p>
+              <span class="status-badge ${statusClass}">
+                <i class="${icon}"></i>
+                ${item.status}
+              </span>
+            </div>
+          </div>
+        `;
+        });
+
+        cardsBody.innerHTML = cardsHTML;
+      };
+
+      // Initial fetch
+      fetchWithdrawals();
+
+      // Refresh data every 60 seconds
+      setInterval(() => {
+        fetchWithdrawals();
+        fetchUserDetails();
+      }, 10000);
+    </script>
+  </body>
+</html>

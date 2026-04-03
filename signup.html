@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+  />
+  <style>
+    body {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+    }
+    .btn-primary {
+      background: #3B82F6;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0284c7 0%, #0f766e 100%);
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    }
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+    }
+        .small-loading-spinner {
+        border: 3px solid #f9f8f8;
+        border-top: 3px solid #0ea5e9;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+      }
+          @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Create account</h2>
+
+    <form id="signupForm" class="space-y-4">
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Username</label>
+    <input id="username" type="text" placeholder="Enter username" class="w-full px-4 py-2 border rounded-lg text-gray-700"/>
+    <p id="usernameError" class="text-red-500 text-sm mt-1 hidden">Username is required</p>
+  </div>
+
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Phone Number</label>
+    <input id="phone" type="tel" placeholder="Enter phone number" class="w-full px-4 py-2 border rounded-lg text-gray-700"/>
+    <p id="phoneError" class="text-red-500 text-sm mt-1 hidden">Phone number is required</p>
+  </div>
+
+  <div>
+    <label class="block text-gray-700 font-medium mb-1">Password</label>
+    <div class="flex items-center px-4 py-2 border rounded-lg text-gray-700">
+      <input id="password" type="password" placeholder="Enter password" class="w-full bg-transparent focus:ring-0"/>
+      <i id="togglePassword" class="fas fa-eye cursor-pointer"></i>
+    </div>
+    <p id="passwordError" class="text-red-500 text-sm mt-1 hidden">Password is required</p>
+  </div>
+
+  <button type="submit" id="signUpBtn" class="btn-primary w-full py-3 rounded-lg text-white font-semibold flex items-center justify-center">
+    <span>Sign Up</span>
+  </button>
+</form>
+    <p class="mt-4 text-center text-gray-600 text-sm">
+      Already have an account?
+      <a href="login.html" class="text-blue-500 font-semibold hover:text-blue-600">Login</a>
+    </p>
+
+<script type="module">
+import { showToast } from "./toast.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("signupForm");
+  const usernameInput = document.getElementById("username");
+  const phoneInput = document.getElementById("phone");
+  const passwordInput = document.getElementById("password");
+  const togglePassword = document.getElementById("togglePassword");
+  const signUpButton = document.getElementById("signUpBtn");
+
+  // Extract referral code from URL once
+  const referralCode = new URLSearchParams(window.location.search).get("ref");
+
+  // Toggle password visibility
+  togglePassword.addEventListener("click", () => {
+    passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Hide all errors
+    document.querySelectorAll("p[id$='Error']").forEach(el => el.classList.add("hidden"));
+
+    let valid = true;
+
+   // Username validation 
+if (!/^[a-zA-Z0-9_ ]{3,}$/.test(usernameInput.value.trim())) {
+  document.getElementById("usernameError").textContent = "Username must be at least 3 characters";
+  document.getElementById("usernameError").classList.remove("hidden");
+  valid = false;
+}
+
+    // Phone validation
+    if (!/^\+?[0-9]{7,15}$/.test(phoneInput.value.trim())) {
+      document.getElementById("phoneError").textContent = "Enter a valid phone number";
+      document.getElementById("phoneError").classList.remove("hidden");
+      valid = false;
+    }
+
+    // Password validation
+    if (passwordInput.value.trim().length < 8) {
+      document.getElementById("passwordError").textContent = "Password must be at least 8 characters";
+      document.getElementById("passwordError").classList.remove("hidden");
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Disable button & show loading
+    signUpButton.disabled = true;
+    const originalText = signUpButton.innerHTML;
+    signUpButton.innerHTML = `    <div class="small-loading-spinner mr-2"></div>
+ Signing Up...`;
+
+    try {
+      const res = await fetch("https://neo-invest-server.onrender.com/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: usernameInput.value.trim(),
+          phoneNumber: phoneInput.value.trim(),
+          password: passwordInput.value.trim(),
+          referralCode: referralCode || null
+
+        }),
+        credentials: "include"
+      });
+
+      const data = await res.json();
+      
+        if (!res.ok) {
+ 
+          throw new Error(data.message || "Signup failed");
+
+  }
+
+      showToast({ icon: "fas fa-check-circle", message: "Sign up successful!", type: "success" });
+      setTimeout(() => (window.location.href = "/login.html"), 2000);
+
+    } catch (err) {
+      showToast({ icon: "fas fa-times-circle", message: err.message, type: "error" });
+      console.log(err.message)
+    } finally {
+      signUpButton.disabled = false;
+      signUpButton.innerHTML = originalText;
+    }
+  });
+});
+</script>
+
+
+</body>
+</html>

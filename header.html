@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Dashboard Header</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+              teal: {
+                50: "#f0fdfa",
+                100: "#ccfbf1",
+                200: "#99f6e4",
+                300: "#5eead4",
+                400: "#2dd4bf",
+                500: "#14b8a6",
+                600: "#0d9488",
+                700: "#0f766e",
+                800: "#115e59",
+                900: "#134e4a",
+              },
+            },
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+              roboto: ["Roboto", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: linear-gradient(135deg, #f0f7ff 0%, #dbeafe 100%);
+
+        min-height: 100vh;
+      }
+
+      .header-avatar {
+        background-color: #3b82f6;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+      }
+      .header-icon-btn {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        position: relative;
+      }
+
+      .header-icon-btn:hover {
+        background-color: #f0f9ff;
+        transform: scale(1.1);
+        color: #0284c7;
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: 1px;
+        right: 4px;
+        width: 18px;
+        height: 18px;
+        color: white;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      /* Loading animation styles */
+      .loading-skeleton {
+        background: linear-gradient(
+          90deg,
+          #f0f0f0 25%,
+          #e0e0e0 50%,
+          #f0f0f0 75%
+        );
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        border-radius: 2px;
+      }
+
+      @keyframes loading {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      .loading-avatar {
+        background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 0.4;
+        }
+        100% {
+          opacity: 0.7;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="flex items-center justify-center min-h-screen font-poppins">
+    <header class="w-full max-w-4xl">
+      <div
+        class="flex items-center justify-between bg-white shadow-lg lg:rounded-xl p-4 md:p-5 sticky top-2"
+      >
+        <div
+          class="header-avatar text-white font-bold text-lg loading-avatar"
+          id="avatar-loading"
+        ></div>
+
+        <div class="flex-1 ml-4">
+          <p id="greeting-text" class="text-gray-500 text-sm">
+            <span class="loading-skeleton inline-block h-3 w-24"></span>
+          </p>
+          <div class="flex space-x-2 items-center">
+            <h1 class="text-gray-800 font-semibold" id="username">
+              <span class="loading-skeleton inline-block h-3 w-32"></span>
+            </h1>
+          </div>
+        </div>
+        <div class="flex space-x-3">
+          <a
+            href="/notifications.html"
+            class="relative header-icon-btn text-gray-400 text-xl"
+          >
+            <i class="far fa-bell"></i>
+            <div class="notification-badge"></div>
+          </a>
+        </div>
+      </div>
+    </header>
+    <script>
+      // Function to fetch and update unread notification count
+      async function updateUnreadCount() {
+        try {
+          const API_BASE = "https://neo-invest-server.onrender.com/api";
+          const response = await fetch(
+            `${API_BASE}/notifications/unread-count`,
+            {
+              credentials: "include", // Important for authenticated requests
+            }
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            const unreadCount = data.unreadCount; // Adjust based on your API response
+
+            // Update the badge
+            const badge = document.querySelector(".notification-badge");
+            if (badge) {
+              if (unreadCount > 0) {
+                badge.textContent = unreadCount > 99 ? "99+" : unreadCount;
+                badge.style.display = "flex";
+                badge.style.backgroundColor = "#ef4444"; // Red background for visibility
+              } else {
+                badge.style.display = "none";
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Failed to fetch unread count:", error);
+          // Hide badge on error to avoid showing incorrect information
+          const badge = document.querySelector(".notification-badge");
+          if (badge) {
+            badge.style.display = "none";
+          }
+        }
+      }
+
+      // Function to simulate API call delay - Keep your existing function
+      function fetchUserData() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              data: {
+                username: "John Doe",
+              },
+            });
+          }, 3000);
+        });
+      }
+
+      // Your existing updateHeaderUI function with added unread count
+      function updateHeaderUI(userData) {
+        const usernameEl = document.getElementById("username");
+        const greetingEl = document.getElementById("greeting-text");
+        const avatarEl = document.querySelector(".header-avatar");
+
+        if (userData?.data) {
+          const { username } = userData.data;
+
+          // Remove loading states
+          usernameEl.innerHTML = "";
+          greetingEl.innerHTML = "";
+
+          // Set greeting
+          const hour = new Date().getHours();
+          const greeting =
+            hour < 12
+              ? "Good Morning"
+              : hour < 18
+              ? "Good Afternoon"
+              : "Good Evening";
+          greetingEl.textContent = `${greeting},`;
+
+          // Set username
+          usernameEl.textContent = username || "User";
+
+          // Set avatar initials
+          if (avatarEl) {
+            avatarEl.textContent = (username?.slice(0, 2) || "U").toUpperCase();
+            avatarEl.classList.remove("loading-avatar");
+          }
+
+          // Load unread count after user data is loaded
+          updateUnreadCount();
+        }
+      }
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", function () {
+        // Your existing initialization code
+        fetchUserData()
+          .then((userData) => updateHeaderUI(userData))
+          .catch(() => {
+            document.getElementById("username").textContent = "Guest";
+            document.getElementById("greeting-text").textContent = "Welcome";
+            // Still try to load unread count even for guest users
+            updateUnreadCount();
+          });
+
+        // Optional: Update count periodically (every 10 seconds)
+        setInterval(updateUnreadCount, 10000);
+
+        // Smart update when page becomes visible again
+        document.addEventListener("visibilitychange", function () {
+          if (!document.hidden) {
+            updateUnreadCount();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

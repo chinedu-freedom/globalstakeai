@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Transaction History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+              },
+              teal: {
+                50: "#f0fdfa",
+                100: "#ccfbf1",
+                200: "#99f6e4",
+                300: "#5eead4",
+                400: "#2dd4bf",
+                500: "#14b8a6",
+                600: "#0d9488",
+                700: "#0f766e",
+                800: "#115e59",
+                900: "#134e4a",
+              },
+            },
+            fontFamily: { poppins: ["Poppins", "sans-serif"] },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        min-height: 100vh;
+        padding-bottom: 80px;
+        display: none;
+      }
+      .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .status-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+      .status-success {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+      .status-approved {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+      .status-failed {
+        background-color: #fee2e2;
+        color: #b91c1c;
+      }
+      .transaction-card {
+        border-left: 4px solid;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      .loading-spinner {
+        border: 3px solid #f9f8f8;
+        border-top: 3px solid #0ea5e9;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="font-poppins">
+    <div class="lg:p-4 max-w-4xl mx-auto">
+      <div id="header" class="sticky top-0 z-[1000]"></div>
+      <div class="px-4 lg:px-0 mt-8">
+        <!-- Withdrawals Section -->
+        <div class="bg-white rounded-xl shadow-lg card overflow-hidden mb-6">
+          <div
+            class="p-6 border-b border-gray-200 flex justify-between items-center"
+          >
+            <h3 class="text-lg font-semibold text-gray-800">
+              Recent Withdrawals
+            </h3>
+          </div>
+          <div class="p-4 md:p-6 space-y-4" id="withdrawals">
+            <div class="col-span-full text-center py-4">
+              <div class="loading-spinner mb-4"></div>
+              <p>Loading withdrawal history...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deposits Section -->
+        <div class="bg-white rounded-xl shadow-lg card overflow-hidden mb-6">
+          <div
+            class="p-6 border-b border-gray-200 flex justify-between items-center"
+          >
+            <h3 class="text-lg font-semibold text-gray-800">Recent Deposits</h3>
+          </div>
+          <div class="p-4 md:p-6 space-y-4" id="deposits">
+            <div class="col-span-full text-center py-4">
+              <div class="loading-spinner mb-4"></div>
+              <p>Loading deposits history...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer" class="fixed w-full md:sticky bottom-0 z-[1000]"></div>
+    </div>
+
+    <script type="module">
+      import { authFetch, checkAuth } from "./auth.js";
+      import { protectPage } from "./protect.js";
+
+      checkAuth().then((user) => {
+        if (user) {
+          document.body.style.display = "block"; // reveal page
+          protectPage(); // safe to load header/footer
+          fetchUserDetails();
+        } else {
+          window.location.href = "/login.html";
+        }
+      });
+
+      // Fetch user details and update header
+      async function fetchUserDetails() {
+        try {
+          const res = await authFetch(
+            "https://neo-invest-server.onrender.com/api/users/me",
+            { credentials: "include" }
+          );
+          if (!res.ok) throw new Error("Failed to fetch user details");
+          const userData = await res.json();
+          // Update header if function is available
+          console.log(userData);
+          if (typeof window.updateHeaderUI === "function") {
+            console.log(userData);
+            updateHeaderUI(userData);
+          }
+        } catch (err) {
+          console.error("Error fetching user details:", err);
+        }
+      }
+
+      // Utility to format amounts
+      const formatCurrency = (amt) => `₦${Number(amt).toLocaleString()}`;
+      const formatDate = (dt) => new Date(dt).toLocaleString();
+
+      // Fetch both withdrawals and deposits
+      async function fetchTransactions() {
+        try {
+          const [withdrawalsRes, depositsRes] = await Promise.all([
+            authFetch(
+              "https://neo-invest-server.onrender.com/api/withdrawals",
+              { credentials: "include" }
+            ),
+            authFetch("https://neo-invest-server.onrender.com/api/deposits", {
+              credentials: "include",
+            }),
+          ]);
+
+          const withdrawalsData = await withdrawalsRes.json();
+          const depositsData = await depositsRes.json();
+
+          renderWithdrawals(withdrawalsData.data.withdrawals.slice(0,5));
+          renderDeposits(depositsData.data.slice(0,5));
+        } catch (err) {
+          console.error("Error fetching transactions:", err);
+        }
+      }
+
+      // Render withdrawals
+      function renderWithdrawals(withdrawals) {
+        const container = document.getElementById("withdrawals");
+        if (withdrawals.length === 0) {
+          container.innerHTML =
+            '<p class="text-gray-500 text-center">No withdrawals yet.</p>';
+          return;
+        }
+        container.innerHTML = "";
+        withdrawals.forEach((item) => {
+          const statusClass =
+            item.status === "pending"
+              ? "status-pending"
+              : item.status === "successful"
+              ? "status-success"
+              : "status-failed";
+          const card = document.createElement("div");
+          card.className = `transaction-card bg-white rounded-lg p-4 flex items-center justify-between border-l-4 ${statusClass}`;
+          card.innerHTML = `
+      <div>
+        <p class="font-semibold">${item.balanceType}</p>
+        <p class="text-sm text-gray-500">${formatDate(item.withdrawnAt)}</p>
+      </div>
+      <div class="text-right">
+        <p class="font-bold text-lg">${formatCurrency(item.amount)}</p>
+        <span class="status-badge ${statusClass}">${item.status}</span>
+      </div>
+    `;
+          container.appendChild(card);
+        });
+      }
+
+      // Render deposits
+      function renderDeposits(deposits) {
+        const container = document.getElementById("deposits");
+        if (deposits.length === 0) {
+          container.innerHTML =
+            '<p class="text-gray-500 text-center">No deposits yet.</p>';
+          return;
+        }
+        container.innerHTML = "";
+        deposits.forEach((item) => {
+          const statusClass =
+            item.status === "pending"
+              ? "status-pending"
+              : item.status === "successful"
+              ? "status-success"
+              : "status-failed";
+          const card = document.createElement("div");
+          card.className = `transaction-card bg-white rounded-lg p-4 flex items-center justify-between border-l-4  ${statusClass}`;
+          card.innerHTML = `
+      <div class="flex items-center gap-3">
+        ${
+          item.proofOfPayment?.asset?.url
+            ? `<img src="${item.proofOfPayment.asset.url}" alt="Proof" class="w-12 h-12 object-cover rounded"/>`
+            : ""
+        }
+        <div>
+          <p class="font-semibold">${item.balanceType}</p>
+          <p class="text-sm text-gray-500">${formatDate(item.fundedAt)}</p>
+          </div>
+      </div>
+      <div class="text-right">
+        <p class="font-bold text-lg">${formatCurrency(item.amount)}</p>
+        <span class="status-badge ${statusClass}">${item.status}</span>
+      </div>
+    `;
+          container.appendChild(card);
+        });
+      }
+
+      // Initial fetch
+      fetchTransactions();
+    </script>
+  </body>
+</html>
