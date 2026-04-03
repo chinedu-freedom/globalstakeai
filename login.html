@@ -1,235 +1,227 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Globalstakeai</title>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Globalstakeai</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+<link rel="stylesheet" href="./global.css">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    />
+<style>
+body {
+  font-family: "Poppins", sans-serif;
+}
 
-    <style>
-      body {
-        font-family: "Poppins", sans-serif;
-      }
+.gradient-bg {
+  background: linear-gradient(135deg, #4f8cff, #6ee7ff);
+}
 
-      .gradient-bg {
-        background: linear-gradient(135deg, #4f8cff, #6ee7ff);
-      }
+.input {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 12px 16px;
+  width: 100%;
+  border: 1px solid #e5e7eb;
+}
 
-      .tab {
-        border-radius: 999px;
-        transition: 0.3s;
-      }
+.btn-gradient {
+  background: linear-gradient(90deg, #5eead4, #93c5fd);
+}
+</style>
+</head>
 
-      .tab-active {
-        background: linear-gradient(90deg, #5eead4, #60a5fa);
-        color: white;
-      }
+<body class="flex flex-col min-h-screen">
 
-      .input {
-        background: #f8fafc;
-        border-radius: 12px;
-        padding: 12px 16px;
-        width: 100%;
-        border: 1px solid #e5e7eb;
-      }
+<!-- HEADER -->
+<div class="gradient-bg text-white text-center py-16">
+  <h1 class="text-xl font-semibold">Globalstakeai</h1>
+</div>
 
-      .btn-gradient {
-        background: linear-gradient(90deg, #5eead4, #93c5fd);
-      }
-    </style>
-  </head>
+<!-- MAIN -->
+<div class="flex-1 flex justify-center px-4">
+<div class="bg-white w-full p-6">
 
-  <body class="flex flex-col min-h-screen">
-    <!-- HEADER -->
-    <div class="gradient-bg text-white text-center py-16">
-      <h1 class="text-xl font-semibold">Globalstakeai</h1>
+<!-- Tabs -->
+<div class="relative flex bg-gray-100 rounded-full p-1 mb-6">
+
+  <!-- Sliding Indicator -->
+  <div id="tabIndicator"
+    class="absolute top-1 left-1 w-1/2 h-[calc(100%-8px)] rounded-full bg-gradient-to-r from-teal-300 to-blue-400 transition-all duration-300 ease-in-out">
+  </div>
+
+  <button id="loginTab" class="flex-1 py-2 relative z-10 text-white font-medium">
+    Login
+  </button>
+
+  <button id="registerTab" class="flex-1 py-2 relative z-10 text-gray-500 font-medium">
+    Register
+  </button>
+</div>
+
+<!-- FORMS WRAPPER -->
+  <div class="relative h-[520px] overflow-hidden">
+
+<!-- LOGIN FORM -->
+<form id="loginForm"
+class="space-y-5 absolute w-full transition-all duration-500 ease-in-out opacity-100 translate-x-0">
+
+  <div>
+    <label class="text-sm text-gray-500">Phone Number</label>
+    <input type="text" placeholder="Enter your number" class="input mt-1"/>
+  </div>
+
+  <div>
+    <label class="text-sm text-gray-500">Password</label>
+    <div class="relative mt-1">
+      <input type="password" class="input pr-10" placeholder="Enter your password"/>
+      <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
     </div>
+  </div>
 
-    <!-- MAIN -->
-    <div class="flex-1 flex justify-center px-4">
-      <div class="bg-white w-full p-6 min-h-[500px]">
-        <!-- Tabs -->
-        <div class="flex bg-gray-100 rounded-full p-1 mb-6">
-          <button id="loginTab" class="flex-1 py-2 rounded-full tab tab-active">
-            Login
-          </button>
-          <button id="registerTab" class="flex-1 py-2 text-gray-500 tab">
-            Register
-          </button>
-        </div>
+  <div class="flex items-center text-sm text-gray-500">
+    <input type="checkbox" class="mr-2" />
+    I have read and accept the
+    <span class="text-blue-500 ml-1 cursor-pointer">User Agreement</span>
+  </div>
 
-        <!-- ================= LOGIN FORM ================= -->
-        <form id="loginForm" class="space-y-5">
-          <!-- Phone -->
-          <div>
-            <label class="text-sm text-gray-500">Phone Number</label>
-            <input
-              type="text"
-              placeholder="Enter your number"
-              class="input mt-1"
-            />
-          </div>
+  <div class="text-center text-blue-500 text-sm">
+    <a href="/forgotPassword.html">Forgot Password?</a>
+  </div>
 
-       
-          <div>
-            <label class="text-sm text-gray-500">Password</label>
-            <div class="relative mt-1">
-              <input
-                type="password"
-                class="input pr-10"
-                placeholder="Enter your password"
-              />
-              <i
-                class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"
-              ></i>
-            </div>
-          </div>
-          <div class="flex items-center text-sm text-gray-500">
-            <input type="checkbox" class="mr-2" />
-            I have read and accept the
-            <span class="text-blue-500 ml-1 cursor-pointer"
-              >User Agreement</span
-            >
-          </div>
-             <div class="text-center text-blue-500 text-sm cursor-pointer">
-           <a href="/forgotPassword.html">Forgot Password?</a>
-          </div>
-          <button
-            class="w-full py-3 rounded-xl btn-gradient text-white font-semibold"
-          >
-            Sign In
-          </button>
-        </form>
+  <button class="w-full py-3 rounded-xl btn-gradient text-white font-semibold">
+    Sign In
+  </button>
+</form>
 
-        <!-- ================= REGISTER FORM ================= -->
-        <form id="registerForm" class="space-y-5 hidden">
-          <!-- Phone -->
-          <div>
-            <label class="text-sm text-gray-500">Phone Number</label>
-            <input
-              type="text"
-              placeholder="Enter your number"
-              class="input mt-1"
-            />
-          </div>
+<!-- REGISTER FORM -->
+<!-- <form id="registerForm"
+class="space-y-5 absolute w-full transition-all duration-500 ease-in-out opacity-0 translate-x-full pointer-events-none"> -->
+<form id="registerForm"
+class="space-y-5 absolute w-full h-full overflow-y-auto pr-2 transition-all duration-500 ease-in-out opacity-0 translate-x-full pointer-events-none">
+  <div>
+    <label class="text-sm text-gray-500">Phone Number</label>
+    <input type="text" placeholder="Enter your number" class="input mt-1"/>
+  </div>
 
-          <!-- Email -->
-          <div>
-            <label class="text-sm text-gray-500">Email</label>
-            <input type="email" placeholder="Enter email" class="input mt-1" />
-          </div>
+  <div>
+    <label class="text-sm text-gray-500">Email</label>
+    <input type="email" placeholder="Enter email" class="input mt-1"/>
+  </div>
 
-          <!-- Username -->
-          <div>
-            <label class="text-sm text-gray-500">Username</label>
-            <input
-              type="text"
-              placeholder="Enter username"
-              class="input mt-1"
-            />
-          </div>
+  <div>
+    <label class="text-sm text-gray-500">Username</label>
+    <input type="text" placeholder="Enter username" class="input mt-1"/>
+  </div>
 
-          <!-- Password -->
-          <div>
-            <label class="text-sm text-gray-500">Password</label>
-            <div class="relative mt-1">
-              <input
-                type="password"
-                class="input pr-10"
-                placeholder="Enter password"
-              />
-              <i
-                class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"
-              ></i>
-            </div>
-          </div>
-
-          <!-- Confirm Password -->
-          <div>
-            <label class="text-sm text-gray-500">Confirm Password</label>
-            <div class="relative mt-1">
-              <input
-                type="password"
-                class="input pr-10"
-                placeholder="Repeat password"
-              />
-              <i
-                class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"
-              ></i>
-            </div>
-          </div>
-
-          <!-- Invitation Code -->
-          <div>
-            <label class="text-sm text-gray-500">Invitation Code</label>
-            <input
-              type="text"
-              placeholder="Enter referral code"
-              class="input mt-1"
-            />
-          </div>
- <div class="flex items-center text-sm text-gray-500">
-            <input type="checkbox" class="mr-2" />
-            I have read and accept the
-            <span class="text-blue-500 ml-1 cursor-pointer"
-              >User Agreement</span
-            >
-          </div>
-          <button
-            class="w-full py-3 rounded-xl btn-gradient text-white font-semibold"
-          >
-            Register
-          </button>
-        </form>
-      </div>
+  <div>
+    <label class="text-sm text-gray-500">Password</label>
+    <div class="relative mt-1">
+      <input type="password" class="input pr-10" placeholder="Enter password"/>
+      <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
     </div>
+  </div>
 
-    <script>
-      const loginTab = document.getElementById("loginTab");
-      const registerTab = document.getElementById("registerTab");
+  <div>
+    <label class="text-sm text-gray-500">Confirm Password</label>
+    <div class="relative mt-1">
+      <input type="password" class="input pr-10" placeholder="Repeat password"/>
+      <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
+    </div>
+  </div>
 
-      const loginForm = document.getElementById("loginForm");
-      const registerForm = document.getElementById("registerForm");
+  <div>
+    <label class="text-sm text-gray-500">Invitation Code</label>
+    <input type="text" placeholder="Enter referral code" class="input mt-1"/>
+  </div>
 
-      loginTab.addEventListener("click", () => {
-        loginForm.classList.remove("hidden");
-        registerForm.classList.add("hidden");
+  <div class="flex items-center text-sm text-gray-500">
+    <input type="checkbox" class="mr-2" />
+    I have read and accept the
+    <span class="text-blue-500 ml-1 cursor-pointer">User Agreement</span>
+  </div>
 
-        loginTab.classList.add("tab-active");
-        registerTab.classList.remove("tab-active");
-        registerTab.classList.add("text-gray-500");
-      });
+  <button class="w-full py-3 rounded-xl btn-gradient text-white font-semibold">
+    Register
+  </button>
+</form>
 
-      registerTab.addEventListener("click", () => {
-        registerForm.classList.remove("hidden");
-        loginForm.classList.add("hidden");
+</div>
 
-        registerTab.classList.add("tab-active");
-        loginTab.classList.remove("tab-active");
-        loginTab.classList.add("text-gray-500");
-      });
+</div>
+</div>
 
-      // Toggle password visibility
-      document.querySelectorAll(".toggle-password").forEach((icon) => {
-        icon.addEventListener("click", () => {
-          const input = icon.previousElementSibling;
+<script>
+const loginTab = document.getElementById("loginTab");
+const registerTab = document.getElementById("registerTab");
+const indicator = document.getElementById("tabIndicator");
 
-          if (input.type === "password") {
-            input.type = "text";
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
-          } else {
-            input.type = "password";
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
-          }
-        });
-      });
-    </script>
-  </body>
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+
+// LOGIN CLICK
+loginTab.addEventListener("click", () => {
+
+  // Slide indicator
+  indicator.style.transform = "translateX(0%)";
+
+  // Forms
+  loginForm.classList.remove("opacity-0", "-translate-x-full");
+  loginForm.classList.add("opacity-100", "translate-x-0");
+
+  registerForm.classList.add("opacity-0", "translate-x-full");
+  registerForm.classList.remove("opacity-100", "translate-x-0");
+
+  registerForm.classList.add("pointer-events-none");
+  loginForm.classList.remove("pointer-events-none");
+
+  // Text color
+  loginTab.classList.remove("text-gray-500");
+  loginTab.classList.add("text-white");
+
+  registerTab.classList.remove("text-white");
+  registerTab.classList.add("text-gray-500");
+});
+
+// REGISTER CLICK
+registerTab.addEventListener("click", () => {
+
+  // Slide indicator
+  indicator.style.transform = "translateX(100%)";
+
+  // Forms
+  registerForm.classList.remove("opacity-0", "translate-x-full");
+  registerForm.classList.add("opacity-100", "translate-x-0");
+
+  loginForm.classList.add("opacity-0", "-translate-x-full");
+  loginForm.classList.remove("opacity-100", "translate-x-0");
+
+  loginForm.classList.add("pointer-events-none");
+  registerForm.classList.remove("pointer-events-none");
+
+  // Text color
+  registerTab.classList.remove("text-gray-500");
+  registerTab.classList.add("text-white");
+
+  loginTab.classList.remove("text-white");
+  loginTab.classList.add("text-gray-500");
+});
+
+// PASSWORD TOGGLE
+document.querySelectorAll(".toggle-password").forEach(icon => {
+  icon.addEventListener("click", () => {
+    const input = icon.previousElementSibling;
+
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
+  });
+});
+</script>
+
+</body>
 </html>
