@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verify OTP - Globalstakeai</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+
+<style>
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #4f8cff, #6ee7ff);
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, #5eead4, #93c5fd);
+}
+
+.otp-input {
+  width: 50px;
+  height: 55px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+</style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+<!-- HEADER -->
+<div class="gradient-bg text-white text-center py-16">
+  <h1 class="text-xl font-semibold">Globalstakeai</h1>
+</div>
+
+<!-- MAIN -->
+<div class=" flex justify-center px-4">
+  <div class="bg-white w-full p-6 ">
+
+    <!-- Title -->
+    <h2 class="text-lg font-semibold text-center mb-2">
+      Verify Code
+    </h2>
+    <p class="text-sm text-gray-500 text-center mb-6 ">
+      Enter the 4-digit code sent to your email
+    </p>
+
+    <!-- OTP FORM -->
+    <form class="space-y-6">
+
+      <!-- OTP Inputs -->
+      <div class="flex justify-between gap-2 max-w-xs mx-auto">
+         <input type="text" maxlength="1" class="otp-input" />
+        <input type="text" maxlength="1" class="otp-input" />
+        <input type="text" maxlength="1" class="otp-input" />
+        <input type="text" maxlength="1" class="otp-input" />
+        <input type="text" maxlength="1" class="otp-input" />
+      </div>
+
+      <!-- Button -->
+      <button class="w-full py-3 rounded-xl btn-gradient text-white font-semibold">
+        Verify
+      </button>
+
+    </form>
+
+    <!-- Resend -->
+    <div class="text-center mt-6 text-sm">
+      <span class="text-gray-500">Didn't receive code?</span>
+      <button class="text-blue-500 ml-1">Resend</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const inputs = document.querySelectorAll(".otp-input");
+
+inputs.forEach((input, index) => {
+  input.addEventListener("input", () => {
+    if (input.value.length === 1 && index < inputs.length - 1) {
+      inputs[index + 1].focus();
+    }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Backspace" && input.value === "" && index > 0) {
+      inputs[index - 1].focus();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
