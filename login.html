@@ -1,11 +1,12 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Globalstakeai</title>
+<title>StakeWiseAi</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"/>
 <link rel="stylesheet" href="./global.css">
 
 <style>
@@ -23,19 +24,171 @@ body {
   padding: 12px 16px;
   width: 100%;
   border: 1px solid #e5e7eb;
+  outline: none;
+  font-size: 14px;
+}
+
+.input:focus {
+  border-color: #93c5fd;
 }
 
 .btn-gradient {
   background: linear-gradient(90deg, #5eead4, #93c5fd);
 }
+
+/* Country Picker */
+.cc-trigger {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+  padding: 12px 10px 12px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+  user-select: none;
+  min-width: 90px;
+  transition: background 0.2s;
+}
+
+.cc-trigger:hover {
+  background: #f0f4ff;
+}
+
+/* Flag icon sizing */
+.fi {
+  width: 22px;
+  height: 16px;
+  border-radius: 3px;
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.cc-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 280px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  z-index: 100;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+}
+
+.cc-dropdown.open {
+  display: flex;
+}
+
+.cc-search-wrap {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.cc-search {
+  width: 100%;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+}
+
+.cc-search:focus {
+  border-color: #93c5fd;
+}
+
+.cc-list {
+  max-height: 220px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.cc-list::-webkit-scrollbar {
+  display: none;
+}
+
+.cc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #374151;
+  transition: background 0.15s;
+}
+
+.cc-item:hover {
+  background: #f0f6ff;
+}
+
+.cc-item.selected {
+  background: #e8efff;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.cc-item .code {
+  min-width: 38px;
+  font-weight: 600;
+  color: #4b5563;
+  font-size: 11px;
+}
+
+.cc-item.selected .code {
+  color: #2563eb;
+}
+
+.cc-item .name {
+  color: #374151;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.phone-input-group {
+  display: flex;
+  position: relative;
+}
+
+.phone-input-group .phone-input {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 0 12px 12px 0;
+  padding: 12px 16px;
+  font-size: 14px;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+}
+
+.phone-input-group .phone-input:focus {
+  border-color: #93c5fd;
+}
 </style>
+
+  <script src="./translator.js"></script>
 </head>
 
 <body class="flex flex-col min-h-screen">
 
 <!-- HEADER -->
 <div class="gradient-bg text-white text-center py-16">
-  <h1 class="text-xl font-semibold">Globalstakeai</h1>
+  <h1 class="text-xl font-semibold">StakeWiseAi</h1>
 </div>
 
 <!-- MAIN -->
@@ -44,43 +197,49 @@ body {
 
 <!-- Tabs -->
 <div class="relative flex bg-gray-100 rounded-full p-1 mb-6">
-
-  <!-- Sliding Indicator -->
   <div id="tabIndicator"
     class="absolute top-1 left-1 w-1/2 h-[calc(100%-8px)] rounded-full bg-gradient-to-r from-teal-300 to-blue-400 transition-all duration-300 ease-in-out">
   </div>
-
-  <button id="loginTab" class="flex-1 py-2 relative z-10 text-white font-medium">
-    Login
-  </button>
-
-  <button id="registerTab" class="flex-1 py-2 relative z-10 text-gray-500 font-medium">
-    Register
-  </button>
+  <button id="loginTab" class="flex-1 py-2 relative z-10 text-white font-medium">Login</button>
+  <button id="registerTab" class="flex-1 py-2 relative z-10 text-gray-500 font-medium">Register</button>
 </div>
 
 <!-- FORMS WRAPPER -->
-  <div class="relative h-[520px] overflow-hidden">
+<div class="relative h-[520px] overflow-hidden">
 
 <!-- LOGIN FORM -->
-<form id="loginForm"
-class="space-y-5 absolute w-full transition-all duration-500 ease-in-out opacity-100 translate-x-0">
+<form id="loginForm" class="space-y-5 absolute w-full transition-all duration-500 ease-in-out opacity-100 translate-x-0" onsubmit="handleLogin(event)">
 
   <div>
     <label class="text-sm text-gray-500">Phone Number</label>
-    <input type="text" placeholder="Enter your number" class="input mt-1"/>
+    <div class="phone-input-group mt-1" id="loginPhoneWrap">
+      <div class="cc-trigger" id="loginCCTrigger" onclick="toggleCC('login')">
+        <span class="fi" id="loginCCFlag"></span>
+        <span id="loginCCCode">+234</span>
+        <i class="fas fa-chevron-down text-[9px] text-gray-400 transition-transform duration-200" id="loginCCChevron"></i>
+      </div>
+      <div class="cc-dropdown" id="loginCCDropdown">
+        <div class="cc-search-wrap">
+          <input type="text" class="cc-search" placeholder="Search country..." oninput="filterCC('login', this.value)" id="loginCCSearch">
+        </div>
+        <div class="cc-list" id="loginCCList"></div>
+      </div>
+      <input type="text" id="loginPhone" class="phone-input" placeholder="Enter your number" oninput="clearErr('loginPhone')"/>
+    </div>
+    <p class="text-red-500 text-[11px] mt-1 hidden" id="loginPhoneErr"></p>
   </div>
 
   <div>
     <label class="text-sm text-gray-500">Password</label>
     <div class="relative mt-1">
-      <input type="password" class="input pr-10" placeholder="Enter your password"/>
+      <input type="password" id="loginPassword" class="input pr-10" placeholder="Enter your password" oninput="clearErr('loginPassword')"/>
       <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
     </div>
+    <p class="text-red-500 text-[11px] mt-1 hidden" id="loginPasswordErr"></p>
   </div>
 
   <div class="flex items-center text-sm text-gray-500">
-    <input type="checkbox" class="mr-2" />
+    <input type="checkbox" class="mr-2" id="loginAgreement" onchange="toggleLoginBtn()" />
     I have read and accept the
     <span class="text-blue-500 ml-1 cursor-pointer">User Agreement</span>
   </div>
@@ -89,129 +248,402 @@ class="space-y-5 absolute w-full transition-all duration-500 ease-in-out opacity
     <a href="/forgotPassword.html">Forgot Password?</a>
   </div>
 
-  <button class="w-full py-3 rounded-xl btn-gradient text-white font-semibold">
-    Sign In
+  <button type="submit" id="loginBtn" disabled
+    class="w-full py-3 rounded-xl btn-gradient text-white font-semibold flex items-center justify-center gap-2 opacity-50 cursor-not-allowed transition-opacity duration-200">
+    <span id="loginBtnText">Sign In</span>
+    <i class="fas fa-spinner fa-spin hidden" id="loginSpinner"></i>
   </button>
 </form>
 
 <!-- REGISTER FORM -->
-<!-- <form id="registerForm"
-class="space-y-5 absolute w-full transition-all duration-500 ease-in-out opacity-0 translate-x-full pointer-events-none"> -->
-<form id="registerForm"
-class="space-y-5 absolute w-full h-full overflow-y-auto pr-2 transition-all duration-500 ease-in-out opacity-0 translate-x-full pointer-events-none">
+<form id="registerForm" class="space-y-5 absolute w-full h-full overflow-y-auto pr-2 transition-all duration-500 ease-in-out opacity-0 translate-x-full pointer-events-none" onsubmit="handleRegister(event)">
+
   <div>
     <label class="text-sm text-gray-500">Phone Number</label>
-    <input type="text" placeholder="Enter your number" class="input mt-1"/>
+    <div class="phone-input-group mt-1" id="registerPhoneWrap">
+      <div class="cc-trigger" id="registerCCTrigger" onclick="toggleCC('register')">
+        <span class="fi" id="registerCCFlag"></span>
+        <span id="registerCCCode">+234</span>
+        <i class="fas fa-chevron-down text-[9px] text-gray-400 transition-transform duration-200" id="registerCCChevron"></i>
+      </div>
+      <div class="cc-dropdown" id="registerCCDropdown">
+        <div class="cc-search-wrap">
+          <input type="text" class="cc-search" placeholder="Search country..." oninput="filterCC('register', this.value)" id="registerCCSearch">
+        </div>
+        <div class="cc-list" id="registerCCList"></div>
+      </div>
+      <input type="text" id="registerPhone" class="phone-input" placeholder="Enter your number" oninput="clearErr('registerPhone')"/>
+    </div>
+    <p class="text-red-500 text-[11px] mt-1 hidden" id="registerPhoneErr"></p>
   </div>
 
   <div>
     <label class="text-sm text-gray-500">Email</label>
-    <input type="email" placeholder="Enter email" class="input mt-1"/>
+    <input type="email" id="registerEmail" placeholder="Enter email" class="input mt-1" oninput="clearErr('registerEmail')"/>
+    <p class="text-red-500 text-[11px] mt-1 hidden" id="registerEmailErr"></p>
   </div>
 
   <div>
     <label class="text-sm text-gray-500">Username</label>
-    <input type="text" placeholder="Enter username" class="input mt-1"/>
+    <input type="text" id="registerUsername" placeholder="Enter username" class="input mt-1" oninput="clearErr('registerUsername')"/>
+    <p class="text-red-500 text-[11px] mt-1 hidden" id="registerUsernameErr"></p>
   </div>
 
   <div>
     <label class="text-sm text-gray-500">Password</label>
     <div class="relative mt-1">
-      <input type="password" class="input pr-10" placeholder="Enter password"/>
+      <input type="password" id="registerPassword" class="input pr-10" placeholder="Enter password" oninput="clearErr('registerPassword')"/>
       <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
     </div>
+    <p class="text-red-500 text-[11px] mt-1 hidden" id="registerPasswordErr"></p>
   </div>
 
   <div>
     <label class="text-sm text-gray-500">Confirm Password</label>
     <div class="relative mt-1">
-      <input type="password" class="input pr-10" placeholder="Repeat password"/>
+      <input type="password" id="registerConfirmPassword" class="input pr-10" placeholder="Repeat password" oninput="clearErr('registerConfirmPassword')"/>
       <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
     </div>
+    <p class="text-red-500 text-[11px] mt-1 hidden" id="registerConfirmPasswordErr"></p>
   </div>
 
   <div>
-    <label class="text-sm text-gray-500">Invitation Code</label>
-    <input type="text" placeholder="Enter referral code" class="input mt-1"/>
+    <label class="text-sm text-gray-500">Invitation Code <span class="text-gray-400 text-xs">(Optional)</span></label>
+    <input type="text" id="registerReferral" placeholder="Enter referral code" class="input mt-1"/>
   </div>
 
-  <div class="flex items-center text-sm text-gray-500">
-    <input type="checkbox" class="mr-2" />
-    I have read and accept the
-    <span class="text-blue-500 ml-1 cursor-pointer">User Agreement</span>
+  <div>
+    <div class="flex items-center text-sm text-gray-500">
+      <input type="checkbox" class="mr-2" id="registerAgreement" onchange="toggleRegisterBtn(); clearErr('registerAgreement')" />
+      I have read and accept the
+      <span class="text-blue-500 ml-1 cursor-pointer">User Agreement</span>
+    </div>
+    <p class="text-red-500 text-[11px] mt-1 hidden" id="registerAgreementErr"></p>
   </div>
 
-  <button class="w-full py-3 rounded-xl btn-gradient text-white font-semibold">
-    Register
+  <button type="submit" id="registerBtn" disabled
+    class="w-full py-3 rounded-xl btn-gradient text-white font-semibold flex items-center justify-center gap-2 opacity-50 cursor-not-allowed transition-opacity duration-200">
+    <span id="registerBtnText">Register</span>
+    <i class="fas fa-spinner fa-spin hidden" id="registerSpinner"></i>
   </button>
 </form>
 
 </div>
-
 </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div id="appToast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[999] px-5 py-3 rounded-full text-white text-xs font-semibold shadow-xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2" style="min-width:200px;justify-content:center;">
+  <i id="appToastIcon" class="fas fa-check-circle"></i>
+  <span id="appToastMsg"></span>
 </div>
 
 <script>
-const loginTab = document.getElementById("loginTab");
-const registerTab = document.getElementById("registerTab");
-const indicator = document.getElementById("tabIndicator");
+// ── ALL COUNTRIES with ISO 3166-1 alpha-2 codes for flag-icons library ──
+const COUNTRIES = [
+  { name:"Afghanistan", code:"+93", iso:"af" },
+  { name:"Albania", code:"+355", iso:"al" },
+  { name:"Algeria", code:"+213", iso:"dz" },
+  { name:"Andorra", code:"+376", iso:"ad" },
+  { name:"Angola", code:"+244", iso:"ao" },
+  { name:"Antigua and Barbuda", code:"+1268", iso:"ag" },
+  { name:"Argentina", code:"+54", iso:"ar" },
+  { name:"Armenia", code:"+374", iso:"am" },
+  { name:"Australia", code:"+61", iso:"au" },
+  { name:"Austria", code:"+43", iso:"at" },
+  { name:"Azerbaijan", code:"+994", iso:"az" },
+  { name:"Bahamas", code:"+1242", iso:"bs" },
+  { name:"Bahrain", code:"+973", iso:"bh" },
+  { name:"Bangladesh", code:"+880", iso:"bd" },
+  { name:"Barbados", code:"+1246", iso:"bb" },
+  { name:"Belarus", code:"+375", iso:"by" },
+  { name:"Belgium", code:"+32", iso:"be" },
+  { name:"Belize", code:"+501", iso:"bz" },
+  { name:"Benin", code:"+229", iso:"bj" },
+  { name:"Bhutan", code:"+975", iso:"bt" },
+  { name:"Bolivia", code:"+591", iso:"bo" },
+  { name:"Bosnia and Herzegovina", code:"+387", iso:"ba" },
+  { name:"Botswana", code:"+267", iso:"bw" },
+  { name:"Brazil", code:"+55", iso:"br" },
+  { name:"Brunei", code:"+673", iso:"bn" },
+  { name:"Bulgaria", code:"+359", iso:"bg" },
+  { name:"Burkina Faso", code:"+226", iso:"bf" },
+  { name:"Burundi", code:"+257", iso:"bi" },
+  { name:"Cabo Verde", code:"+238", iso:"cv" },
+  { name:"Cambodia", code:"+855", iso:"kh" },
+  { name:"Cameroon", code:"+237", iso:"cm" },
+  { name:"Canada", code:"+1", iso:"ca" },
+  { name:"Central African Republic", code:"+236", iso:"cf" },
+  { name:"Chad", code:"+235", iso:"td" },
+  { name:"Chile", code:"+56", iso:"cl" },
+  { name:"China", code:"+86", iso:"cn" },
+  { name:"Colombia", code:"+57", iso:"co" },
+  { name:"Comoros", code:"+269", iso:"km" },
+  { name:"Congo (DRC)", code:"+243", iso:"cd" },
+  { name:"Congo (Republic)", code:"+242", iso:"cg" },
+  { name:"Costa Rica", code:"+506", iso:"cr" },
+  { name:"Croatia", code:"+385", iso:"hr" },
+  { name:"Cuba", code:"+53", iso:"cu" },
+  { name:"Cyprus", code:"+357", iso:"cy" },
+  { name:"Czech Republic", code:"+420", iso:"cz" },
+  { name:"Denmark", code:"+45", iso:"dk" },
+  { name:"Djibouti", code:"+253", iso:"dj" },
+  { name:"Dominica", code:"+1767", iso:"dm" },
+  { name:"Dominican Republic", code:"+1809", iso:"do" },
+  { name:"Ecuador", code:"+593", iso:"ec" },
+  { name:"Egypt", code:"+20", iso:"eg" },
+  { name:"El Salvador", code:"+503", iso:"sv" },
+  { name:"Equatorial Guinea", code:"+240", iso:"gq" },
+  { name:"Eritrea", code:"+291", iso:"er" },
+  { name:"Estonia", code:"+372", iso:"ee" },
+  { name:"Eswatini", code:"+268", iso:"sz" },
+  { name:"Ethiopia", code:"+251", iso:"et" },
+  { name:"Fiji", code:"+679", iso:"fj" },
+  { name:"Finland", code:"+358", iso:"fi" },
+  { name:"France", code:"+33", iso:"fr" },
+  { name:"Gabon", code:"+241", iso:"ga" },
+  { name:"Gambia", code:"+220", iso:"gm" },
+  { name:"Georgia", code:"+995", iso:"ge" },
+  { name:"Germany", code:"+49", iso:"de" },
+  { name:"Ghana", code:"+233", iso:"gh" },
+  { name:"Greece", code:"+30", iso:"gr" },
+  { name:"Grenada", code:"+1473", iso:"gd" },
+  { name:"Guatemala", code:"+502", iso:"gt" },
+  { name:"Guinea", code:"+224", iso:"gn" },
+  { name:"Guinea-Bissau", code:"+245", iso:"gw" },
+  { name:"Guyana", code:"+592", iso:"gy" },
+  { name:"Haiti", code:"+509", iso:"ht" },
+  { name:"Honduras", code:"+504", iso:"hn" },
+  { name:"Hungary", code:"+36", iso:"hu" },
+  { name:"Iceland", code:"+354", iso:"is" },
+  { name:"India", code:"+91", iso:"in" },
+  { name:"Indonesia", code:"+62", iso:"id" },
+  { name:"Iran", code:"+98", iso:"ir" },
+  { name:"Iraq", code:"+964", iso:"iq" },
+  { name:"Ireland", code:"+353", iso:"ie" },
+  { name:"Israel", code:"+972", iso:"il" },
+  { name:"Italy", code:"+39", iso:"it" },
+  { name:"Ivory Coast", code:"+225", iso:"ci" },
+  { name:"Jamaica", code:"+1876", iso:"jm" },
+  { name:"Japan", code:"+81", iso:"jp" },
+  { name:"Jordan", code:"+962", iso:"jo" },
+  { name:"Kazakhstan", code:"+7", iso:"kz" },
+  { name:"Kenya", code:"+254", iso:"ke" },
+  { name:"Kiribati", code:"+686", iso:"ki" },
+  { name:"Kuwait", code:"+965", iso:"kw" },
+  { name:"Kyrgyzstan", code:"+996", iso:"kg" },
+  { name:"Laos", code:"+856", iso:"la" },
+  { name:"Latvia", code:"+371", iso:"lv" },
+  { name:"Lebanon", code:"+961", iso:"lb" },
+  { name:"Lesotho", code:"+266", iso:"ls" },
+  { name:"Liberia", code:"+231", iso:"lr" },
+  { name:"Libya", code:"+218", iso:"ly" },
+  { name:"Liechtenstein", code:"+423", iso:"li" },
+  { name:"Lithuania", code:"+370", iso:"lt" },
+  { name:"Luxembourg", code:"+352", iso:"lu" },
+  { name:"Madagascar", code:"+261", iso:"mg" },
+  { name:"Malawi", code:"+265", iso:"mw" },
+  { name:"Malaysia", code:"+60", iso:"my" },
+  { name:"Maldives", code:"+960", iso:"mv" },
+  { name:"Mali", code:"+223", iso:"ml" },
+  { name:"Malta", code:"+356", iso:"mt" },
+  { name:"Marshall Islands", code:"+692", iso:"mh" },
+  { name:"Mauritania", code:"+222", iso:"mr" },
+  { name:"Mauritius", code:"+230", iso:"mu" },
+  { name:"Mexico", code:"+52", iso:"mx" },
+  { name:"Micronesia", code:"+691", iso:"fm" },
+  { name:"Moldova", code:"+373", iso:"md" },
+  { name:"Monaco", code:"+377", iso:"mc" },
+  { name:"Mongolia", code:"+976", iso:"mn" },
+  { name:"Montenegro", code:"+382", iso:"me" },
+  { name:"Morocco", code:"+212", iso:"ma" },
+  { name:"Mozambique", code:"+258", iso:"mz" },
+  { name:"Myanmar", code:"+95", iso:"mm" },
+  { name:"Namibia", code:"+264", iso:"na" },
+  { name:"Nauru", code:"+674", iso:"nr" },
+  { name:"Nepal", code:"+977", iso:"np" },
+  { name:"Netherlands", code:"+31", iso:"nl" },
+  { name:"New Zealand", code:"+64", iso:"nz" },
+  { name:"Nicaragua", code:"+505", iso:"ni" },
+  { name:"Niger", code:"+227", iso:"ne" },
+  { name:"Nigeria", code:"+234", iso:"ng" },
+  { name:"North Korea", code:"+850", iso:"kp" },
+  { name:"North Macedonia", code:"+389", iso:"mk" },
+  { name:"Norway", code:"+47", iso:"no" },
+  { name:"Oman", code:"+968", iso:"om" },
+  { name:"Pakistan", code:"+92", iso:"pk" },
+  { name:"Palau", code:"+680", iso:"pw" },
+  { name:"Palestine", code:"+970", iso:"ps" },
+  { name:"Panama", code:"+507", iso:"pa" },
+  { name:"Papua New Guinea", code:"+675", iso:"pg" },
+  { name:"Paraguay", code:"+595", iso:"py" },
+  { name:"Peru", code:"+51", iso:"pe" },
+  { name:"Philippines", code:"+63", iso:"ph" },
+  { name:"Poland", code:"+48", iso:"pl" },
+  { name:"Portugal", code:"+351", iso:"pt" },
+  { name:"Qatar", code:"+974", iso:"qa" },
+  { name:"Romania", code:"+40", iso:"ro" },
+  { name:"Russia", code:"+7", iso:"ru" },
+  { name:"Rwanda", code:"+250", iso:"rw" },
+  { name:"Saint Kitts and Nevis", code:"+1869", iso:"kn" },
+  { name:"Saint Lucia", code:"+1758", iso:"lc" },
+  { name:"Saint Vincent", code:"+1784", iso:"vc" },
+  { name:"Samoa", code:"+685", iso:"ws" },
+  { name:"San Marino", code:"+378", iso:"sm" },
+  { name:"Sao Tome and Principe", code:"+239", iso:"st" },
+  { name:"Saudi Arabia", code:"+966", iso:"sa" },
+  { name:"Senegal", code:"+221", iso:"sn" },
+  { name:"Serbia", code:"+381", iso:"rs" },
+  { name:"Seychelles", code:"+248", iso:"sc" },
+  { name:"Sierra Leone", code:"+232", iso:"sl" },
+  { name:"Singapore", code:"+65", iso:"sg" },
+  { name:"Slovakia", code:"+421", iso:"sk" },
+  { name:"Slovenia", code:"+386", iso:"si" },
+  { name:"Solomon Islands", code:"+677", iso:"sb" },
+  { name:"Somalia", code:"+252", iso:"so" },
+  { name:"South Africa", code:"+27", iso:"za" },
+  { name:"South Korea", code:"+82", iso:"kr" },
+  { name:"South Sudan", code:"+211", iso:"ss" },
+  { name:"Spain", code:"+34", iso:"es" },
+  { name:"Sri Lanka", code:"+94", iso:"lk" },
+  { name:"Sudan", code:"+249", iso:"sd" },
+  { name:"Suriname", code:"+597", iso:"sr" },
+  { name:"Sweden", code:"+46", iso:"se" },
+  { name:"Switzerland", code:"+41", iso:"ch" },
+  { name:"Syria", code:"+963", iso:"sy" },
+  { name:"Taiwan", code:"+886", iso:"tw" },
+  { name:"Tajikistan", code:"+992", iso:"tj" },
+  { name:"Tanzania", code:"+255", iso:"tz" },
+  { name:"Thailand", code:"+66", iso:"th" },
+  { name:"Timor-Leste", code:"+670", iso:"tl" },
+  { name:"Togo", code:"+228", iso:"tg" },
+  { name:"Tonga", code:"+676", iso:"to" },
+  { name:"Trinidad and Tobago", code:"+1868", iso:"tt" },
+  { name:"Tunisia", code:"+216", iso:"tn" },
+  { name:"Turkey", code:"+90", iso:"tr" },
+  { name:"Turkmenistan", code:"+993", iso:"tm" },
+  { name:"Tuvalu", code:"+688", iso:"tv" },
+  { name:"Uganda", code:"+256", iso:"ug" },
+  { name:"Ukraine", code:"+380", iso:"ua" },
+  { name:"United Arab Emirates", code:"+971", iso:"ae" },
+  { name:"United Kingdom", code:"+44", iso:"gb" },
+  { name:"United States", code:"+1", iso:"us" },
+  { name:"Uruguay", code:"+598", iso:"uy" },
+  { name:"Uzbekistan", code:"+998", iso:"uz" },
+  { name:"Vanuatu", code:"+678", iso:"vu" },
+  { name:"Vatican City", code:"+379", iso:"va" },
+  { name:"Venezuela", code:"+58", iso:"ve" },
+  { name:"Vietnam", code:"+84", iso:"vn" },
+  { name:"Yemen", code:"+967", iso:"ye" },
+  { name:"Zambia", code:"+260", iso:"zm" },
+  { name:"Zimbabwe", code:"+263", iso:"zw" }
+];
 
-const loginForm = document.getElementById("loginForm");
+// Default: Nigeria
+const selectedCC = {
+  login: { ...COUNTRIES.find(c => c.iso === 'ng') },
+  register: { ...COUNTRIES.find(c => c.iso === 'ng') }
+};
+
+function buildCCList(form, filter = '') {
+  const listEl = document.getElementById(`${form}CCList`);
+  const q = filter.toLowerCase();
+  const filtered = COUNTRIES.filter(c =>
+    c.name.toLowerCase().includes(q) || c.code.includes(filter)
+  );
+
+  listEl.innerHTML = filtered.map(c => `
+    <div class="cc-item ${selectedCC[form].iso === c.iso ? 'selected' : ''}"
+         onclick="selectCC('${form}', '${c.iso}', '${c.code}', '${c.name.replace(/'/g,"\\'")}')">
+      <span class="fi fi-${c.iso}" style="border-radius:3px;"></span>
+      <span class="code">${c.code}</span>
+      <span class="name">${c.name}</span>
+    </div>
+  `).join('');
+}
+
+function selectCC(form, iso, code, name) {
+  selectedCC[form] = { iso, code, name };
+  // Update trigger flag
+  document.getElementById(`${form}CCFlag`).className = `fi fi-${iso}`;
+  document.getElementById(`${form}CCCode`).textContent = code;
+  toggleCC(form, false);
+}
+
+function toggleCC(form, forceState) {
+  const dropdown = document.getElementById(`${form}CCDropdown`);
+  const chevron  = document.getElementById(`${form}CCChevron`);
+  const searchEl = document.getElementById(`${form}CCSearch`);
+
+  const isOpen   = dropdown.classList.contains('open');
+  const shouldOpen = forceState !== undefined ? forceState : !isOpen;
+
+  // Close all first
+  ['login','register'].forEach(f => {
+    document.getElementById(`${f}CCDropdown`).classList.remove('open');
+    document.getElementById(`${f}CCChevron`).style.transform = '';
+  });
+
+  if (shouldOpen) {
+    buildCCList(form, '');
+    if (searchEl) searchEl.value = '';
+    dropdown.classList.add('open');
+    chevron.style.transform = 'rotate(180deg)';
+    setTimeout(() => searchEl && searchEl.focus(), 50);
+  }
+}
+
+function filterCC(form, val) {
+  buildCCList(form, val);
+}
+
+// Close on outside click
+document.addEventListener('click', (e) => {
+  ['login','register'].forEach(form => {
+    const trigger  = document.getElementById(`${form}CCTrigger`);
+    const dropdown = document.getElementById(`${form}CCDropdown`);
+    if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove('open');
+      document.getElementById(`${form}CCChevron`).style.transform = '';
+    }
+  });
+});
+
+// Tab logic
+const loginTab    = document.getElementById("loginTab");
+const registerTab = document.getElementById("registerTab");
+const indicator   = document.getElementById("tabIndicator");
+const loginForm   = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
 
-// LOGIN CLICK
 loginTab.addEventListener("click", () => {
-
-  // Slide indicator
   indicator.style.transform = "translateX(0%)";
-
-  // Forms
   loginForm.classList.remove("opacity-0", "-translate-x-full");
   loginForm.classList.add("opacity-100", "translate-x-0");
-
   registerForm.classList.add("opacity-0", "translate-x-full");
   registerForm.classList.remove("opacity-100", "translate-x-0");
-
   registerForm.classList.add("pointer-events-none");
   loginForm.classList.remove("pointer-events-none");
-
-  // Text color
-  loginTab.classList.remove("text-gray-500");
-  loginTab.classList.add("text-white");
-
-  registerTab.classList.remove("text-white");
-  registerTab.classList.add("text-gray-500");
+  loginTab.classList.replace("text-gray-500", "text-white");
+  registerTab.classList.replace("text-white", "text-gray-500");
 });
 
-// REGISTER CLICK
 registerTab.addEventListener("click", () => {
-
-  // Slide indicator
   indicator.style.transform = "translateX(100%)";
-
-  // Forms
   registerForm.classList.remove("opacity-0", "translate-x-full");
   registerForm.classList.add("opacity-100", "translate-x-0");
-
   loginForm.classList.add("opacity-0", "-translate-x-full");
   loginForm.classList.remove("opacity-100", "translate-x-0");
-
   loginForm.classList.add("pointer-events-none");
   registerForm.classList.remove("pointer-events-none");
-
-  // Text color
-  registerTab.classList.remove("text-gray-500");
-  registerTab.classList.add("text-white");
-
-  loginTab.classList.remove("text-white");
-  loginTab.classList.add("text-gray-500");
+  registerTab.classList.replace("text-gray-500", "text-white");
+  loginTab.classList.replace("text-white", "text-gray-500");
 });
 
-// PASSWORD TOGGLE
+// Password Toggle
 document.querySelectorAll(".toggle-password").forEach(icon => {
   icon.addEventListener("click", () => {
     const input = icon.previousElementSibling;
-
     if (input.type === "password") {
       input.type = "text";
       icon.classList.replace("fa-eye", "fa-eye-slash");
@@ -221,6 +653,228 @@ document.querySelectorAll(".toggle-password").forEach(icon => {
     }
   });
 });
+
+// Init flags on load
+document.addEventListener('DOMContentLoaded', () => {
+  ['login', 'register'].forEach(form => {
+    const c = selectedCC[form];
+    document.getElementById(`${form}CCFlag`).className = `fi fi-${c.iso}`;
+    document.getElementById(`${form}CCCode`).textContent = c.code;
+  });
+});
+
+// ─── API BASE ───
+const API_BASE = 'https://stakewiseai-server.onrender.com';
+
+// ─── TOAST HELPER ───
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('appToast');
+  const msgEl = document.getElementById('appToastMsg');
+  const iconEl = document.getElementById('appToastIcon');
+
+  msgEl.textContent = msg;
+  toast.className = toast.className
+    .replace(/bg-\S+/g, '')
+    .replace(/opacity-\S+/g, 'opacity-0');
+
+  if (type === 'success') {
+    toast.classList.add('bg-[#4f8cff]');
+    iconEl.className = 'fas fa-check-circle';
+  } else {
+    toast.classList.add('bg-red-500');
+    iconEl.className = 'fas fa-exclamation-circle';
+  }
+
+  toast.classList.remove('opacity-0');
+  toast.classList.add('opacity-100');
+  setTimeout(() => {
+    toast.classList.remove('opacity-100');
+    toast.classList.add('opacity-0');
+  }, 3500);
+}
+
+// ─── BUTTON LOADING STATE ───
+function setLoading(form, loading) {
+  const btn     = document.getElementById(`${form}Btn`);
+  const btnText = document.getElementById(`${form}BtnText`);
+  const spinner = document.getElementById(`${form}Spinner`);
+  btn.disabled  = loading;
+  btnText.textContent = loading ? (form === 'login' ? 'Signing in...' : 'Registering...') : (form === 'login' ? 'Sign In' : 'Register');
+  spinner.classList.toggle('hidden', !loading);
+  // When done loading, restore disabled state based on checkbox
+  if (!loading) {
+    if (form === 'login') toggleLoginBtn();
+    if (form === 'register') toggleRegisterBtn();
+  }
+}
+
+// ─── CHECKBOX TOGGLE HELPERS ───
+function toggleLoginBtn() {
+  const checked = document.getElementById('loginAgreement').checked;
+  const btn     = document.getElementById('loginBtn');
+  btn.disabled  = !checked;
+  btn.classList.toggle('opacity-50', !checked);
+  btn.classList.toggle('cursor-not-allowed', !checked);
+  btn.classList.toggle('cursor-pointer', checked);
+}
+
+function toggleRegisterBtn() {
+  const checked = document.getElementById('registerAgreement').checked;
+  const btn     = document.getElementById('registerBtn');
+  btn.disabled  = !checked;
+  btn.classList.toggle('opacity-50', !checked);
+  btn.classList.toggle('cursor-not-allowed', !checked);
+  btn.classList.toggle('cursor-pointer', checked);
+}
+
+// ─── BUILD PHONE NUMBER ───
+function buildPhone(form) {
+  const countryCode = selectedCC[form].code;  // e.g. "+234"
+  const number      = document.getElementById(`${form}Phone`).value.trim();
+  // Strip any leading zero or + from the local number to avoid duplication
+  const cleaned     = number.replace(/^0+/, '');
+  return countryCode + cleaned; // => "+2348158052206"
+}
+
+// ─── INLINE FIELD ERROR HELPERS ───
+function showErr(inputId, msg) {
+  const input = document.getElementById(inputId);
+  const errEl = document.getElementById(inputId + 'Err');
+  if (input) {
+    input.style.borderColor = '#ef4444';
+    input.style.outline = 'none';
+  }
+  if (errEl) {
+    errEl.textContent = msg;
+    errEl.classList.remove('hidden');
+  }
+}
+
+function clearErr(inputId) {
+  const input = document.getElementById(inputId);
+  const errEl = document.getElementById(inputId + 'Err');
+  if (input) input.style.borderColor = '';
+  if (errEl) errEl.classList.add('hidden');
+}
+
+function showPhoneErr(form, msg) {
+  const wrap = document.getElementById(`${form}PhoneWrap`);
+  const errEl = document.getElementById(`${form}PhoneErr`);
+  const phoneInput = document.getElementById(`${form}Phone`);
+  if (phoneInput) phoneInput.style.borderColor = '#ef4444';
+  if (errEl) { errEl.textContent = msg; errEl.classList.remove('hidden'); }
+}
+
+// ─── LOGIN HANDLER ───
+async function handleLogin(e) {
+  e.preventDefault();
+
+  const rawPhone    = document.getElementById('loginPhone').value.trim();
+  const password    = document.getElementById('loginPassword').value.trim();
+  let hasError      = false;
+
+  if (!rawPhone) {
+    showPhoneErr('login', 'Phone number is required');
+    hasError = true;
+  }
+  if (!password) {
+    showErr('loginPassword', 'Password is required');
+    hasError = true;
+  }
+  if (hasError) return;
+
+  const phoneNumber = buildPhone('login');
+
+  setLoading('login', true);
+  try {
+    const res  = await fetch(`${API_BASE}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phoneNumber, password })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      if (data.token)              localStorage.setItem('authToken', data.token);
+      if (data.user)               localStorage.setItem('userData', JSON.stringify(data.user));
+      if (data.user?.username)     localStorage.setItem('userName', data.user.username);
+      if (data.user?.phoneNumber)  localStorage.setItem('userPhone', data.user.phoneNumber);
+      showToast('Login successful! Redirecting...', 'success');
+      setTimeout(() => window.location.href = '/index.html', 1200);
+    } else {
+      showToast(data.message || 'Invalid credentials. Please try again.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error. Please check your connection.', 'error');
+  } finally {
+    setLoading('login', false);
+  }
+}
+
+// ─── REGISTER HANDLER ───
+async function handleRegister(e) {
+  e.preventDefault();
+
+  const rawPhone   = document.getElementById('registerPhone').value.trim();
+  const email      = document.getElementById('registerEmail').value.trim();
+  const username   = document.getElementById('registerUsername').value.trim();
+  const password   = document.getElementById('registerPassword').value.trim();
+  const confirmPwd = document.getElementById('registerConfirmPassword').value.trim();
+  const referralCode = document.getElementById('registerReferral').value.trim();
+  const agreed     = document.getElementById('registerAgreement').checked;
+  let hasError     = false;
+
+  if (!rawPhone) {
+    showPhoneErr('register', 'Phone number is required');
+    hasError = true;
+  }
+  if (!email) {
+    showErr('registerEmail', 'Email address is required');
+    hasError = true;
+  }
+  if (!username) {
+    showErr('registerUsername', 'Username is required');
+    hasError = true;
+  }
+  if (!password || password.length < 6) {
+    showErr('registerPassword', password ? 'Password must be at least 6 characters' : 'Password is required');
+    hasError = true;
+  }
+  if (!confirmPwd || password !== confirmPwd) {
+    showErr('registerConfirmPassword', !confirmPwd ? 'Please confirm your password' : 'Passwords do not match');
+    hasError = true;
+  }
+  if (!agreed) {
+    showErr('registerAgreement', 'You must accept the User Agreement');
+    hasError = true;
+  }
+  if (hasError) return;
+
+  const phoneNumber = buildPhone('register');
+  const payload = { username, email, phoneNumber, password };
+  if (referralCode) payload.referralCode = referralCode;
+
+  setLoading('register', true);
+  try {
+    const res  = await fetch(`${API_BASE}/api/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      showToast('Account created! Please log in.', 'success');
+      setTimeout(() => document.getElementById('loginTab').click(), 1500);
+    } else {
+      showToast(data.message || 'Registration failed. Please try again.', 'error');
+    }
+  } catch (err) {
+    showToast('Network error. Please check your connection.', 'error');
+  } finally {
+    setLoading('register', false);
+  }
+}
 </script>
 
 </body>

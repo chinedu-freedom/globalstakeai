@@ -1,286 +1,179 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <title>Transaction History</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: "#f0f9ff",
-                100: "#e0f2fe",
-                200: "#bae6fd",
-                300: "#7dd3fc",
-                400: "#38bdf8",
-                500: "#0ea5e9",
-                600: "#0284c7",
-                700: "#0369a1",
-                800: "#075985",
-                900: "#0c4a6e",
-              },
-              teal: {
-                50: "#f0fdfa",
-                100: "#ccfbf1",
-                200: "#99f6e4",
-                300: "#5eead4",
-                400: "#2dd4bf",
-                500: "#14b8a6",
-                600: "#0d9488",
-                700: "#0f766e",
-                800: "#115e59",
-                900: "#134e4a",
-              },
-            },
-            fontFamily: { poppins: ["Poppins", "sans-serif"] },
-          },
-        },
-      };
-    </script>
-    <style>
-      body {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        min-height: 100vh;
-        padding-bottom: 80px;
-        display: none;
-      }
-      .card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .card:hover {
-        transform: translateY(-5px);
-      }
-      .status-badge {
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-      }
-      .status-pending {
-        background-color: #fef3c7;
-        color: #92400e;
-      }
-      .status-success {
-        background-color: #d1fae5;
-        color: #065f46;
-      }
-      .status-approved {
-        background-color: #d1fae5;
-        color: #065f46;
-      }
-      .status-failed {
-        background-color: #fee2e2;
-        color: #b91c1c;
-      }
-      .transaction-card {
-        border-left: 4px solid;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-      }
-      .loading-spinner {
-        border: 3px solid #f9f8f8;
-        border-top: 3px solid #0ea5e9;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto;
-      }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-  </head>
-  <body class="font-poppins">
-    <div class="lg:p-4 max-w-4xl mx-auto">
-      <div id="header" class="sticky top-0 z-[1000]"></div>
-      <div class="px-4 lg:px-0 mt-8">
-        <!-- Withdrawals Section -->
-        <div class="bg-white rounded-xl shadow-lg card overflow-hidden mb-6">
-          <div
-            class="p-6 border-b border-gray-200 flex justify-between items-center"
-          >
-            <h3 class="text-lg font-semibold text-gray-800">
-              Recent Withdrawals
-            </h3>
-          </div>
-          <div class="p-4 md:p-6 space-y-4" id="withdrawals">
-            <div class="col-span-full text-center py-4">
-              <div class="loading-spinner mb-4"></div>
-              <p>Loading withdrawal history...</p>
-            </div>
-          </div>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Transaction History - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f0f4f8; 
+      padding-bottom: 70px; 
+    }
 
-        <!-- Deposits Section -->
-        <div class="bg-white rounded-xl shadow-lg card overflow-hidden mb-6">
-          <div
-            class="p-6 border-b border-gray-200 flex justify-between items-center"
-          >
-            <h3 class="text-lg font-semibold text-gray-800">Recent Deposits</h3>
-          </div>
-          <div class="p-4 md:p-6 space-y-4" id="deposits">
-            <div class="col-span-full text-center py-4">
-              <div class="loading-spinner mb-4"></div>
-              <p>Loading deposits history...</p>
-            </div>
-          </div>
-        </div>
+    .header-bg {
+      background: linear-gradient(90deg, #1fa2d0, #167bee);
+    }
+    
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+
+    .tab-item {
+      position: relative;
+      color: #9ca3af;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 14px 0;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .tab-item.active {
+      color: #1fa2d0;
+    }
+
+    .tab-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #1fa2d0;
+    }
+
+    /* Hide scrollbar */
+    .overflow-y-auto::-webkit-scrollbar {
+      display: none;
+    }
+    .overflow-y-auto {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+
+  <script src="./translator.js"></script>
+</head>
+<body class="flex flex-col min-h-screen items-center">
+
+  <div class="w-full max-w-md bg-[#eaf0f6] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+
+    <!-- HEADER -->
+    <div class="header-bg text-white px-5 pt-5 pb-5 sticky top-0 z-40">
+      <div class="flex items-center relative">
+        <a href="javascript:history.back()" class="absolute left-0 p-2 -ml-2 text-white">
+          <i class="fas fa-chevron-left text-[15px]"></i>
+        </a>
+        <h1 class="text-base font-bold w-full text-center tracking-wide">Transactions</h1>
       </div>
-      <div id="footer" class="fixed w-full md:sticky bottom-0 z-[1000]"></div>
     </div>
 
-    <script type="module">
-      import { authFetch, checkAuth } from "./auth.js";
-      import { protectPage } from "./protect.js";
+    <!-- TABS ROW -->
+    <div class="bg-white flex items-center justify-around sticky top-[60px] z-30 shadow-sm">
+      <div class="flex-1 text-center tab-item active" onclick="switchTab(this, 'all')">All</div>
+      <div class="flex-1 text-center tab-item" onclick="switchTab(this, 'deposits')">Deposits</div>
+      <div class="flex-1 text-center tab-item" onclick="switchTab(this, 'withdrawals')">Withdrawals</div>
+    </div>
 
-      checkAuth().then((user) => {
-        if (user) {
-          document.body.style.display = "block"; // reveal page
-          protectPage(); // safe to load header/footer
-          fetchUserDetails();
-        } else {
-          window.location.href = "/login.html";
-        }
-      });
-
-      // Fetch user details and update header
-      async function fetchUserDetails() {
-        try {
-          const res = await authFetch(
-            "https://neo-invest-server.onrender.com/api/users/me",
-            { credentials: "include" }
-          );
-          if (!res.ok) throw new Error("Failed to fetch user details");
-          const userData = await res.json();
-          // Update header if function is available
-          console.log(userData);
-          if (typeof window.updateHeaderUI === "function") {
-            console.log(userData);
-            updateHeaderUI(userData);
-          }
-        } catch (err) {
-          console.error("Error fetching user details:", err);
-        }
-      }
-
-      // Utility to format amounts
-      const formatCurrency = (amt) => `₦${Number(amt).toLocaleString()}`;
-      const formatDate = (dt) => new Date(dt).toLocaleString();
-
-      // Fetch both withdrawals and deposits
-      async function fetchTransactions() {
-        try {
-          const [withdrawalsRes, depositsRes] = await Promise.all([
-            authFetch(
-              "https://neo-invest-server.onrender.com/api/withdrawals",
-              { credentials: "include" }
-            ),
-            authFetch("https://neo-invest-server.onrender.com/api/deposits", {
-              credentials: "include",
-            }),
-          ]);
-
-          const withdrawalsData = await withdrawalsRes.json();
-          const depositsData = await depositsRes.json();
-
-          renderWithdrawals(withdrawalsData.data.withdrawals.slice(0,5));
-          renderDeposits(depositsData.data.slice(0,5));
-        } catch (err) {
-          console.error("Error fetching transactions:", err);
-        }
-      }
-
-      // Render withdrawals
-      function renderWithdrawals(withdrawals) {
-        const container = document.getElementById("withdrawals");
-        if (withdrawals.length === 0) {
-          container.innerHTML =
-            '<p class="text-gray-500 text-center">No withdrawals yet.</p>';
-          return;
-        }
-        container.innerHTML = "";
-        withdrawals.forEach((item) => {
-          const statusClass =
-            item.status === "pending"
-              ? "status-pending"
-              : item.status === "successful"
-              ? "status-success"
-              : "status-failed";
-          const card = document.createElement("div");
-          card.className = `transaction-card bg-white rounded-lg p-4 flex items-center justify-between border-l-4 ${statusClass}`;
-          card.innerHTML = `
-      <div>
-        <p class="font-semibold">${item.balanceType}</p>
-        <p class="text-sm text-gray-500">${formatDate(item.withdrawnAt)}</p>
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 flex flex-col items-center justify-center p-6 text-center">
+      <div id="emptyState" class="flex flex-col items-center">
+        <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-6">
+          <!-- Clipboard Icon from screenshot -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+          </svg>
+        </div>
+        <h2 class="text-sm font-bold text-gray-800 mb-2 tracking-wide">No Transactions</h2>
+        <p class="text-[11px] text-gray-400 max-w-[200px] leading-relaxed">
+          You have no transactions yet. Make a deposit to get started.
+        </p>
       </div>
-      <div class="text-right">
-        <p class="font-bold text-lg">${formatCurrency(item.amount)}</p>
-        <span class="status-badge ${statusClass}">${item.status}</span>
-      </div>
-    `;
-          container.appendChild(card);
-        });
-      }
+    </div>
 
-      // Render deposits
-      function renderDeposits(deposits) {
-        const container = document.getElementById("deposits");
-        if (deposits.length === 0) {
-          container.innerHTML =
-            '<p class="text-gray-500 text-center">No deposits yet.</p>';
-          return;
-        }
-        container.innerHTML = "";
-        deposits.forEach((item) => {
-          const statusClass =
-            item.status === "pending"
-              ? "status-pending"
-              : item.status === "successful"
-              ? "status-success"
-              : "status-failed";
-          const card = document.createElement("div");
-          card.className = `transaction-card bg-white rounded-lg p-4 flex items-center justify-between border-l-4  ${statusClass}`;
-          card.innerHTML = `
-      <div class="flex items-center gap-3">
-        ${
-          item.proofOfPayment?.asset?.url
-            ? `<img src="${item.proofOfPayment.asset.url}" alt="Proof" class="w-12 h-12 object-cover rounded"/>`
-            : ""
-        }
-        <div>
-          <p class="font-semibold">${item.balanceType}</p>
-          <p class="text-sm text-gray-500">${formatDate(item.fundedAt)}</p>
-          </div>
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
       </div>
-      <div class="text-right">
-        <p class="font-bold text-lg">${formatCurrency(item.amount)}</p>
-        <span class="status-badge ${statusClass}">${item.status}</span>
-      </div>
-    `;
-          container.appendChild(card);
-        });
-      }
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 
-      // Initial fetch
-      fetchTransactions();
-    </script>
-  </body>
+  </div>
+  <script>
+    function switchTab(el, type) {
+      document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
+      el.classList.add('active');
+      // Logic for filtering would go here
+    }
+  </script>
+
+</body>
 </html>

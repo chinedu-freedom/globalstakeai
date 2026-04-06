@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <title>My Profile - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f0f4f8; 
+      padding-bottom: 70px; 
+    }
+
+    .header-bg {
+      background: linear-gradient(90deg, #1fa2d0, #167bee);
+    }
+    
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+  </style>
+
+  <script src="./translator.js"></script>
+</head>
+<body class="flex flex-col min-h-screen items-center">
+
+  <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+
+    <!-- HEADER -->
+    <div class="header-bg text-white px-5 pt-5 pb-5 sticky top-0 z-40">
+      <div class="flex items-center relative">
+        <a href="javascript:history.back()" class="absolute left-0 p-2 -ml-2 text-white">
+          <i class="fas fa-chevron-left text-[15px]"></i>
+        </a>
+        <h1 class="text-base font-bold w-full text-center">Account Details</h1>
+      </div>
+    </div>
+
+    <!-- AVATAR HEADER AREA -->
+    <div class="flex flex-col items-center mt-8 mb-6 relative">
+      <div class="relative w-24 h-24 rounded-full border-4 border-white shadow-md overflow-hidden bg-gray-200">
+        <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="Profile" class="w-full h-full object-cover" id="profilePageAvatar">
+      </div>
+      <h2 class="mt-3 text-lg font-bold text-gray-800 tracking-wide" id="profileUsername">Chinedu22</h2>
+    </div>
+
+    <!-- DETAILS CARD -->
+    <div class="px-4">
+      <div class="bg-white rounded-[20px] shadow-sm border border-gray-50 flex flex-col overflow-hidden">
+        
+        <!-- Row 1: Email -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
+              <i class="far fa-envelope text-[13px]"></i>
+            </div>
+            <span class="text-xs text-gray-400 font-medium">Email</span>
+          </div>
+          <span class="text-[11px] font-semibold text-gray-800 tracking-wide" id="profileEmail">chinedufreedom10@gmail.com</span>
+        </div>
+
+        <!-- Row 2: Country -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
+              <i class="fas fa-globe text-[13px]"></i>
+            </div>
+            <span class="text-xs text-gray-400 font-medium">Country</span>
+          </div>
+          <span class="text-[11px] font-semibold text-gray-800 tracking-wide">+234</span>
+        </div>
+
+        <!-- Row 3: Phone -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
+              <i class="fas fa-phone-alt text-[13px]"></i>
+            </div>
+            <span class="text-xs text-gray-400 font-medium">Phone</span>
+          </div>
+          <span class="text-[11px] font-semibold text-gray-800 tracking-wide" id="profilePhone">+234 08158051119</span>
+        </div>
+
+        <!-- Row 4: Username -->
+        <div class="flex items-center justify-between p-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
+              <i class="far fa-user text-[13px]"></i>
+            </div>
+            <span class="text-xs text-gray-400 font-medium">Username</span>
+          </div>
+          <span class="text-[11px] font-semibold text-gray-800 tracking-wide" id="profileUsernameRow">Chinedu22</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- QUICK LINKS MENU (From Image) -->
+    <div class="px-4 mt-6 mb-8">
+      <div class="bg-white rounded-[24px] shadow-sm border border-gray-50 flex flex-col overflow-hidden">
+        
+        <!-- Transaction History -->
+        <a href="/history.html" class="flex items-center justify-between p-5 border-b border-gray-50 hover:bg-gray-50 transition">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
+              <i class="fas fa-file-invoice-dollar text-sm"></i>
+            </div>
+            <span class="text-[13px] font-medium text-gray-700">Transaction History</span>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </a>
+
+        <!-- Active Staking -->
+        <a href="/plans.html" class="flex items-center justify-between p-5 border-b border-gray-50 hover:bg-gray-50 transition">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
+              <i class="fas fa-chart-line text-sm"></i>
+            </div>
+            <span class="text-[13px] font-medium text-gray-700">Active Staking</span>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </a>
+
+        <!-- My Wallets -->
+        <a href="/wallets.html" class="flex items-center justify-between p-5 hover:bg-gray-50 transition">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
+              <i class="far fa-credit-card text-sm"></i>
+            </div>
+            <span class="text-[13px] font-medium text-gray-700">My Wallets</span>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </a>
+
+      </div>
+    </div>
+
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Hydrate data from local storage if available from login
+        const phone = localStorage.getItem("userPhone");
+        const user = localStorage.getItem("userName");
+        if(phone) document.getElementById("profilePhone").innerText = "+234 " + phone;
+        if(user) {
+            document.getElementById("profileUsername").innerText = user;
+            document.getElementById("profileUsernameRow").innerText = user;
+        }
+
+        // Sync Avatar
+        const savedAvatar = localStorage.getItem("userAvatar");
+        if(savedAvatar) {
+            document.getElementById("profilePageAvatar").src = savedAvatar;
+        }
+    });
+  </script>
+</body>
+</html>

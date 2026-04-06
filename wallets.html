@@ -1,0 +1,684 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <title>My Wallets - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f0f4f8; 
+      padding-bottom: 70px; 
+    }
+
+    .header-bg {
+      background: linear-gradient(90deg, #1fa2d0, #167bee);
+    }
+    
+    .btn-gradient {
+      background: linear-gradient(90deg, #1fa2d0, #167bee);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+
+    /* Modal Animation */
+    .modal-enter {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    .modal-enter-active {
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 300ms, transform 300ms;
+    }
+
+    /* Hide Scrollbar */
+    .overflow-y-auto::-webkit-scrollbar {
+      display: none;
+    }
+    .overflow-y-auto {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+
+  <script src="./translator.js"></script>
+</head>
+<body class="flex flex-col min-h-screen items-center">
+
+  <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+
+    <!-- HEADER -->
+    <div class="header-bg text-white px-5 pt-5 pb-5 sticky top-0 z-40">
+      <div class="flex items-center relative">
+        <a href="javascript:history.back()" class="absolute left-0 p-2 -ml-2 text-white">
+          <i class="fas fa-chevron-left text-[15px]"></i>
+        </a>
+        <h1 class="text-base font-bold w-full text-center tracking-wide">My Wallets</h1>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="px-5 pt-6 flex-1 flex flex-col">
+      
+      <!-- Add Wallet Button -->
+      <button onclick="toggleAddModal(true)" class="w-full btn-gradient text-white font-bold py-4 rounded-2xl text-sm transition shadow-md flex items-center justify-center gap-2 mb-10 active:scale-[0.98]">
+        <i class="fas fa-plus text-xs"></i>
+        <span>Add Wallet</span>
+      </button>
+
+      <!-- EMPTY STATE -->
+      <div id="emptyState" class="hidden flex-1 flex flex-col items-center justify-center text-center -mt-20">
+        <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-6">
+          <i class="far fa-credit-card text-3xl text-gray-300"></i>
+        </div>
+        <h2 class="text-sm font-bold text-gray-800 mb-2 tracking-wide">No wallets saved</h2>
+        <p class="text-[11px] text-gray-400 max-w-[200px] leading-relaxed">
+          Add your first wallet to get started
+        </p>
+      </div>
+
+      <!-- WALLETS LIST CONTAINER -->
+      <div id="walletsList" class="hidden space-y-4 pb-10">
+        <!-- Wallet cards will be injected here -->
+      </div>
+
+    </div>
+
+    <!-- ADD WALLET MODAL -->
+    <div id="addModal" class="fixed inset-0 z-[60] flex flex-col justify-center hidden px-4">
+      <!-- Dark overlay -->
+      <div id="modalOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" onclick="toggleAddModal(false)"></div>
+      
+      <!-- Modal Content (Centered) -->
+      <div class="relative w-full max-w-sm mx-auto bg-white rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out px-6 py-8" id="addModalContent">
+        
+        <h3 class="text-base font-bold text-gray-800 text-center mb-6">Add Wallet</h3>
+
+        <div class="space-y-5">
+          <!-- Select Crypto -->
+          <div class="relative">
+            <label class="block text-[10px] font-semibold text-gray-500 mb-1.5 ml-1">Select Cryptocurrency</label>
+            <button type="button" id="coinTrigger" onclick="toggleCurrencyModal(true)" class="w-full flex items-center justify-between bg-[#f8fafc] border border-gray-100 text-gray-700 text-xs font-medium rounded-xl py-4 px-4 focus:outline-none transition cursor-pointer">
+              <div class="flex items-center gap-2">
+                <img id="selectedCoinImg" src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-4 h-4 hidden" alt="Coin">
+                <span id="selectedCoinText">Choose a cryptocurrency</span>
+              </div>
+              <i class="fas fa-chevron-down text-[10px] text-gray-400"></i>
+            </button>
+            <p id="coinError" class="text-[9px] text-red-500 mt-1 ml-1 hidden">Please select a currency</p>
+          </div>
+
+          <!-- Wallet Address -->
+          <div>
+            <label class="block text-[10px] font-semibold text-gray-500 mb-1.5 ml-1">Wallet Address</label>
+            <input type="text" id="walletAddressInput" class="w-full bg-[#f8fafc] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter wallet address">
+            <p id="addressError" class="text-[9px] text-red-500 mt-1 ml-1 hidden">Please enter a valid wallet address</p>
+          </div>
+
+          <!-- Label -->
+          <div>
+            <label class="block text-[10px] font-semibold text-gray-500 mb-1.5 ml-1">Label (Optional)</label>
+            <input type="text" id="walletLabelInput" class="w-full bg-[#f8fafc] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="e.g. My main wallet">
+          </div>
+
+          <div class="flex flex-col gap-3 pt-2">
+            <button onclick="addWalletSubmit()" class="w-full btn-gradient active:scale-[0.98] text-white font-bold py-4 rounded-xl text-xs transition shadow-sm">
+              Add Wallet
+            </button>
+            <button onclick="toggleAddModal(false)" class="w-full text-gray-400 font-semibold py-2 text-xs transition hover:text-gray-600">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CURRENCY SELECTOR MODAL -->
+    <div id="currencyModal" class="fixed inset-0 z-[70] flex flex-col justify-center hidden px-4">
+      <!-- Dark overlay -->
+      <div id="currencyOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" onclick="toggleCurrencyModal(false)"></div>
+      
+      <!-- Modal Content (Centered) -->
+      <div class="relative w-full max-w-sm mx-auto bg-white rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out" id="currencyModalContent">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center px-6 py-5 border-b border-gray-50">
+          <h3 class="text-sm font-bold text-gray-800">Select Currency</h3>
+          <button onclick="toggleCurrencyModal(false)" class="text-gray-400 hover:text-gray-600 transition p-1">
+            <i class="fas fa-times text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Scrollable List -->
+        <div class="px-6 py-5 space-y-3 max-h-[60vh] overflow-y-auto">
+          
+          <!-- USDT TRC20 -->
+          <button onclick="selectCurrency('USDT (TRC20)', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-6 h-6" alt="USDT">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">USDT</p>
+                <p class="text-[10px] text-gray-400 font-medium">TRC20</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- USDT BEP20 -->
+          <button onclick="selectCurrency('USDT (BEP20)', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-6 h-6" alt="USDT">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">USDT</p>
+                <p class="text-[10px] text-gray-400 font-medium">BEP20</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- BTC -->
+          <button onclick="selectCurrency('BTC (Bitcoin)', 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-6 h-6" alt="BTC">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">BTC</p>
+                <p class="text-[10px] text-gray-400 font-medium">Bitcoin</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- ETH -->
+          <button onclick="selectCurrency('ETH (Ethereum)', 'https://assets.coingecko.com/coins/images/279/small/ethereum.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" class="w-6 h-6" alt="ETH">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">ETH</p>
+                <p class="text-[10px] text-gray-400 font-medium">Ethereum</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- BNB -->
+          <button onclick="selectCurrency('BNB (Smart Chain)', 'https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png" class="w-6 h-6" alt="BNB">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">BNB</p>
+                <p class="text-[10px] text-gray-400 font-medium">BEP20</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- SOL -->
+          <button onclick="selectCurrency('SOL (Solana)', 'https://assets.coingecko.com/coins/images/4128/small/solana.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/4128/small/solana.png" class="w-6 h-6" alt="SOL">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">SOL</p>
+                <p class="text-[10px] text-gray-400 font-medium">Solana</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- XRP -->
+          <button onclick="selectCurrency('XRP (Ripple)', 'https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png" class="w-6 h-6" alt="XRP">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">XRP</p>
+                <p class="text-[10px] text-gray-400 font-medium">Ripple</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- ADA -->
+          <button onclick="selectCurrency('ADA (Cardano)', 'https://assets.coingecko.com/coins/images/975/small/cardano.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/975/small/cardano.png" class="w-6 h-6" alt="ADA">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">ADA</p>
+                <p class="text-[10px] text-gray-400 font-medium">Cardano</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- DOGE -->
+          <button onclick="selectCurrency('DOGE (Dogecoin)', 'https://assets.coingecko.com/coins/images/5/small/dogecoin.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/5/small/dogecoin.png" class="w-6 h-6" alt="DOGE">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">DOGE</p>
+                <p class="text-[10px] text-gray-400 font-medium">Dogecoin</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- TRX -->
+          <button onclick="selectCurrency('TRX (Tron)', 'https://assets.coingecko.com/coins/images/1094/small/tron-logo.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/1094/small/tron-logo.png" class="w-6 h-6" alt="TRX">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">TRX</p>
+                <p class="text-[10px] text-gray-400 font-medium">Tron</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- DOT -->
+          <button onclick="selectCurrency('DOT (Polkadot)', 'https://assets.coingecko.com/coins/images/12171/small/polkadot.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/12171/small/polkadot.png" class="w-6 h-6" alt="DOT">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">DOT</p>
+                <p class="text-[10px] text-gray-400 font-medium">Polkadot</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- MATIC -->
+          <button onclick="selectCurrency('MATIC (Polygon)', 'https://assets.coingecko.com/coins/images/4713/small/matic_polygon.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/4713/small/matic_polygon.png" class="w-6 h-6" alt="MATIC">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">MATIC</p>
+                <p class="text-[10px] text-gray-400 font-medium">Polygon</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- DAI -->
+          <button onclick="selectCurrency('DAI (Stablecoin)', 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png" class="w-6 h-6" alt="DAI">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">DAI</p>
+                <p class="text-[10px] text-gray-400 font-medium">Stablecoin</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- LTC -->
+          <button onclick="selectCurrency('LTC (Litecoin)', 'https://assets.coingecko.com/coins/images/2/small/litecoin.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/2/small/litecoin.png" class="w-6 h-6" alt="LTC">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">LTC</p>
+                <p class="text-[10px] text-gray-400 font-medium">Litecoin</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- SHIB -->
+          <button onclick="selectCurrency('SHIB (Shiba Inu)', 'https://assets.coingecko.com/coins/images/11939/small/shiba.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/11939/small/shiba.png" class="w-6 h-6" alt="SHIB">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">SHIB</p>
+                <p class="text-[10px] text-gray-400 font-medium">Shiba Inu</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- BCH -->
+          <button onclick="selectCurrency('BCH (Bitcoin Cash)', 'https://assets.coingecko.com/coins/images/780/small/bitcoin-cash.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/780/small/bitcoin-cash.png" class="w-6 h-6" alt="BCH">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">BCH</p>
+                <p class="text-[10px] text-gray-400 font-medium">Bitcoin Cash</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- AVAX -->
+          <button onclick="selectCurrency('AVAX (Avalanche)', 'https://assets.coingecko.com/coins/images/12559/small/Avalanche_Circle_RedWhite_Trans.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/12559/small/Avalanche_Circle_RedWhite_Trans.png" class="w-6 h-6" alt="AVAX">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">AVAX</p>
+                <p class="text-[10px] text-gray-400 font-medium">Avalanche</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- LINK -->
+          <button onclick="selectCurrency('LINK (Chainlink)', 'https://assets.coingecko.com/coins/images/877/small/chainlink-new-logo.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/877/small/chainlink-new-logo.png" class="w-6 h-6" alt="LINK">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">LINK</p>
+                <p class="text-[10px] text-gray-400 font-medium">Chainlink</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- XLM -->
+          <button onclick="selectCurrency('XLM (Stellar)', 'https://assets.coingecko.com/coins/images/100/small/stellar.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+            <div class="flex items-center gap-3">
+              <img src="https://assets.coingecko.com/coins/images/100/small/stellar.png" class="w-6 h-6" alt="XLM">
+              <div class="text-left">
+                <p class="text-xs font-bold text-gray-800">XLM</p>
+                <p class="text-[10px] text-gray-400 font-medium">Stellar</p>
+              </div>
+            </div>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div id="deleteModal" class="fixed inset-0 z-[80] flex flex-col justify-center hidden px-8">
+      <!-- Dark overlay -->
+      <div id="deleteOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" onclick="toggleDeleteModal(false)"></div>
+      
+      <!-- Modal Content (Centered) -->
+      <div class="relative w-full max-w-[280px] mx-auto bg-white rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out px-6 py-8 text-center" id="deleteModalContent">
+        <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-trash-alt text-red-500 text-xl"></i>
+        </div>
+        <h3 class="text-sm font-bold text-gray-800 mb-2">Delete Wallet?</h3>
+        <p class="text-[10px] text-gray-400 leading-relaxed mb-6">
+          Are you sure you want to remove <span id="deleteWalletName" class="font-bold text-gray-600">this wallet</span>? This action cannot be undone.
+        </p>
+
+        <div class="flex flex-col gap-2">
+          <button onclick="confirmDelete()" class="w-full bg-red-500 hover:bg-red-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-xl text-[11px] transition shadow-sm">
+            Delete Wallet
+          </button>
+          <button onclick="toggleDeleteModal(false)" class="w-full text-gray-400 font-semibold py-2 text-[11px] transition hover:text-gray-600">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+  </div>
+  <script>
+    function toggleAddModal(show) {
+      const modal = document.getElementById('addModal');
+      const modalContent = document.getElementById('addModalContent');
+      const overlay = document.getElementById('modalOverlay');
+
+      if(show) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          overlay.classList.remove('opacity-0');
+          overlay.classList.add('opacity-100');
+          modalContent.classList.remove('scale-95', 'opacity-0');
+          modalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+      } else {
+        overlay.classList.remove('opacity-100');
+        overlay.classList.add('opacity-0');
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    function toggleCurrencyModal(show) {
+      const modal = document.getElementById('currencyModal');
+      const modalContent = document.getElementById('currencyModalContent');
+      const overlay = document.getElementById('currencyOverlay');
+
+      if(show) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          overlay.classList.remove('opacity-0');
+          overlay.classList.add('opacity-100');
+          modalContent.classList.remove('scale-95', 'opacity-0');
+          modalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+      } else {
+        overlay.classList.remove('opacity-100');
+        overlay.classList.add('opacity-0');
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    function selectCurrency(name, imgUrl) {
+      const textEl = document.getElementById('selectedCoinText');
+      const imgEl = document.getElementById('selectedCoinImg');
+      
+      textEl.innerText = name;
+      imgEl.src = imgUrl;
+      imgEl.classList.remove('hidden');
+      
+      toggleCurrencyModal(false);
+    }
+
+    function addWalletSubmit() {
+      const coin = document.getElementById('selectedCoinText').innerText;
+      const coinImg = document.getElementById('selectedCoinImg').src;
+      const address = document.getElementById('walletAddressInput').value.trim();
+      const label = document.getElementById('walletLabelInput').value.trim();
+
+      const coinErr = document.getElementById('coinError');
+      const addrErr = document.getElementById('addressError');
+      const trigger = document.getElementById('coinTrigger');
+      const addrInp = document.getElementById('walletAddressInput');
+
+      // RESET ERRORS
+      coinErr.classList.add('hidden');
+      addrErr.classList.add('hidden');
+      trigger.classList.remove('border-red-400');
+      addrInp.classList.remove('border-red-400');
+
+      let isValid = true;
+
+      // VALIDATION
+      if (coin === 'Choose a cryptocurrency') {
+        coinErr.classList.remove('hidden');
+        trigger.classList.add('border-red-400');
+        isValid = false;
+      }
+      if (address.length < 10) {
+        addrErr.classList.remove('hidden');
+        addrInp.classList.add('border-red-400');
+        isValid = false;
+      }
+
+      if(!isValid) return;
+
+      // SAVE LOGIC
+      const newWallet = {
+        coin: coin,
+        img: coinImg,
+        address: address,
+        label: label || 'My Wallet', // Fallback if optional label is empty
+        id: Date.now()
+      };
+
+      let wallets = JSON.parse(localStorage.getItem('savedWallets') || '[]');
+      wallets.push(newWallet);
+      localStorage.setItem('savedWallets', JSON.stringify(wallets));
+
+      // UI UPDATES
+      renderWallets();
+      toggleAddModal(false);
+      
+      // Reset inputs
+      document.getElementById('walletAddressInput').value = '';
+      document.getElementById('walletLabelInput').value = '';
+      document.getElementById('selectedCoinText').innerText = 'Choose a cryptocurrency';
+      document.getElementById('selectedCoinImg').classList.add('hidden');
+    }
+
+    function renderWallets() {
+      const wallets = JSON.parse(localStorage.getItem('savedWallets') || '[]');
+      const listContainer = document.getElementById('walletsList');
+      const emptyState = document.getElementById('emptyState');
+
+      if (wallets.length === 0) {
+        emptyState.classList.remove('hidden');
+        listContainer.classList.add('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        listContainer.classList.remove('hidden');
+        listContainer.innerHTML = '';
+
+        wallets.forEach(w => {
+          const card = `
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-50 flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center shrink-0">
+                  <img src="${w.img}" class="w-6 h-6" alt="Coin">
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-gray-800">${w.label}</h3>
+                  <p class="text-[10px] text-gray-400 mt-0.5 truncate max-w-[180px] font-medium">${w.address}</p>
+                </div>
+              </div>
+              <div class="flex flex-col items-end gap-1">
+                <span class="text-[9px] font-bold text-[#167bee] bg-[#e8efff] px-2 py-0.5 rounded-full">${w.coin.split(' ')[0]}</span>
+                <button onclick="deleteWallet(${w.id})" class="text-gray-300 hover:text-red-400 transition ml-2">
+                  <i class="fas fa-trash-alt text-[11px]"></i>
+                </button>
+              </div>
+            </div>
+          `;
+          listContainer.innerHTML += card;
+        });
+      }
+    }
+
+    let walletToDeleteId = null;
+
+    function deleteWallet(id) {
+      const wallets = JSON.parse(localStorage.getItem('savedWallets') || '[]');
+      const wallet = wallets.find(w => w.id === id);
+      if(!wallet) return;
+
+      walletToDeleteId = id;
+      document.getElementById('deleteWalletName').innerText = `"${wallet.label}"`;
+      toggleDeleteModal(true);
+    }
+
+    function toggleDeleteModal(show) {
+      const modal = document.getElementById('deleteModal');
+      const modalContent = document.getElementById('deleteModalContent');
+      const overlay = document.getElementById('deleteOverlay');
+
+      if(show) {
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          overlay.classList.remove('opacity-0');
+          overlay.classList.add('opacity-100');
+          modalContent.classList.remove('scale-95', 'opacity-0');
+          modalContent.classList.add('scale-100', 'opacity-100');
+        }, 10);
+      } else {
+        overlay.classList.remove('opacity-100');
+        overlay.classList.add('opacity-0');
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    function confirmDelete() {
+      if(!walletToDeleteId) return;
+      let wallets = JSON.parse(localStorage.getItem('savedWallets') || '[]');
+      wallets = wallets.filter(w => w.id !== walletToDeleteId);
+      localStorage.setItem('savedWallets', JSON.stringify(wallets));
+      
+      toggleDeleteModal(false);
+      renderWallets();
+      walletToDeleteId = null;
+    }
+
+    // INITIALIZE ON LOAD
+    document.addEventListener('DOMContentLoaded', () => {
+      renderWallets();
+    });
+  </script>
+</body>
+</html>  

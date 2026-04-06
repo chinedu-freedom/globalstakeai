@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - GlobalStakeAi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; padding-bottom: 80px; }
+        .gradient-top { background: linear-gradient(135deg, #14b8a6, #2563eb); }
+        .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+        .nav-item.active { color: #4f8cff; }
+        .nav-item { color: #94a3b8; transition: color 0.3s ease; }
+        .stat-card { background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); }
+        .feature-card { background: white; border: 1px solid #f1f5f9; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: all 0.3s ease; }
+        .feature-card:hover { transform: translateY(-2px); border-color: #4f8cff; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <div class="w-full max-w-md bg-white min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+        
+        <!-- HEADER STATS (SCROLLABLE) -->
+        <div class="gradient-top text-white px-5 pt-8 pb-10 rounded-b-[40px] shadow-lg w-full z-20">
+            <div class="flex items-center gap-4 mb-4">
+                <a href="index.html" class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition shadow-sm">
+                    <i class="fas fa-chevron-left text-sm"></i>
+                </a>
+                <h1 class="text-xl font-bold tracking-tight">Built for Endurance</h1>
+            </div>
+            
+            <p class="text-[10px] text-white/90 text-center mb-5 font-medium leading-relaxed max-w-[85%] mx-auto">
+                Cloud mining infrastructure designed for long-term performance and sustainable digital asset growth.
+            </p>
+
+            <div class="grid grid-cols-3 gap-2">
+                <div class="stat-card p-3 rounded-2xl flex flex-col items-center text-center">
+                    <p class="text-base font-bold">10K+</p>
+                    <p class="text-[7px] uppercase tracking-widest text-white/70">Active Users</p>
+                </div>
+                <div class="stat-card p-3 rounded-2xl flex flex-col items-center text-center">
+                    <p class="text-base font-bold">99.9%</p>
+                    <p class="text-[7px] uppercase tracking-widest text-white/70">Uptime</p>
+                </div>
+                <div class="stat-card p-3 rounded-2xl flex flex-col items-center text-center">
+                    <p class="text-base font-bold">24/7</p>
+                    <p class="text-[7px] uppercase tracking-widest text-white/70">Support</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCROLLABLE CONTENT -->
+        <div class="px-4 mt-6 space-y-8 flex-grow pb-12 overflow-y-auto overflow-x-hidden">
+            
+            <!-- ABOUT OVERVIEW -->
+            <div class="bg-white rounded-3xl p-6 feature-card text-center relative overflow-hidden">
+                <div class="w-16 h-16 rounded-3xl bg-teal-50 flex items-center justify-center text-teal-600 mx-auto mb-4 shadow-sm">
+                    <i class="fas fa-microchip text-2xl"></i>
+                </div>
+                <h2 class="text-lg font-bold text-slate-800 mb-3">About GlobalStakeAi</h2>
+                <p class="text-[11px] text-slate-500 leading-relaxed font-medium">
+                    GlobalStakeAi is a leading cloud mining platform that provides users with access to professional-grade mining infrastructure without the complexity of hardware management. Our platform combines cutting-edge technology with user-friendly interfaces to make cryptocurrency mining accessible to everyone.
+                </p>
+            </div>
+
+            <!-- WHAT WE DO -->
+            <div class="space-y-4">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">What We Do</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center text-cyan-600 mb-3 shadow-sm group-hover:scale-110 transition">
+                            <i class="fas fa-cloud text-sm"></i>
+                        </div>
+                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">Cloud Mining</p>
+                        <p class="text-[9px] text-slate-400">Powerful mining hardware without the maintenance.</p>
+                    </div>
+                    <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-3 shadow-sm group-hover:scale-110 transition">
+                            <i class="fas fa-user-shield text-sm"></i>
+                        </div>
+                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">Secure Accounts</p>
+                        <p class="text-[9px] text-slate-400">Bank-grade security protocols protected at all times.</p>
+                    </div>
+                    <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-3 shadow-sm group-hover:scale-110 transition">
+                            <i class="fas fa-chart-pie text-sm"></i>
+                        </div>
+                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">Daily Allocation</p>
+                        <p class="text-[9px] text-slate-400">Smart algorithms distribute rewards to your account.</p>
+                    </div>
+                    <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 mb-3 shadow-sm group-hover:scale-110 transition">
+                            <i class="fas fa-coins text-sm"></i>
+                        </div>
+                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">Wide Assets</p>
+                        <p class="text-[9px] text-slate-400">Mine Bitcoin, Ethereum and other popular assets.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOW IT WORKS (REWORKED AS CARDS) -->
+            <div class="bg-slate-900 rounded-[32px] p-8 text-white relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                <h3 class="text-base font-bold mb-6 text-center">How It Works</h3>
+                <div class="space-y-6">
+                    <div class="flex gap-4 group">
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">1</div>
+                        <div>
+                            <p class="text-xs font-bold mb-1">Create Account</p>
+                            <p class="text-[10px] text-white/50 leading-relaxed">Sign up for a free account and complete the verification process.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 group">
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">2</div>
+                        <div>
+                            <p class="text-xs font-bold mb-1">Choose a Plan</p>
+                            <p class="text-[10px] text-white/50 leading-relaxed">Select a mining plan that fits your investment goals and budget.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 group">
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">3</div>
+                        <div>
+                            <p class="text-xs font-bold mb-1">Start Earning</p>
+                            <p class="text-[10px] text-white/50 leading-relaxed">Watch your earnings grow as our infrastructure works for you 24/7.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WHY SWITZERLAND -->
+            <div class="space-y-4">
+                <div class="text-center">
+                    <h3 class="text-base font-bold text-slate-800">Why Switzerland?</h3>
+                    <p class="text-[10px] text-slate-400 mt-1">Founding infrastructure in the world's safest jurisdiction.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
+                        <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500 mb-3 shadow-sm">
+                            <i class="fas fa-university text-sm"></i>
+                        </div>
+                        <p class="text-[11px] font-bold text-slate-800">Financial Discipline</p>
+                        <p class="text-[9px] text-slate-400 mt-1">Renowned for strict financial regulations and banking security.</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 mb-3 shadow-sm">
+                            <i class="fas fa-balance-scale text-sm"></i>
+                        </div>
+                        <p class="text-[11px] font-bold text-slate-800">Regulatory Clarity</p>
+                        <p class="text-[9px] text-slate-400 mt-1">Clear and progressive crypto laws provide stable environment.</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500 mb-3 shadow-sm">
+                            <i class="fas fa-shield-alt text-sm"></i>
+                        </div>
+                        <p class="text-[11px] font-bold text-slate-800">Asset Protection</p>
+                        <p class="text-[9px] text-slate-400 mt-1">Strong legal frameworks ensure your investments are protected.</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-500 mb-3 shadow-sm">
+                            <i class="fas fa-flag text-sm"></i>
+                        </div>
+                        <p class="text-[11px] font-bold text-slate-800">Stability</p>
+                        <p class="text-[9px] text-slate-400 mt-1">Neutral stance and stable government provide long-term security.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAPITAL STRENGTH -->
+            <div class="bg-white rounded-3xl p-6 feature-card border border-slate-100">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shadow-sm">
+                        <i class="fas fa-vault"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-800">Capital Strength</h4>
+                        <p class="text-[9px] text-slate-400">Substantial reserves for user protection.</p>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center">
+                        <p class="text-[10px] font-medium text-slate-600">Strong Reserves</p>
+                        <span class="text-[9px] bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold uppercase tracking-tight">Verified</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center">
+                        <p class="text-[10px] font-medium text-slate-600">Operational Continuity</p>
+                        <span class="text-[9px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold uppercase tracking-tight">Active</span>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center">
+                        <p class="text-[10px] font-medium text-slate-600">User Fund Protection</p>
+                        <span class="text-[9px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-bold uppercase tracking-tight">Insured</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PARTNERS -->
+            <div class="space-y-4">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Our Partners</h3>
+                <div class="flex overflow-x-auto gap-4 pb-2 no-scrollbar px-2">
+                    <div class="bg-white rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
+                        <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-6 h-6 mr-2">
+                        <span class="text-[10px] font-bold text-slate-800 uppercase">Binance</span>
+                    </div>
+                    <div class="bg-white rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
+                        <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" class="w-6 h-6 mr-2">
+                        <span class="text-[10px] font-bold text-slate-800 uppercase">Coinbase</span>
+                    </div>
+                    <div class="bg-white rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
+                        <i class="fab fa-aws text-xl mr-2"></i>
+                        <span class="text-[10px] font-bold text-slate-800 uppercase">AWS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GLOBAL FEEDBACK SLIDER -->
+            <div class="space-y-4 bg-slate-50/50 py-8 px-4 rounded-[40px]">
+                <h3 class="text-xs font-bold text-slate-800 text-center uppercase tracking-widest mb-6">Global Feedback</h3>
+                
+                <div class="relative group max-w-sm mx-auto">
+                    <!-- Slider Container -->
+                    <div id="testimonialSlider" class="overflow-hidden rounded-3xl">
+                        <div id="sliderWrapper" class="flex transition-transform duration-500 ease-in-out">
+                            <!-- Slide 1: John D. -->
+                            <div class="w-full shrink-0 px-2 slide">
+                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                    <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
+                                    <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
+                                        "I've been using this platform for over a year now and the returns have been consistent. The interface is easy to use and withdrawals are processed quickly."
+                                    </p>
+                                    <div class="flex items-center justify-between mt-auto">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-[10px]">JD</div>
+                                            <div>
+                                                <p class="text-[10px] font-bold text-slate-800">John D.</p>
+                                                <p class="text-[8px] text-slate-400">Investor • USA</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex text-yellow-400 text-[8px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 2: Sarah M. -->
+                            <div class="w-full shrink-0 px-2 slide">
+                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                    <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
+                                    <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
+                                        "Finally found a cloud mining platform I can trust. The transparency and regular updates give me confidence in my investment."
+                                    </p>
+                                    <div class="flex items-center justify-between mt-auto">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-[10px]">SM</div>
+                                            <div>
+                                                <p class="text-[10px] font-bold text-slate-800">Sarah M.</p>
+                                                <p class="text-[8px] text-slate-400">Crypto Enthusiast • UK</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex text-yellow-400 text-[8px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 3: Michael R. -->
+                            <div class="w-full shrink-0 px-2 slide">
+                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                    <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
+                                    <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
+                                        "The customer support team is exceptional. They helped me understand the different plans and choose the right one for my goals."
+                                    </p>
+                                    <div class="flex items-center justify-between mt-auto">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-[10px]">MR</div>
+                                            <div>
+                                                <p class="text-[10px] font-bold text-slate-800">Michael R.</p>
+                                                <p class="text-[8px] text-slate-400">Owner • Germany</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex text-yellow-400 text-[8px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 4: Emma L. -->
+                            <div class="w-full shrink-0 px-2 slide">
+                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                    <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
+                                    <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
+                                        "As someone who works in finance, I appreciate the detailed reporting and transparency. This platform sets the standard."
+                                    </p>
+                                    <div class="flex items-center justify-between mt-auto">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold text-[10px]">EL</div>
+                                            <div>
+                                                <p class="text-[10px] font-bold text-slate-800">Emma L.</p>
+                                                <p class="text-[8px] text-slate-400">Analyst • Canada</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex text-yellow-400 text-[8px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 5: David K. -->
+                            <div class="w-full shrink-0 px-2 slide">
+                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                    <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
+                                    <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
+                                        "The technology behind this platform is impressive. Secure, fast, and reliable. Definitely recommended."
+                                    </p>
+                                    <div class="flex items-center justify-between mt-auto">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-[10px]">DK</div>
+                                            <div>
+                                                <p class="text-[10px] font-bold text-slate-800">David K.</p>
+                                                <p class="text-[8px] text-slate-400">Dev • Australia</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex text-yellow-400 text-[8px]"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button id="prevBtn" class="absolute top-1/2 -left-2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-400 hover:text-blue-500 transition-opacity opacity-0 group-hover:opacity-100 z-10">
+                        <i class="fas fa-chevron-left text-xs"></i>
+                    </button>
+                    <button id="nextBtn" class="absolute top-1/2 -right-2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-400 hover:text-blue-500 transition-opacity opacity-0 group-hover:opacity-100 z-10">
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
+
+                    <!-- Navigation Dots -->
+                    <div id="sliderDots" class="flex justify-center mt-6 gap-2">
+                        <div class="dot w-6 h-1.5 bg-blue-500 rounded-full transition-all duration-300" data-index="0"></div>
+                        <div class="dot w-1.5 h-1.5 bg-slate-300 rounded-full transition-all duration-300" data-index="1"></div>
+                        <div class="dot w-1.5 h-1.5 bg-slate-300 rounded-full transition-all duration-300" data-index="2"></div>
+                        <div class="dot w-1.5 h-1.5 bg-slate-300 rounded-full transition-all duration-300" data-index="3"></div>
+                        <div class="dot w-1.5 h-1.5 bg-slate-300 rounded-full transition-all duration-300" data-index="4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FINAL MISSION QUOTE -->
+            <div class="bg-blue-600 p-8 rounded-3xl text-center text-white shadow-lg overflow-hidden relative">
+                <div class="absolute inset-0 bg-gradient-to-br from-teal-400/20 to-transparent"></div>
+                <i class="fas fa-quote-left text-3xl opacity-20 mb-4"></i>
+                <p class="text-xs font-medium italic leading-relaxed relative z-10">
+                    "Our mission is to bridge the gap between traditional finance and the decentralized future, making high-performance computing power a universal asset."
+                </p>
+                <div class="w-12 h-1 bg-white/30 mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+        </div>
+
+        <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
+      </div>
+    </div>
+    </div>
+
+    <script>
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        let autoplayInterval;
+
+        function updateSlider() {
+            sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.remove('w-1.5', 'bg-slate-300');
+                    dot.classList.add('w-6', 'bg-blue-500');
+                } else {
+                    dot.classList.remove('w-6', 'bg-blue-500');
+                    dot.classList.add('w-1.5', 'bg-slate-300');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % dots.length;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + dots.length) % dots.length;
+            updateSlider();
+        }
+
+        function startAutoplay() {
+            autoplayInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoplay() {
+            clearInterval(autoplayInterval);
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateSlider();
+                stopAutoplay();
+                startAutoplay();
+            });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoplay();
+            startAutoplay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoplay();
+            startAutoplay();
+        });
+
+        sliderWrapper.addEventListener('mouseenter', stopAutoplay);
+        sliderWrapper.addEventListener('mouseleave', startAutoplay);
+
+        startAutoplay();
+    </script>
+    <script src="./translator.js"></script>
+</body>
+</html>

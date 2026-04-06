@@ -1,901 +1,580 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <title>Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: "#f0f9ff",
-                100: "#e0f2fe",
-                200: "#bae6fd",
-                300: "#7dd3fc",
-                400: "#38bdf8",
-                500: "#0ea5e9",
-                600: "#0284c7",
-                700: "#0369a1",
-                800: "#075985",
-                900: "#0c4a6e",
-              },
-              teal: {
-                50: "#f0fdfa",
-                100: "#ccfbf1",
-                200: "#99f6e4",
-                300: "#5eead4",
-                400: "#2dd4bf",
-                500: "#14b8a6",
-                600: "#0d9488",
-                700: "#0f766e",
-                800: "#115e59",
-                900: "#134e4a",
-              },
-            },
-            fontFamily: {
-              poppins: ["Poppins", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
-    <style>
-      body {
-        background: linear-gradient(135deg, #f0f7ff 0%, #dbeafe 100%);
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Dashboard - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js for the market quote chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f0f4f8; /* Soft light background matching screenshot */
+      padding-bottom: 70px; 
+    }
 
-        min-height: 100vh;
-      }
-      .card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
+    .gradient-bg {
+      background: linear-gradient(135deg, #4f8cff, #6ee7ff);
+    }
+    
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
 
-      .icon-container {
-        background-color: #3B82F6;
-        border-radius: 12px;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 8px;
-      }
-      .btn-primary {
-        background-color: #3B82F6;
+    /* Slider logic */
+    .slider-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .slider-img.active {
+      opacity: 1;
+    }
 
-        transition: all 0.3s ease;
-      }
-      .btn-primary:hover {
-        background-color: #2563EB;
+    /* Custom scrollbar for coins */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 
-        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-      }
-      .status-badge {
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-      .status-pending {
-        background-color: #fef3c7;
-        color: #92400e;
-      }
-      .status-success {
-        background-color: #d1fae5;
-        color: #065f46;
-      }
-      .status-failed {
-        background-color: #fee2e2;
-        color: #b91c1c;
-      }
-      .loading-spinner {
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #0ea5e9;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto;
-      }
-      .withdrawal-card {
-        border-left: 4px solid;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-      }
-      .loading-skeleton {
-        background: linear-gradient(
-          90deg,
-          #f0f0f0 25%,
-          #e0e0e0 50%,
-          #f0f0f0 75%
-        );
+  <script src="./translator.js"></script>
+</head>
+<body class="flex flex-col min-h-screen items-center">
 
-        background-size: 200% 100%;
-        animation: loading 1.5s infinite;
-        border-radius: 2px;
-      }
+  <!-- Mobile sized app container that sits in the middle of desktop screens -->
+  <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100">
 
-      @keyframes loading {
-        0% {
-          background-position: 200% 0;
-        }
-        100% {
-          background-position: -200% 0;
-        }
-      }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      /* Mobile responsive styles */
-      .transaction-table {
-        display: block;
-      }
-      .transaction-cards {
-        display: none;
-      }
-      @media (max-width: 768px) {
-        .transaction-table {
-          display: none;
-        }
-        .transaction-cards {
-          display: block;
-        }
-      }
-      @media (max-width: 640px) {
-        .icon-container {
-          width: 40px;
-          height: 40px;
-        }
-        .card-container {
-          height: 700px; /* Fixed height to prevent layout shift */
-        }
-      }
-
-      /* Card slider styles */
-      .card-container {
-        position: relative;
-        height: 220px; /* Fixed height to prevent layout shift */
-        overflow: hidden;
-      }
-
-      .balance-card {
-        position: absolute;
-        width: 100%;
-        transition: transform 0.5s ease-in-out;
-      }
-
-      .card-hidden-left {
-        transform: translateX(-100%);
-      }
-
-      .card-hidden-right {
-        transform: translateX(100%);
-      }
-
-      .card-visible {
-        transform: translateX(0);
-      }
-      @media (max-width: 640px) {
-        .card-container {
-          height: 285px;
-        }
-      }
-    </style>
-  </head>
-  <body style="display: none" class="font-poppins">
-    <div class="lg:p-4 space-y-8 max-w-4xl mx-auto">
-      <div id="header" class="sticky top-0 z-[1000]"></div>
-
-      <div class="px-4 lg:px-0">
-        <!-- Card container with fixed height -->
-        <div class="card-container">
-          <!-- First balance card -->
-          <div class="balance-card card-visible" id="card1">
-            <div
-              class="w-full rounded-xl flex flex-col justify-center p-6 bg-white shadow-sm card border border-gray-100"
-            >
-              <div
-                class="flex flex-col md:flex-row md:justify-between md:items-center"
-              >
-                <div>
-                  <p class="font-semibold text-xl text-gray-700">
-                    My Investment Balance
-                  </p>
-                  <p
-                    class="text-3xl font-bold text-gray-800 mt-1"
-                    id="investment-balance"
-                  >
-                    ₦0.00
-                  </p>
-                </div>
-                <a href="/withdrawal.html">
-                  <button
-                    class="btn-primary text-white font-semibold py-3 px-6 rounded-lg mt-4 md:mt-0 flex items-center justify-center"
-                  >
-                    <span>Withdraw Funds</span>
-                    <i class="fas fa-arrow-down ml-2"></i>
-                  </button>
-                </a>
-              </div>
-              <div
-                class="flex items-center bg-teal-50 p-4 mt-5 rounded-lg border border-teal-100"
-              >
-                <div class="bg-teal-100 p-2 rounded-lg mr-3">
-                  <i class="fas fa-wallet text-teal-600 text-xl"></i>
-                </div>
-                <p class="text-teal-800 font-medium">
-                  Recharge Balance:
-                  <span
-                    class="font-bold text-lg"
-                    id="investment-recharge-balance"
-                    >₦0.00</span
-                  >
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Second balance card -->
-          <div class="balance-card card-hidden-right" id="card2">
-            <div
-              class="w-full rounded-xl flex flex-col justify-center p-6 bg-white shadow-sm card border border-gray-100"
-            >
-              <div
-                class="flex flex-col md:flex-row md:justify-between md:items-center"
-              >
-                <div>
-                  <p class="font-semibold text-xl text-gray-700">
-                    My Welfare Balance
-                  </p>
-                  <p
-                    class="text-3xl font-bold text-gray-800 mt-1"
-                    id="welfare-balance"
-                  >
-                    ₦0.00
-                  </p>
-                </div>
-
-                <a href="/withdrawal.html">
-                  <button
-                    class="btn-primary text-white font-semibold py-3 px-6 rounded-lg mt-4 md:mt-0 flex items-center justify-center"
-                  >
-                    <span>Withdraw Funds</span>
-                    <i class="fas fa-arrow-down ml-2"></i>
-                  </button>
-                </a>
-              </div>
-              <div
-                class="flex items-center bg-teal-50 p-4 mt-5 rounded-lg border border-teal-100"
-              >
-                <div class="bg-teal-100 p-2 rounded-lg mr-3">
-                  <i class="fas fa-wallet text-teal-600 text-xl"></i>
-                </div>
-                <p class="text-teal-800 font-medium">
-                  Recharge Balance:
-                  <span class="font-bold text-lg" id="welfare-recharge-balance"
-                    >₦0.00</span
-                  >
-                </p>
-              </div>
-            </div>
-          </div>
+    <!-- HEADER / TOP NAV (Restoring curved bottom layout) -->
+    <div class="gradient-bg text-white px-5 pt-5 pb-8 rounded-b-[30px] shadow-md relative z-10">
+      <div class="flex justify-between items-start mb-5">
+        <div>
+          <h1 class="text-base sm:text-lg font-bold leading-tight tracking-wide">StakeWiseAi</h1>
+          <p class="text-[8px] uppercase tracking-widest text-white/90">TECH</p>
         </div>
-      </div>
-
-      <div class="px-4 lg:px-0">
-        <!-- Quick actions grid -->
-        <div
-          class="bg-white shadow-lg w-full rounded-xl py-8 px-2 md:px-4 space-y-6 card"
-        >
-          <div class="grid grid-cols-4 gap-6 mb-5 px-4">
-            <a
-              href="/deposit.html"
-              class="flex flex-col items-center cursor-pointer group"
-            >
-              <div class="icon-container group-hover:shadow-lg">
-                <i class="fas fa-bolt text-white text-lg"></i>
-              </div>
-              <p
-                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
-              >
-                Recharge
-              </p>
-            </a>
-
-            <a
-              href="/invite.html"
-              class="flex flex-col items-center cursor-pointer group"
-            >
-              <div class="icon-container group-hover:shadow-lg">
-                <i class="fas fa-user-plus text-white text-lg"></i>
-              </div>
-              <p
-                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
-              >
-                Invite
-              </p>
-            </a>
-            <a
-              href="/investment.html"
-              class="flex flex-col items-center cursor-pointer group"
-            >
-              <div class="icon-container group-hover:shadow-lg">
-                <i class="fas fa-chart-line text-white text-lg"></i>
-              </div>
-              <p
-                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
-              >
-                Investment
-              </p>
-            </a>
-            <a
-              href="/welfare.html"
-              class="flex flex-col items-center cursor-pointer group"
-            >
-              <div class="icon-container group-hover:shadow-lg">
-                <i class="fas fa-gift text-white text-lg"></i>
-              </div>
-              <p
-                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
-              >
-                Welfare
-              </p>
-            </a>
-            <a
-              href="/history.html"
-              class="flex flex-col items-center cursor-pointer group"
-            >
-              <div class="icon-container group-hover:shadow-lg">
-                <i class="fas fa-clock text-white text-lg"></i>
-              </div>
-              <p
-                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
-              >
-                History
-              </p>
-            </a>
-
-            <a
-              href="/bankDetails.html"
-              class="flex flex-col items-center cursor-pointer group"
-            >
-              <div class="icon-container group-hover:shadow-lg">
-                <i class="fas fa-university text-white text-lg"></i>
-              </div>
-              <p
-                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
-              >
-                Bank
-              </p>
-            </a>
-            <a
-              href="https://t.me/+K12zbGu3KtYyYmFK"
-              class="flex flex-col items-center cursor-pointer group"
-            >
-              <div class="icon-container group-hover:shadow-lg">
-                <i class="fab fa-telegram text-white text-lg"></i>
-              </div>
-              <p
-                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
-              >
-                Telegram
-              </p>
-            </a>
-            <a
-              href="/withdrawal.html"
-              class="flex flex-col items-center cursor-pointer group"
-            >
-              <div class="icon-container group-hover:shadow-lg">
-                <i class="fas fa-money-bill-wave text-white text-lg"></i>
-              </div>
-              <p
-                class="text-sm font-medium text-gray-700 mt-1 group-hover:text-primary-600"
-              >
-                Cashout
-              </p>
-            </a>
+        
+        <!-- Language Selector Dropdown -->
+        <div class="relative inline-block text-left z-[100]">
+          <div class="flex items-center gap-1.5 cursor-pointer mt-0.5 px-1 py-0.5 rounded hover:bg-white/10 transition" id="lang-menu-btn" onclick="toggleLangMenu(event)">
+            <img src="https://flagcdn.com/w20/us.png" id="navFlag" class="w-4 h-3 object-cover rounded-[2px] shadow-sm" alt="EN">
+            <span class="text-[10px] font-medium" id="navLangText">EN</span>
+            <i class="fas fa-chevron-down text-[8px] opacity-80 transition-transform duration-200" id="navLangIcon"></i>
           </div>
 
-          <!-- Referral section -->
-          <div class="w-full px-2 md:px-4">
-            <p class="text-sm font-semibold mb-3 text-gray-700">
-              Invite new users and get
-              <strong class="text-blue-600">25%</strong> interest
-            </p>
-
-            <div
-              class="flex bg-teal-50 h-12 rounded-lg border border-teal-200 overflow-hidden"
-            >
-              <div class="flex-grow px-3 flex items-center relative">
-                <input
-                  type="text"
-                  class="w-full bg-transparent text-gray-700 focus:outline-none text-sm sm:text-base absolute inset-0 opacity-0"
-                  disabled
-                  readonly
-                  id="referralLink"
-                />
-                <span
-                  class="loading-skeleton inline-block h-4 w-full"
-                  id="referralLinkLoading"
-                ></span>
-              </div>
-              <button
-                class="btn-primary text-white font-semibold px-4 sm:px-6 flex items-center justify-center h-full opacity-50"
-                id="copyBtn"
-                disabled
-              >
-                <span class="hidden sm:inline">Copy Link</span>
-                <i class="fa-solid fa-copy ml-0 sm:ml-2"></i>
+          <div id="langDropdown" class="absolute right-0 mt-2 w-36 origin-top-right rounded-xl bg-white shadow-xl ring-1 ring-black ring-opacity-5 hidden opacity-0 scale-95 transition-all duration-200 overflow-hidden max-h-60 overflow-y-auto no-scrollbar">
+            <div class="py-1">
+              <button onclick="selectLang('EN', 'https://flagcdn.com/w20/us.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/us.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="EN"><span class="text-[11px] font-medium flex-1">English</span>
+              </button>
+              <button onclick="selectLang('ES', 'https://flagcdn.com/w20/es.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/es.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="ES"><span class="text-[11px] font-medium flex-1">Español</span>
+              </button>
+              <button onclick="selectLang('FR', 'https://flagcdn.com/w20/fr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/fr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="FR"><span class="text-[11px] font-medium flex-1">Français</span>
+              </button>
+              <button onclick="selectLang('DE', 'https://flagcdn.com/w20/de.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/de.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="DE"><span class="text-[11px] font-medium flex-1">Deutsch</span>
+              </button>
+              <button onclick="selectLang('IT', 'https://flagcdn.com/w20/it.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/it.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="IT"><span class="text-[11px] font-medium flex-1">Italiano</span>
+              </button>
+              <button onclick="selectLang('PT', 'https://flagcdn.com/w20/pt.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/pt.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="PT"><span class="text-[11px] font-medium flex-1">Português</span>
+              </button>
+              <button onclick="selectLang('CN', 'https://flagcdn.com/w20/cn.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/cn.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="CN"><span class="text-[11px] font-medium flex-1">中文</span>
+              </button>
+              <button onclick="selectLang('JP', 'https://flagcdn.com/w20/jp.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/jp.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="JP"><span class="text-[11px] font-medium flex-1">日本語</span>
+              </button>
+              <button onclick="selectLang('KR', 'https://flagcdn.com/w20/kr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/kr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="KR"><span class="text-[11px] font-medium flex-1">한국어</span>
+              </button>
+              <button onclick="selectLang('RU', 'https://flagcdn.com/w20/ru.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/ru.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="RU"><span class="text-[11px] font-medium flex-1">Русский</span>
+              </button>
+              <button onclick="selectLang('IN', 'https://flagcdn.com/w20/in.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/in.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="IN"><span class="text-[11px] font-medium flex-1">हिन्दी</span>
+              </button>
+              <button onclick="selectLang('SA', 'https://flagcdn.com/w20/sa.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/sa.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="SA"><span class="text-[11px] font-medium flex-1">العربية</span>
+              </button>
+              <button onclick="selectLang('TR', 'https://flagcdn.com/w20/tr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/tr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="TR"><span class="text-[11px] font-medium flex-1">Türkçe</span>
+              </button>
+              <button onclick="selectLang('NL', 'https://flagcdn.com/w20/nl.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/nl.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="NL"><span class="text-[11px] font-medium flex-1">Nederlands</span>
+              </button>
+              <button onclick="selectLang('ID', 'https://flagcdn.com/w20/id.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/id.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="ID"><span class="text-[11px] font-medium flex-1">Bahasa Indonesia</span>
+              </button>
+              <button onclick="selectLang('VN', 'https://flagcdn.com/w20/vn.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/vn.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="VN"><span class="text-[11px] font-medium flex-1">Tiếng Việt</span>
+              </button>
+              <button onclick="selectLang('TH', 'https://flagcdn.com/w20/th.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/th.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="TH"><span class="text-[11px] font-medium flex-1">ไทย</span>
+              </button>
+              <button onclick="selectLang('GR', 'https://flagcdn.com/w20/gr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/gr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="GR"><span class="text-[11px] font-medium flex-1">Ελληνικά</span>
+              </button>
+              <button onclick="selectLang('SE', 'https://flagcdn.com/w20/se.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/se.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="SE"><span class="text-[11px] font-medium flex-1">Svenska</span>
+              </button>
+              <button onclick="selectLang('PL', 'https://flagcdn.com/w20/pl.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+                <img src="https://flagcdn.com/w20/pl.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="PL"><span class="text-[11px] font-medium flex-1">Polski</span>
               </button>
             </div>
           </div>
-          <div
-            class="fixed inset-0 flex items-center justify-center pointer-events-none"
-          >
-            <div
-              id="toast"
-              class="btn-primary text-white px-4 py-2 rounded shadow-lg opacity-0 transition-opacity duration-300 pointer-events-auto"
-            >
-              Copied!
-            </div>
-          </div>
         </div>
       </div>
 
-      <!-- Withdrawal History Section -->
-      <div class="px-4 lg:px-0">
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
-          <div
-            class="p-6 border-b border-gray-200 flex justify-between items-center"
-          >
-            <h3 class="text-lg font-semibold text-gray-800">
-              Recent Withdrawals
-            </h3>
-            <span class="hidden md:block text-sm text-gray-500"
-              >Latest transactions</span
-            >
-          </div>
-
-          <!-- Desktop Table View -->
-          <div class="transaction-table">
-            <div class="p-4 md:p-6">
-              <div class="overflow-x-auto">
-                <table class="w-full">
-                  <thead>
-                    <tr class="text-left text-gray-500 border-b">
-                      <th class="py-3 px-6">Wallet</th>
-                      <th class="py-3 px-6">Amount</th>
-                      <th class="py-3 px-6">Status</th>
-                      <th class="py-3 px-6">Date</th>
-                      <th class="py-3 px-6">Time</th>
-                    </tr>
-                  </thead>
-                  <tbody id="withdrawals-table-body">
-                    <tr>
-                      <td colspan="5" class="py-8 px-6 text-center">
-                        <div class="loading-spinner mb-4"></div>
-                        <p>Loading withdrawal history...</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile Card View -->
-          <div
-            class="transaction-cards p-4 md:p-6 space-y-4"
-            id="withdrawals-cards-body"
-          >
-            <div class="text-center py-8">
-              <div class="loading-spinner mb-4"></div>
-              <p>Loading withdrawal history...</p>
-            </div>
-          </div>
+      <div class="flex justify-between items-end">
+        <div>
+          <p class="text-[9px] text-white/80 mb-0.5 font-medium">Total Earning</p>
+          <p class="text-base font-bold">$0.00</p>
+        </div>
+        <div class="text-right">
+          <p class="text-[9px] text-white/80 mb-0.5 font-medium">Total Investment</p>
+          <p class="text-base font-bold">$0.00</p>
         </div>
       </div>
-
-      <div id="footer" class="sticky bottom-0 z-[1000]"></div>
     </div>
 
-    <script type="module">
-      import { authFetch, checkAuth } from "./auth.js";
-      import { protectPage } from "./protect.js";
+    <!-- VIDEO SECTION -->
+    <div class="px-3 mt-3">
+      <div class="w-full bg-black rounded-lg shadow-sm overflow-hidden relative" style="aspect-ratio: 16/9;">
+        <video class="w-full h-full object-cover" controls autoplay muted loop playsinline preload="metadata">
+          <source src="./home_video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    
+    <!-- LIVE INVESTMENT FEED -->
+    <div class="px-3 mt-3">
+      <div id="liveFeedContainer" class="bg-white rounded-full px-1.5 py-1 border border-gray-100 shadow-sm relative overflow-hidden h-[36px] w-full flex items-center">
+        <!-- JS will inject single notification items here smoothly -->
+      </div>
+    </div>
 
-      checkAuth().then(async (user) => {
-        if (!user) {
-          return (window.location.href = "/login.html");
+    <!-- QUICK ACTIONS & INFO CARD -->
+    <div class="px-3 mt-3">
+      <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100">
+        
+        <!-- Top Row: Active Staking & Company Info -->
+        <div class="flex gap-2 mb-3">
+          <!-- Active Staking -->
+          <div class="flex-1 rounded-lg bg-[#f8fbff] border border-blue-50 p-2 flex items-center justify-between">
+            <span class="text-[10px] font-semibold text-gray-800 leading-tight w-1/2">Active Staking</span>
+            <div class="relative w-7 h-7 flex items-center justify-center text-[#4f8cff]">
+              <i class="fas fa-money-check-alt text-lg"></i>
+              <div class="absolute -top-1 -right-1 w-[12px] h-[12px] bg-yellow-400 rounded-full flex items-center justify-center text-[6px] text-white font-bold border border-white">B</div>
+            </div>
+          </div>
+          
+          <!-- Company Info -->
+          <a href="company.html" class="flex-1 rounded-lg bg-[#f4fbfb] border border-teal-50 p-2 flex items-center justify-between hover:bg-teal-50 transition cursor-pointer">
+            <span class="text-[10px] font-semibold text-gray-800 leading-tight w-1/2 flex-1">Company<br>Information</span>
+            <div class="w-7 h-7 flex items-center justify-center text-blue-400">
+              <i class="far fa-building text-lg pt-1"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Bottom Row: 4 Icons -->
+        <div class="grid grid-cols-4 gap-1">
+          <a href="#" class="flex flex-col items-center">
+            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-1 text-[#4f8cff] shadow-inner transition hover:scale-105">
+              <i class="fas fa-dharmachakra text-sm"></i>
+            </div>
+            <p class="text-[8px] font-medium text-gray-600">Lucky Spin</p>
+          </a>
+          <a href="#" class="flex flex-col items-center">
+            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-1 text-[#4f8cff] shadow-inner transition hover:scale-105">
+              <i class="fas fa-info-circle text-sm"></i>
+            </div>
+            <p class="text-[8px] font-medium text-gray-600">About Us</p>
+          </a>
+          <a href="#" class="flex flex-col items-center">
+            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-1 text-[#4f8cff] shadow-inner transition hover:scale-105">
+              <i class="fas fa-bullhorn text-sm"></i>
+            </div>
+            <p class="text-[8px] font-medium text-gray-600">Announcement</p>
+          </a>
+          <a href="https://t.me/+K12zbGu3KtYyYmFK" class="flex flex-col items-center">
+            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-1 text-[#4f8cff] shadow-inner transition hover:scale-105">
+              <i class="fas fa-headset text-sm"></i>
+            </div>
+            <p class="text-[8px] font-medium text-gray-600">Help Line</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ABOUT US EXACT SECTION -->
+    <div class="px-3 mt-3">
+      <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-start gap-3">
+        <!-- Exact image downloaded -->
+        <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
+          <img src="./idea.png" alt="About StakeWiseAi" class="w-full h-full object-contain">
+        </div>
+        <div class="flex-1">
+          <h3 class="text-[9px] sm:text-[10px] font-bold text-gray-800 mb-1 leading-snug">
+            StakeWiseAi: Leading the Future of Computing Power. Building the Foundation for a Sustainable Digital Infrastructure.
+          </h3>
+          <p class="text-[8px] sm:text-[9px] text-gray-500 leading-relaxed text-left">
+            StakeWiseAi (full name: Crypto-Ecosystem Mining) is a global leader in cryptocurrency mining solutions, dedicated to making digital asset mining accessible, efficient, and profitable for everyone. Founded by a team of blockchain technology experts and financial professionals, we have built a state-of-the-art mining ecosystem that leverages the latest advancements in hardware and software to deliver unparalleled results.
+          </p>
+          <div class="mt-2">
+            <a href="about.html" class="inline-block bg-[#4f8cff] text-white text-[8px] font-semibold px-3 py-1.5 rounded-full shadow-sm hover:opacity-90 transition">
+              Learn More
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAROUSEL BANNER SECTION (Local Images) -->
+    <div class="px-3 mt-3">
+      <div class="w-full rounded-xl shadow-sm overflow-hidden relative border border-gray-100" style="aspect-ratio: 24/9;" id="imageSlider">
+        <img src="./slider1.jpg" class="slider-img active slide" alt="Promo 1">
+        <img src="./slider2.png" class="slider-img slide" alt="Promo 2">
+      </div>
+    </div>
+
+    <!-- 4 COINS ROW IDENTICAL TO IMAGE -->
+    <div class="px-3 mt-3">
+      <div class="flex overflow-x-auto gap-2 pb-1 no-scrollbar">
+        <!-- BTC -->
+        <div class="bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap">
+          <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="BTC" />
+          <p class="font-bold text-gray-800 text-[10px] tracking-wide">BTC</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">66,611.00</p>
+        </div>
+        <!-- ETH -->
+        <div class="bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap">
+          <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="ETH" />
+          <p class="font-bold text-gray-800 text-[10px] tracking-wide">ETH</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">2,052.48</p>
+        </div>
+        <!-- TRX -->
+        <div class="bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap">
+          <img src="https://assets.coingecko.com/coins/images/1094/small/tron-logo.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="TRX" />
+          <p class="font-bold text-gray-800 text-[10px] tracking-wide">TRX</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">0.3149</p>
+        </div>
+        <!-- DOGE -->
+        <div class="bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap">
+          <img src="https://assets.coingecko.com/coins/images/5/small/dogecoin.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="DOGE" />
+          <p class="font-bold text-gray-800 text-[10px] tracking-wide">DOGE</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">0.0904</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRYPTOCURRENCY MARKET QUOTES CHART -->
+    <div class="px-3 mt-3 mb-6">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <h3 class="text-[10px] sm:text-[11px] font-semibold text-[#4f8cff] tracking-wide mb-1 text-center uppercase">
+          Cryptocurrency Market Quotes
+        </h3>
+        
+        <div class="w-full mt-2 h-44 sm:h-52">
+           <canvas id="cryptoChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+  </div>
+  <script>
+    // Live Feed Single-Line Scroller
+    document.addEventListener("DOMContentLoaded", function () {
+      const feedData = [
+        "Natalia just withdrew $2,150 in DOGE",
+        "Viktor just invested ₦24,500 in Basic Plan",
+        "Amaka successfully withdrew ₦5,200",
+        "Mohammed just invested ₦60,000 in Standard Plan",
+        "Sarah claimed Lucky Spin bonus ₦500"
+      ];
+      
+      const container = document.getElementById("liveFeedContainer");
+      if (container) {
+        let currentIndex = 0;
+        function showNextFeed() {
+          const text = feedData[currentIndex];
+          const div = document.createElement('div');
+          div.className = "flex items-center w-full px-2 absolute left-0 transition-transform duration-500 ease-in-out";
+          div.style.transform = "translateY(150%)";
+          div.innerHTML = `
+            <div class="w-6 h-6 rounded-full bg-[#e8f1ff] flex items-center justify-center text-[#4f8cff] shrink-0">
+              <i class="fas fa-check-circle text-xs"></i>
+            </div>
+            <p class="text-[10px] font-medium text-gray-500 ml-2 truncate pr-16">${text}</p>
+            <div class="flex flex-row items-center gap-1 absolute right-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></div>
+              <span class="text-[8px] font-bold text-[#10b981] uppercase tracking-wide">LIVE</span>
+            </div>
+          `;
+          
+          container.appendChild(div);
+
+          setTimeout(() => {
+            div.style.transform = "translateY(0%)";
+          }, 50);
+
+          const allItems = container.children;
+          if (allItems.length > 1) {
+            const oldItem = allItems[0];
+            oldItem.style.transform = "translateY(-150%)";
+            setTimeout(() => {
+              if (oldItem.parentNode === container) container.removeChild(oldItem);
+            }, 500);
+          }
+
+          currentIndex = (currentIndex + 1) % feedData.length;
         }
 
-        document.body.style.display = "block";
+        showNextFeed();
+        setInterval(showNextFeed, 3000); // Rotate every 3 seconds
+      }
 
-        // Fetch header/footer AND user data in parallel
-        const [_, userData] = await Promise.all([
-          protectPage(),
-          fetchUserDetails(),
-        ]);
+      // Fading Image Slider Script
+      let slides = document.querySelectorAll(".slider-img");
+      if (slides.length > 0) {
+        let currentSlide = 0;
+        setInterval(() => {
+          slides[currentSlide].classList.remove("active");
+          currentSlide = (currentSlide + 1) % slides.length;
+          slides[currentSlide].classList.add("active");
+        }, 4000); // Crossfade duration interval (every 4s)
+      }
 
-        // Now safely update the header (if it's ready)
-        if (typeof window.updateHeaderUI === "function") {
-          updateHeaderUI(userData);
+      // Language dropdown logic
+      window.toggleLangMenu = function(e) {
+        e.stopPropagation();
+        const menu = document.getElementById('langDropdown');
+        const icon = document.getElementById('navLangIcon');
+        
+        if(menu.classList.contains('hidden')) {
+          menu.classList.remove('hidden');
+          setTimeout(() => {
+            menu.classList.remove('opacity-0', 'scale-95');
+            menu.classList.add('opacity-100', 'scale-100');
+            icon.style.transform = 'rotate(180deg)';
+          }, 10);
+        } else {
+          menu.classList.remove('opacity-100', 'scale-100');
+          menu.classList.add('opacity-0', 'scale-95');
+          icon.style.transform = 'rotate(0deg)';
+          setTimeout(() => {
+            menu.classList.add('hidden');
+          }, 200);
+        }
+      };
+
+      window.selectLang = function(shortCode, flagUrl) {
+        if (window.setSiteLanguage) {
+            window.setSiteLanguage(shortCode, flagUrl);
+            return;
+        }
+        document.getElementById('navLangText').innerText = shortCode;
+        document.getElementById('navFlag').src = flagUrl;
+        
+        // Hide menu
+        const menu = document.getElementById('langDropdown');
+        const icon = document.getElementById('navLangIcon');
+        menu.classList.remove('opacity-100', 'scale-100');
+        menu.classList.add('opacity-0', 'scale-95');
+        icon.style.transform = 'rotate(0deg)';
+        setTimeout(() => {
+          menu.classList.add('hidden');
+        }, 200);
+      };
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        const menu = document.getElementById('langDropdown');
+        const btn = document.getElementById('lang-menu-btn');
+        if(menu && !menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
+            menu.classList.remove('opacity-100', 'scale-100');
+            menu.classList.add('opacity-0', 'scale-95');
+            document.getElementById('navLangIcon').style.transform = 'rotate(0deg)';
+            setTimeout(() => {
+              menu.classList.add('hidden');
+            }, 200);
         }
       });
 
-      // Utility functions
-      const formatCurrency = (amount) => {
-        return new Intl.NumberFormat("en-NG", {
-          style: "currency",
-          currency: "NGN",
-        }).format(amount);
-      };
-
-      const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        });
-      };
-
-      const formatTime = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-      };
-
-      let cachedUserData = null;
-
-      async function fetchUserDetails() {
-        try {
-          const res = await authFetch(
-            "https://neo-invest-server.onrender.com/api/users/me",
-            { credentials: "include" }
-          );
-          if (!res.ok) throw new Error("Failed to fetch user details");
-          const userData = await res.json();
-          return userData; // return instead of calling updateHeaderUI here
-        } catch (err) {
-          console.error("Error fetching user details:", err);
-          return null;
-        }
-      }
-
-      function updateUserUI(userData) {
-        const rechargeInvestmentBalanceElement = document.getElementById(
-          "investment-recharge-balance"
-        );
-        if (rechargeInvestmentBalanceElement) {
-          const rechargeInvestmentBalance =
-            userData.data.investmentRechargeBalance || 0;
-          rechargeInvestmentBalanceElement.innerHTML = `₦${Number(
-            rechargeInvestmentBalance
-          ).toLocaleString()}`;
-        }
-
-        const investmentBalanceElement =
-          document.getElementById("investment-balance");
-        if (investmentBalanceElement) {
-          const investmentBalance = userData.data.investmentBalance || 0;
-          investmentBalanceElement.innerHTML = `₦${Number(
-            investmentBalance
-          ).toLocaleString()}`;
-        }
-        const rechargeWelfareBalanceElement = document.getElementById(
-          "welfare-recharge-balance"
-        );
-        if (rechargeWelfareBalanceElement) {
-          const rechargeWelfareBalance =
-            userData.data.welfareRechargeBalance || 0;
-          rechargeWelfareBalanceElement.innerHTML = `₦${Number(
-            rechargeWelfareBalance
-          ).toLocaleString()}`;
-        }
-        // Update welfare balance
-        const welfareBalanceElement =
-          document.getElementById("welfare-balance");
-        if (welfareBalanceElement) {
-          const welfareBalance = userData.data.welfareBalance || 0;
-          welfareBalanceElement.innerHTML = `₦${Number(
-            welfareBalance
-          ).toLocaleString()}`;
-        }
-
-        // Update referral link section - REMOVE LOADING STATE
-        const referralLinkContainer = document.querySelector(
-          ".flex-grow.px-3.flex.items-center.relative"
-        );
-        const referralLinkValue = `https://neo-invest.onrender.com/signup.html?ref=${userData.data.referralCode}`;
-
-        if (referralLinkContainer) {
-          // Remove the loading skeleton and show the actual input
-          referralLinkContainer.innerHTML = `
-      <input type="text" class="w-full bg-transparent text-gray-700 focus:outline-none text-sm sm:text-base" disabled readonly id="referralLink" value="${referralLinkValue}" />
-    `;
-        }
-
-        // Enable the copy button
-        const copyBtn = document.getElementById("copyBtn");
-        if (copyBtn) {
-          copyBtn.disabled = false;
-          copyBtn.classList.remove("opacity-50");
-
-          // Re-attach the copy functionality
-          copyBtn.addEventListener("click", () => {
-            const text = referralLinkValue;
-            navigator.clipboard
-              .writeText(text)
-              .then(() => {
-                const toast = document.getElementById("toast");
-                if (toast) {
-                  toast.classList.remove("opacity-0");
-                  toast.classList.add("opacity-100");
-                  setTimeout(() => {
-                    toast.classList.remove("opacity-100");
-                    toast.classList.add("opacity-0");
-                  }, 2000);
-                }
-              })
-              .catch((err) => {
-                console.error("Failed to copy:", err);
-              });
-          });
-        }
-      }
-      // Card slider functionality
-      function initCardSlider() {
-        const card1 = document.getElementById("card1");
-        const card2 = document.getElementById("card2");
-        let currentCard = 1;
-
-        // Function to toggle between cards
-        function toggleCards() {
-          if (currentCard === 1) {
-            // Slide card1 out to the left and card2 in from the right
-            card1.classList.remove("card-visible");
-            card1.classList.add("card-hidden-left");
-
-            card2.classList.remove("card-hidden-right");
-            card2.classList.add("card-visible");
-
-            currentCard = 2;
-          } else {
-            // Slide card2 out to the right and card1 in from the left
-            card2.classList.remove("card-visible");
-            card2.classList.add("card-hidden-right");
-
-            card1.classList.remove("card-hidden-left");
-            card1.classList.add("card-visible");
-
-            currentCard = 1;
+      // Initialize the Chart.js Spline Chart mimicking the uploaded image
+      const ctx = document.getElementById('cryptoChart').getContext('2d');
+      new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: ['01-01', '01-02', '01-03', '01-04', '01-05', '01-06', '01-07'],
+              datasets: [
+                  {
+                      label: 'BTC',
+                      data: [2, 8, 4, 2, 1, -2, 0],
+                      borderColor: '#4f8cff',
+                      backgroundColor: '#4f8cff',
+                      tension: 0.4,
+                      borderWidth: 2,
+                      pointBackgroundColor: '#fff',
+                      pointBorderColor: '#4f8cff',
+                      pointRadius: 3
+                  },
+                  {
+                      label: 'ETH',
+                      data: [8, 6, 3, 2, 0, -4, -1],
+                      borderColor: '#10b981',
+                      backgroundColor: '#10b981',
+                      tension: 0.4,
+                      borderWidth: 2,
+                      pointBackgroundColor: '#fff',
+                      pointBorderColor: '#10b981',
+                      pointRadius: 3
+                  },
+                  {
+                      label: 'DOGE',
+                      data: [0, 2, 1, 3, 2, -6, 1],
+                      borderColor: '#f59e0b',
+                      backgroundColor: '#f59e0b',
+                      tension: 0.4,
+                      borderWidth: 2,
+                      pointBackgroundColor: '#fff',
+                      pointBorderColor: '#f59e0b',
+                      pointRadius: 3
+                  },
+                  {
+                      label: 'TRX',
+                      data: [1, 3, 2, 1, 0, -1, 0],
+                      borderColor: '#ef4444',
+                      backgroundColor: '#ef4444',
+                      tension: 0.4,
+                      borderWidth: 2,
+                      pointBackgroundColor: '#fff',
+                      pointBorderColor: '#ef4444',
+                      pointRadius: 3
+                  }
+              ]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                  legend: {
+                      position: 'top',
+                      labels: {
+                          usePointStyle: true,
+                          boxWidth: 6,
+                          font: { size: 9, family: 'Poppins', weight: '600' },
+                          color: '#6b7280'
+                      }
+                  }
+              },
+              scales: {
+                  y: {
+                      min: -12,
+                      max: 12,
+                      ticks: {
+                          stepSize: 6,
+                          callback: function(value) { return value + '%'; },
+                          font: { size: 9, color: '#9ca3af' }
+                      },
+                      grid: { color: '#f1f5f9', drawBorder: false },
+                      border: { display: false }
+                  },
+                  x: {
+                      grid: { display: false },
+                      ticks: { font: { size: 9, color: '#9ca3af' } },
+                      border: { display: false }
+                  }
+              }
           }
-        }
-
-        // Start the animation cycle (change every 3 seconds)
-        setInterval(toggleCards, 3000);
-      }
-
-      // Call the function when the page loads
-      document.addEventListener("DOMContentLoaded", function () {
-        fetchUserDetails()
-          .then((userData) => {
-            updateUserUI(userData);
-            initCardSlider(); // Initialize the card slider after data is loaded
-          })
-          .catch((error) => {
-            console.error("Failed to fetch user details:", error);
-            initCardSlider(); // Initialize the card slider even if data fails to load
-          });
       });
-
-      // Optional: Refresh data every 60 seconds
-      setInterval(fetchUserDetails, 60000);
-      // Fetch withdrawals from API
-      const fetchWithdrawals = async () => {
-        try {
-          const response = await authFetch(
-            "https://neo-invest-server.onrender.com/api/withdrawals",
-            {
-              credentials: "include",
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const data = await response.json();
-          const withdrawals = data.data.withdrawals.slice(0, 5);
-
-          renderTable(withdrawals);
-          renderCards(withdrawals);
-        } catch (error) {
-          console.error("Error fetching withdrawals:", error);
-          document.getElementById("withdrawals-table-body").innerHTML = `
-          <tr>
-            <td colspan="5" class="py-4 px-6 text-center text-red-600">
-              <i class="fas fa-exclamation-triangle mr-2"></i>
-              Failed to load withdrawal data. Please try again later.
-            </td>
-          </tr>
-        `;
-          document.getElementById("withdrawals-cards-body").innerHTML = `
-          <div class="text-center py-8 text-red-600">
-            <i class="fas fa-exclamation-triangle mr-2"></i>
-            Failed to load withdrawal data. Please try again later.
-          </div>
-        `;
-        }
-      };
-
-      // Render table with withdrawal data (for desktop)
-      const renderTable = (withdrawals) => {
-        const tableBody = document.getElementById("withdrawals-table-body");
-
-        if (withdrawals.length === 0) {
-          tableBody.innerHTML = `
-    <tr>
-      <td colspan="5" class="py-4 px-6 text-center text-gray-500">
-        No withdrawal history found.
-      </td>
-    </tr>
-  `;
-
-          // hide the "See more" button
-          const seeMoreBtn = document.getElementById("seeMoreBtn");
-          if (seeMoreBtn) {
-            seeMoreBtn.style.display = "none";
-          }
-
-          return;
-        }
-
-        let tableHTML = "";
-
-        withdrawals.forEach((item) => {
-          let statusClass, iconClass;
-          if (item.status.toLowerCase() === "pending") {
-            statusClass = "status-pending";
-            iconClass = "fas fa-clock text-yellow-500";
-          } else if (item.status.toLowerCase() === "successful") {
-            statusClass = "status-success";
-            iconClass = "fas fa-check-circle text-green-500";
-          } else {
-            statusClass = "status-failed";
-            iconClass = "fas fa-times-circle text-red-500";
-          }
-
-          tableHTML += `
-          <tr class="border-b border-gray-100 hover:bg-gray-50">
-            <td class="py-4 px-6">
-              <div class="flex items-center">
-                <span class="font-medium">${item.balanceType || "N/A"}</span>
-              </div>
-            </td>
-            <td class="py-4 px-6 font-semibold">${formatCurrency(
-              item.amount
-            )}</td>
-            <td class="py-4 px-6">
-              <span class="status-badge ${statusClass}">
-                <i class="${iconClass} mr-1"></i>
-                ${item.status}
-              </span>
-            </td>
-            <td class="py-4 px-6">${formatDate(item.withdrawnAt)}</td>
-            <td class="py-4 px-6">${formatTime(item.withdrawnAt)}</td>
-          </tr>
-        `;
-        });
-
-        tableBody.innerHTML = tableHTML;
-      };
-
-      // Render cards with withdrawal data (for mobile) - Updated to match your reference
-      const renderCards = (withdrawals) => {
-        const cardsBody = document.getElementById("withdrawals-cards-body");
-
-        if (withdrawals.length === 0) {
-          cardsBody.innerHTML = `
-          <div class="text-center py-4 text-gray-500">
-            No withdrawal history found.
-          </div>
-        `;
-          return;
-        }
-
-        let cardsHTML = "";
-
-        withdrawals.forEach((item) => {
-          // Determine status class, border color, and icon based on status
-          let statusClass, borderColor, icon, iconColor;
-          if (item.status.toLowerCase() === "pending") {
-            statusClass = "status-pending";
-            borderColor = "border-yellow-400";
-            icon = "fas fa-clock";
-            iconColor = "text-yellow-500";
-          } else if (item.status.toLowerCase() === "successful") {
-            statusClass = "status-success";
-            borderColor = "border-green-400";
-            icon = "fas fa-check-circle";
-            iconColor = "text-green-500";
-          } else {
-            statusClass = "status-failed";
-            borderColor = "border-red-400";
-            icon = "fas fa-times-circle";
-            iconColor = "text-red-500";
-          }
-
-          // Determine wallet icon based on balance type
-          let walletIcon;
-          if (item.balanceType && item.balanceType.includes("BTC")) {
-            walletIcon = "fab fa-bitcoin";
-          } else if (item.balanceType && item.balanceType.includes("USDT")) {
-            walletIcon = "fas fa-dollar-sign";
-          } else if (item.balanceType && item.balanceType.includes("ETH")) {
-            walletIcon = "fab fa-ethereum";
-          } else if (item.balanceType && item.balanceType.includes("Bank")) {
-            walletIcon = "fas fa-university";
-          } else {
-            walletIcon = "fas fa-wallet";
-          }
-
-          cardsHTML += `
-          <div class="withdrawal-card bg-white rounded-lg p-4 flex items-center justify-between ${borderColor}">
-            <div class="flex items-center">
-              <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center mr-4 ${iconColor}">
-                <i class="${walletIcon}"></i>
-              </div>
-              <div>
-                <p class="font-semibold">${item.balanceType || "N/A"}</p>
-                <p class="text-sm text-gray-500">${formatDate(
-                  item.withdrawnAt
-                )} ${formatTime(item.withdrawnAt)}</p>
-              </div>
-            </div>
-            <div class="text-right">
-              <p class="font-bold text-lg">${formatCurrency(item.amount)}</p>
-              <span class="status-badge ${statusClass}">
-                <i class="${icon}"></i>
-                ${item.status}
-              </span>
-            </div>
-          </div>
-        `;
-        });
-
-        cardsBody.innerHTML = cardsHTML;
-      };
-
-      // Initial fetch
-      fetchWithdrawals();
-
-      // Refresh data every 60 seconds
-      setInterval(() => {
-        fetchWithdrawals();
-        fetchUserDetails();
-      }, 10000);
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -41,7 +41,7 @@
       body {
         background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
         min-height: 100vh;
-        padding-bottom: 80px;
+        padding-bottom: 70px;
       }
       .welfare-card {
         background: white;
@@ -107,7 +107,9 @@
         }
       }
     </style>
-  </head>
+  
+  <script src="./translator.js"></script>
+</head>
   <body style="display: none" class="font-poppins">
     <div class="lg:p-4 space-y-8 max-w-4xl mx-auto">
       <div id="header" class="sticky top-0 z-[1000]"></div>
@@ -183,10 +185,10 @@
             return `
       <div class="welfare-card">
         <div class="welfare-header">
-          <h3 class="text-xl font-bold">${plan.title}</h3>
-          <p class="text-sm opacity-90">${plan.description || ""}</p>
+          <h3 class="text-base font-bold">${plan.title}</h3>
+          <p class="text-xs opacity-90">${plan.description || ""}</p>
         </div>
-        <div class="p-6 flex-grow">
+        <div class="p-4 flex-grow">
           <div class="text-center mb-6">
             <span class="welfare-price">₦${Number(
               plan.price

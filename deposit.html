@@ -1,407 +1,219 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Deposit - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f0f4f8; 
+      padding-bottom: 70px; 
+    }
 
-    <!-- Fonts & Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
+    .header-bg {
+      background: linear-gradient(90deg, #1fa2d0, #4f8cff);
+    }
+    
+    .crypto-btn.active {
+      border-color: #4f8cff;
+      background-color: #ebf3ff;
+    }
 
-    <title>Recharge Wallet</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: { 500: "#0ea5e9", 600: "#0284c7", 700: "#0369a1" },
-            },
-            fontFamily: {
-              poppins: ["Poppins", "sans-serif"],
-              roboto: ["Roboto", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
-    <style>
-      body {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        min-height: 100vh;
-        padding-bottom: 80px;
-      }
-      .card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .card:hover {
-        transform: translateY(-5px);
-      }
-      .note {
-        background: #3b82f6;
-      }
-      .btn-primary {
-        background: #3b82f6;
-        transition: all 0.3s ease;
-      }
-      .btn-primary:hover {
-        background: #2563eb;
-        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-      }
-      input[type="number"]::-webkit-outer-spin-button,
-      input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-      input[type="number"] {
-        -moz-appearance: textfield;
-      }
-      .bank-info {
-        background: linear-gradient(135deg, #0c4a6e 0%, #134e4a 100%);
-        color: white;
-      }
-      .copy-btn {
-        transition: all 0.3s ease;
-      }
-      .copy-btn:hover {
-        transform: scale(1.05);
-        background-color: rgba(255, 255, 255, 0.2);
-      }
-      .small-loading-spinner {
-        border: 3px solid #f9f8f8;
-        border-top: 3px solid #0ea5e9;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        animation: spin 1s linear infinite;
-      }
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      @media (min-width: 768px) {
-        body {
-          padding-bottom: 0;
-        }
-      }
-    </style>
-  </head>
-  <body style="display: none" class="md:pt-2 font-poppins">
-    <div class="lg:p-4 space-y-8 max-w-4xl mx-auto">
-      <div id="header" class="sticky top-0 z-[1000]"></div>
+    .crypto-btn:hover:not(.active) {
+      border-color: #cbd5e1;
+      background-color: #f8fafc;
+    }
 
-      <!-- Bank Info -->
-      <section class="px-4 lg:px-0">
-        <div class="bank-info rounded-xl shadow-lg mb-6 p-6 space-y-4">
-          <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-            <i class="fas fa-university mr-2"></i> Bank Account Details
-          </h2>
-          <!-- Dynamic bank info will render here -->
-          <div
-            id="bankInfo"
-            class="bg-white bg-opacity-10 p-4 rounded-lg space-y-4"
-          ></div>
-        </div>
-      </section>
+    .btn-gradient {
+      background: linear-gradient(90deg, #1fa2d0, #4f8cff);
+    }
+    .btn-disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+    }
 
-      <!-- Recharge Form -->
-      <section class="px-4 lg:px-0">
-        <form
-          id="depositForm"
-          class="bg-white rounded-xl shadow-lg card p-6 space-y-6 mb-16"
-          enctype="multipart/form-data"
-          novalidate
-        >
-          <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center">
-            <i class="fas fa-bolt text-primary-500 mr-2"></i> Recharge Wallet
-          </h2>
-          <p class="text-gray-600 text-sm">
-            Please fill in the details below to complete your recharge.
-          </p>
-          <p class="note p-2 text-white text-sm font-semibold rounded-lg">
-            Note: Minimum Deposit is ₦3000
-          </p>
+  </style>
 
-          <!-- Amount -->
-          <div>
-            <label class="block text-gray-700 font-medium mb-1"
-              >Deposit Amount (₦)</label
-            >
-            <input
-              type="number"
-              name="amount"
-              min="3000"
-              placeholder="Enter amount to deposit"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:outline-none"
-              aria-describedby="amountError"
-              required
-            />
-            <p id="amountError" class="text-red-500 text-sm mt-1 hidden">
-              Please enter a valid amount (minimum ₦3000)
-            </p>
-          </div>
+  <script src="./translator.js"></script>
+</head>
+<body class="flex flex-col min-h-screen items-center">
 
-          <!-- Sender -->
-          <div>
-            <label class="block text-gray-700 font-medium mb-1"
-              >Sender Name</label
-            >
-            <input
-              type="text"
-              name="senderName"
-              placeholder="Enter sender name"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:outline-none"
-              aria-describedby="senderError"
-              required
-            />
-            <p id="senderError" class="text-red-500 text-sm mt-1 hidden">
-              Please enter sender name
-            </p>
-          </div>
+  <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
 
-          <!-- Proof -->
-          <div>
-            <label class="block text-gray-700 font-medium mb-1"
-              >Proof of Payment</label
-            >
-            <input
-              type="file"
-              name="file"
-              accept="image/*"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-600 bg-gray-50 cursor-pointer focus:ring-2 focus:ring-primary-500 focus:outline-none"
-              aria-describedby="proofError"
-              required
-            />
-            <p id="proofError" class="text-red-500 text-sm mt-1 hidden">
-              Please upload proof of payment
-            </p>
-          </div>
-
-          <!-- Wallet -->
-          <div>
-            <label class="block text-gray-700 font-medium mb-1"
-              >Select Wallet</label
-            >
-            <select
-              name="balanceType"
-              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500"
-              aria-describedby="walletError"
-              required
-            >
-              <option value="">-- Choose Wallet --</option>
-              <option value="investment">Investment Wallet</option>
-              <option value="welfare">Welfare Wallet</option>
-            </select>
-            <p id="walletError" class="text-red-500 text-sm mt-1 hidden">
-              Please select a wallet
-            </p>
-          </div>
-
-          <button
-            type="submit"
-            class="btn-primary w-full text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center"
-          >
-            <span>Submit to Recharge</span>
-            <i class="fas fa-arrow-right ml-2"></i>
-          </button>
-        </form>
-      </section>
-
-      <div id="footer" class="fixed w-full md:sticky bottom-0 z-[1000]"></div>
+    <!-- HEADER -->
+    <div class="header-bg text-white px-5 pt-6 pb-6 sticky top-0 z-40">
+      <div class="flex items-center relative">
+        <a href="javascript:history.back()" class="absolute left-0 text-white hover:opacity-80 transition">
+          <i class="fas fa-chevron-left text-[15px]"></i>
+        </a>
+        <h1 class="text-base font-bold w-full text-center tracking-wide">Deposit</h1>
+      </div>
     </div>
 
-    <script type="module">
-      import { showToast } from "./toast.js";
-
-      import { authFetch, checkAuth } from "./auth.js";
-      import { protectPage } from "./protect.js";
-
-      function waitForHeaderUI() {
-        return new Promise((resolve) => {
-          const interval = setInterval(() => {
-            if (typeof window.updateHeaderUI === "function") {
-              clearInterval(interval);
-              resolve();
-            }
-          }, 100);
-        });
-      }
-
-      checkAuth().then(async (user) => {
-        if (user) {
-          document.body.style.display = "block";
-          protectPage();
-          await waitForHeaderUI();
-          fetchUserDetails();
-        } else {
-          window.location.href = "/login.html";
-        }
-      });
-
-      async function fetchUserDetails() {
-        try {
-          const res = await authFetch(
-            "https://neo-invest-server.onrender.com/api/users/me",
-            { credentials: "include" }
-          );
-          if (!res.ok) throw new Error("Failed to fetch user details");
-          const userData = await res.json();
-          // Update header if function is available
-          if (typeof window.updateHeaderUI === "function") {
-            updateHeaderUI(userData);
-          }
-        } catch (err) {
-          console.error("Error fetching user details:", err);
-        }
-      }
-
-      // Bank account details (editable in one place)
-      const bankDetails = [
-        { label: "Bank Name", value: "Access Bank" },
-        { label: "Account Name", value: "John Chinedu" },
-        { label: "Account Number", value: "0034567890" },
-      ];
-
-      const bankInfoContainer = document.getElementById("bankInfo");
-      bankDetails.forEach((item) => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "flex justify-between items-center";
-        wrapper.innerHTML = `
-        <div>
-          <p class="text-sm text-gray-300">${item.label}</p>
-          <p class="font-semibold">${item.value}</p>
+    <!-- MAIN CONTENT -->
+    <div class="px-5 pt-6 pb-6 space-y-6 flex-1">
+      
+      <!-- Payment Method -->
+      <!-- <div>
+        <label class="block text-[11px] text-gray-500 font-medium mb-2 pl-1">Select Payment Method</label>
+        <div class="relative">
+          <select class="w-full appearance-none bg-[#f8fafc] border border-[#a5c3fb] text-gray-700 text-sm font-medium rounded-xl py-3.5 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition cursor-pointer">
+            <option value="crypto">Select Crypto Payment Method</option>
+            <option value="bank">Bank Transfer (Naira)</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+            <i class="fas fa-chevron-down text-xs"></i>
+          </div>
         </div>
-        <button type="button"
-          class="copy-btn bg-white bg-opacity-20 p-2 rounded-lg hover:bg-opacity-30 transition"
-          onclick="copyToClipboard('${item.value}', '${item.label}')">
-          <i class="fas fa-copy"></i>
-        </button>
-      `;
-        bankInfoContainer.appendChild(wrapper);
-      });
+      </div> -->
 
-      // Copy to clipboard with toast
-      window.copyToClipboard = (text, label) => {
-        navigator.clipboard
-          .writeText(text)
-          .then(() => {
-            showToast({
-              icon: "fas fa-copy",
-              message: `${label} copied to clipboard!`,
-              type: "success",
-            });
-          })
-          .catch(() => {
-            showToast({
-              icon: "fas fa-exclamation-circle",
-              message: `Failed to copy ${label}`,
-              type: "error",
-            });
-          });
-      };
+      <!-- Select Cryptocurrency -->
+      <div>
+        <label class="block text-[11px] text-gray-500 font-medium mb-2 pl-1">Select Cryptocurrency</label>
+        <div class="grid grid-cols-2 gap-3">
+          
+          <!-- BTC -->
+          <button type="button" class="crypto-btn flex items-center gap-3 bg-[#f8fafc] border border-gray-200 rounded-xl p-3 transition text-left" data-coin="BTC" data-rate="66000" onclick="selectCrypto(this)">
+            <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-7 h-7" alt="BTC" />
+            <div>
+              <p class="text-[11px] font-bold text-gray-800 leading-tight">BTC</p>
+              <p class="text-[9px] text-gray-400 mt-0.5">Bitcoin</p>
+            </div>
+          </button>
 
-      // Form submission
-      const form = document.getElementById("depositForm");
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+          <!-- USDT TRC20 (Default Active) -->
+          <button type="button" class="crypto-btn active flex items-center gap-3 bg-[#f8fafc] border border-gray-200 rounded-xl p-3 transition text-left" data-coin="USDT" data-rate="1" onclick="selectCrypto(this)">
+            <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-7 h-7" alt="USDT" />
+            <div>
+              <p class="text-[11px] font-bold text-gray-800 leading-tight">USDT</p>
+              <p class="text-[9px] text-gray-400 mt-0.5">TRC20</p>
+            </div>
+          </button>
 
-        const amount = form.amount.value.trim();
-        const senderName = form.senderName.value.trim();
-        const file = form.file.files[0];
-        const balanceType = form.balanceType.value;
-        const button = document
-          .getElementById("depositForm")
-          .querySelector("button[type='submit']");
-        const originalText = button.innerHTML;
+          <!-- USDT BEP20 -->
+          <button type="button" class="crypto-btn flex items-center gap-3 bg-[#f8fafc] border border-gray-200 rounded-xl p-3 transition text-left" data-coin="USDT" data-rate="1" onclick="selectCrypto(this)">
+            <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-7 h-7" alt="USDT" />
+            <div>
+              <p class="text-[11px] font-bold text-gray-800 leading-tight">USDT</p>
+              <p class="text-[9px] text-gray-400 mt-0.5">BEP20</p>
+            </div>
+          </button>
 
-        // Errors
-        const errors = {
-          amount: document.getElementById("amountError"),
-          sender: document.getElementById("senderError"),
-          proof: document.getElementById("proofError"),
-          wallet: document.getElementById("walletError"),
-        };
-        Object.values(errors).forEach((el) => el.classList.add("hidden"));
+          <!-- BNB BEP20 -->
+          <button type="button" class="crypto-btn flex items-center gap-3 bg-[#f8fafc] border border-gray-200 rounded-xl p-3 transition text-left" data-coin="BNB" data-rate="600" onclick="selectCrypto(this)">
+            <img src="https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png" class="w-7 h-7" alt="BNB" />
+            <div>
+              <p class="text-[11px] font-bold text-gray-800 leading-tight">BNB</p>
+              <p class="text-[9px] text-gray-400 mt-0.5">BEP20</p>
+            </div>
+          </button>
 
-        let valid = true;
-        if (!amount || Number(amount) < 3000) {
-          errors.amount.classList.remove("hidden");
-          valid = false;
-        }
-        if (!senderName) {
-          errors.sender.classList.remove("hidden");
-          valid = false;
-        }
-        if (!file) {
-          errors.proof.classList.remove("hidden");
-          valid = false;
-        }
-        if (!balanceType) {
-          errors.wallet.classList.remove("hidden");
-          valid = false;
-        }
-        if (!valid) return;
+        </div>
+      </div>
 
-        const formData = new FormData();
-        formData.append("amount", amount);
-        formData.append("senderName", senderName);
-        formData.append("balanceType", balanceType);
-        formData.append("proofOfPayment", file);
-        button.disabled = true;
-        button.innerHTML = `    <div class="small-loading-spinner mr-2"></div>
- Recharging...`;
-        try {
-          const res = await authFetch(
-            "https://neo-invest-server.onrender.com/api/deposits",
-            {
-              method: "POST",
-              body: formData,
-              credentials: "include",
-            }
-          );
-          const data = await res.json();
+      <!-- Amount Input -->
+      <div>
+        <label class="block text-[11px] text-gray-500 font-medium mb-2 pl-1">Amount (USD)</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <span class="text-gray-500 font-medium text-sm">$</span>
+          </div>
+          <input type="number" id="depositAmount" class="w-full bg-[#f8fafc] border border-gray-200 text-gray-800 text-sm font-semibold rounded-xl py-3.5 pl-8 pr-4 focus:outline-none focus:ring-1 focus:border-blue-400 focus:ring-blue-400 transition" placeholder="0.00" oninput="calculateAmount()">
+        </div>
+      </div>
 
-          if (!res.ok) {
-            showToast({
-              icon: "fas fa-exclamation-circle",
-              message: data.message || "Failed to submit deposit",
-              type: "error",
-            });
-            return;
-          }
+      <!-- Realtime Conversion Box -->
+      <div class="bg-[#f8fafc] border border-gray-200 rounded-xl p-4 flex justify-between items-center shadow-sm">
+        <span class="text-[11px] text-gray-500 font-medium tracking-wide">You will send</span>
+        <div class="text-right">
+          <p class="text-sm font-bold text-gray-800 tracking-wide"><span id="convertedAmount">0.00</span> <span id="selectedCoinLabel">USDT</span></p>
+          <p class="text-[9px] text-gray-400 mt-0.5 tracking-wide">1 <span id="rateCoinLabel">USDT</span> = $<span id="rateValueLabel">1.00</span></p>
+        </div>
+      </div>
 
-          showToast({
-            icon: "fas fa-check-circle",
-            message: data.message || "Recharge request submitted successfully!",
-            type: "success",
-          });
-          form.reset();
-        } catch (err) {
-          console.error(err);
-          showToast({
-            icon: "fas fa-exclamation-circle",
-            message: "An error occurred while submitting deposit",
-            type: "error",
-          });
-          button.disabled = false;
-          button.innerHTML = originalText;
-        } finally {
-          button.disabled = false;
-          button.innerHTML = originalText;
-        }
-      });
-    </script>
-  </body>
+      <!-- Submit Button -->
+      <button id="proceedBtn" class="w-full btn-disabled text-white font-bold py-3.5 rounded-xl text-sm transition mt-2 shadow-sm">
+        Proceed to Payment
+      </button>
+
+      <!-- Info Box -->
+      <div class="bg-[#f0f7ff] rounded-xl p-4 flex items-start gap-3 border border-[#e0efff] mt-4 shadow-sm">
+        <i class="fas fa-info-circle text-[#4f8cff] text-[13px] mt-0.5 shrink-0"></i>
+        <p class="text-[10px] text-[#4f8cff] leading-relaxed">
+          Please ensure you send the exact amount to the provided wallet address. Transactions are typically confirmed within 10-30 minutes.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let activeCoin = "USDT";
+    let activeRate = 1;
+
+    // Handle crypto selection
+    function selectCrypto(buttonElement) {
+      // Remove active class from all
+      document.querySelectorAll('.crypto-btn').forEach(btn => btn.classList.remove('active'));
+      // Add to clicked
+      buttonElement.classList.add('active');
+
+      // Update state
+      activeCoin = buttonElement.getAttribute('data-coin');
+      activeRate = parseFloat(buttonElement.getAttribute('data-rate'));
+
+      calculateAmount();
+    }
+
+    // Handle typing in the amount box
+    function calculateAmount() {
+      const input = document.getElementById('depositAmount').value;
+      const parsedAmount = parseFloat(input);
+      
+      const convertedDisplay = document.getElementById('convertedAmount');
+      const coinLabels = document.querySelectorAll('#selectedCoinLabel, #rateCoinLabel');
+      const rateDisplay = document.getElementById('rateValueLabel');
+      const btn = document.getElementById('proceedBtn');
+
+      // Update structural labels
+      coinLabels.forEach(el => el.innerText = activeCoin);
+      
+      // We assume activeRate is the price of the coin in USD
+      // e.g., if Bitcoin is 66000, and user enters 1000 USD, they send 1000 / 66000 BTC.
+      let finalAmount = 0;
+      if (!isNaN(parsedAmount) && parsedAmount > 0) {
+        finalAmount = parsedAmount / activeRate;
+      }
+
+      // Format correctly depending on coin
+      if (activeCoin === 'BTC' || activeCoin === 'BNB') {
+        convertedDisplay.innerText = finalAmount.toFixed(6);
+      } else {
+        convertedDisplay.innerText = finalAmount.toFixed(2);
+      }
+
+      // Format the static rate label for the bottom
+      rateDisplay.innerText = activeRate >= 1000 ? activeRate.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : activeRate.toFixed(2);
+
+      // Toggle button states
+      if (!isNaN(parsedAmount) && parsedAmount >= 1) {
+        btn.classList.remove('btn-disabled');
+        btn.classList.add('btn-gradient');
+        btn.onclick = () => { alert('Redirecting to Payment Gateway...'); };
+      } else {
+        btn.classList.add('btn-disabled');
+        btn.classList.remove('btn-gradient');
+        btn.onclick = null;
+      }
+    }
+
+    // Initialize state on load
+    calculateAmount();
+  </script>
+</body>
 </html>

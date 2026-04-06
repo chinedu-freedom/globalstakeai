@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Bank Info - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f0f4f8;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #4f8cff, #6ee7ff);
+    }
+    
+    .btn-gradient {
+      background: linear-gradient(90deg, #5eead4, #93c5fd);
+      transition: all 0.3s ease;
+    }
+  </style>
+
+  <script src="./translator.js"></script>
+</head>
+<body class="flex flex-col min-h-screen items-center">
+
+  <div class="w-full max-w-md mx-auto border-x border-gray-100 bg-[#f0f4f8] min-h-screen relative shadow-xl">
+
+    <!-- HEADER -->
+    <div class="gradient-bg text-white pt-5 pb-8 px-5 rounded-b-[30px] shadow-md sticky top-0 z-40">
+      <div class="flex justify-between items-center">
+        <a href="javascript:history.back()" class="text-white text-xl">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+        <h1 class="text-base font-semibold">Bind Bank Card</h1>
+        <div class="w-5"></div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="p-3">
+      <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 flex items-start gap-3 text-sm text-[#4f8cff]">
+        <i class="fas fa-info-circle mt-0.5"></i>
+        <p>Please ensure all bank information provided is accurate and matches your registered identity.</p>
+      </div>
+
+      <form class="space-y-4">
+        <div>
+          <label class="text-xs font-medium text-gray-500 ml-1">Bank Name</label>
+          <div class="relative mt-1">
+            <select class="w-full bg-white border border-gray-200 rounded-xl py-3 px-4 text-gray-700 appearance-none focus:outline-none focus:border-[#4f8cff]">
+              <option value="">Select Bank Provider</option>
+              <option value="access">Access Bank</option>
+              <option value="gtb">GTBank</option>
+              <option value="first">First Bank</option>
+              <option value="uba">UBA</option>
+              <option value="zenith">Zenith Bank</option>
+              <option value="opay">OPay</option>
+              <option value="palmpay">PalmPay</option>
+            </select>
+            <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-xs font-medium text-gray-500 ml-1">Account Number</label>
+          <input type="text" class="w-full mt-1 bg-white border border-gray-200 rounded-xl py-3 px-4 text-gray-700 focus:outline-none focus:border-[#4f8cff]" placeholder="e.g. 0123456789">
+        </div>
+
+        <div>
+          <label class="text-xs font-medium text-gray-500 ml-1">Account Name</label>
+          <input type="text" class="w-full mt-1 bg-gray-100 border border-gray-200 rounded-xl py-3 px-4 text-gray-500 focus:outline-none" placeholder="Enter Account number first" readonly>
+          <p class="text-[10px] text-gray-400 mt-1 ml-1">Account name resolves automatically.</p>
+        </div>
+
+        <button type="button" class="w-full btn-gradient py-4 mt-6 rounded-xl text-white font-bold text-lg shadow-md">
+          Save Bank Info
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

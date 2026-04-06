@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <title>Withdraw - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f6f8; 
+      padding-bottom: 70px; 
+    }
+
+    .header-bg {
+      background-color: #0e7bee; 
+      background: linear-gradient(90deg, #1282ec, #086edf);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+    
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+    
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
+    
+    
+    
+    
+
+    .overflow-y-auto::-webkit-scrollbar {
+      display: none;
+    }
+    .overflow-y-auto {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+  <script src="./translator.js"></script>
+</head>
+<body class="flex flex-col min-h-screen items-center bg-[#f4f6f8]">
+
+  <div class="w-full max-w-md bg-[#eef1f6] min-h-screen relative shadow-2xl mx-auto border-x border-[#e2e8f0] flex flex-col pb-24">
+
+    <!-- HEADER -->
+    <div class="header-bg text-white px-5 py-4 sticky top-0 z-40 shadow-sm">
+      <div class="flex items-center relative">
+        <a href="javascript:history.back()" class="absolute left-0 p-2 text-white flex items-center pr-4">
+          <i class="fas fa-chevron-left text-lg"></i>
+        </a>
+        <h1 class="text-[17px] font-bold w-full text-center tracking-wide">Withdraw</h1>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="px-5 pt-6 flex-1 space-y-5">
+      
+      <!-- Available Balance Card -->
+      <div class="bg-[#e4f0fa] rounded-xl px-5 py-4 flex items-center justify-between border border-[#d2e4f7] shadow-sm">
+        <p class="text-[13px] text-gray-500 font-medium tracking-wide">Available Balance</p>
+        <div class="flex items-center">
+            <span class="text-xl font-bold text-[#427ced] tracking-tight">$1606.00</span>
+        </div>
+      </div>
+
+      <!-- Today's Limit Card -->
+      <div class="bg-[#fcf3e6] rounded-xl p-5 shadow-sm border border-[#f5ead8]">
+        
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-sm font-bold text-gray-800 flex items-center gap-2">
+            <span class="bg-amber-400 text-white w-4 h-4 flex items-center justify-center rounded-sm text-[10px]">
+              <i class="fas fa-percent"></i>
+            </span>
+            Today's Limit
+          </span>
+          <span class="bg-[#fae7c8] text-[#e69f33] font-bold text-[10px] px-3 py-1 rounded-2xl tracking-wide uppercase">VIP 3</span>
+        </div>
+        
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-[12px] text-[#8e8d8d] font-medium tracking-wide">Remaining Today</span>
+          <span class="text-[14px] font-bold text-[#f5a623]">$100.00</span>
+        </div>
+        
+        <div class="w-full bg-[#f4e6d4] h-1.5 mb-2 rounded-full overflow-hidden">
+          <div class="bg-[#e69f33] h-full rounded-full" style="width: 0%"></div>
+        </div>
+        
+        <div class="flex justify-between text-[11px] text-[#9a9a9a] font-medium">
+          <span>$0.00 / $100.00</span>
+          <span>0/2 today</span>
+        </div>
+
+      </div>
+
+      <!-- Select Payout Method Container -->
+      <div class="space-y-3 pt-1">
+        <!-- <div>
+          <label class="block text-[13px] font-medium text-[#849ab3] mb-2 pl-1">Select Payout Method</label>
+          <div class="relative">
+            <select class="w-full appearance-none bg-[#fbfdfc] border border-[#e2e8f0] text-[#334155] text-[13px] font-medium rounded-xl py-3.5 px-4 focus:outline-none focus:border-[#0e7bee] transition pr-10 shadow-sm cursor-pointer">
+              <option>Select Crypto Method</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#9ca3af]">
+              <i class="fas fa-chevron-down text-sm"></i>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Select Cryptocurrency Button -->
+        <div class="pt-2">
+          <label class="block text-[13px] font-medium text-[#849ab3] mb-2 pl-1">Select Cryptocurrency</label>
+          <button id="usdt-btn" class="w-full flex items-center gap-3 bg-[#fbfdfc] border border-[#e2e8f0] rounded-xl p-3 focus:outline-none hover:border-[#0e7bee] transition shadow-sm">
+            <div class="w-[42px] h-[42px] rounded-full bg-[#e6f7f3] flex items-center justify-center border border-[#d2eee7] shrink-0">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="12" fill="#26A17B"/>
+                <path d="M13.25 10H17V8H7V10H10.75V17H13.25V10Z" fill="white"/>
+              </svg>
+            </div>
+            <div class="text-left flex flex-col justify-center">
+              <span class="text-[13px] font-bold text-[#1e293b] leading-tight mb-0.5 tracking-wide">USDT</span>
+              <span class="text-[11px] text-[#94a3b8] font-medium leading-tight uppercase">BEP20</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Dynamically Revealed Form Elements -->
+        <div id="expanded-form" class="hidden space-y-4 pt-1 animate-fade-in">
+          
+          <!-- Amount Input -->
+          <div>
+            <div class="flex justify-between items-center mb-2 pl-1 pr-1">
+              <label class="block text-[13px] font-medium text-[#849ab3]">Amount (USD)</label>
+              <button id="max-btn" class="text-[#0e7bee] text-[12px] font-bold hover:opacity-80 transition uppercase tracking-wide">MAX</button>
+            </div>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="text-[15px] font-semibold text-[#849ab3]">$</span>
+              </div>
+              <input type="number" id="amount-input" class="w-full bg-[#fbfdfc] border border-[#e2e8f0] text-[#1e293b] text-[15px] font-semibold rounded-xl py-3.5 pl-8 pr-4 focus:outline-none focus:border-[#0e7bee] focus:ring-1 focus:ring-[#0e7bee]/50 transition shadow-sm placeholder:text-[#cbd5e1] placeholder:font-normal" placeholder="0.00" step="0.01">
+            </div>
+            <p class="text-[11px] text-[#94a3b8] mt-1.5 pl-1 tracking-wide font-medium">Minimum amount: $20.00</p>
+          </div>
+
+          <!-- Wallet Address Input -->
+          <div>
+            <label class="block text-[13px] font-medium text-[#849ab3] mb-2 pl-1">Wallet Address</label>
+            <input type="text" id="wallet-input" class="w-full bg-[#fbfdfc] border border-[#e2e8f0] text-[#1e293b] text-[13px] rounded-xl py-3.5 px-4 focus:outline-none focus:border-[#0e7bee] focus:ring-1 focus:ring-[#0e7bee]/50 transition shadow-sm font-mono tracking-tight" placeholder="Paste your address here">
+            <p class="text-[11px] text-[#94a3b8] mt-1.5 pl-1 font-medium tracking-wide">Make sure to use a BEP20 compatible address</p>
+          </div>
+
+          <!-- Dynamic Summary Card -->
+          <div id="summary-card" class="bg-[#fbfdfc] border border-[#e2e8f0] rounded-xl p-5 shadow-sm hidden">
+            <div class="space-y-4">
+              <div class="flex justify-between items-center text-[13px]">
+                <span class="text-[#64748b] font-medium tracking-wide">Amount</span>
+                <span id="summary-amount" class="font-bold text-[#1e293b] tracking-wide">$0.00</span>
+              </div>
+              <div class="flex justify-between items-center text-[13px]">
+                <span class="text-[#64748b] font-medium tracking-wide">Fee (0% + $0.00)</span>
+                <span class="font-bold text-red-500 tracking-wide">-$0.00</span>
+              </div>
+              <div class="pt-4 border-t border-[#e2e8f0]">
+                <div class="flex justify-between items-end">
+                  <span class="text-[12px] font-medium text-[#64748b] mb-0.5 tracking-wide">You will receive</span>
+                  <div class="text-right">
+                    <div id="summary-final" class="text-[20px] font-bold text-emerald-500 tracking-tight">0.00 USDT</div>
+                    <div id="summary-fiat" class="text-[11px] text-[#94a3b8] font-medium mt-1">≈ $0.00</div>
+                  </div>
+                </div>
+              </div>
+              <p class="text-center text-[11px] text-[#94a3b8] font-medium mt-0.5 pt-3">1 USDT = $1.00</p>
+            </div>
+          </div>
+
+          <!-- Error Alert -->
+          <div id="error-alert" class="bg-red-50/80 border border-red-100 rounded-xl p-3.5 flex items-start gap-3 hidden shadow-sm">
+            <i class="fas fa-exclamation-circle text-red-500 text-sm mt-[3px]"></i>
+            <p id="error-msg" class="text-[12px] font-medium text-red-600 leading-snug flex-1 tracking-wide"></p>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button id="submit-btn" disabled class="w-full py-3.5 rounded-xl font-bold transition-all duration-300 bg-slate-200 text-slate-400 cursor-not-allowed text-[14px]">
+              Submit Withdrawal
+            </button>
+          </div>
+
+          <!-- Info Warning -->
+          <div class="bg-[#fdf8f0] border border-[#f5ead8] rounded-xl p-4 flex gap-3 text-[11px] text-[#b3833d] shadow-sm mb-4">
+            <i class="fas fa-exclamation-triangle text-[#e69f33] mt-0.5 text-xs shrink-0"></i>
+            <p class="leading-relaxed font-medium tracking-wide pr-1">Withdrawals are processed within 24 hours. Make sure your wallet address is correct as transactions cannot be reversed.</p>
+          </div>
+
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+  </div>
+  <script>
+    // Elements
+    const usdtBtn = document.getElementById('usdt-btn');
+    const expandedForm = document.getElementById('expanded-form');
+    const maxBtn = document.getElementById('max-btn');
+    const amountInput = document.getElementById('amount-input');
+    const walletInput = document.getElementById('wallet-input');
+    const summaryCard = document.getElementById('summary-card');
+    const errorAlert = document.getElementById('error-alert');
+    const submitBtn = document.getElementById('submit-btn');
+    
+    // Limits and variables based on user data
+    const remainingLimit = 100.00;
+    const minimumAmount = 20.00;
+    const availableBalance = 1606.00;
+
+    // Load previously saved address
+    const savedAddress = localStorage.getItem('savedWithdrawalAddress');
+    if (savedAddress) {
+      walletInput.value = savedAddress;
+    }
+
+    // Toggle expansion logic
+    usdtBtn.addEventListener('click', () => {
+      // Style button as active
+      usdtBtn.classList.remove('border-[#e2e8f0]');
+      usdtBtn.classList.add('border-[#0e7bee]', 'bg-blue-50/30');
+      // Show form
+      expandedForm.classList.remove('hidden');
+    });
+
+    // Validate and update summary on input
+    amountInput.addEventListener('input', validateForm);
+    walletInput.addEventListener('input', validateForm);
+
+    maxBtn.addEventListener('click', () => {
+      amountInput.value = Math.min(availableBalance, remainingLimit).toFixed(2);
+      validateForm();
+    });
+
+    function validateForm() {
+      const amountStr = amountInput.value;
+      const amount = parseFloat(amountStr);
+      const hasValidAmount = !isNaN(amount) && amountStr.trim() !== '';
+      const hasAddress = walletInput.value.trim().length > 0;
+
+      // Reset states
+      summaryCard.classList.add('hidden');
+      errorAlert.classList.add('hidden');
+      submitBtn.disabled = true;
+      submitBtn.classList.add('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
+      submitBtn.classList.remove('bg-[#0e7bee]', 'text-white', 'shadow-lg', 'shadow-[#0e7bee]/30', 'hover:bg-[#0c6cd6]', 'active:scale-[0.98]');
+
+      if (hasValidAmount) {
+        // Show summary
+        summaryCard.classList.remove('hidden');
+        document.getElementById('summary-amount').innerText = `$${amount.toFixed(2)}`;
+        document.getElementById('summary-final').innerText = `${amount.toFixed(2)} USDT`;
+        document.getElementById('summary-fiat').innerText = `≈ $${amount.toFixed(2)}`;
+
+        // Validations
+        if (amount < minimumAmount) {
+          showError(`Minimum withdrawal amount is $${minimumAmount.toFixed(2)}`);
+        } else if (amount > remainingLimit) {
+          showError(`Amount exceeds remaining daily limit of $${remainingLimit.toFixed(2)}`);
+        } else if (amount > availableBalance) {
+          showError(`Amount exceeds available balance.`);
+        } else {
+          // Valid numbers, now check if address is empty
+          if (hasAddress) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
+            submitBtn.classList.add('bg-[#0e7bee]', 'text-white', 'shadow-lg', 'shadow-[#0e7bee]/30', 'hover:bg-[#0c6cd6]', 'active:scale-[0.98]');
+          }
+        }
+      }
+    }
+
+    function showError(msg) {
+      errorAlert.classList.remove('hidden');
+      document.getElementById('error-msg').innerText = msg;
+    }
+
+    submitBtn.addEventListener('click', () => {
+      if (submitBtn.disabled) return;
+      
+      // Save address locally
+      localStorage.setItem('savedWithdrawalAddress', walletInput.value.trim());
+
+      // Show success toast
+      const successToast = document.getElementById('success-toast');
+      successToast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+      
+      // Update button state
+      const originalText = submitBtn.innerText;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+      submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+
+      // Hide toast after 5 seconds and reset
+      setTimeout(() => {
+        successToast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+        submitBtn.innerHTML = originalText;
+        submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+      }, 5000);
+    });
+  </script>
+</body>
+</html>

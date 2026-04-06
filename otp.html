@@ -1,72 +1,90 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Verify OTP - Globalstakeai</title>
-
+<title>Verify OTP - StakeWiseAi</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
-
 <style>
-body {
-  font-family: "Poppins", sans-serif;
-}
-
-.gradient-bg {
-  background: linear-gradient(135deg, #4f8cff, #6ee7ff);
-}
-
-.btn-gradient {
-  background: linear-gradient(90deg, #5eead4, #93c5fd);
-}
+body { font-family: "Poppins", sans-serif; }
+.gradient-bg { background: linear-gradient(135deg, #4f8cff, #6ee7ff); }
+.btn-gradient { background: linear-gradient(90deg, #5eead4, #93c5fd); }
 
 .otp-input {
-  width: 50px;
-  height: 55px;
+  width: 52px;
+  height: 58px;
   text-align: center;
-  font-size: 20px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  font-size: 22px;
+  font-weight: 700;
+  border-radius: 14px;
+  border: 2px solid #e5e7eb;
   background: #f8fafc;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: "Poppins", sans-serif;
+  color: #1e293b;
+}
+.otp-input:focus {
+  border-color: #4f8cff;
+  box-shadow: 0 0 0 3px rgba(79,140,255,0.15);
+}
+.otp-input.err {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
 }
 </style>
+
+  <script src="./translator.js"></script>
 </head>
 
 <body class="flex flex-col min-h-screen">
 
 <!-- HEADER -->
 <div class="gradient-bg text-white text-center py-16">
-  <h1 class="text-xl font-semibold">Globalstakeai</h1>
+  <h1 class="text-base font-semibold">StakeWiseAi</h1>
 </div>
 
 <!-- MAIN -->
-<div class=" flex justify-center px-4">
-  <div class="bg-white w-full p-6 ">
+<div class="flex justify-center px-4">
+  <div class="bg-white w-full p-6">
+
+    <!-- Back arrow -->
+    <a href="/forgotPassword.html" class="flex items-center gap-2 text-gray-400 text-sm mb-6">
+      <i class="fas fa-chevron-left text-xs"></i>
+      Back
+    </a>
 
     <!-- Title -->
-    <h2 class="text-lg font-semibold text-center mb-2">
-      Verify Code
-    </h2>
-    <p class="text-sm text-gray-500 text-center mb-6 ">
-      Enter the 4-digit code sent to your email
+    <h2 class="text-sm font-semibold text-center mb-2">Verify Code</h2>
+    <p class="text-xs text-gray-500 text-center mb-1" id="otpSubtitle">
+      Enter the 4-digit code sent to
     </p>
+    <p class="text-xs text-blue-500 font-semibold text-center mb-6" id="otpPhone"></p>
 
     <!-- OTP FORM -->
-    <form class="space-y-6">
+    <form class="space-y-6" onsubmit="handleVerifyOtp(event)">
 
       <!-- OTP Inputs -->
-      <div class="flex justify-between gap-2 max-w-xs mx-auto">
-         <input type="text" maxlength="1" class="otp-input" />
-        <input type="text" maxlength="1" class="otp-input" />
-        <input type="text" maxlength="1" class="otp-input" />
-        <input type="text" maxlength="1" class="otp-input" />
-        <input type="text" maxlength="1" class="otp-input" />
+      <div class="flex justify-center gap-2" id="otpInputsWrap">
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+        <!-- <input type="text" inputmode="numeric" maxlength="1" class="otp-input" /> -->
+        <!-- <input type="text" inputmode="numeric" maxlength="1" class="otp-input" /> -->
       </div>
 
+      <p class="text-red-500 text-[11px] text-center hidden" id="otpErr"></p>
+
       <!-- Button -->
-      <button class="w-full py-3 rounded-xl btn-gradient text-white font-semibold">
-        Verify
+      <button
+        type="submit"
+        id="otpBtn"
+        class="w-full py-3 rounded-xl btn-gradient text-white font-semibold flex items-center justify-center gap-2"
+      >
+        <span id="otpBtnText">Verify</span>
+        <i class="fas fa-spinner fa-spin hidden" id="otpSpinner"></i>
       </button>
 
     </form>
@@ -74,28 +92,174 @@ body {
     <!-- Resend -->
     <div class="text-center mt-6 text-sm">
       <span class="text-gray-500">Didn't receive code?</span>
-      <button class="text-blue-500 ml-1">Resend</button>
+      <button id="resendBtn" class="text-blue-500 ml-1 font-medium" onclick="handleResend()">Resend</button>
     </div>
+    <p class="text-center text-gray-400 text-xs mt-2 hidden" id="resendCountdown"></p>
 
   </div>
 </div>
 
-<script>
-const inputs = document.querySelectorAll(".otp-input");
+<!-- Toast -->
+<div id="otpToast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[999] px-5 py-3 rounded-full text-white text-xs font-semibold shadow-xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2" style="min-width:200px;justify-content:center;">
+  <i id="otpToastIcon" class="fas fa-check-circle"></i>
+  <span id="otpToastMsg"></span>
+</div>
 
+<script>
+const API_BASE = 'https://stakewiseai-server.onrender.com';
+const inputs   = document.querySelectorAll('.otp-input');
+
+// --- Show stored phone ---
+document.addEventListener('DOMContentLoaded', () => {
+  const phone = sessionStorage.getItem('resetPhone') || '';
+  document.getElementById('otpPhone').textContent = phone;
+});
+
+// --- OTP keyboard nav ---
 inputs.forEach((input, index) => {
-  input.addEventListener("input", () => {
+  input.addEventListener('input', () => {
+    // Only allow digits
+    input.value = input.value.replace(/\D/g, '');
+    clearOtpErr();
     if (input.value.length === 1 && index < inputs.length - 1) {
       inputs[index + 1].focus();
     }
   });
 
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Backspace" && input.value === "" && index > 0) {
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && input.value === '' && index > 0) {
       inputs[index - 1].focus();
     }
   });
+
+  // Allow pasting full OTP
+  input.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+    pasted.split('').forEach((char, i) => {
+      if (inputs[i]) inputs[i].value = char;
+    });
+    const nextEmpty = [...inputs].findIndex(inp => !inp.value);
+    if (nextEmpty !== -1) inputs[nextEmpty].focus();
+    else inputs[inputs.length - 1].focus();
+  });
 });
+
+function getOtpValue() {
+  return [...inputs].map(i => i.value).join('');
+}
+
+function showOtpErr(msg) {
+  const errEl = document.getElementById('otpErr');
+  errEl.textContent = msg;
+  errEl.classList.remove('hidden');
+  inputs.forEach(inp => inp.classList.add('err'));
+}
+
+function clearOtpErr() {
+  document.getElementById('otpErr').classList.add('hidden');
+  inputs.forEach(inp => inp.classList.remove('err'));
+}
+
+function showToast(msg, type = 'success') {
+  const toast  = document.getElementById('otpToast');
+  const msgEl  = document.getElementById('otpToastMsg');
+  const iconEl = document.getElementById('otpToastIcon');
+  msgEl.textContent = msg;
+  toast.style.background = type === 'success' ? '#4f8cff' : '#ef4444';
+  iconEl.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+  toast.classList.remove('opacity-0');
+  toast.classList.add('opacity-100');
+  setTimeout(() => { toast.classList.remove('opacity-100'); toast.classList.add('opacity-0'); }, 3500);
+}
+
+function setLoading(on) {
+  document.getElementById('otpBtn').disabled = on;
+  document.getElementById('otpBtnText').textContent = on ? 'Verifying...' : 'Verify';
+  document.getElementById('otpSpinner').classList.toggle('hidden', !on);
+}
+
+async function handleVerifyOtp(e) {
+  e.preventDefault();
+  const otp = getOtpValue();
+  const phone = sessionStorage.getItem('resetPhone') || '';
+
+  if (otp.length < 4) {
+    showOtpErr('Please enter the complete 4-digit code');
+    return;
+  }
+  if (!phone) {
+    showToast('Session expired. Please start over.', 'error');
+    setTimeout(() => window.location.href = '/forgotPassword.html', 1500);
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const res  = await fetch(`${API_BASE}/api/auth/verify-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phoneNumber: phone, otp })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      // Save OTP token/resetToken for the reset page if backend returns one
+      if (data.resetToken) sessionStorage.setItem('resetToken', data.resetToken);
+      sessionStorage.setItem('verifiedOtp', otp);
+      showToast('Code verified! Redirecting...', 'success');
+      setTimeout(() => window.location.href = '/resetPassword.html', 1300);
+    } else {
+      showOtpErr(data.message || 'Invalid code. Please try again.');
+    }
+  } catch (err) {
+    showToast('Network error. Please check your connection.', 'error');
+  } finally {
+    setLoading(false);
+  }
+}
+
+// --- Resend OTP with 60s cooldown ---
+let resendTimer = null;
+async function handleResend() {
+  const phone = sessionStorage.getItem('resetPhone') || '';
+  if (!phone) return;
+
+  const btn = document.getElementById('resendBtn');
+  const countdown = document.getElementById('resendCountdown');
+  btn.disabled = true;
+  countdown.classList.remove('hidden');
+
+  let seconds = 60;
+  countdown.textContent = `Resend available in ${seconds}s`;
+  resendTimer = setInterval(() => {
+    seconds--;
+    countdown.textContent = `Resend available in ${seconds}s`;
+    if (seconds <= 0) {
+      clearInterval(resendTimer);
+      btn.disabled = false;
+      countdown.classList.add('hidden');
+    }
+  }, 1000);
+
+  try {
+    const res = await fetch(`${API_BASE}/api/auth/request-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phoneNumber: phone })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showToast('New OTP sent!', 'success');
+      inputs.forEach(inp => inp.value = '');
+      inputs[0].focus();
+    } else {
+      showToast(data.message || 'Could not resend OTP.', 'error');
+    }
+  } catch {
+    showToast('Network error.', 'error');
+  }
+}
 </script>
 
 </body>

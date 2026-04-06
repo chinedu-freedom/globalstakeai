@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Active Staking - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f3f6f9; /* Match background */
+      padding-bottom: 70px; 
+    }
+
+    .top-header-gradient {
+      background: linear-gradient(90deg, #3db8b8, #186ef2);
+    }
+    
+    .btn-gradient-active {
+      background: linear-gradient(90deg, #2a9ba9, #136df1);
+    }
+
+    .plan-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid #eef2f6;
+    }
+    .plan-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+    
+    .nav-item {
+      color: #b1b5c3;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-item.active, .nav-item:hover {
+      color: #4f8cff;
+    }
+  </style>
+
+  <script src="./translator.js"></script>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <div class="w-full bg-[#f3f6f9] min-h-screen relative mx-auto">
+
+    <!-- HEADER / TOP NAV -->
+    <div class="top-header-gradient text-white flex items-center shadow-md relative z-10 w-full mb-4">
+      <a href="javascript:history.back()" class="bg-[#3eacac] px-5 py-4 text-white text-lg hover:bg-opacity-80 transition cursor-pointer">
+        <i class="fas fa-chevron-left text-[16px]"></i>
+      </a>
+      <h1 class="flex-1 text-center font-bold text-[16px] tracking-wide pr-14">Active Staking</h1>
+    </div>
+
+    <div class="px-3 md:px-6 w-full max-w-7xl mx-auto space-y-4">
+        <!-- STATS CARD -->
+        <div class="bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 flex p-4 justify-between items-center w-full">
+            <div class="flex-1 text-center border-r border-gray-100">
+                <p class="text-[#10b981] font-bold text-lg leading-tight">$0.00</p>
+                <p class="text-[11px] text-gray-400 font-medium tracking-wide">Invested</p>
+            </div>
+            <div class="flex-1 text-center border-r border-gray-100">
+                <p class="text-gray-800 font-bold text-lg leading-tight">0</p>
+                <p class="text-[11px] text-gray-400 font-medium tracking-wide">Active</p>
+            </div>
+            <div class="flex-1 text-center">
+                <p class="text-[#10b981] font-bold text-lg leading-tight">+$0.00</p>
+                <p class="text-[11px] text-gray-400 font-medium tracking-wide">Daily</p>
+            </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="flex gap-2 w-full p-1 bg-white rounded-xl border border-gray-50 shadow-sm">
+            <button id="activePlansTab" onclick="switchTab('activePlans')" class="flex-1 py-2.5 rounded-lg btn-gradient-active text-white font-semibold text-xs transition duration-300">
+                Active Plans
+            </button>
+            <button id="historyTab" onclick="switchTab('history')" class="flex-1 py-2.5 rounded-lg bg-transparent text-gray-400 font-semibold text-xs transition duration-300">
+                History
+            </button>
+        </div>
+
+        <!-- CONTENT SECTIONS -->
+        <div class="relative min-h-[400px]">
+            
+            <!-- ACTIVE PLANS SECTION -->
+            <div id="activePlansSection" class="absolute w-full flex flex-col items-center justify-center pt-20 transition-all duration-500 opacity-100 translate-x-0">
+                <div class="w-16 h-16 bg-gray-100/50 rounded-2xl flex items-center justify-center mb-6 border border-gray-100">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                </div>
+                <h2 class="text-gray-800 font-bold text-base mb-1">No Active Investments</h2>
+                <p class="text-gray-400 text-[11px] mb-6">Start investing to earn daily profits</p>
+                <a href="/plans.html" class="px-10 py-3 rounded-xl bg-[#186ef2] text-white font-bold text-xs shadow-lg shadow-blue-200 hover:bg-blue-600 transition">
+                    Browse Plans
+                </a>
+            </div>
+
+            <!-- HISTORY SECTION -->
+            <div id="historySection" class="absolute w-full space-y-3 pb-10 opacity-0 translate-x-full pointer-events-none transition-all duration-500">
+                
+                <!-- Item 1 -->
+                <div class="plan-card bg-white rounded-xl p-3.5 flex justify-between items-center w-full">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#ecfdf5] flex items-center justify-center text-[#10b981]">
+                            <i class="fas fa-dollar-sign text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-[12px] uppercase">Basic Plan</h3>
+                            <p class="text-[#a1a1aa] text-[10px] mt-0.5">Daily Profits - Day 30</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[#10b981] font-bold text-sm">+$1.33</p>
+                        <p class="text-[#a1a1aa] text-[9px] mt-0.5">Mar 30, 2026, 01:10 AM</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="plan-card bg-white rounded-xl p-3.5 flex justify-between items-center w-full">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#eff6ff] flex items-center justify-center text-[#3b82f6]">
+                            <i class="fas fa-undo text-sm" style="transform: scaleX(-1);"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-[12px] uppercase">Basic Plan</h3>
+                            <p class="text-[#a1a1aa] text-[10px] mt-0.5">Capital Return - Day 30</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[#3b82f6] font-bold text-sm">+$88.50</p>
+                        <p class="text-[#a1a1aa] text-[9px] mt-0.5">Mar 30, 2026, 01:10 AM</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="plan-card bg-white rounded-xl p-3.5 flex justify-between items-center w-full">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#ecfdf5] flex items-center justify-center text-[#10b981]">
+                            <i class="fas fa-dollar-sign text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-[12px] uppercase">Basic Plan</h3>
+                            <p class="text-[#a1a1aa] text-[10px] mt-0.5">Daily Profits - Day 29</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[#10b981] font-bold text-sm">+$1.33</p>
+                        <p class="text-[#a1a1aa] text-[9px] mt-0.5">Mar 29, 2026, 01:05 AM</p>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="plan-card bg-white rounded-xl p-3.5 flex justify-between items-center w-full">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#ecfdf5] flex items-center justify-center text-[#10b981]">
+                            <i class="fas fa-dollar-sign text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-[12px] uppercase">Basic Plan</h3>
+                            <p class="text-[#a1a1aa] text-[10px] mt-0.5">Daily Profits - Day 28</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[#10b981] font-bold text-sm">+$1.33</p>
+                        <p class="text-[#a1a1aa] text-[9px] mt-0.5">Mar 28, 2026, 01:00 AM</p>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="plan-card bg-white rounded-xl p-3.5 flex justify-between items-center w-full">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-[#ecfdf5] flex items-center justify-center text-[#10b981]">
+                            <i class="fas fa-dollar-sign text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-[12px] uppercase">Basic Plan</h3>
+                            <p class="text-[#a1a1aa] text-[10px] mt-0.5">Daily Profits - Day 27</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[#10b981] font-bold text-sm">+$1.33</p>
+                        <p class="text-[#a1a1aa] text-[9px] mt-0.5">Mar 27, 2026, 01:00 AM</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> <!-- end wrapper -->
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tab) {
+        const activePlansTab = document.getElementById('activePlansTab');
+        const historyTab = document.getElementById('historyTab');
+        const activePlansSection = document.getElementById('activePlansSection');
+        const historySection = document.getElementById('historySection');
+
+        if (tab === 'activePlans') {
+            // Update buttons
+            activePlansTab.classList.add('btn-gradient-active', 'text-white');
+            activePlansTab.classList.remove('bg-transparent', 'text-gray-400');
+            
+            historyTab.classList.remove('btn-gradient-active', 'text-white');
+            historyTab.classList.add('bg-transparent', 'text-gray-400');
+
+            // Update sections
+            activePlansSection.classList.remove('opacity-0', '-translate-x-full');
+            activePlansSection.classList.add('opacity-100', 'translate-x-0');
+            activePlansSection.classList.remove('pointer-events-none');
+
+            historySection.classList.add('opacity-0', 'translate-x-full');
+            historySection.classList.remove('opacity-100', 'translate-x-0');
+            historySection.classList.add('pointer-events-none');
+        } else {
+            // Update buttons
+            historyTab.classList.add('btn-gradient-active', 'text-white');
+            historyTab.classList.remove('bg-transparent', 'text-gray-400');
+
+            activePlansTab.classList.remove('btn-gradient-active', 'text-white');
+            activePlansTab.classList.add('bg-transparent', 'text-gray-400');
+
+            // Update sections
+            historySection.classList.remove('opacity-0', 'translate-x-full');
+            historySection.classList.add('opacity-100', 'translate-x-0');
+            historySection.classList.remove('pointer-events-none');
+
+            activePlansSection.classList.add('opacity-0', '-translate-x-full');
+            activePlansSection.classList.remove('opacity-100', 'translate-x-0');
+            activePlansSection.classList.add('pointer-events-none');
+        }
+    }
+  </script>
+</body>
+</html>
+
