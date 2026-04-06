@@ -301,28 +301,28 @@
     <div class="px-3 mt-3">
       <div class="flex overflow-x-auto gap-2 pb-1 no-scrollbar">
         <!-- BTC -->
-        <div class="bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap">
+        <div id="coin-btc" onclick="updateCryptoChart('BTC')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border-2 border-black flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
           <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="BTC" />
           <p class="font-bold text-gray-800 text-[10px] tracking-wide">BTC</p>
-          <p class="text-[8px] text-gray-400 mt-0.5">66,611.00</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">69,534.00</p>
         </div>
         <!-- ETH -->
-        <div class="bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap">
+        <div id="coin-eth" onclick="updateCryptoChart('ETH')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
           <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="ETH" />
           <p class="font-bold text-gray-800 text-[10px] tracking-wide">ETH</p>
-          <p class="text-[8px] text-gray-400 mt-0.5">2,052.48</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">2,135.75</p>
         </div>
         <!-- TRX -->
-        <div class="bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap">
+        <div id="coin-trx" onclick="updateCryptoChart('TRX')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
           <img src="https://assets.coingecko.com/coins/images/1094/small/tron-logo.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="TRX" />
           <p class="font-bold text-gray-800 text-[10px] tracking-wide">TRX</p>
-          <p class="text-[8px] text-gray-400 mt-0.5">0.3149</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">0.3163</p>
         </div>
         <!-- DOGE -->
-        <div class="bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap">
+        <div id="coin-doge" onclick="updateCryptoChart('DOGE')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
           <img src="https://assets.coingecko.com/coins/images/5/small/dogecoin.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="DOGE" />
           <p class="font-bold text-gray-800 text-[10px] tracking-wide">DOGE</p>
-          <p class="text-[8px] text-gray-400 mt-0.5">0.0904</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">0.0919</p>
         </div>
       </div>
     </div>
@@ -361,6 +361,8 @@
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>
       </div>
+    </div>
+    </div>
     </div>
     </div>
     </div>
@@ -489,54 +491,62 @@
 
       // Initialize the Chart.js Spline Chart mimicking the uploaded image
       const ctx = document.getElementById('cryptoChart').getContext('2d');
-      new Chart(ctx, {
+      window.cryptoChart = new Chart(ctx, {
           type: 'line',
           data: {
               labels: ['01-01', '01-02', '01-03', '01-04', '01-05', '01-06', '01-07'],
               datasets: [
                   {
                       label: 'BTC',
-                      data: [2, 8, 4, 2, 1, -2, 0],
+                      data: [2, 8, 4, 3, 2, -3, 0],
                       borderColor: '#4f8cff',
-                      backgroundColor: '#4f8cff',
+                      backgroundColor: '#4f8cff22',
+                      fill: true,
                       tension: 0.4,
                       borderWidth: 2,
                       pointBackgroundColor: '#fff',
                       pointBorderColor: '#4f8cff',
-                      pointRadius: 3
+                      pointRadius: 3,
+                      hidden: false
                   },
                   {
                       label: 'ETH',
-                      data: [8, 6, 3, 2, 0, -4, -1],
-                      borderColor: '#10b981',
-                      backgroundColor: '#10b981',
+                      data: [1, 5, 3, 2, 0, -2, -1],
+                      borderColor: '#22d3ee',
+                      backgroundColor: '#22d3ee22',
+                      fill: true,
                       tension: 0.4,
                       borderWidth: 2,
                       pointBackgroundColor: '#fff',
-                      pointBorderColor: '#10b981',
-                      pointRadius: 3
-                  },
-                  {
-                      label: 'DOGE',
-                      data: [0, 2, 1, 3, 2, -6, 1],
-                      borderColor: '#f59e0b',
-                      backgroundColor: '#f59e0b',
-                      tension: 0.4,
-                      borderWidth: 2,
-                      pointBackgroundColor: '#fff',
-                      pointBorderColor: '#f59e0b',
-                      pointRadius: 3
+                      pointBorderColor: '#22d3ee',
+                      pointRadius: 3,
+                      hidden: true
                   },
                   {
                       label: 'TRX',
-                      data: [1, 3, 2, 1, 0, -1, 0],
+                      data: [0, 2, 1, 3, 2, -1, 1],
                       borderColor: '#ef4444',
-                      backgroundColor: '#ef4444',
+                      backgroundColor: '#ef444422',
+                      fill: true,
                       tension: 0.4,
                       borderWidth: 2,
                       pointBackgroundColor: '#fff',
                       pointBorderColor: '#ef4444',
-                      pointRadius: 3
+                      pointRadius: 3,
+                      hidden: true
+                  },
+                  {
+                      label: 'DOGE',
+                      data: [1, 3, 2, 1, 0, -1, 0],
+                      borderColor: '#f59e0b',
+                      backgroundColor: '#f59e0b22',
+                      fill: true,
+                      tension: 0.4,
+                      borderWidth: 2,
+                      pointBackgroundColor: '#fff',
+                      pointBorderColor: '#f59e0b',
+                      pointRadius: 3,
+                      hidden: true
                   }
               ]
           },
@@ -552,14 +562,23 @@
                           font: { size: 9, family: 'Poppins', weight: '600' },
                           color: '#6b7280'
                       }
+                  },
+                  tooltip: {
+                    mode: 'index',
+                    intersect: false,
                   }
+              },
+              interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
               },
               scales: {
                   y: {
-                      min: -12,
-                      max: 12,
+                      min: -10,
+                      max: 10,
                       ticks: {
-                          stepSize: 6,
+                          stepSize: 5,
                           callback: function(value) { return value + '%'; },
                           font: { size: 9, color: '#9ca3af' }
                       },
@@ -574,6 +593,29 @@
               }
           }
       });
+
+      // Function to update the chart based on card selection
+      window.updateCryptoChart = function(coin) {
+          const coinIndices = { 'BTC': 0, 'ETH': 1, 'TRX': 2, 'DOGE': 3 };
+          const activeIndex = coinIndices[coin];
+
+          // Update chart datasets visibility
+          window.cryptoChart.data.datasets.forEach((dataset, index) => {
+              dataset.hidden = (index !== activeIndex);
+          });
+          window.cryptoChart.update();
+
+          // Update card visual state
+          document.querySelectorAll('.coin-card').forEach(card => {
+              card.classList.remove('border-2', 'border-black');
+              card.classList.add('border', 'border-gray-100');
+          });
+          
+          const selectedCard = document.getElementById(`coin-${coin.toLowerCase()}`);
+          selectedCard.classList.remove('border', 'border-gray-100');
+          selectedCard.classList.add('border-2', 'border-black');
+      };
+
     });
   </script>
 </body>

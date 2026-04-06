@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - GlobalStakeAi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8fafc; padding-bottom: 80px; }
+        .gradient-header { background: linear-gradient(90deg, #14b8a6, #226ddc); }
+        .gradient-btn { background: linear-gradient(135deg, #14b8a6, #2563eb); }
+        .modal-overlay { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); }
+        .support-card { transition: all 0.3s ease; }
+        .support-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+        .nav-item { color: #94a3b8; transition: color 0.3s ease; }
+        .nav-item.active { color: #4f8cff; }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <div class="w-full max-w-md bg-white min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+        
+        <!-- HEADER -->
+        <div class="gradient-header px-6 pt-10 pb-10 flex justify-between items-center text-white">
+            <div class="flex items-center gap-4">
+                <a href="account.html" class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition">
+                    <i class="fas fa-chevron-left text-sm"></i>
+                </a>
+                <h1 class="text-2xl font-bold tracking-tight">Contact Us</h1>
+            </div>
+            <!-- Refresh icon container -->
+            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shadow-lg transition">
+                <i class="fas fa-headset text-sm"></i>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center pt-10 px-6">
+            <!-- Illustration Section -->
+        <div class="w-48 h-48 mb-8 relative">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <circle cx="100" cy="100" r="80" fill="#f1f5f9"/>
+                <circle cx="100" cy="70" r="40" fill="#14b8a6" opacity="0.8"/>
+                <path d="M100 120 C60 120 40 160 40 160 L160 160 C160 160 140 120 100 120" fill="#2563eb" opacity="0.8"/>
+                <rect x="70" y="55" width="60" height="10" rx="5" fill="white" opacity="0.3"/>
+                <circle cx="85" cy="45" r="5" fill="white" opacity="0.4"/>
+                <circle cx="115" cy="45" r="5" fill="white" opacity="0.4"/>
+            </svg>
+            <div class="absolute -top-2 -right-2 w-12 h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center p-2">
+                <i class="fas fa-comment-dots text-teal-500 text-lg"></i>
+            </div>
+            <div class="absolute bottom-4 -left-4 w-10 h-10 bg-white rounded-2xl shadow-lg flex items-center justify-center p-2">
+                <i class="fas fa-headset text-blue-500"></i>
+            </div>
+        </div>
+
+        <!-- Text Content -->
+        <div class="text-center space-y-3 mb-10">
+            <h1 class="text-2xl font-bold text-slate-800">Need Assistance?</h1>
+            <p class="text-xs text-slate-500 leading-relaxed font-medium px-4">
+                Our support team is available 24/7 to assist you with any inquiries or concerns regarding your account or mining plans.
+            </p>
+        </div>
+
+        <!-- Main Action Button -->
+        <button id="openModal" class="gradient-btn w-full py-4 rounded-2xl text-white font-bold shadow-lg flex items-center justify-center gap-3 active:scale-95 transition-transform">
+            <i class="fas fa-comments"></i>
+            <span>Support Services</span>
+        </button>
+
+        <!-- Support Modal (Hidden by Default) -->
+        <div id="supportModal" class="fixed inset-0 z-[100] modal-overlay flex items-center justify-center px-6 hidden opacity-0 transition-opacity duration-300">
+            <div class="bg-white w-full max-w-[320px] rounded-[32px] p-6 shadow-2xl relative">
+                <!-- Close Button -->
+                <button id="closeModal" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition">
+                    <i class="fas fa-times text-sm"></i>
+                </button>
+
+                <h3 class="text-lg font-bold text-slate-800 mb-6 text-center">Contact Us</h3>
+
+                <!-- Grid of Support Channels -->
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Telegram Group -->
+                    <a href="#" class="support-card bg-sky-50 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 group">
+                        <div class="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 group-hover:bg-sky-500 group-hover:text-white transition">
+                            <i class="fab fa-telegram-plane text-xl"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-700">Telegram Group</span>
+                    </a>
+                    <!-- WhatsApp Group -->
+                    <a href="#" class="support-card bg-emerald-50 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 group">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-700">WhatsApp Group</span>
+                    </a>
+                    <!-- Telegram Channel -->
+                    <a href="#" class="support-card bg-sky-50 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 group col-span-2 flex-row py-3">
+                        <div class="w-10 h-10 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 group-hover:bg-sky-500 group-hover:text-white transition">
+                            <i class="fas fa-bullhorn text-sm"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-700">Telegram Channel</span>
+                    </a>
+                    <!-- WhatsApp Channel -->
+                    <a href="#" class="support-card bg-emerald-50 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 group col-span-2 flex-row py-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition">
+                            <i class="fab fa-whatsapp text-sm"></i>
+                        </div>
+                        <span class="text-[10px] font-bold text-slate-700">WhatsApp Channel</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
+      </div>
+    </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Script -->
+    <script>
+        const modal = document.getElementById('supportModal');
+        const openBtn = document.getElementById('openModal');
+        const closeBtn = document.getElementById('closeModal');
+
+        function toggleModal(show) {
+            if (show) {
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            } else {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        }
+
+        openBtn.addEventListener('click', () => toggleModal(true));
+        closeBtn.addEventListener('click', () => toggleModal(false));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) toggleModal(false);
+        });
+    </script>
+
+    <!-- Start of Tawk.to Script -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6784d142afdbb419340058b7/1ihfgl563';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!-- End of Tawk.to Script -->
+
+    <script src="./translator.js"></script>
+</body>
+</html>

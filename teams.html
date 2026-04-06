@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -42,6 +42,31 @@
       transform: translateY(-2px);
     }
 
+    .member-card {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      transition: transform 0.2s ease;
+    }
+    .member-card:hover { transform: translateY(-2px); }
+    .member-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #14b8a6, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
     .level-tab {
       transition: all 0.3s ease;
     }
@@ -107,7 +132,7 @@
   <div class="w-full max-w-md mx-auto border-x border-gray-100 bg-[#f0f4f8] min-h-screen relative shadow-xl">
 
     <!-- HEADER -->
-    <div class="gradient-bg text-white pt-5 pb-8 px-5 rounded-b-[40px] shadow-md relative">
+    <div class="gradient-bg text-white pt-5 pb-10 px-5 rounded-b-[40px] shadow-md relative">
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-base font-semibold">My Team</h1>
         <div>
@@ -115,10 +140,10 @@
         </div>
       </div>
       
-      <div class="text-center mt-2">
-        <p class="text-xs text-white/80">Total Team Bonus</p>
-        <p class="text-xl font-bold mt-1">₦0.00</p>
-      </div>
+      <!-- <div class="text-center mt-2">
+        <p class="text-xs text-white/80">Total Invites</p>
+        <p class="text-xl font-bold mt-1">0</p>
+      </div> -->
     </div>
 
     <!-- REFERRAL LINK AREA -->
@@ -140,11 +165,11 @@
       <h3 class="text-xs font-semibold text-gray-800 mb-3 px-1">Team Overview</h3>
       <div class="grid grid-cols-2 gap-4">
         <div class="stat-card shadow-sm">
-          <p class="text-gray-500 text-xs mb-1">Total Team Size</p>
+          <p class="text-gray-500 text-xs mb-1">Total Invites</p>
           <p class="text-base font-bold text-gray-800">0</p>
         </div>
         <div class="stat-card shadow-sm">
-          <p class="text-gray-500 text-xs mb-1">Active Members</p>
+          <p class="text-gray-500 text-xs mb-1">Total Earnings</p>
           <p class="text-base font-bold text-[#4f8cff]">0</p>
         </div>
       </div>
@@ -158,12 +183,91 @@
         <button class="level-tab flex-1 py-2 text-sm rounded-full text-gray-600" onclick="switchLevel(this, 3)">Level 3 (1%)</button>
       </div>
 
-      <!-- MEMBER LIST START -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 min-h-[150px] flex flex-col items-center justify-center">
-        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3">
-          <i class="fas fa-folder-open text-gray-300 text-2xl"></i>
+      <!-- MEMBER LIST: Level panels -->
+      <div id="level-1" class="level-panel space-y-3">
+        <div class="member-card">
+          <div class="member-avatar">S</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-gray-800">Success</p>
+            <p class="text-[10px] text-gray-400">Joined Feb 21, 2026</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="text-sm font-bold text-[#4f8cff]">$0.00</p>
+            <p class="text-[9px] text-gray-400">Invested</p>
+          </div>
         </div>
-        <p class="text-gray-400 text-sm">No members found in this level</p>
+        <div class="member-card">
+          <div class="member-avatar">V</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-gray-800">Vegas</p>
+            <p class="text-[10px] text-gray-400">Joined Feb 21, 2026</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="text-sm font-bold text-[#4f8cff]">$30.00</p>
+            <p class="text-[9px] text-gray-400">Invested</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">C</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-gray-800">Chinedu22</p>
+            <p class="text-[10px] text-gray-400">Joined Apr 2, 2026</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="text-sm font-bold text-[#4f8cff]">$0.00</p>
+            <p class="text-[9px] text-gray-400">Invested</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">Y</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-gray-800">Young_tech</p>
+            <p class="text-[10px] text-gray-400">Joined Apr 2, 2026</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="text-sm font-bold text-[#4f8cff]">$0.00</p>
+            <p class="text-[9px] text-gray-400">Invested</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="level-2" class="level-panel space-y-3 hidden">
+        <div class="member-card">
+          <div class="member-avatar">A</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-gray-800">Alpha_user</p>
+            <p class="text-[10px] text-gray-400">Joined Mar 5, 2026</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="text-sm font-bold text-[#4f8cff]">$10.00</p>
+            <p class="text-[9px] text-gray-400">Invested</p>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">B</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-gray-800">Bright22</p>
+            <p class="text-[10px] text-gray-400">Joined Mar 10, 2026</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="text-sm font-bold text-[#4f8cff]">$0.00</p>
+            <p class="text-[9px] text-gray-400">Invested</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="level-3" class="level-panel space-y-3 hidden">
+        <div class="member-card">
+          <div class="member-avatar">T</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-gray-800">TechPro</p>
+            <p class="text-[10px] text-gray-400">Joined Apr 1, 2026</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="text-sm font-bold text-[#4f8cff]">$5.00</p>
+            <p class="text-[9px] text-gray-400">Invested</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -197,6 +301,8 @@
     </div>
     </div>
     </div>
+    </div>
+    </div>
 
   </div>
   <script>
@@ -220,8 +326,10 @@
       });
       element.classList.add('active');
       element.classList.remove('text-gray-600');
-      
-      // We would swap list contents here normally
+
+      document.querySelectorAll('.level-panel').forEach(panel => panel.classList.add('hidden'));
+      const activePanel = document.getElementById('level-' + level);
+      if (activePanel) activePanel.classList.remove('hidden');
     }
   </script>
 </body>

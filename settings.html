@@ -102,6 +102,112 @@
       </div>
     </div>
 
+  <!-- ===== LANGUAGE MODAL ===== -->
+  <div id="langModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center px-5">
+    <div id="langOverlay" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300" onclick="toggleLanguageModal(false)"></div>
+    <div id="langModalContent" class="relative w-full max-w-sm bg-white rounded-[32px] shadow-2xl scale-95 opacity-0 transition-all duration-300 max-h-[75vh] flex flex-col">
+      <!-- Handle -->
+      <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-4 mb-1 flex-shrink-0"></div>
+      <h3 class="text-sm font-bold text-gray-800 text-center py-4 border-b border-gray-50 flex-shrink-0">Select Language</h3>
+
+      <!-- Search Bar -->
+      <div class="px-4 py-3 flex-shrink-0 border-b border-gray-50">
+        <div class="relative">
+          <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-xs"></i>
+          <input
+            id="langSearch"
+            type="text"
+            placeholder="Search language..."
+            oninput="filterLanguages(this.value)"
+            class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-2xl text-sm text-gray-700 placeholder-gray-300 outline-none focus:border-[#4f8cff] focus:ring-2 focus:ring-[#4f8cff]/10 transition"
+          />
+        </div>
+      </div>
+
+      <div class="overflow-y-auto flex-1 py-2" id="langList" translate="no" data-notranslate="true">
+        <p id="langNoResults" class="text-[11px] text-gray-400 text-center py-6 hidden">No languages found</p>
+        <!-- Language options -->
+        <button onclick="changeLanguage('English', 'https://flagcdn.com/w20/us.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/us.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="EN">
+          <span class="text-sm font-medium text-gray-700 flex-1">English</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs" id="check-English"></i>
+        </button>
+        <button onclick="changeLanguage('Español', 'https://flagcdn.com/w20/es.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/es.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="ES">
+          <span class="text-sm font-medium text-gray-700 flex-1">Español</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Español"></i>
+        </button>
+        <button onclick="changeLanguage('Français', 'https://flagcdn.com/w20/fr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/fr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="FR">
+          <span class="text-sm font-medium text-gray-700 flex-1">Français</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Français"></i>
+        </button>
+        <button onclick="changeLanguage('Deutsch', 'https://flagcdn.com/w20/de.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/de.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="DE">
+          <span class="text-sm font-medium text-gray-700 flex-1">Deutsch</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Deutsch"></i>
+        </button>
+        <button onclick="changeLanguage('Português', 'https://flagcdn.com/w20/pt.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/pt.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="PT">
+          <span class="text-sm font-medium text-gray-700 flex-1">Português</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Português"></i>
+        </button>
+        <button onclick="changeLanguage('中文', 'https://flagcdn.com/w20/cn.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/cn.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="CN">
+          <span class="text-sm font-medium text-gray-700 flex-1">中文</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-中文"></i>
+        </button>
+        <button onclick="changeLanguage('日本語', 'https://flagcdn.com/w20/jp.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="JP">
+          <span class="text-sm font-medium text-gray-700 flex-1">日本語</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-日本語"></i>
+        </button>
+        <button onclick="changeLanguage('한국어', 'https://flagcdn.com/w20/kr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/kr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="KR">
+          <span class="text-sm font-medium text-gray-700 flex-1">한국어</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-한국어"></i>
+        </button>
+        <button onclick="changeLanguage('Русский', 'https://flagcdn.com/w20/ru.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/ru.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="RU">
+          <span class="text-sm font-medium text-gray-700 flex-1">Русский</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Русский"></i>
+        </button>
+        <button onclick="changeLanguage('العربية', 'https://flagcdn.com/w20/sa.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/sa.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="AR">
+          <span class="text-sm font-medium text-gray-700 flex-1">العربية</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-العربية"></i>
+        </button>
+        <button onclick="changeLanguage('हिन्दी', 'https://flagcdn.com/w20/in.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/in.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IN">
+          <span class="text-sm font-medium text-gray-700 flex-1">हिन्दी</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-हिन्दी"></i>
+        </button>
+        <button onclick="changeLanguage('Türkçe', 'https://flagcdn.com/w20/tr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/tr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="TR">
+          <span class="text-sm font-medium text-gray-700 flex-1">Türkçe</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Türkçe"></i>
+        </button>
+        <button onclick="changeLanguage('Bahasa Indonesia', 'https://flagcdn.com/w20/id.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/id.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="ID">
+          <span class="text-sm font-medium text-gray-700 flex-1">Bahasa Indonesia</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Bahasa Indonesia"></i>
+        </button>
+        <button onclick="changeLanguage('Tiếng Việt', 'https://flagcdn.com/w20/vn.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+          <img src="https://flagcdn.com/w20/vn.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="VN">
+          <span class="text-sm font-medium text-gray-700 flex-1">Tiếng Việt</span>
+          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Tiếng Việt"></i>
+        </button>
+      </div>
+
+      <div class="flex-shrink-0 px-5 py-4 border-t border-gray-50">
+        <button onclick="toggleLanguageModal(false)" class="w-full py-3 rounded-2xl text-sm font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 transition">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PASSWORD MODAL ===== -->
     <!-- MAIN CONTENT START -->
     <div class="px-3 pt-5 pb-6 space-y-4">
       
@@ -229,6 +335,8 @@
     </div>
     </div>
     </div>
+    </div>
+    </div>
 
   </div>
   <script>
@@ -247,7 +355,36 @@
         if(savedAvatar) {
             document.getElementById("settingAvatar").src = savedAvatar;
         }
+
+        // Restore active language checkmark after page reload
+        const reverseMapFull = {
+          'en':'English','es':'Español','fr':'Français','de':'Deutsch',
+          'it':'Italiano','pt':'Português','zh-CN':'中文','ja':'日本語',
+          'ko':'한국어','ru':'Русский','hi':'हिन्दी','ar':'العربية',
+          'tr':'Türkçe','nl':'Nederlands','id':'Bahasa Indonesia',
+          'vi':'Tiếng Việt','th':'ไทย','el':'Ελληνικά','sv':'Svenska','pl':'Polski'
+        };
+        const savedGCode = localStorage.getItem('siteLangGCode');
+        const activeLangName = reverseMapFull[savedGCode] || 'English';
+        // Hide all checkmarks first
+        document.querySelectorAll('[id^="check-"]').forEach(el => el.classList.add('hidden'));
+        // Show the active one
+        const activeCheck = document.getElementById('check-' + activeLangName);
+        if (activeCheck) activeCheck.classList.remove('hidden');
     });
+
+    function filterLanguages(query) {
+      const q = query.toLowerCase().trim();
+      const buttons = document.querySelectorAll('#langList button[onclick^="changeLanguage"]');
+      let visible = 0;
+      buttons.forEach(btn => {
+        const name = btn.querySelector('span').textContent.toLowerCase();
+        const matches = name.includes(q);
+        btn.style.display = matches ? '' : 'none';
+        if (matches) visible++;
+      });
+      document.getElementById('langNoResults').classList.toggle('hidden', visible > 0);
+    }
 
     function updateSettingAvatar(input) {
       if (input.files && input.files[0]) {
@@ -271,6 +408,9 @@
 
       if(show) {
         modal.classList.remove('hidden');
+        // Reset search on open
+        const searchInput = document.getElementById('langSearch');
+        if (searchInput) { searchInput.value = ''; filterLanguages(''); }
         setTimeout(() => {
           overlay.classList.remove('opacity-0');
           overlay.classList.add('opacity-100');
@@ -315,10 +455,15 @@
     function changeLanguage(langName, flagUrl) {
       if (window.setSiteLanguage) {
           window.setSiteLanguage(langName, flagUrl);
-          return;
       }
       document.getElementById('activeLangText').innerText = langName;
       document.getElementById('activeLangFlag').src = flagUrl;
+
+      // Update checkmarks
+      document.querySelectorAll('[id^="check-"]').forEach(el => el.classList.add('hidden'));
+      const checkEl = document.getElementById('check-' + langName);
+      if (checkEl) checkEl.classList.remove('hidden');
+
       toggleLanguageModal(false);
     }
 
@@ -349,10 +494,15 @@
     function changeLanguage(langName, flagUrl) {
       if (window.setSiteLanguage) {
           window.setSiteLanguage(langName, flagUrl);
-          return;
       }
       document.getElementById('activeLangText').innerText = langName;
       document.getElementById('activeLangFlag').src = flagUrl;
+
+      // Update checkmarks
+      document.querySelectorAll('[id^="check-"]').forEach(el => el.classList.add('hidden'));
+      const checkEl = document.getElementById('check-' + langName);
+      if (checkEl) checkEl.classList.remove('hidden');
+
       toggleLanguageModal(false);
     }
 

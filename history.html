@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -123,21 +123,269 @@
       <div class="flex-1 text-center tab-item" onclick="switchTab(this, 'withdrawals')">Withdrawals</div>
     </div>
 
+    <!-- TRANSACTION LIST STYLES (inline for quick access) -->
+    <style>
+      .tx-row {
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 14px 16px;
+        border-bottom: 1px solid #f1f5f9;
+        gap: 12px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .tx-row:hover { background: #f8faff; }
+      .tx-icon {
+        width: 42px; height: 42px; border-radius: 50%;
+        background: linear-gradient(135deg, #14b8a6, #2563eb);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+      }
+      .badge-pending {
+        font-size: 9px; font-weight: 700; padding: 2px 8px;
+        border-radius: 999px; background: #fef9c3; color: #b45309; border: 1px solid #fde68a;
+      }
+      .badge-approved {
+        font-size: 9px; font-weight: 700; padding: 2px 8px;
+        border-radius: 999px; background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7;
+      }
+      .badge-failed {
+        font-size: 9px; font-weight: 700; padding: 2px 8px;
+        border-radius: 999px; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5;
+      }
+    </style>
+
     <!-- MAIN CONTENT -->
-    <div class="flex-1 flex flex-col items-center justify-center p-6 text-center">
-      <div id="emptyState" class="flex flex-col items-center">
-        <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-6">
-          <!-- Clipboard Icon from screenshot -->
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-          </svg>
+    <div class="flex-1 bg-white">
+
+      <!-- ALL panel -->
+      <div id="tab-all" class="tx-panel">
+        <!-- Withdrawal Pending -->
+        <div class="tx-row" data-type="withdrawal">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm1-11h-2v3H8l4 4 4-4h-3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Withdrawal</span>
+              <span class="badge-pending">Pending</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (BEP20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-red-500">-$100.00</p>
+            <p class="text-[9px] text-gray-400">100.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </div>
-        <h2 class="text-sm font-bold text-gray-800 mb-2 tracking-wide">No Transactions</h2>
-        <p class="text-[11px] text-gray-400 max-w-[200px] leading-relaxed">
-          You have no transactions yet. Make a deposit to get started.
-        </p>
+
+        <!-- Withdrawal Pending 2 -->
+        <div class="tx-row" data-type="withdrawal">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm1-11h-2v3H8l4 4 4-4h-3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Withdrawal</span>
+              <span class="badge-pending">Pending</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (BEP20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-red-500">-$100.00</p>
+            <p class="text-[9px] text-gray-400">100.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <!-- Deposit Approved -->
+        <div class="tx-row" data-type="deposit">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-1-5h2V8h-2v7zm0 2h2v-2h-2v2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Deposit</span>
+              <span class="badge-approved">Approved</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (TRC20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-emerald-500">+$100.00</p>
+            <p class="text-[9px] text-gray-400">100.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <!-- Withdrawal Approved -->
+        <div class="tx-row" data-type="withdrawal">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm1-11h-2v3H8l4 4 4-4h-3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Withdrawal</span>
+              <span class="badge-approved">Approved</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (BEP20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-red-500">-$20.00</p>
+            <p class="text-[9px] text-gray-400">20.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <!-- Deposit Approved 2 -->
+        <div class="tx-row" data-type="deposit">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-1-5h2V8h-2v7zm0 2h2v-2h-2v2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Deposit</span>
+              <span class="badge-approved">Approved</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (TRC20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-emerald-500">+$50.00</p>
+            <p class="text-[9px] text-gray-400">50.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+
+        <!-- Withdrawal Failed -->
+        <div class="tx-row" data-type="withdrawal">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm1-11h-2v3H8l4 4 4-4h-3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Withdrawal</span>
+              <span class="badge-failed">Failed</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (BEP20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-red-400">-$75.00</p>
+            <p class="text-[9px] text-gray-400">75.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
       </div>
+
+      <!-- DEPOSITS panel (hidden by default) -->
+      <div id="tab-deposits" class="tx-panel hidden">
+        <div class="tx-row">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-1-5h2V8h-2v7zm0 2h2v-2h-2v2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Deposit</span>
+              <span class="badge-approved">Approved</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (TRC20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-emerald-500">+$100.00</p>
+            <p class="text-[9px] text-gray-400">100.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+        <div class="tx-row">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-1-5h2V8h-2v7zm0 2h2v-2h-2v2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Deposit</span>
+              <span class="badge-approved">Approved</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (TRC20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-emerald-500">+$50.00</p>
+            <p class="text-[9px] text-gray-400">50.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+      </div>
+
+      <!-- WITHDRAWALS panel (hidden by default) -->
+      <div id="tab-withdrawals" class="tx-panel hidden">
+        <div class="tx-row">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm1-11h-2v3H8l4 4 4-4h-3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Withdrawal</span>
+              <span class="badge-pending">Pending</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (BEP20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-red-500">-$100.00</p>
+            <p class="text-[9px] text-gray-400">100.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+        <div class="tx-row">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm1-11h-2v3H8l4 4 4-4h-3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Withdrawal</span>
+              <span class="badge-pending">Pending</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (BEP20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-red-500">-$100.00</p>
+            <p class="text-[9px] text-gray-400">100.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+        <div class="tx-row">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm1-11h-2v3H8l4 4 4-4h-3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Withdrawal</span>
+              <span class="badge-approved">Approved</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (BEP20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-red-500">-$20.00</p>
+            <p class="text-[9px] text-gray-400">20.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+        <div class="tx-row">
+          <div class="tx-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm1-11h-2v3H8l4 4 4-4h-3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-0.5">
+              <span class="text-sm font-bold text-gray-800">Withdrawal</span>
+              <span class="badge-failed">Failed</span>
+            </div>
+            <p class="text-[10px] text-gray-400">USDT (BEP20)</p>
+          </div>
+          <div class="text-right flex-shrink-0 mr-1">
+            <p class="text-sm font-bold text-red-400">-$75.00</p>
+            <p class="text-[9px] text-gray-400">75.00 USDT</p>
+          </div>
+          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+        </div>
+      </div>
+
     </div>
 
     <!-- BOTTOM NAV -->
@@ -165,13 +413,17 @@
     </div>
     </div>
     </div>
+    </div>
+    </div>
 
   </div>
   <script>
     function switchTab(el, type) {
       document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
       el.classList.add('active');
-      // Logic for filtering would go here
+      document.querySelectorAll('.tx-panel').forEach(panel => panel.classList.add('hidden'));
+      const active = document.getElementById('tab-' + type);
+      if (active) active.classList.remove('hidden');
     }
   </script>
 

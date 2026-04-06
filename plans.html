@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #f0f4f8; /* Soft light background matching index.html */
+      background-color: #f0f4f8;
       padding-bottom: 70px; 
     }
 
@@ -19,7 +19,7 @@
     }
     
     .btn-gradient {
-      background: linear-gradient(90deg, #5eead4, #93c5fd);
+      background: linear-gradient(90deg, #14b8a6, #2563eb);
       transition: all 0.3s ease;
     }
 
@@ -49,51 +49,47 @@
       border-top: 1px solid #f1f5f9;
       height: 64px;
     }
-    
-    
-    
-    
-    
-    .nav-item svg {
-      width: 20px;
-      height: 20px;
-      margin-bottom: 4px;
-      stroke-width: 2;
-    }
-    
-    .nav-item span {
-      font-size: 10px;
-      font-weight: 500;
-    }
-    
-    
-    
-    
-    
-    .nav-item svg {
-      width: 20px;
-      height: 20px;
-      margin-bottom: 4px;
-      stroke-width: 2;
-    }
-    
-    .nav-item span {
-      font-size: 10px;
-      font-weight: 500;
-    }
-    
-    
-    
-    
-  </style>
 
+    .nav-item svg { width: 20px; height: 20px; margin-bottom: 4px; stroke-width: 2; }
+    .nav-item span { font-size: 10px; font-weight: 500; }
+
+    /* Stake Modal Bottom Sheet */
+    #stakeOverlay {
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(3px);
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    #stakeSheet {
+      transform: translateY(150%);
+      transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+      width: 100%;
+      max-width: 26rem;
+      border-radius: 32px;
+    }
+    #stakeSheet.open {
+      transform: translateY(0);
+    }
+    .amount-input:focus {
+      outline: none;
+      border-color: #4f8cff;
+      box-shadow: 0 0 0 3px rgba(79, 140, 255, 0.1);
+    }
+    .return-chip {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border: 1px solid #bae6fd;
+    }
+  </style>
   <script src="./translator.js"></script>
 </head>
 <body class="flex flex-col min-h-screen items-center">
 
   <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100">
 
-    <!-- HEADER / TOP NAV (Curved bottom layout scaled down) -->
+    <!-- HEADER -->
     <div class="gradient-bg text-white px-5 pt-5 pb-8 rounded-b-[30px] shadow-md relative z-10">
       <div class="flex items-center mb-1">
         <a href="javascript:history.back()" class="text-white text-lg mr-4">
@@ -105,6 +101,8 @@
 
     <!-- PLANS CONTENT -->
     <div class="px-3 pb-3 mt-3 relative z-20 space-y-3">
+
+      <!-- PLAN 1: Basic -->
       <div class="plan-card bg-white rounded-xl p-3 shadow-sm">
         <div class="flex justify-between items-start border-b border-gray-50 pb-2 mb-2">
           <div class="flex items-center gap-2">
@@ -120,7 +118,6 @@
             <p class="text-lg font-bold text-[#4f8cff]">1.5%</p>
           </div>
         </div>
-        
         <div class="space-y-1.5 text-[11px] text-gray-600 mb-3">
           <div class="flex justify-between">
             <span>Minimum Entry:</span>
@@ -135,9 +132,8 @@
             <span class="font-semibold text-gray-800">30 Days</span>
           </div>
         </div>
-        
-        <button class="w-full btn-gradient text-white py-2 rounded-lg font-bold shadow-sm text-xs">
-          Invest Now
+        <button onclick="openStakeModal('Basic Plan', 1.5, 2500, 10000, 30)" class="w-full btn-gradient text-white py-2 rounded-lg font-bold shadow-sm text-xs active:scale-95 transition-transform">
+          Stake Now
         </button>
       </div>
 
@@ -145,7 +141,7 @@
       <div class="plan-card bg-white rounded-xl p-3 shadow-sm">
         <div class="flex justify-between items-start border-b border-gray-50 pb-2 mb-2">
           <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center text-[#5eead4]">
+            <div class="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center text-teal-500">
               <i class="fas fa-award text-sm"></i>
             </div>
             <div>
@@ -157,7 +153,6 @@
             <p class="text-lg font-bold text-[#4f8cff]">5.0%</p>
           </div>
         </div>
-        
         <div class="space-y-1.5 text-[11px] text-gray-600 mb-3">
           <div class="flex justify-between">
             <span>Minimum Entry:</span>
@@ -172,9 +167,8 @@
             <span class="font-semibold text-gray-800">30 Days</span>
           </div>
         </div>
-        
-        <button class="w-full btn-gradient text-white py-2 rounded-lg font-bold shadow-sm text-xs">
-          Invest Now
+        <button onclick="openStakeModal('Standard Plan', 5.0, 15000, 50000, 30)" class="w-full btn-gradient text-white py-2 rounded-lg font-bold shadow-sm text-xs active:scale-95 transition-transform">
+          Stake Now
         </button>
       </div>
 
@@ -194,7 +188,6 @@
             <p class="text-lg font-bold text-[#4f8cff]">10.0%</p>
           </div>
         </div>
-        
         <div class="space-y-1.5 text-[11px] text-gray-600 mb-3">
           <div class="flex justify-between">
             <span>Minimum Entry:</span>
@@ -209,19 +202,16 @@
             <span class="font-semibold text-gray-800">30 Days</span>
           </div>
         </div>
-        
-        <button class="w-full btn-gradient text-white py-2 rounded-lg font-bold shadow-sm text-xs">
-          Invest Now
+        <button onclick="openStakeModal('Premium Plan', 10.0, 60000, 200000, 30)" class="w-full btn-gradient text-white py-2 rounded-lg font-bold shadow-sm text-xs active:scale-95 transition-transform">
+          Stake Now
         </button>
       </div>
       
       <!-- PLAN 4: Max -->
       <div class="plan-card bg-white rounded-xl p-3 shadow-sm relative overflow-hidden mb-4">
-        <!-- Hot Badge -->
         <div class="absolute top-0 right-0 bg-[#fef08a] text-yellow-800 text-[8px] font-bold px-2 py-0.5 rounded-bl-md">
           HOT DEALS
         </div>
-        
         <div class="flex justify-between items-start border-b border-gray-50 pb-2 mb-2">
           <div class="flex items-center gap-2">
             <div class="w-8 h-8 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-500">
@@ -236,7 +226,6 @@
             <p class="text-lg font-bold text-[#4f8cff]">15.0%</p>
           </div>
         </div>
-        
         <div class="space-y-1.5 text-[11px] text-gray-600 mb-3">
           <div class="flex justify-between">
             <span>Minimum Entry:</span>
@@ -251,9 +240,8 @@
             <span class="font-semibold text-gray-800">45 Days</span>
           </div>
         </div>
-        
-        <button class="w-full btn-gradient text-white py-2 rounded-lg font-bold shadow-sm text-xs">
-          Invest Now
+        <button onclick="openStakeModal('Max Plan', 15.0, 250000, null, 45)" class="w-full btn-gradient text-white py-2 rounded-lg font-bold shadow-sm text-xs active:scale-95 transition-transform">
+          Stake Now
         </button>
       </div>
 
@@ -280,11 +268,156 @@
         </a>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
   </div>
-  </body>
+
+  <!-- ===== STAKE MODAL (BOTTOM SHEET) ===== -->
+  <div id="stakeOverlay" class="fixed inset-0 z-[200] hidden opacity-0" onclick="closeStakeModal()">
+    <div id="stakeSheet" class="bg-white shadow-2xl px-5 pt-5 pb-10"
+         onclick="event.stopPropagation()">
+      
+      <!-- Handle Bar -->
+      <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-5"></div>
+
+      <!-- Plan Header -->
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Staking Plan</p>
+          <h2 id="modalPlanName" class="text-lg font-bold text-gray-800 mt-0.5">Basic Plan</h2>
+        </div>
+        <div class="text-right">
+          <p class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Daily Return</p>
+          <p id="modalRate" class="text-2xl font-bold text-[#4f8cff]">1.5%</p>
+        </div>
+      </div>
+
+      <!-- Amount Input -->
+      <div class="mb-4">
+        <label class="text-[11px] font-semibold text-gray-600 mb-1.5 block">Investment Amount (₦)</label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">₦</span>
+          <input
+            id="stakeAmountInput"
+            type="number"
+            placeholder="Enter amount"
+            class="amount-input w-full pl-8 pr-4 py-3.5 border border-gray-200 rounded-2xl text-sm font-semibold text-gray-800 bg-gray-50 transition"
+            oninput="updateReturns()"
+          />
+        </div>
+        <p id="amountHint" class="text-[9px] text-gray-400 mt-1.5 ml-1">Min: ₦2,500 &nbsp;|&nbsp; Max: ₦10,000</p>
+      </div>
+
+      <!-- Returns Preview -->
+      <div class="grid grid-cols-3 gap-2 mb-5">
+        <div class="return-chip rounded-2xl p-3 text-center">
+          <p class="text-[8px] text-sky-500 font-bold uppercase tracking-wide mb-1">Daily</p>
+          <p id="dailyReturn" class="text-sm font-bold text-gray-800">₦0</p>
+        </div>
+        <div class="return-chip rounded-2xl p-3 text-center">
+          <p class="text-[8px] text-sky-500 font-bold uppercase tracking-wide mb-1">Total Profit</p>
+          <p id="totalProfit" class="text-sm font-bold text-gray-800">₦0</p>
+        </div>
+        <div class="return-chip rounded-2xl p-3 text-center">
+          <p class="text-[8px] text-sky-500 font-bold uppercase tracking-wide mb-1">Pay-out</p>
+          <p id="totalPayout" class="text-sm font-bold text-gray-800">₦0</p>
+        </div>
+      </div>
+
+      <!-- Plan Details Row -->
+      <div class="flex items-center gap-2 bg-gray-50 rounded-2xl px-4 py-3 mb-5 text-[11px] text-gray-600">
+        <i class="fas fa-clock text-[#4f8cff]"></i>
+        <span>Cycle: <strong class="text-gray-800" id="cycleDays">30 Days</strong></span>
+        <span class="ml-auto text-[9px] text-gray-400">Returns credited daily</span>
+      </div>
+
+      <!-- Error Message -->
+      <p id="stakeError" class="text-[10px] text-red-500 font-medium mb-3 hidden text-center"></p>
+
+      <!-- Confirm Button -->
+      <button onclick="confirmStake()" class="w-full btn-gradient text-white py-4 rounded-2xl font-bold text-sm shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2">
+        <i class="fas fa-circle-check"></i>
+        <span>Confirm Stake</span>
+      </button>
+
+      <!-- Cancel -->
+      <button onclick="closeStakeModal()" class="w-full text-center text-[11px] text-gray-400 font-medium mt-3 py-1 hover:text-gray-600 transition">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentPlan = {};
+
+    function openStakeModal(name, rate, min, max, days) {
+      currentPlan = { name, rate, min, max, days };
+
+      document.getElementById('modalPlanName').textContent = name;
+      document.getElementById('modalRate').textContent = rate.toFixed(1) + '%';
+      document.getElementById('cycleDays').textContent = days + ' Days';
+      document.getElementById('stakeAmountInput').value = '';
+      document.getElementById('amountHint').innerHTML = `Min: ₦${min.toLocaleString()} &nbsp;|&nbsp; Max: ${max ? '₦' + max.toLocaleString() : 'Unlimited'}`;
+      document.getElementById('stakeError').classList.add('hidden');
+
+      updateReturns();
+
+      const overlay = document.getElementById('stakeOverlay');
+      const sheet = document.getElementById('stakeSheet');
+      overlay.classList.remove('hidden');
+      overlay.classList.remove('opacity-0');
+      setTimeout(() => sheet.classList.add('open'), 10);
+
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeStakeModal() {
+      const overlay = document.getElementById('stakeOverlay');
+      const sheet = document.getElementById('stakeSheet');
+      sheet.classList.remove('open');
+      setTimeout(() => {
+        overlay.classList.add('opacity-0');
+        setTimeout(() => overlay.classList.add('hidden'), 300);
+      }, 350);
+      document.body.style.overflow = '';
+    }
+
+    function updateReturns() {
+      const amount = parseFloat(document.getElementById('stakeAmountInput').value) || 0;
+      const rate = currentPlan.rate || 0;
+      const days = currentPlan.days || 30;
+
+      const daily = (amount * rate) / 100;
+      const profit = daily * days;
+      const payout = amount + profit;
+
+      document.getElementById('dailyReturn').textContent = '₦' + daily.toLocaleString('en-NG', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      document.getElementById('totalProfit').textContent = '₦' + profit.toLocaleString('en-NG', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      document.getElementById('totalPayout').textContent = '₦' + payout.toLocaleString('en-NG', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    }
+
+    function confirmStake() {
+      const amount = parseFloat(document.getElementById('stakeAmountInput').value);
+      const errorEl = document.getElementById('stakeError');
+      errorEl.classList.add('hidden');
+
+      if (!amount || amount <= 0) {
+        errorEl.textContent = 'Please enter a valid investment amount.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      if (amount < currentPlan.min) {
+        errorEl.textContent = `Minimum investment for ${currentPlan.name} is ₦${currentPlan.min.toLocaleString()}.`;
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      if (currentPlan.max && amount > currentPlan.max) {
+        errorEl.textContent = `Maximum investment for ${currentPlan.name} is ₦${currentPlan.max.toLocaleString()}.`;
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      // Redirect to deposit or trigger stake API
+      window.location.href = `deposit.html?plan=${encodeURIComponent(currentPlan.name)}&amount=${amount}`;
+    }
+  </script>
+</body>
 </html>

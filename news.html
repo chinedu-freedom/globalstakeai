@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News - GlobalStakeAi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f1f5f9; padding-bottom: 80px; }
+        .gradient-header { background: linear-gradient(90deg, #14b8a6, #226ddc); }
+        .news-card { background: white; border-radius: 28px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; transition: transform 0.2s ease; }
+        .news-card:active { transform: scale(0.98); }
+        .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+        .nav-item { color: #94a3b8; transition: color 0.3s ease; }
+        .nav-item.active { color: #4f8cff; }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <div class="w-full max-w-md bg-slate-50 min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+        
+        <!-- HEADER -->
+        <div class="gradient-header px-6 pt-10 pb-10 flex justify-between items-center text-white">
+            <div class="flex items-center gap-4">
+                <a href="account.html" class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition">
+                    <i class="fas fa-chevron-left text-sm"></i>
+                </a>
+                <h1 class="text-2xl font-bold tracking-tight">News</h1>
+            </div>
+            <button class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition">
+                <i class="fas fa-rotate text-sm"></i>
+            </button>
+        </div>
+
+        <!-- NEWS LIST -->
+        <div class="px-4 -mt-4 space-y-4 pb-20 overflow-y-auto">
+            
+            <!-- Update 1 -->
+            <div class="news-card p-4 flex gap-4 items-start">
+                <div class="shrink-0 w-20 h-20 rounded-2xl overflow-hidden shadow-sm border border-slate-50">
+                    <img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" class="w-full h-full object-cover bg-slate-900 p-2" alt="BTC">
+                </div>
+                <div class="flex flex-col justify-between h-20 w-full min-w-0">
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-800 leading-tight">update 1</h2>
+                        <p class="text-[10px] text-slate-500 leading-relaxed mt-1 line-clamp-2">
+                            📈 In the last 24 hours, Bitcoin's price moved +0.12% to $90.47k and trading volume moved -11.79% to...
+                        </p>
+                    </div>
+                    <p class="text-[9px] text-slate-400 font-medium">01/10/2026 02:30:06</p>
+                </div>
+            </div>
+
+            <!-- Update 2 -->
+            <div class="news-card p-4 flex gap-4 items-start">
+                <div class="shrink-0 w-20 h-20 rounded-2xl overflow-hidden shadow-sm border border-slate-50">
+                    <img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" class="w-full h-full object-cover bg-slate-900 p-2" alt="ETH">
+                </div>
+                <div class="flex flex-col justify-between h-20 w-full min-w-0">
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-800 leading-tight">update 2</h2>
+                        <p class="text-[10px] text-slate-500 leading-relaxed mt-1 line-clamp-2">
+                            💎 Ethereum staking rewards have been boosted to 4.2% APY for all users. Start earning more with your assets today.
+                        </p>
+                    </div>
+                    <p class="text-[9px] text-slate-400 font-medium">02/10/2026 14:15:22</p>
+                </div>
+            </div>
+
+            <!-- Update 3 -->
+            <div class="news-card p-4 flex gap-4 items-start">
+                <div class="shrink-0 w-20 h-20 rounded-2xl overflow-hidden shadow-sm border border-slate-50">
+                   <div class="w-full h-full bg-teal-600 flex items-center justify-center text-white text-xl">
+                       <i class="fas fa-server"></i>
+                   </div>
+                </div>
+                <div class="flex flex-col justify-between h-20 w-full min-w-0">
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-800 leading-tight">Infrastructure expansion</h2>
+                        <p class="text-[10px] text-slate-500 leading-relaxed mt-1 line-clamp-2">
+                            🏗️ Our new mining farm in Singapore is now officially live, adding 500 PH/s to the global ecosystem.
+                        </p>
+                    </div>
+                    <p class="text-[9px] text-slate-400 font-medium">03/10/2026 09:44:11</p>
+                </div>
+            </div>
+
+            <!-- Update 4 -->
+            <div class="news-card p-4 flex gap-4 items-start">
+                <div class="shrink-0 w-20 h-20 rounded-2xl overflow-hidden shadow-sm border border-slate-50">
+                    <div class="w-full h-full bg-blue-600 flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-between h-20 w-full min-w-0">
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-800 leading-tight">Security upgrade</h2>
+                        <p class="text-[10px] text-slate-500 leading-relaxed mt-1 line-clamp-2">
+                            🔐 We have enhanced our multi-factor authentication protocols to provide institutional-grade protection for your accounts.
+                        </p>
+                    </div>
+                    <p class="text-[9px] text-slate-400 font-medium">04/10/2026 18:22:45</p>
+                </div>
+            </div>
+
+            <!-- Update 5 -->
+            <div class="news-card p-4 flex gap-4 items-start">
+                <div class="shrink-0 w-20 h-20 rounded-2xl overflow-hidden shadow-sm border border-slate-50">
+                    <div class="w-full h-full bg-orange-500 flex items-center justify-center text-white text-xl">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-between h-20 w-full min-w-0">
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-800 leading-tight">Community milestone</h2>
+                        <p class="text-[10px] text-slate-500 leading-relaxed mt-1 line-clamp-2">
+                            🎉 GlobalStakeAi has officially surpassed 10,000 active users globally. Thank you for being part of our journey!
+                        </p>
+                    </div>
+                    <p class="text-[9px] text-slate-400 font-medium">05/10/2026 12:00:00</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
+        </a>
+        <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
+        </a>
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
+        </a>
+      </div>
+    </div>
+    </div>
+        </div>
+
+    </div>
+
+    <script src="./translator.js"></script>
+</body>
+</html>
