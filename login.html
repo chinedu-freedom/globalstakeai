@@ -656,11 +656,23 @@ document.querySelectorAll(".toggle-password").forEach(icon => {
 
 // Init flags on load
 document.addEventListener('DOMContentLoaded', () => {
-  ['login', 'register'].forEach(form => {
-    const c = selectedCC[form];
-    document.getElementById(`${form}CCFlag`).className = `fi fi-${c.iso}`;
-    document.getElementById(`${form}CCCode`).textContent = c.code;
-  });
+    ['login', 'register'].forEach(form => {
+        const c = selectedCC[form];
+        document.getElementById(`${form}CCFlag`).className = `fi fi-${c.iso}`;
+        document.getElementById(`${form}CCCode`).textContent = c.code;
+    });
+
+    // Check for referral code in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref') || urlParams.get('r');
+    if (refCode) {
+        const referralInput = document.getElementById('registerReferral');
+        if (referralInput) {
+            referralInput.value = refCode;
+            // Optionally switch to register tab if ref code is present
+            // document.getElementById('registerTab').click();
+        }
+    }
 });
 
 // ─── API BASE ───

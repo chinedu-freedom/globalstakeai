@@ -320,6 +320,7 @@
                     }
                     const skeletonContainer = document.getElementById("avatarSkeletonContainer");
                     const initialsEl = document.getElementById("profileInitials");
+                    const avatarEl = document.getElementById("profileAvatar");
                     
                     const setInitialsFallback = () => {
                         if (skeletonContainer) {
@@ -333,36 +334,12 @@
                         }
                     };
 
-                    if (user.image && user.image.asset && user.image.asset._ref) {
-                        const ref = user.image.asset._ref;
-                        const parts = ref.split('-'); 
-                        if (parts.length === 4) {
-                            const assetId = parts[1];
-                            const dimensions = parts[2];
-                            const extension = parts[3];
-                            const projectId = "hr3iao8d"; 
-                            const dataset = "production"; 
-                            const imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${dimensions}.${extension}`;
-                            
-                            const avatarEl = document.getElementById("profileAvatar");
-                            if (avatarEl) {
-                                avatarEl.onload = () => {
-                                    avatarEl.classList.remove('hidden');
-                                    if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse');
-                                };
-                                avatarEl.onerror = () => setInitialsFallback();
-                                avatarEl.src = imageUrl;
-                            }
-                            localStorage.setItem('userAvatar', imageUrl);
-                        } else {
-                             setInitialsFallback();
-                        }
-                    } else if (user.profilePicture) {
-                        const avatarEl = document.getElementById("profileAvatar");
+                    if (user.profilePicture) {
                         if (avatarEl) {
                             avatarEl.onload = () => {
                                 avatarEl.classList.remove('hidden');
                                 if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse');
+                                if (initialsEl) initialsEl.classList.add('hidden');
                             };
                             avatarEl.onerror = () => setInitialsFallback();
                             avatarEl.src = user.profilePicture;

@@ -151,7 +151,7 @@
       <div class="w-full rounded-2xl p-5 bg-white shadow-lg border border-gray-100">
         <p class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">My Referral Link</p>
         <div class="flex bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
-          <input type="text" id="referralCode" class="w-full bg-transparent p-3 text-gray-700 text-sm outline-none" value="https://StakeWiseAi.com/register?r=08158051119" readonly />
+          <input type="text" id="referralCode" class="w-full bg-transparent p-3 text-gray-700 text-sm outline-none" value="" placeholder="Fetching referral link..." readonly />
           <button onclick="copyLink()" class="btn-gradient text-white px-5 font-semibold text-sm">
             Copy
           </button>
@@ -249,7 +249,7 @@
                 const user = data.user || data.data || data;
                 if (user && (user._id || user.id)) {
                     const id = user._id || user.id;
-                    const link = `${window.location.origin}/register.html?r=${id}`;
+                    const link = `https://stakewiseai.vip/login.html?ref=${id}`;
                     document.getElementById("referralCode").value = link;
                 }
             }
@@ -268,22 +268,29 @@
             }
 
             if (response.ok) {
-                const data = await response.json();
-                // Usually direct data or data.referrals
-                const referrals = data.referrals || data.data || data;
+                const totalData = await response.json();
+                
+                // Based on provided JSON structure: totalData.data.referrals
+                const dataObj = totalData.data || {};
+                const members = dataObj.referrals || [];
+                const pagination = dataObj.pagination || {};
 
                 // Overall Stats
-                document.getElementById("totalInvites").innerText = referrals.totalInvites || "0";
-                document.getElementById("totalEarnings").innerText = `$${Number(referrals.totalEarnings || 0).toFixed(2)}`;
+                document.getElementById("totalInvites").innerText = pagination.totalItems || members.length || "0";
+                
+                // Note: The sample JSON didn't show earnings, keeping as $0.00 or fetching from elsewhere if available
+                // If it's in the data object but not the referrals array:
+                if (dataObj.totalEarnings !== undefined) {
+                    document.getElementById("totalEarnings").innerText = `$${Number(dataObj.totalEarnings).toFixed(2)}`;
+                }
 
-                // Levels Rendering
-                renderLevel(1, referrals.level1 || []);
-                renderLevel(2, referrals.level2 || []);
-                renderLevel(3, referrals.level3 || []);
+                // Rendering logic - Mapping provided list to Level 1
+                renderLevel(1, members);
+                renderLevel(2, []); // Snippet only showed flat list
+                renderLevel(3, []);
             }
         } catch (error) {
             console.error("Error fetching referrals:", error);
-            // Handle error UI if needed
         }
     }
 
@@ -306,8 +313,12 @@
         container.innerHTML = members.map(m => {
             const name = m.username || "Investor";
             const initial = name.charAt(0).toUpperCase();
-            const date = m.createdAt ? new Date(m.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently";
-            const invested = Number(m.totalInvested || 0).toFixed(2);
+            const dateStr = m._createdAt || m.createdAt;
+            const date = dateStr ? new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently";
+            const status = m.accountStatus || "active";
+            
+            // Note: If invested amount isn't in this specific referral object, we show 0 or status
+            const invested = m.totalInvested !== undefined ? `$${Number(m.totalInvested).toFixed(2)}` : (status.charAt(0).toUpperCase() + status.slice(1));
 
             return `
                 <div class="member-card">
@@ -317,8 +328,8 @@
                     <p class="text-[10px] text-gray-400">Joined ${date}</p>
                   </div>
                   <div class="text-right flex-shrink-0">
-                    <p class="text-sm font-bold text-[#4f8cff]">$${invested}</p>
-                    <p class="text-[9px] text-gray-400">Invested</p>
+                    <p class="text-sm font-bold text-[#4f8cff]">${invested}</p>
+                    <p class="text-[9px] text-gray-400">${m.totalInvested !== undefined ? 'Invested' : 'Status'}</p>
                   </div>
                 </div>
             `;
