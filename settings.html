@@ -208,28 +208,75 @@
   </div>
 
   <!-- ===== PASSWORD MODAL ===== -->
+  <div id="pwdModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center px-5">
+    <div id="pwdOverlay" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300" onclick="togglePasswordModal(false)"></div>
+    <div id="pwdModalContent" class="relative w-full max-w-sm bg-white rounded-[32px] shadow-2xl scale-95 opacity-0 transition-all duration-300 max-h-[75vh] flex flex-col p-6">
+      
+      <h3 class="text-[15px] font-bold text-gray-800 text-center mb-6">Change Password</h3>
+
+      <div class="space-y-4 mb-6">
+        <div>
+          <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">Current Password</label>
+          <div class="relative flex items-center">
+            <input type="password" id="currentPasswordInput" class="w-full bg-[#f8fafc] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter current password">
+            <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
+              <i class="far fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div>
+           <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">New Password</label>
+           <div class="relative flex items-center">
+             <input type="password" id="newPasswordInput" class="w-full bg-[#f8fafc] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter new password">
+             <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
+               <i class="far fa-eye text-xs"></i>
+             </button>
+           </div>
+        </div>
+
+        <div>
+           <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">Confirm New Password</label>
+           <div class="relative flex items-center">
+             <input type="password" id="confirmPasswordInput" class="w-full bg-[#f8fafc] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Confirm new password">
+             <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
+               <i class="far fa-eye text-xs"></i>
+             </button>
+           </div>
+        </div>
+        <p id="pwdError" class="text-[10px] text-red-500 hidden text-center"></p>
+        <p id="pwdSuccess" class="text-[10px] text-green-500 hidden text-center">Password successfully updated!</p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <button onclick="changePasswordSubmit()" id="changePwdBtn" class="w-full header-bg active:scale-[0.98] text-white font-bold py-4 rounded-xl text-xs transition shadow-sm">
+          Save Changes
+        </button>
+      </div>
+
+    </div>
+  </div>
+
     <!-- MAIN CONTENT START -->
     <div class="px-3 pt-5 pb-6 space-y-4">
       
       <!-- User Info Top Card -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center gap-4 transition overflow-hidden">
         <div class="relative group cursor-pointer shrink-0" onclick="document.getElementById('settingAvatarInput').click()">
-          <div class="w-12 h-12 rounded-full border-2 border-white/20 shadow-sm overflow-hidden bg-gray-200 transition active:scale-95">
-            <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="Profile" class="w-full h-full object-cover" id="settingAvatar">
+          <div class="w-12 h-12 rounded-full border-2 border-white/20 shadow-sm overflow-hidden bg-gray-100 animate-pulse transition active:scale-95 flex items-center justify-center relative" id="settingAvatarContainer">
+            <img src="" alt="Profile" class="w-full h-full object-cover hidden absolute inset-0 z-10" id="settingAvatar">
           </div>
-          <div class="absolute inset-0 bg-black/10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition pointer-events-none">
+          <div class="absolute inset-0 bg-black/10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition pointer-events-none z-20">
             <i class="fas fa-camera text-white text-[9px]"></i>
           </div>
         </div>
         <input type="file" id="settingAvatarInput" accept="image/*" class="hidden" onchange="updateSettingAvatar(this)">
         <a href="/profile.html" class="flex-1">
-          <h2 class="text-[13px] font-bold text-gray-800" id="settingUsername">Chinedu22</h2>
-          <p class="text-[10px] text-gray-400 mt-0.5">chinedufreedom10@gmail.com</p>
+          <h2 class="text-[13px] font-bold text-gray-800 animate-pulse bg-gray-100 h-4 w-24 rounded-md mb-1" id="settingUsername"></h2>
+          <p class="text-[10px] text-gray-400 mt-0.5 animate-pulse bg-gray-100 h-3 w-36 rounded-md" id="settingEmail"></p>
         </a>
         <i class="fas fa-chevron-right text-gray-200 text-[10px]"></i>
       </div>
-
-      <!-- MENU ROW BLOCKS (Individual Cards style from screenshot) -->
 
       <!-- My Wallets -->
       <a href="/wallets.html" class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition cursor-pointer">
@@ -250,8 +297,8 @@
           </div>
           <span class="text-[11px] font-semibold text-gray-800">Account Verification</span>
         </div>
-        <div class="flex items-center gap-2">
-          <span class="bg-[#fef3c7] text-[#92400e] text-[9px] font-bold px-2 py-0.5 rounded-full">Not Verified</span>
+        <div class="flex items-center gap-2" id="verificationBadgeContainer">
+          <span id="verificationStatus" class="animate-pulse bg-gray-100 text-transparent text-[9px] font-bold px-4 py-0.5 rounded-full">Loading</span>
           <i class="fas fa-chevron-right text-gray-300 text-[10px]"></i>
         </div>
       </a>
@@ -340,21 +387,13 @@
 
   </div>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const user = localStorage.getItem("userName");
-        if(user) {
-            document.getElementById("settingUsername").innerText = user;
-        }
+    document.addEventListener("DOMContentLoaded", async () => {
+        // FETCH REAL DATA
+        await fetchUserDetails();
 
         const isDark = localStorage.getItem('darkMode') === 'enabled';
         const toggle = document.getElementById('toggle');
         if(toggle) toggle.checked = isDark;
-
-        // LOAD SAVED AVATAR
-        const savedAvatar = localStorage.getItem("userAvatar");
-        if(savedAvatar) {
-            document.getElementById("settingAvatar").src = savedAvatar;
-        }
 
         // Restore active language checkmark after page reload
         const reverseMapFull = {
@@ -373,6 +412,91 @@
         if (activeCheck) activeCheck.classList.remove('hidden');
     });
 
+    async function fetchUserDetails() {
+        try {
+            const response = await fetch('https://stakewiseai-server.onrender.com/api/users/me', {
+                credentials: 'include'
+            });
+            if (response.ok) {
+                const data = await response.json();
+                const user = data.user || data.data || data;
+                
+                if (user) {
+                    const usernameEl = document.getElementById("settingUsername");
+                    const emailEl = document.getElementById("settingEmail");
+                    
+                    usernameEl.innerText = user.username || "User";
+                    usernameEl.classList.remove('animate-pulse', 'bg-gray-100', 'h-4', 'w-24', 'rounded-md', 'mb-1');
+                    
+                    emailEl.innerText = user.email || "";
+                    emailEl.classList.remove('animate-pulse', 'bg-gray-100', 'h-3', 'w-36', 'rounded-md');
+
+                    // Verification logic
+                    const verifyEl = document.getElementById("verificationStatus");
+                    verifyEl.classList.remove('animate-pulse', 'bg-gray-100', 'text-transparent');
+                    if (user.emailVerified) {
+                        verifyEl.innerText = "Verified";
+                        verifyEl.classList.add('bg-green-100', 'text-green-700');
+                        verifyEl.classList.remove('bg-[#fef3c7]', 'text-[#92400e]');
+                    } else {
+                        verifyEl.innerText = "Not Verified";
+                        verifyEl.classList.add('bg-[#fef3c7]', 'text-[#92400e]');
+                        verifyEl.classList.remove('bg-green-100', 'text-green-700');
+                    }
+
+                    // Avatar logic
+                    const avatarImg = document.getElementById("settingAvatar");
+                    const avatarContainer = document.getElementById("settingAvatarContainer");
+                    avatarContainer.classList.remove('animate-pulse', 'bg-gray-100'); 
+
+                    if (user.image && user.image.asset && user.image.asset._ref) {
+                        const ref = user.image.asset._ref;
+                        const parts = ref.split('-');
+                        const id = parts[1];
+                        const dimensions = parts[2];
+                        const format = parts[3];
+                        const url = `https://cdn.sanity.io/images/hr3iao8d/production/${id}-${dimensions}.${format}`;
+                        
+                        avatarImg.src = url;
+                        avatarImg.classList.remove('hidden');
+                        
+                        const existingFallback = avatarContainer.querySelector('.initials-fallback');
+                        if (existingFallback) existingFallback.remove();
+
+                        avatarImg.onerror = () => {
+                            showInitialsFallback(user.username, avatarContainer, avatarImg);
+                        };
+                    } else if (user.profilePicture) {
+                        avatarImg.src = user.profilePicture;
+                        avatarImg.classList.remove('hidden');
+                        const existingFallback = avatarContainer.querySelector('.initials-fallback');
+                        if (existingFallback) existingFallback.remove();
+                    } else {
+                        showInitialsFallback(user.username, avatarContainer, avatarImg);
+                    }
+                }
+            } else if (response.status === 401 || response.status === 403) {
+                window.location.href = '/login.html';
+            }
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+        }
+    }
+
+    function showInitialsFallback(username, container, imgElement) {
+        imgElement.classList.add('hidden');
+        const initials = (username || "U").substring(0, 2).toUpperCase();
+        
+        // Remove existing fallback
+        const old = container.querySelector('.initials-fallback');
+        if (old) old.remove();
+
+        const fallback = document.createElement('div');
+        fallback.className = 'initials-fallback w-full h-full flex items-center justify-center bg-[#1fa2d0] text-white font-bold text-xs';
+        fallback.innerText = initials;
+        container.appendChild(fallback);
+    }
+
     function filterLanguages(query) {
       const q = query.toLowerCase().trim();
       const buttons = document.querySelectorAll('#langList button[onclick^="changeLanguage"]');
@@ -386,17 +510,37 @@
       document.getElementById('langNoResults').classList.toggle('hidden', visible > 0);
     }
 
-    function updateSettingAvatar(input) {
+    async function updateSettingAvatar(input) {
       if (input.files && input.files[0]) {
+        const file = input.files[0];
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = async function(e) {
           const base64Image = e.target.result;
-          // Update UI
-          document.getElementById('settingAvatar').src = base64Image;
-          // Save to LocalStorage (Same key as account page for sync)
-          localStorage.setItem('userAvatar', base64Image);
+          
+          const avatarImg = document.getElementById('settingAvatar');
+          const container = document.getElementById('settingAvatarContainer');
+          
+          avatarImg.src = base64Image;
+          avatarImg.classList.remove('hidden');
+          const fallback = container.querySelector('.initials-fallback');
+          if (fallback) fallback.remove();
+
+          // Live upload to backend
+          try {
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            await fetch('https://stakewiseai-server.onrender.com/api/users/me', {
+                method: 'PATCH',
+                credentials: 'include',
+                body: formData
+            });
+            // Background update - user sees the local reader result immediately
+          } catch (err) {
+            console.error("Upload error", err);
+          }
         };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(file);
       }
     }
 
@@ -408,9 +552,8 @@
 
       if(show) {
         modal.classList.remove('hidden');
-        // Reset search on open
-        const searchInput = document.getElementById('langSearch');
-        if (searchInput) { searchInput.value = ''; filterLanguages(''); }
+        document.getElementById('pwdError').classList.add('hidden');
+        document.getElementById('pwdSuccess').classList.add('hidden');
         setTimeout(() => {
           overlay.classList.remove('opacity-0');
           overlay.classList.add('opacity-100');
@@ -520,9 +663,67 @@
       }
     }
 
-    function changePasswordSubmit() {
-      alert("Password successfully updated (Placeholder)");
-      togglePasswordModal(false);
+    async function changePasswordSubmit() {
+      const currentPwd = document.getElementById('currentPasswordInput').value.trim();
+      const newPwd = document.getElementById('newPasswordInput').value.trim();
+      const confirmPwd = document.getElementById('confirmPasswordInput').value.trim();
+      const errEl = document.getElementById('pwdError');
+      const succEl = document.getElementById('pwdSuccess');
+      const btn = document.getElementById('changePwdBtn');
+      
+      errEl.classList.add('hidden');
+      succEl.classList.add('hidden');
+
+      if(!currentPwd || !newPwd || !confirmPwd) {
+          errEl.innerText = "Please fill out all fields";
+          errEl.classList.remove('hidden');
+          return;
+      }
+      if(newPwd.length < 6) {
+          errEl.innerText = "New password must be at least 6 characters";
+          errEl.classList.remove('hidden');
+          return;
+      }
+      if(newPwd !== confirmPwd) {
+          errEl.innerText = "New password and Confirm password do not match";
+          errEl.classList.remove('hidden');
+          return;
+      }
+
+      const oldText = btn.innerText;
+      btn.innerText = "Validating...";
+      btn.disabled = true;
+
+      try {
+          const response = await fetch('https://stakewiseai-server.onrender.com/api/users/change-password', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({
+                  currentPassword: currentPwd,
+                  newPassword: confirmPwd
+              })
+          });
+
+          const data = await response.json();
+          if(response.ok || data.success) {
+              succEl.innerText = data.message || "Password successfully updated!";
+              succEl.classList.remove('hidden');
+              document.getElementById('currentPasswordInput').value = '';
+              document.getElementById('newPasswordInput').value = '';
+              document.getElementById('confirmPasswordInput').value = '';
+              setTimeout(() => togglePasswordModal(false), 2000);
+          } else {
+              errEl.innerText = data.message || "Failed to update password";
+              errEl.classList.remove('hidden');
+          }
+      } catch (error) {
+          errEl.innerText = "A network error occurred. Please try again later.";
+          errEl.classList.remove('hidden');
+      } finally {
+          btn.innerText = oldText;
+          btn.disabled = false;
+      }
     }
   </script>
 </body>

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -790,15 +790,17 @@ async function handleLogin(e) {
     const res  = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phoneNumber, password })
+      credentials: 'include',
+      body: JSON.stringify({ phoneNumber, password, keepMeLoggedIn: true })
     });
     const data = await res.json();
 
     if (res.ok) {
-      if (data.token)              localStorage.setItem('authToken', data.token);
-      if (data.user)               localStorage.setItem('userData', JSON.stringify(data.user));
-      if (data.user?.username)     localStorage.setItem('userName', data.user.username);
-      if (data.user?.phoneNumber)  localStorage.setItem('userPhone', data.user.phoneNumber);
+      localStorage.setItem('isLoggedIn', 'true');
+      const userPayload = data.data || data.user || data;
+      if (userPayload) localStorage.setItem('userData', JSON.stringify(userPayload));
+      if (userPayload?.username) localStorage.setItem('userName', userPayload.username);
+      if (userPayload?.phoneNumber) localStorage.setItem('userPhone', userPayload.phoneNumber);
       showToast('Login successful! Redirecting...', 'success');
       setTimeout(() => window.location.href = '/index.html', 1200);
     } else {

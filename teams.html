@@ -166,11 +166,11 @@
       <div class="grid grid-cols-2 gap-4">
         <div class="stat-card shadow-sm">
           <p class="text-gray-500 text-xs mb-1">Total Invites</p>
-          <p class="text-base font-bold text-gray-800">0</p>
+          <p class="text-base font-bold text-gray-800" id="totalInvites">0</p>
         </div>
         <div class="stat-card shadow-sm">
           <p class="text-gray-500 text-xs mb-1">Total Earnings</p>
-          <p class="text-base font-bold text-[#4f8cff]">0</p>
+          <p class="text-base font-bold text-[#4f8cff]" id="totalEarnings">$0.00</p>
         </div>
       </div>
     </div>
@@ -185,89 +185,19 @@
 
       <!-- MEMBER LIST: Level panels -->
       <div id="level-1" class="level-panel space-y-3">
-        <div class="member-card">
-          <div class="member-avatar">S</div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-bold text-gray-800">Success</p>
-            <p class="text-[10px] text-gray-400">Joined Feb 21, 2026</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-sm font-bold text-[#4f8cff]">$0.00</p>
-            <p class="text-[9px] text-gray-400">Invested</p>
-          </div>
-        </div>
-        <div class="member-card">
-          <div class="member-avatar">V</div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-bold text-gray-800">Vegas</p>
-            <p class="text-[10px] text-gray-400">Joined Feb 21, 2026</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-sm font-bold text-[#4f8cff]">$30.00</p>
-            <p class="text-[9px] text-gray-400">Invested</p>
-          </div>
-        </div>
-        <div class="member-card">
-          <div class="member-avatar">C</div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-bold text-gray-800">Chinedu22</p>
-            <p class="text-[10px] text-gray-400">Joined Apr 2, 2026</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-sm font-bold text-[#4f8cff]">$0.00</p>
-            <p class="text-[9px] text-gray-400">Invested</p>
-          </div>
-        </div>
-        <div class="member-card">
-          <div class="member-avatar">Y</div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-bold text-gray-800">Young_tech</p>
-            <p class="text-[10px] text-gray-400">Joined Apr 2, 2026</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-sm font-bold text-[#4f8cff]">$0.00</p>
-            <p class="text-[9px] text-gray-400">Invested</p>
-          </div>
+        <!-- Dynmically loaded -->
+        <div class="py-10 text-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4f8cff] mx-auto mb-3"></div>
+            <p class="text-xs text-gray-400">Fetching team...</p>
         </div>
       </div>
 
       <div id="level-2" class="level-panel space-y-3 hidden">
-        <div class="member-card">
-          <div class="member-avatar">A</div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-bold text-gray-800">Alpha_user</p>
-            <p class="text-[10px] text-gray-400">Joined Mar 5, 2026</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-sm font-bold text-[#4f8cff]">$10.00</p>
-            <p class="text-[9px] text-gray-400">Invested</p>
-          </div>
-        </div>
-        <div class="member-card">
-          <div class="member-avatar">B</div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-bold text-gray-800">Bright22</p>
-            <p class="text-[10px] text-gray-400">Joined Mar 10, 2026</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-sm font-bold text-[#4f8cff]">$0.00</p>
-            <p class="text-[9px] text-gray-400">Invested</p>
-          </div>
-        </div>
+          <!-- Dynmically loaded -->
       </div>
 
       <div id="level-3" class="level-panel space-y-3 hidden">
-        <div class="member-card">
-          <div class="member-avatar">T</div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-bold text-gray-800">TechPro</p>
-            <p class="text-[10px] text-gray-400">Joined Apr 1, 2026</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-sm font-bold text-[#4f8cff]">$5.00</p>
-            <p class="text-[9px] text-gray-400">Invested</p>
-          </div>
-        </div>
+          <!-- Dynmically loaded -->
       </div>
     </div>
 
@@ -306,6 +236,95 @@
 
   </div>
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchReferralData();
+        fetchUserDataForLink();
+    });
+
+    async function fetchUserDataForLink() {
+        try {
+            const res = await fetch('https://stakewiseai-server.onrender.com/api/users/me', { credentials: 'include' });
+            if (res.ok) {
+                const data = await res.json();
+                const user = data.user || data.data || data;
+                if (user && (user._id || user.id)) {
+                    const id = user._id || user.id;
+                    const link = `${window.location.origin}/register.html?r=${id}`;
+                    document.getElementById("referralCode").value = link;
+                }
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    async function fetchReferralData() {
+        try {
+            const response = await fetch('https://stakewiseai-server.onrender.com/api/users/referrals', {
+                credentials: 'include'
+            });
+            
+            if (response.status === 401 || response.status === 403) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            if (response.ok) {
+                const data = await response.json();
+                // Usually direct data or data.referrals
+                const referrals = data.referrals || data.data || data;
+
+                // Overall Stats
+                document.getElementById("totalInvites").innerText = referrals.totalInvites || "0";
+                document.getElementById("totalEarnings").innerText = `$${Number(referrals.totalEarnings || 0).toFixed(2)}`;
+
+                // Levels Rendering
+                renderLevel(1, referrals.level1 || []);
+                renderLevel(2, referrals.level2 || []);
+                renderLevel(3, referrals.level3 || []);
+            }
+        } catch (error) {
+            console.error("Error fetching referrals:", error);
+            // Handle error UI if needed
+        }
+    }
+
+    function renderLevel(levelNum, members) {
+        const container = document.getElementById(`level-${levelNum}`);
+        if (!container) return;
+
+        if (!members || members.length === 0) {
+            container.innerHTML = `
+                <div class="py-12 text-center bg-white rounded-2xl border border-dashed border-gray-200">
+                    <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-user-friends text-gray-300"></i>
+                    </div>
+                    <p class="text-xs text-gray-400">No referrals at Level ${levelNum} yet</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = members.map(m => {
+            const name = m.username || "Investor";
+            const initial = name.charAt(0).toUpperCase();
+            const date = m.createdAt ? new Date(m.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently";
+            const invested = Number(m.totalInvested || 0).toFixed(2);
+
+            return `
+                <div class="member-card">
+                  <div class="member-avatar">${initial}</div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-gray-800">${name}</p>
+                    <p class="text-[10px] text-gray-400">Joined ${date}</p>
+                  </div>
+                  <div class="text-right flex-shrink-0">
+                    <p class="text-sm font-bold text-[#4f8cff]">$${invested}</p>
+                    <p class="text-[9px] text-gray-400">Invested</p>
+                  </div>
+                </div>
+            `;
+        }).join('');
+    }
+
     function copyLink() {
       const copyText = document.getElementById("referralCode");
       copyText.select();

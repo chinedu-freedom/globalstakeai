@@ -1,7 +1,7 @@
 import os
 import glob
 
-folder = r"c:\Users\Spark.DESKTOP-F75SGV0\Desktop\globalstakeai"
+folder = r"c:\Users\Spark.DESKTOP-F75SGV0\Desktop\StakeWiseAi"
 html_files = glob.glob(os.path.join(folder, "*.html"))
 
 for file in html_files:

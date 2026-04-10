@@ -87,8 +87,9 @@
         <!-- Left: Avatar & Info -->
         <div class="flex items-center gap-3">
           <div class="relative group cursor-pointer" onclick="document.getElementById('avatarInput').click()">
-            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white/20 shadow-sm transition active:scale-95">
-              <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="Avatar" class="w-full h-full object-cover bg-blue-900" id="profileAvatar">
+            <div id="avatarSkeletonContainer" class="w-14 h-14 rounded-full overflow-hidden border-2 border-white/20 shadow-sm transition active:scale-95 bg-gray-200 animate-pulse flex items-center justify-center text-white text-xl font-bold tracking-widest relative">
+              <span id="profileInitials" class="hidden drop-shadow-md"></span>
+              <img src="" alt="Avatar" class="w-full h-full object-cover hidden absolute inset-0 z-10" id="profileAvatar">
             </div>
             <!-- Overlay Camera Icon on Hover (Optional touch) -->
             <div class="absolute inset-0 bg-black/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow-inner pointer-events-none">
@@ -98,10 +99,10 @@
           <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="updateAvatar(this)">
           <div>
             <div class="flex items-center gap-2">
-              <p class="text-sm font-semibold tracking-wide" id="userIdDisplay">ID: 4713422477</p>
-              <i class="far fa-copy text-xs opacity-80 cursor-pointer hover:opacity-100 transition" onclick="copyId()"></i>
+              <p class="text-sm tracking-wide animate-pulse bg-white/20 h-4 w-24 rounded-md" id="userIdDisplay"></p>
+              <i class="far fa-copy text-xs opacity-80 cursor-pointer hover:opacity-100 transition hidden" id="copyIdIcon" onclick="copyId()"></i>
             </div>
-            <p class="text-[11px] text-white/90 mt-0.5" id="userPhoneDisplay">+234 08158051119</p>
+            <p class="text-[11px] text-white/90 mt-1.5 animate-pulse bg-white/20 h-3 w-32 rounded-md" id="userPhoneDisplay"></p>
           </div>
         </div>
         
@@ -129,19 +130,19 @@
         <div class="flex justify-between items-center text-center">
           <div class="flex-1">
             <p class="text-[10px] text-gray-400 mb-1">Total Staked</p>
-            <p class="text-sm font-bold text-gray-800">$0.00</p>
+            <p class="text-sm font-bold text-gray-800" id="statTotalStaked">$0.00</p>
           </div>
           <!-- Vertical Divider -->
           <div class="w-px h-8 bg-gray-100"></div>
           <div class="flex-1">
             <p class="text-[10px] text-gray-400 mb-1">Current Assets</p>
-            <p class="text-sm font-bold text-gray-800">$0.00</p>
+            <p class="text-sm font-bold text-gray-800" id="statCurrentAssets">$0.00</p>
           </div>
           <!-- Vertical Divider -->
           <div class="w-px h-8 bg-gray-100"></div>
           <div class="flex-1">
             <p class="text-[10px] text-gray-400 mb-1">Commission</p>
-            <p class="text-sm font-bold text-gray-800">$0.00</p>
+            <p class="text-sm font-bold text-gray-800" id="statCommission">$0.00</p>
           </div>
         </div>
       </div>
@@ -269,31 +270,224 @@
 
   </div>
   <script>
-    // Logic to fetch stored session info if available
-    document.addEventListener("DOMContentLoaded", () => {
-        const storedPhone = localStorage.getItem("userPhone");
-        if(storedPhone) {
-            document.getElementById("userPhoneDisplay").innerText = "+234 " + storedPhone;
-        }
+    document.addEventListener("DOMContentLoaded", async () => {
+        // const storedPhone = localStorage.getItem("userPhone");
+        // if(storedPhone) {
+        //     document.getElementById("userPhoneDisplay").innerText = storedPhone;
+        // }
 
         // LOAD SAVED AVATAR
         const savedAvatar = localStorage.getItem("userAvatar");
         if(savedAvatar) {
-            document.getElementById("profileAvatar").src = savedAvatar;
+            const avatarEl = document.getElementById("profileAvatar");
+            const skeletonContainer = document.getElementById("avatarSkeletonContainer");
+            if (avatarEl) {
+                avatarEl.onload = () => {
+                    avatarEl.classList.remove('hidden');
+                    if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse');
+                };
+                avatarEl.src = savedAvatar;
+            }
+        }
+
+        // 1. Fetch User Data
+        try {
+            const userRes = await fetch('https://stakewiseai-server.onrender.com/api/users/me', {
+                credentials: 'include'
+            });
+            if (userRes.status === 401 || userRes.status === 403) {
+                window.location.href = '/login.html';
+                return;
+            }
+            if (userRes.ok) {
+                const userData = await userRes.json();
+                const user = userData.data || userData;
+                if (user) {
+                    const idEl = document.getElementById("userIdDisplay");
+                    const phoneEl = document.getElementById("userPhoneDisplay");
+                    const copyIcon = document.getElementById("copyIdIcon");
+
+                    if (user._id || user.id) {
+                        idEl.innerText = `ID: ${user._id || user.id}`;
+                        idEl.classList.remove('animate-pulse', 'bg-white/20', 'h-4', 'w-24', 'rounded-md');
+                        if (copyIcon) copyIcon.classList.remove('hidden');
+                    }
+                    if (user.phoneNumber || user.phone) {
+                        phoneEl.innerText = user.phoneNumber || user.phone;
+         ~               phoneEl.classList.remove('animate-pulse', 'bg-white/20', 'h-3', 'w-32', 'rounded-md', 'mt-1.5');
+                        phoneEl.classList.add('mt-0.5'); // Restore original margin
+                        localStorage.setItem("userPhone", user.phoneNumber || user.phone);
+                    }
+                    const skeletonContainer = document.getElementById("avatarSkeletonContainer");
+                    const initialsEl = document.getElementById("profileInitials");
+                    
+                    const setInitialsFallback = () => {
+                        if (skeletonContainer) {
+                            skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
+                            skeletonContainer.classList.add('bg-[#1fa2d0]'); 
+                            if (initialsEl && user.username) {
+                                const initials = user.username.substring(0, 2).toUpperCase();
+                                initialsEl.innerText = initials;
+                                initialsEl.classList.remove('hidden');
+                            }
+                        }
+                    };
+
+                    if (user.image && user.image.asset && user.image.asset._ref) {
+                        const ref = user.image.asset._ref;
+                        const parts = ref.split('-'); 
+                        if (parts.length === 4) {
+                            const assetId = parts[1];
+                            const dimensions = parts[2];
+                            const extension = parts[3];
+                            const projectId = "hr3iao8d"; 
+                            const dataset = "production"; 
+                            const imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${dimensions}.${extension}`;
+                            
+                            const avatarEl = document.getElementById("profileAvatar");
+                            if (avatarEl) {
+                                avatarEl.onload = () => {
+                                    avatarEl.classList.remove('hidden');
+                                    if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse');
+                                };
+                                avatarEl.onerror = () => setInitialsFallback();
+                                avatarEl.src = imageUrl;
+                            }
+                            localStorage.setItem('userAvatar', imageUrl);
+                        } else {
+                             setInitialsFallback();
+                        }
+                    } else if (user.profilePicture) {
+                        const avatarEl = document.getElementById("profileAvatar");
+                        if (avatarEl) {
+                            avatarEl.onload = () => {
+                                avatarEl.classList.remove('hidden');
+                                if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse');
+                            };
+                            avatarEl.onerror = () => setInitialsFallback();
+                            avatarEl.src = user.profilePicture;
+                        }
+                        localStorage.setItem('userAvatar', user.profilePicture);
+                    } else {
+                        setInitialsFallback();
+                    }
+                    if (user.vipLevel) {
+                        const vipEl = document.querySelector('a[href="/vip.html"]');
+                        if (vipEl) vipEl.innerText = user.vipLevel;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+
+        // 2. Fetch Dashboard Stats
+        try {
+            const statsRes = await fetch('https://stakewiseai-server.onrender.com/api/users/dashboard-stats', {
+                credentials: 'include'
+            });
+            if (statsRes.ok) {
+                const statsData = await statsRes.json();
+                const stats = statsData.data || statsData;
+                
+                if (stats.totalStaked !== undefined) {
+                    document.getElementById("statTotalStaked").innerText = `$${Number(stats.totalStaked).toFixed(2)}`;
+                }
+                if (stats.currentAssets !== undefined) {
+                    document.getElementById("statCurrentAssets").innerText = `$${Number(stats.currentAssets).toFixed(2)}`;
+                }
+                if (stats.commission !== undefined) {
+                    document.getElementById("statCommission").innerText = `$${Number(stats.commission).toFixed(2)}`;
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching dashboard stats:", error);
         }
     });
 
-    function updateAvatar(input) {
+    async function updateAvatar(input) {
       if (input.files && input.files[0]) {
+        const file = input.files[0];
         const reader = new FileReader();
-        reader.onload = function(e) {
+
+        reader.onload = async function(e) {
           const base64Image = e.target.result;
-          // Update UI
-          document.getElementById('profileAvatar').src = base64Image;
-          // Save to LocalStorage
+          
+          const avatarEl = document.getElementById('profileAvatar');
+          const skeletonContainer = document.getElementById('avatarSkeletonContainer');
+          const initials = document.getElementById('profileInitials');
+          
+          if (avatarEl) {
+              avatarEl.src = base64Image;
+              avatarEl.classList.remove('hidden');
+          }
+          if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse', 'bg-[#1fa2d0]');
+          if (initials) initials.classList.add('hidden');
+          
           localStorage.setItem('userAvatar', base64Image);
+
+          const toast = document.getElementById("toast");
+          toast.innerText = "Uploading picture...";
+          toast.classList.remove("opacity-0", "bg-[#4f8cff]");
+          toast.classList.add("opacity-100", "bg-orange-500");
+
+          try {
+            // Because the expected payload might vary, we can try `multipart/form-data` first,
+            // or alternatively submit base64 directly if the backend supports it.
+            const formData = new FormData();
+            formData.append('image', file);
+
+            // Attempt formData:
+            let response = await fetch('https://stakewiseai-server.onrender.com/api/users/me', {
+                method: 'PATCH',
+                credentials: 'include',
+                body: formData
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            // If it fails due to payload format, try raw JSON with base64
+            if (!response.ok && response.status === 400) {
+                response = await fetch('https://stakewiseai-server.onrender.com/api/users/me', {
+                    method: 'PATCH',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: base64Image })
+                });
+            }
+
+            if (response.ok) {
+                toast.innerText = "Profile picture updated!";
+                toast.classList.remove("bg-orange-500");
+                toast.classList.add("bg-green-500");
+            } else {
+                const errData = await response.json().catch(() => ({}));
+                toast.innerText = errData.message || "Failed to update picture";
+                toast.classList.remove("bg-orange-500");
+                toast.classList.add("bg-red-500");
+            }
+          } catch (err) {
+            console.error("Upload error:", err);
+            toast.innerText = "Error uploading picture";
+            toast.classList.remove("bg-orange-500");
+            toast.classList.add("bg-red-500");
+          }
+
+          setTimeout(() => {
+            toast.classList.remove("opacity-100");
+            toast.classList.add("opacity-0");
+            setTimeout(() => {
+                toast.classList.remove("bg-green-500", "bg-red-500", "bg-orange-500");
+                toast.classList.add("bg-[#4f8cff]");
+                toast.innerText = "ID copied successfully!"; // Reset toast message text back
+            }, 300);
+          }, 3000);
         };
-        reader.readAsDataURL(input.files[0]);
+        
+        reader.readAsDataURL(file);
       }
     }
 
@@ -302,6 +496,7 @@
       navigator.clipboard.writeText(idText);
       
       const toast = document.getElementById("toast");
+      toast.innerText = "ID copied successfully!";
       toast.classList.remove("opacity-0");
       toast.classList.add("opacity-100");
       setTimeout(() => {

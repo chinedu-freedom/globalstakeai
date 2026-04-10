@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -204,7 +204,7 @@
         <div class="px-6 py-5 space-y-3 max-h-[60vh] overflow-y-auto">
           
           <!-- USDT TRC20 -->
-          <button onclick="selectCurrency('USDT (TRC20)', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+          <button onclick="selectCurrency('USDT_TRC20', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
             <div class="flex items-center gap-3">
               <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-6 h-6" alt="USDT">
               <div class="text-left">
@@ -214,41 +214,30 @@
             </div>
           </button>
 
-          <!-- USDT BEP20 -->
-          <button onclick="selectCurrency('USDT (BEP20)', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+          <!-- USDT ERC20 -->
+          <button onclick="selectCurrency('USDT_ERC20', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
             <div class="flex items-center gap-3">
               <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-6 h-6" alt="USDT">
               <div class="text-left">
                 <p class="text-xs font-bold text-gray-800">USDT</p>
-                <p class="text-[10px] text-gray-400 font-medium">BEP20</p>
+                <p class="text-[10px] text-gray-400 font-medium">ERC20</p>
               </div>
             </div>
           </button>
 
-          <!-- BTC -->
-          <button onclick="selectCurrency('BTC (Bitcoin)', 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-6 h-6" alt="BTC">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">BTC</p>
-                <p class="text-[10px] text-gray-400 font-medium">Bitcoin</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- ETH -->
-          <button onclick="selectCurrency('ETH (Ethereum)', 'https://assets.coingecko.com/coins/images/279/small/ethereum.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+          <!-- ETH ERC20 -->
+          <button onclick="selectCurrency('ETH_ERC20', 'https://assets.coingecko.com/coins/images/279/small/ethereum.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
             <div class="flex items-center gap-3">
               <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" class="w-6 h-6" alt="ETH">
               <div class="text-left">
                 <p class="text-xs font-bold text-gray-800">ETH</p>
-                <p class="text-[10px] text-gray-400 font-medium">Ethereum</p>
+                <p class="text-[10px] text-gray-400 font-medium">ERC20</p>
               </div>
             </div>
           </button>
 
-          <!-- BNB -->
-          <button onclick="selectCurrency('BNB (Smart Chain)', 'https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+          <!-- BNB BEP20 -->
+          <button onclick="selectCurrency('BNB_BEP20', 'https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
             <div class="flex items-center gap-3">
               <img src="https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png" class="w-6 h-6" alt="BNB">
               <div class="text-left">
@@ -258,156 +247,13 @@
             </div>
           </button>
 
-          <!-- SOL -->
-          <button onclick="selectCurrency('SOL (Solana)', 'https://assets.coingecko.com/coins/images/4128/small/solana.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
+          <!-- BTC BITCOIN -->
+          <button onclick="selectCurrency('BTC_BITCOIN', 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
             <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/4128/small/solana.png" class="w-6 h-6" alt="SOL">
+              <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-6 h-6" alt="BTC">
               <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">SOL</p>
-                <p class="text-[10px] text-gray-400 font-medium">Solana</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- XRP -->
-          <button onclick="selectCurrency('XRP (Ripple)', 'https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png" class="w-6 h-6" alt="XRP">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">XRP</p>
-                <p class="text-[10px] text-gray-400 font-medium">Ripple</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- ADA -->
-          <button onclick="selectCurrency('ADA (Cardano)', 'https://assets.coingecko.com/coins/images/975/small/cardano.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/975/small/cardano.png" class="w-6 h-6" alt="ADA">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">ADA</p>
-                <p class="text-[10px] text-gray-400 font-medium">Cardano</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- DOGE -->
-          <button onclick="selectCurrency('DOGE (Dogecoin)', 'https://assets.coingecko.com/coins/images/5/small/dogecoin.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/5/small/dogecoin.png" class="w-6 h-6" alt="DOGE">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">DOGE</p>
-                <p class="text-[10px] text-gray-400 font-medium">Dogecoin</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- TRX -->
-          <button onclick="selectCurrency('TRX (Tron)', 'https://assets.coingecko.com/coins/images/1094/small/tron-logo.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/1094/small/tron-logo.png" class="w-6 h-6" alt="TRX">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">TRX</p>
-                <p class="text-[10px] text-gray-400 font-medium">Tron</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- DOT -->
-          <button onclick="selectCurrency('DOT (Polkadot)', 'https://assets.coingecko.com/coins/images/12171/small/polkadot.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/12171/small/polkadot.png" class="w-6 h-6" alt="DOT">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">DOT</p>
-                <p class="text-[10px] text-gray-400 font-medium">Polkadot</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- MATIC -->
-          <button onclick="selectCurrency('MATIC (Polygon)', 'https://assets.coingecko.com/coins/images/4713/small/matic_polygon.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/4713/small/matic_polygon.png" class="w-6 h-6" alt="MATIC">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">MATIC</p>
-                <p class="text-[10px] text-gray-400 font-medium">Polygon</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- DAI -->
-          <button onclick="selectCurrency('DAI (Stablecoin)', 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png" class="w-6 h-6" alt="DAI">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">DAI</p>
-                <p class="text-[10px] text-gray-400 font-medium">Stablecoin</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- LTC -->
-          <button onclick="selectCurrency('LTC (Litecoin)', 'https://assets.coingecko.com/coins/images/2/small/litecoin.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/2/small/litecoin.png" class="w-6 h-6" alt="LTC">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">LTC</p>
-                <p class="text-[10px] text-gray-400 font-medium">Litecoin</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- SHIB -->
-          <button onclick="selectCurrency('SHIB (Shiba Inu)', 'https://assets.coingecko.com/coins/images/11939/small/shiba.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/11939/small/shiba.png" class="w-6 h-6" alt="SHIB">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">SHIB</p>
-                <p class="text-[10px] text-gray-400 font-medium">Shiba Inu</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- BCH -->
-          <button onclick="selectCurrency('BCH (Bitcoin Cash)', 'https://assets.coingecko.com/coins/images/780/small/bitcoin-cash.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/780/small/bitcoin-cash.png" class="w-6 h-6" alt="BCH">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">BCH</p>
-                <p class="text-[10px] text-gray-400 font-medium">Bitcoin Cash</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- AVAX -->
-          <button onclick="selectCurrency('AVAX (Avalanche)', 'https://assets.coingecko.com/coins/images/12559/small/Avalanche_Circle_RedWhite_Trans.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/12559/small/Avalanche_Circle_RedWhite_Trans.png" class="w-6 h-6" alt="AVAX">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">AVAX</p>
-                <p class="text-[10px] text-gray-400 font-medium">Avalanche</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- LINK -->
-          <button onclick="selectCurrency('LINK (Chainlink)', 'https://assets.coingecko.com/coins/images/877/small/chainlink-new-logo.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/877/small/chainlink-new-logo.png" class="w-6 h-6" alt="LINK">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">LINK</p>
-                <p class="text-[10px] text-gray-400 font-medium">Chainlink</p>
-              </div>
-            </div>
-          </button>
-
-          <!-- XLM -->
-          <button onclick="selectCurrency('XLM (Stellar)', 'https://assets.coingecko.com/coins/images/100/small/stellar.png')" class="w-full flex items-center justify-between p-3.5 border border-gray-100 hover:bg-gray-50 rounded-2xl transition cursor-pointer">
-            <div class="flex items-center gap-3">
-              <img src="https://assets.coingecko.com/coins/images/100/small/stellar.png" class="w-6 h-6" alt="XLM">
-              <div class="text-left">
-                <p class="text-xs font-bold text-gray-800">XLM</p>
-                <p class="text-[10px] text-gray-400 font-medium">Stellar</p>
+                <p class="text-xs font-bold text-gray-800">BTC</p>
+                <p class="text-[10px] text-gray-400 font-medium">BITCOIN</p>
               </div>
             </div>
           </button>
@@ -535,7 +381,7 @@
       toggleCurrencyModal(false);
     }
 
-    function addWalletSubmit() {
+    async function addWalletSubmit() {
       const coin = document.getElementById('selectedCoinText').innerText;
       const coinImg = document.getElementById('selectedCoinImg').src;
       const address = document.getElementById('walletAddressInput').value.trim();
@@ -568,77 +414,139 @@
 
       if(!isValid) return;
 
-      // SAVE LOGIC
-      const newWallet = {
-        coin: coin,
-        img: coinImg,
-        address: address,
-        label: label || 'My Wallet', // Fallback if optional label is empty
-        id: Date.now()
-      };
+      const submitBtn = document.querySelector('button[onclick="addWalletSubmit()"]');
+      const oldText = submitBtn.innerText;
+      submitBtn.innerText = "Saving...";
+      submitBtn.disabled = true;
 
-      let wallets = JSON.parse(localStorage.getItem('savedWallets') || '[]');
-      wallets.push(newWallet);
-      localStorage.setItem('savedWallets', JSON.stringify(wallets));
+      // SAVE LOGIC TO BACKEND
+      try {
+          const response = await fetch('https://stakewiseai-server.onrender.com/api/wallets', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'include',
+              body: JSON.stringify({
+                  crypto: coin,
+                  walletAddress: address,
+                  label: label || 'My Wallet',
+                  img: coinImg
+              })
+          });
 
-      // UI UPDATES
-      renderWallets();
-      toggleAddModal(false);
-      
-      // Reset inputs
-      document.getElementById('walletAddressInput').value = '';
-      document.getElementById('walletLabelInput').value = '';
-      document.getElementById('selectedCoinText').innerText = 'Choose a cryptocurrency';
-      document.getElementById('selectedCoinImg').classList.add('hidden');
+          const data = await response.json();
+          if (response.ok || data.success) {
+              toggleAddModal(false);
+              document.getElementById('walletAddressInput').value = '';
+              document.getElementById('walletLabelInput').value = '';
+              document.getElementById('selectedCoinText').innerText = 'Choose a cryptocurrency';
+              document.getElementById('selectedCoinImg').classList.add('hidden');
+              renderWallets(); 
+          } else {
+              alert(data.message || "Failed to save wallet.");
+          }
+      } catch (error) {
+          alert("A network error occurred. Please try again.");
+      } finally {
+          submitBtn.innerText = oldText;
+          submitBtn.disabled = false;
+      }
     }
 
-    function renderWallets() {
-      const wallets = JSON.parse(localStorage.getItem('savedWallets') || '[]');
+    async function renderWallets() {
       const listContainer = document.getElementById('walletsList');
       const emptyState = document.getElementById('emptyState');
 
-      if (wallets.length === 0) {
-        emptyState.classList.remove('hidden');
-        listContainer.classList.add('hidden');
-      } else {
-        emptyState.classList.add('hidden');
-        listContainer.classList.remove('hidden');
-        listContainer.innerHTML = '';
+      try {
+          const res = await fetch('https://stakewiseai-server.onrender.com/api/wallets', {
+              credentials: 'include'
+          });
+          
+          if (res.status === 401 || res.status === 403) {
+              window.location.href = '/login.html';
+              return;
+          }
+          
+          if (res.ok) {
+              const data = await res.json();
+              
+              // Handle nested payloads resiliently (e.g. data.data.wallets, data.wallets, or data.data directly)
+              let wallets = [];
+              if (Array.isArray(data.data)) {
+                  wallets = data.data;
+              } else if (data.data?.wallets && Array.isArray(data.data.wallets)) {
+                  wallets = data.data.wallets;
+              } else if (Array.isArray(data.wallets)) {
+                  wallets = data.wallets;
+              }
 
-        wallets.forEach(w => {
-          const card = `
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-50 flex items-center justify-between group">
-              <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center shrink-0">
-                  <img src="${w.img}" class="w-6 h-6" alt="Coin">
-                </div>
-                <div>
-                  <h3 class="text-xs font-bold text-gray-800">${w.label}</h3>
-                  <p class="text-[10px] text-gray-400 mt-0.5 truncate max-w-[180px] font-medium">${w.address}</p>
-                </div>
-              </div>
-              <div class="flex flex-col items-end gap-1">
-                <span class="text-[9px] font-bold text-[#167bee] bg-[#e8efff] px-2 py-0.5 rounded-full">${w.coin.split(' ')[0]}</span>
-                <button onclick="deleteWallet(${w.id})" class="text-gray-300 hover:text-red-400 transition ml-2">
-                  <i class="fas fa-trash-alt text-[11px]"></i>
-                </button>
-              </div>
-            </div>
-          `;
-          listContainer.innerHTML += card;
-        });
+              if (wallets.length === 0) {
+                  emptyState.classList.remove('hidden');
+                  listContainer.classList.add('hidden');
+              } else {
+                  emptyState.classList.add('hidden');
+                  listContainer.classList.remove('hidden');
+                  listContainer.innerHTML = '';
+
+                  wallets.forEach(w => {
+                      const coinName = w.crypto || w.coin || 'Crypto_Network'; // e.g. "USDT_TRC20"
+                      const label = w.label || "Main Wallet";
+                      const address = w.walletAddress || w.address || "";
+                      const safeLabel = label.replace(/'/g, "\\'");
+                      
+                      const parts = coinName.split('_');
+                      const baseCoin = parts[0] || 'Crypto'; 
+                      const networkName = parts[1] || baseCoin;
+                      const initials = baseCoin.substring(0, 2).toUpperCase();
+
+                      const card = `
+                        <div class="bg-white rounded-[28px] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 flex flex-col gap-6 mb-2">
+                          
+                          <!-- Top row (Icon, Title, Trash) -->
+                          <div class="flex justify-between items-start">
+                            <div class="flex gap-4 items-center">
+                              <!-- Blue circle -->
+                              <div class="w-14 h-14 rounded-full bg-[#167bee] text-white flex items-center justify-center font-bold text-[19px] shrink-0">
+                                ${initials}
+                              </div>
+                              <div class="flex flex-col justify-center">
+                                <h3 class="text-base font-bold text-[#1e293b] leading-tight mb-1">${baseCoin} ${parts.length > 1 ? '(' + networkName + ')' : ''}</h3>
+                                <p class="text-[12px] text-gray-400 font-medium tracking-wide">${networkName.toUpperCase()}</p>
+                              </div>
+                            </div>
+                            <!-- Trash Icon -->
+                            <button onclick="deleteWallet('${w._id || w.id}', '${safeLabel}')" class="text-red-400 hover:text-red-500 transition pt-2.5 cursor-pointer pr-1">
+                              <i class="far fa-trash-alt text-[20px]"></i>
+                            </button>
+                          </div>
+
+                          <!-- Address Box -->
+                          <div class="bg-[#f8fafc] rounded-[20px] p-4.5 py-5 -mt-1">
+                            <span class="block text-[13px] font-semibold text-gray-400 mb-2.5 ml-1.5">Wallet Address</span>
+                            <span class="block text-[14px] text-gray-700 font-mono break-all ml-1.5 leading-relaxed tracking-wide">${address}</span>
+                          </div>
+
+                          <!-- Label Footer -->
+                          <div class="px-1 text-[13px] text-gray-400 font-medium pb-2">
+                            Label: <span class="text-gray-500">${label}</span>
+                          </div>
+                          
+                        </div>
+                      `;
+                      listContainer.innerHTML += card;
+                  });
+              }
+          }
+      } catch (error) {
+          console.error("Fetch error:", error);
       }
     }
 
     let walletToDeleteId = null;
 
-    function deleteWallet(id) {
-      const wallets = JSON.parse(localStorage.getItem('savedWallets') || '[]');
-      const wallet = wallets.find(w => w.id === id);
-      if(!wallet) return;
-
+    function deleteWallet(id, label) {
+      if(!id) return;
       walletToDeleteId = id;
-      document.getElementById('deleteWalletName').innerText = `"${wallet.label}"`;
+      document.getElementById('deleteWalletName').innerText = `"${label || 'wallet'}"`;
       toggleDeleteModal(true);
     }
 
@@ -666,15 +574,34 @@
       }
     }
 
-    function confirmDelete() {
+    async function confirmDelete() {
       if(!walletToDeleteId) return;
-      let wallets = JSON.parse(localStorage.getItem('savedWallets') || '[]');
-      wallets = wallets.filter(w => w.id !== walletToDeleteId);
-      localStorage.setItem('savedWallets', JSON.stringify(wallets));
       
-      toggleDeleteModal(false);
-      renderWallets();
-      walletToDeleteId = null;
+      const btn = document.querySelector('#deleteModalContent .bg-red-500');
+      const oldText = btn.innerText;
+      btn.innerText = "Deleting...";
+      btn.disabled = true;
+
+      try {
+          const response = await fetch(`https://stakewiseai-server.onrender.com/api/wallets/${walletToDeleteId}`, {
+              method: 'DELETE',
+              credentials: 'include'
+          });
+          
+          if (response.ok) {
+              toggleDeleteModal(false);
+              renderWallets();
+          } else {
+              const data = await response.json();
+              alert(data.message || "Failed to delete wallet.");
+          }
+      } catch (error) {
+          alert("Network error occurred");
+      } finally {
+          btn.innerText = oldText;
+          btn.disabled = false;
+          walletToDeleteId = null;
+      }
     }
 
     // INITIALIZE ON LOAD
