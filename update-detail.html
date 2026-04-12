@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="./protect.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update 1 - GlobalStakeAI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #f1f5f9; padding-bottom: 30px; }
+
+    .gradient-header {
+      background: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%);
+    }
+
+    .article-hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0288d1 50%, #2dd4bf 100%);
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      border: 1px solid #f1f5f9;
+    }
+
+    .stat-up { color: #10b981; }
+    .stat-down { color: #ef4444; }
+
+    .section-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+      border: 1px solid #f1f5f9;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #eff6ff;
+      color: #3b82f6;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #e0f2fe, #f0fdf4);
+      border-left: 4px solid #0ea5e9;
+      border-radius: 0 12px 12px 0;
+      padding: 12px 14px;
+    }
+
+    .timeline-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #3b82f6;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+      z-index: 50;
+      border-top: 1px solid #f1f5f9;
+      height: 64px;
+    }
+
+    .pulse-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .share-btn {
+      background: linear-gradient(90deg, #2dd4bf, #3b82f6);
+      color: white;
+      border-radius: 50px;
+      padding: 12px 28px;
+      font-weight: 700;
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(59,130,246,0.25);
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .share-btn:hover { opacity: 0.92; transform: scale(1.02); }
+    .share-btn:active { transform: scale(0.97); }
+  </style>
+</head>
+<body class="flex flex-col items-center">
+  <div class="w-full max-w-md min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 bg-[#f1f5f9]">
+
+    <!-- HEADER -->
+    <div class="gradient-header px-5 pt-10 pb-10 text-white relative">
+      <div class="flex items-center gap-3 mb-4">
+        <a href="./index.html" class="w-9 h-9 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition">
+          <i class="fas fa-chevron-left text-sm"></i>
+        </a>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">Market Update</h1>
+          <p class="text-[10px] text-white/75 font-medium mt-0.5">GlobalStakeAI News</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="tag" style="background:#1e40af; color:white; border-color:transparent;">UPDATE 1</span>
+        <div class="flex items-center gap-1.5">
+          <div class="pulse-dot"></div>
+          <span class="text-[9px] text-white/80 font-semibold uppercase tracking-wide">Live Update</span>
+        </div>
+        <span class="text-[9px] text-white/60 ml-auto">01/10/2026 · 02:30</span>
+      </div>
+    </div>
+
+    <!-- HERO BANNER -->
+    <div class="article-hero mx-4 -mt-4 rounded-2xl p-5 text-white shadow-lg relative overflow-hidden">
+      <!-- Abstract pattern overlay -->
+      <div class="absolute inset-0 opacity-10" style="background: radial-gradient(circle at 80% 20%, white 0%, transparent 55%)"></div>
+      <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-3">
+          <img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png"
+               class="w-14 h-14 rounded-2xl bg-black/20 p-1.5 object-contain shadow-lg" alt="Bitcoin">
+          <div>
+            <p class="text-[10px] text-white/70 uppercase tracking-widest font-semibold">Bitcoin</p>
+            <p class="text-2xl font-black tracking-tight">$90,470</p>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="text-[10px] font-bold bg-emerald-400/20 text-emerald-200 px-2 py-0.5 rounded-full border border-emerald-400/30">
+                +0.12% ↑
+              </span>
+              <span class="text-[9px] text-white/60">24h change</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-[10px] text-white/75 leading-relaxed">
+          Bitcoin's price surged overnight, approaching the major psychological $100K milestone driven by institutional ETF inflows and renewed market optimism.
+        </p>
+      </div>
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="px-4 mt-4 grid grid-cols-3 gap-2">
+      <div class="stat-card p-3 flex flex-col items-center">
+        <p class="text-[9px] text-gray-400 font-medium mb-1">Price</p>
+        <p class="text-[13px] font-bold text-gray-800">$90.47k</p>
+        <span class="stat-up text-[9px] font-semibold mt-0.5">+0.12%</span>
+      </div>
+      <div class="stat-card p-3 flex flex-col items-center">
+        <p class="text-[9px] text-gray-400 font-medium mb-1">Volume 24h</p>
+        <p class="text-[13px] font-bold text-gray-800">$38.05b</p>
+        <span class="stat-down text-[9px] font-semibold mt-0.5">-11.79%</span>
+      </div>
+      <div class="stat-card p-3 flex flex-col items-center">
+        <p class="text-[9px] text-gray-400 font-medium mb-1">Market Cap</p>
+        <p class="text-[13px] font-bold text-gray-800">$1.78T</p>
+        <span class="stat-up text-[9px] font-semibold mt-0.5">+0.08%</span>
+      </div>
+    </div>
+
+    <!-- MAIN ARTICLE -->
+    <div class="px-4 mt-4">
+      <div class="section-card p-4">
+        <h2 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+          <i class="fas fa-newspaper text-blue-400 text-xs"></i>
+          Full Report
+        </h2>
+
+        <div class="highlight-box mb-4">
+          <p class="text-[10.5px] text-gray-700 leading-relaxed font-medium">
+            📝 In the last 24 hours, Bitcoin's price moved <strong>+0.12%</strong> to <strong>$90.47k</strong> and trading volume moved <strong>-11.79%</strong> to <strong>$38.05b</strong>.
+          </p>
+        </div>
+
+        <p class="text-[10.5px] text-gray-600 leading-relaxed mb-3">
+          🔵 Bitcoin nears $100K, driven by ETF inflows. Spot Bitcoin ETFs continue to attract significant institutional capital, with cumulative inflows exceeding $85 billion since launch. Analysts from major banks project further upside as regulatory clarity improves across key markets.
+        </p>
+
+        <p class="text-[10.5px] text-gray-600 leading-relaxed mb-3">
+          The latest rally has been fueled by a confluence of macroeconomic factors: easing inflation data in the U.S., a weaker dollar index, and growing adoption of Bitcoin as a treasury reserve asset by corporations.
+        </p>
+
+        <p class="text-[10.5px] text-gray-600 leading-relaxed">
+          Market sentiment remains cautiously bullish with the Fear & Greed Index sitting at <span class="font-semibold text-amber-600">74 (Greed)</span>, reflecting strong investor confidence heading into Q2.
+        </p>
+      </div>
+    </div>
+
+    <!-- KEY EVENTS TIMELINE -->
+    <div class="px-4 mt-4">
+      <div class="section-card p-4">
+        <h2 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+          <i class="fas fa-clock text-teal-400 text-xs"></i>
+          Key Events (24h)
+        </h2>
+        <div class="space-y-3">
+          <div class="flex gap-3 items-start">
+            <div class="timeline-dot mt-1"></div>
+            <div>
+              <p class="text-[10.5px] font-semibold text-gray-700">02:00 UTC — BTC hits $90,470</p>
+              <p class="text-[9.5px] text-gray-500">Breakthrough above key resistance triggers bullish momentum</p>
+            </div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="timeline-dot mt-1" style="background:#2dd4bf;"></div>
+            <div>
+              <p class="text-[10.5px] font-semibold text-gray-700">06:15 UTC — ETF record day</p>
+              <p class="text-[9.5px] text-gray-500">Spot Bitcoin ETFs record highest single-day inflow of $1.2B</p>
+            </div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="timeline-dot mt-1" style="background:#f59e0b;"></div>
+            <div>
+              <p class="text-[10.5px] font-semibold text-gray-700">14:30 UTC — Volatility spike</p>
+              <p class="text-[9.5px] text-gray-500">Brief dip to $88.9k on profit-taking before quick recovery</p>
+            </div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="timeline-dot mt-1" style="background:#8b5cf6;"></div>
+            <div>
+              <p class="text-[10.5px] font-semibold text-gray-700">22:00 UTC — Analyst upgrade</p>
+              <p class="text-[9.5px] text-gray-500">Goldman Sachs raises BTC 3-month target to $105,000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARKET SENTIMENT -->
+    <div class="px-4 mt-4">
+      <div class="section-card p-4">
+        <h2 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+          <i class="fas fa-chart-pie text-purple-400 text-xs"></i>
+          Market Sentiment
+        </h2>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+            <p class="text-[9px] text-emerald-600 font-semibold uppercase mb-1">Bullish signals</p>
+            <ul class="space-y-1">
+              <li class="text-[9.5px] text-gray-600 flex items-center gap-1"><span class="text-emerald-400">✓</span> ETF inflows strong</li>
+              <li class="text-[9.5px] text-gray-600 flex items-center gap-1"><span class="text-emerald-400">✓</span> On-chain activity up</li>
+              <li class="text-[9.5px] text-gray-600 flex items-center gap-1"><span class="text-emerald-400">✓</span> Hash rate ATH</li>
+            </ul>
+          </div>
+          <div class="bg-red-50 rounded-xl p-3 border border-red-100">
+            <p class="text-[9px] text-red-500 font-semibold uppercase mb-1">Risk factors</p>
+            <ul class="space-y-1">
+              <li class="text-[9.5px] text-gray-600 flex items-center gap-1"><span class="text-red-400">✗</span> Volume decline</li>
+              <li class="text-[9.5px] text-gray-600 flex items-center gap-1"><span class="text-red-400">✗</span> Overbought RSI</li>
+              <li class="text-[9.5px] text-gray-600 flex items-center gap-1"><span class="text-red-400">✗</span> Macro uncertainty</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RELATED UPDATES -->
+    <div class="px-4 mt-4">
+      <div class="section-card p-4">
+        <h2 class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+          <i class="fas fa-layer-group text-blue-400 text-xs"></i>
+          Related Updates
+        </h2>
+        <div class="space-y-3">
+          <a href="./news.html" class="flex gap-3 items-center bg-slate-50 rounded-xl p-3 border border-slate-100 hover:border-blue-200 transition active:scale-[0.98]">
+            <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png"
+                 class="w-10 h-10 rounded-xl bg-slate-900 p-1 object-contain" alt="ETH">
+            <div class="flex-1 min-w-0">
+              <p class="text-[10.5px] font-semibold text-gray-700 truncate">Update 2 — ETH Staking Boost</p>
+              <p class="text-[9px] text-gray-400 mt-0.5">Ethereum staking rewards rise to 4.2% APY</p>
+            </div>
+            <i class="fas fa-chevron-right text-[10px] text-gray-400"></i>
+          </a>
+          <a href="./news.html" class="flex gap-3 items-center bg-slate-50 rounded-xl p-3 border border-slate-100 hover:border-blue-200 transition active:scale-[0.98]">
+            <div class="w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center text-white">
+              <i class="fas fa-server text-sm"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[10.5px] font-semibold text-gray-700 truncate">Infrastructure Expansion</p>
+              <p class="text-[9px] text-gray-400 mt-0.5">Singapore farm adds 500 PH/s to ecosystem</p>
+            </div>
+            <i class="fas fa-chevron-right text-[10px] text-gray-400"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="px-4 mt-5 mb-8 flex flex-col items-center gap-3">
+      <button class="share-btn w-full" onclick="window.location.href='./plans.html'">
+        <i class="fas fa-rocket mr-2"></i>Start Staking Now
+      </button>
+      <a href="./news.html" class="text-[11px] text-blue-500 font-semibold hover:underline">
+        View all updates →
+      </a>
+    </div>
+
+  </div>
+
+  <script src="./translator.js"></script>
+</body>
+</html>

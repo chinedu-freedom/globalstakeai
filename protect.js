@@ -1,44 +1,81 @@
-import { authFetch } from "./auth.js";
+/**
+ * protect.js — Page-level auth guard
+ *
+ * Because the session token is an httpOnly cookie, JavaScript cannot
+ * read it directly. Instead we call a lightweight /api/users/me endpoint
+ * that the server validates. If the request comes back as 401 / network
+ * error, the user is not authenticated and we redirect them to login.
+ *
+ * Usage: add  <script src="./protect.js"></script>
+ *        as the FIRST script in <head> on every protected page.
+ */
+(function () {
+  const API_BASE = "https://stakewiseai-server.onrender.com";
+  const LOGIN_PAGE = "/login.html";
 
-async function loadPartial(url, selector) {
-  try {
-    const res = await authFetch(url);
-    if (!res.ok) throw new Error("Unauthorized");
+  // Pages that are publicly accessible — no redirect needed.
+  // Keep this list lowercase for reliable comparison.
+  const PUBLIC_PATHS = [
+    "/login.html",
+    "/forgotpassword.html",
+    "/resetpassword.html",
+    "/otp.html",
+  ];
 
-    const data = await res.text();
-    const container = document.querySelector(selector);
-    if (!container) return;
-
-    container.innerHTML = data;
-
-    container.querySelectorAll("script").forEach((oldScript) => {
-      const newScript = document.createElement("script");
-
-      if (oldScript.src) newScript.src = oldScript.src;
-      else newScript.textContent = oldScript.textContent;
-
-      // preserve type (important for ES modules)
-      if (oldScript.type) newScript.type = oldScript.type;
-
-      // preserve other attributes if needed
-      if (oldScript.async) newScript.async = true;
-      if (oldScript.defer) newScript.defer = true;
-
-      document.body.appendChild(newScript);
-    });
-  } catch (err) {
-    console.error(`Error loading ${url}:`, err);
-
-    // remember where the user wanted to go
-    localStorage.setItem("redirectAfterLogin", window.location.pathname);
-
-    window.location.href = "/login.html";
+  function currentPathIsPublic() {
+    const path = window.location.pathname.toLowerCase();
+    return PUBLIC_PATHS.some((p) => path.endsWith(p));
   }
-}
 
-export async function protectPage() {
-  await Promise.all([
-    loadPartial("header.html", "#header"),
-    loadPartial("footer.html", "#footer"),
-  ]);
-}
+  function redirectToLogin() {
+    // Remember where the user wanted to go so we can send them back
+    // after a successful login (login.html can read this).
+    try {
+      localStorage.setItem("redirectAfterLogin", window.location.pathname + window.location.search);
+    } catch (_) {}
+    window.location.replace(LOGIN_PAGE);
+  }
+
+  // If this page is public, do nothing at all.
+  if (currentPathIsPublic()) return;
+
+  // -------------------------------------------------------
+  // Immediately hide the body so there's no flash of
+  // protected content while the auth check is in flight.
+  // -------------------------------------------------------
+  var style = document.createElement("style");
+  style.id = "__auth_guard_style";
+  style.textContent = "body { visibility: hidden !important; }";
+  document.head
+    ? document.head.appendChild(style)
+    : document.documentElement.appendChild(style);
+
+  function removeBodyHide() {
+    var el = document.getElementById("__auth_guard_style");
+    if (el) el.parentNode.removeChild(el);
+  }
+
+  // -------------------------------------------------------
+  // Hit the server with the session cookie attached.
+  // -------------------------------------------------------
+  fetch(API_BASE + "/api/users/me", {
+    method: "GET",
+    credentials: "include", // sends the httpOnly cookie
+    headers: { "Content-Type": "application/json" },
+  })
+    .then(function (res) {
+      if (res.status === 401 || res.status === 403) {
+        redirectToLogin();
+      } else if (!res.ok) {
+        // Other server error — still redirect to be safe
+        redirectToLogin();
+      } else {
+        // Authenticated — reveal the page
+        removeBodyHide();
+      }
+    })
+    .catch(function () {
+      // Network failure — could be offline or CORS; redirect to login
+      redirectToLogin();
+    });
+})();
