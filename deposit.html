@@ -1,47 +1,139 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <title>Deposit - StakeWiseAi</title>
+  <title>Deposit - GlobalStakeAI</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #f0f4f8; 
-      padding-bottom: 70px; 
+    body { font-family: "Poppins", sans-serif; background-color: #f0f4f8; padding-bottom: 30px; }
+
+    /* ── Header ── */
+    .header-bg { background: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%); }
+
+    /* ── Method Selection Modal ── */
+    #methodModal {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(5px);
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; transition: opacity .3s ease;
+    }
+    #methodModal.show { opacity: 1; }
+    #methodSheet {
+      background: #fff; width: 100%; max-width: 448px;
+      border-radius: 28px 28px 0 0;
+      padding: 24px 20px 36px;
+      transform: translateY(100%);
+      transition: transform .35s cubic-bezier(.32,1.2,.58,1);
+    }
+    #methodModal.show #methodSheet { transform: translateY(0); }
+
+    .method-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 16px; padding: 14px 16px;
+      cursor: pointer; transition: all .2s ease;
+      background: #f8fafc;
+    }
+    .method-card:hover  { border-color: #94a3b8; background: #f1f5f9; }
+    .method-card.active { border-color: #22c55e; background: #f0fdf4; }
+    .method-card.active .method-badge-auto { background: #22c55e; color: white; }
+
+    .method-badge {
+      font-size: 9px; font-weight: 700; letter-spacing: .5px;
+      padding: 2px 8px; border-radius: 20px; text-transform: uppercase;
+    }
+    .method-badge-auto { background: #dcfce7; color: #16a34a; }
+    .method-badge-manual { background: #fef3c7; color: #b45309; }
+
+    /* ── OxaPay Payment Screen ── */
+    #oxapayScreen { display: none; }
+
+    .qr-wrap {
+      width: 160px; height: 160px;
+      border: 3px solid #e2e8f0;
+      border-radius: 16px; overflow: hidden;
+      margin: 0 auto;
+      background: white;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .qr-wrap img { width: 100%; height: 100%; object-fit: contain; }
+
+    .address-box {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .address-text {
+      font-size: 11px; font-weight: 600; color: #374151;
+      word-break: break-all; flex: 1;
+      font-family: monospace; letter-spacing: .3px;
+    }
+    .copy-btn {
+      flex-shrink: 0; width: 32px; height: 32px;
+      border-radius: 10px; background: #3b82f6; color: white;
+      border: none; cursor: pointer; font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .15s;
+    }
+    .copy-btn:hover  { background: #2563eb; }
+    .copy-btn:active { transform: scale(.92); }
+
+    .step-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: white; border: 1px solid #e2e8f0;
+      border-radius: 50px; padding: 6px 14px;
+      font-size: 10px; font-weight: 600; color: #374151;
+    }
+    .step-num {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #3b82f6; color: white;
+      font-size: 9px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
 
-    .header-bg {
-      background: linear-gradient(90deg, #1fa2d0, #4f8cff);
-    }
-    
-    .crypto-btn.active {
-      border-color: #4f8cff;
-      background-color: #ebf3ff;
-    }
+    /* ── Pulse dot ── */
+    .pulse-dot { width:8px;height:8px;border-radius:50%;background:#22c55e;
+      animation: pdot 1.5s ease-in-out infinite; }
+    @keyframes pdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
 
-    .crypto-btn:hover:not(.active) {
-      border-color: #cbd5e1;
-      background-color: #f8fafc;
-    }
+    /* ── Spinner ── */
+    .spinner { border:3px solid #e2e8f0; border-top-color:#3b82f6;
+      border-radius:50%; width:28px; height:28px;
+      animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
 
-    .btn-gradient {
-      background: linear-gradient(90deg, #1fa2d0, #4f8cff);
+    /* ── Toast ── */
+    #toast {
+      position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+      background:#1e293b; color:white; font-size:12px; font-weight:600;
+      padding:10px 20px; border-radius:50px; z-index:9999;
+      transition: transform .3s ease, opacity .3s ease; opacity:0; white-space:nowrap;
     }
-    .btn-disabled {
-      background: #d1d5db;
-      cursor: not-allowed;
-    }
+    #toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
+    /* ── CTA button ── */
+    .btn-green { background: linear-gradient(90deg,#22c55e,#16a34a); color:white; }
+    .btn-blue  { background: linear-gradient(90deg,#3b82f6,#2563eb); color:white; }
+
+    /* ── Amount section ── */
+    .amount-input {
+      width:100%; background:#f8fafc; border:1.5px solid #e2e8f0;
+      border-radius:14px; padding:12px 16px; font-size:15px; font-weight:700;
+      color:#1e293b; outline:none; transition:border-color .2s;
+    }
+    .amount-input:focus { border-color:#3b82f6; }
   </style>
-
-  <script src="./translator.js"></script>
 </head>
 <body class="flex flex-col min-h-screen items-center">
+
+  <!-- Toast -->
+  <div id="toast"></div>
 
   <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
 
@@ -55,166 +147,305 @@
       </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="px-5 pt-6 pb-6 space-y-6 flex-1">
-      
-      <!-- Payment Method -->
-      <!-- <div>
-        <label class="block text-[11px] text-gray-500 font-medium mb-2 pl-1">Select Payment Method</label>
-        <div class="relative">
-          <select class="w-full appearance-none bg-[#f8fafc] border border-[#a5c3fb] text-gray-700 text-sm font-medium rounded-xl py-3.5 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition cursor-pointer">
-            <option value="crypto">Select Crypto Payment Method</option>
-            <option value="bank">Bank Transfer (Naira)</option>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
-            <i class="fas fa-chevron-down text-xs"></i>
+    <!-- ═══════════════════════════════════════════════
+         STEP 1 — Method Selection UI (default view)
+    ════════════════════════════════════════════════ -->
+    <div id="selectScreen" class="px-5 pt-6 space-y-5 flex-1">
+
+      <!-- Info card -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-wallet text-blue-500"></i>
+        </div>
+        <div>
+          <p class="text-[13px] font-bold text-slate-800">Add Funds to Your Account</p>
+          <p class="text-[10px] text-slate-500 mt-0.5 leading-relaxed">Choose your preferred deposit method below. Automatic payments are credited instantly.</p>
+        </div>
+      </div>
+
+      <!-- Method label -->
+      <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest pl-1">Select Deposit Method</p>
+
+      <!-- OxaPay card -->
+      <div class="method-card active" id="card-oxapay" onclick="selectMethod('oxapay')">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
+            <img src="https://oxapay.com/landing/img/oxapay-logo.svg" class="w-7 h-7 object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="OxaPay">
+            <i class="fas fa-bolt text-emerald-500 text-lg hidden"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <p class="text-[13px] font-bold text-slate-800">OxaPay</p>
+              <span class="method-badge method-badge-auto">Automatic</span>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-0.5">USDT · TRC20 Network</p>
+          </div>
+          <div id="check-oxapay" class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
+            <i class="fas fa-check text-white text-[10px]"></i>
           </div>
         </div>
-      </div> -->
-
-      <!-- Select Cryptocurrency -->
-      <div>
-        <label class="block text-[11px] text-gray-500 font-medium mb-2 pl-1">Select Cryptocurrency</label>
-        <div class="grid grid-cols-2 gap-3">
-          
-          <!-- BTC -->
-          <button type="button" class="crypto-btn flex items-center gap-3 bg-[#f8fafc] border border-gray-200 rounded-xl p-3 transition text-left" data-coin="BTC" data-rate="66000" onclick="selectCrypto(this)">
-            <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-7 h-7" alt="BTC" />
-            <div>
-              <p class="text-[11px] font-bold text-gray-800 leading-tight">BTC</p>
-              <p class="text-[9px] text-gray-400 mt-0.5">Bitcoin</p>
-            </div>
-          </button>
-
-          <!-- USDT TRC20 (Default Active) -->
-          <button type="button" class="crypto-btn active flex items-center gap-3 bg-[#f8fafc] border border-gray-200 rounded-xl p-3 transition text-left" data-coin="USDT" data-rate="1" onclick="selectCrypto(this)">
-            <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-7 h-7" alt="USDT" />
-            <div>
-              <p class="text-[11px] font-bold text-gray-800 leading-tight">USDT</p>
-              <p class="text-[9px] text-gray-400 mt-0.5">TRC20</p>
-            </div>
-          </button>
-
-          <!-- USDT BEP20 -->
-          <button type="button" class="crypto-btn flex items-center gap-3 bg-[#f8fafc] border border-gray-200 rounded-xl p-3 transition text-left" data-coin="USDT" data-rate="1" onclick="selectCrypto(this)">
-            <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-7 h-7" alt="USDT" />
-            <div>
-              <p class="text-[11px] font-bold text-gray-800 leading-tight">USDT</p>
-              <p class="text-[9px] text-gray-400 mt-0.5">BEP20</p>
-            </div>
-          </button>
-
-          <!-- BNB BEP20 -->
-          <button type="button" class="crypto-btn flex items-center gap-3 bg-[#f8fafc] border border-gray-200 rounded-xl p-3 transition text-left" data-coin="BNB" data-rate="600" onclick="selectCrypto(this)">
-            <img src="https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png" class="w-7 h-7" alt="BNB" />
-            <div>
-              <p class="text-[11px] font-bold text-gray-800 leading-tight">BNB</p>
-              <p class="text-[9px] text-gray-400 mt-0.5">BEP20</p>
-            </div>
-          </button>
-
-        </div>
       </div>
 
-      <!-- Amount Input -->
-      <div>
-        <label class="block text-[11px] text-gray-500 font-medium mb-2 pl-1">Amount (USD)</label>
+      <!-- Amount input (shown for OxaPay) -->
+      <div id="amountSection">
+        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 pl-1">Amount (USD)</label>
         <div class="relative">
-          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <span class="text-gray-500 font-medium text-sm">$</span>
-          </div>
-          <input type="number" id="depositAmount" class="w-full bg-[#f8fafc] border border-gray-200 text-gray-800 text-sm font-semibold rounded-xl py-3.5 pl-8 pr-4 focus:outline-none focus:ring-1 focus:border-blue-400 focus:ring-blue-400 transition" placeholder="0.00" oninput="calculateAmount()">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span>
+          <input type="number" id="depositAmount" class="amount-input pl-8" placeholder="Minimum $100" min="100" />
         </div>
+        <p class="text-[9.5px] text-slate-400 mt-1.5 pl-1">Minimum deposit: <strong>$100</strong> · Maximum: <strong>$1,000,000</strong></p>
       </div>
 
-      <!-- Realtime Conversion Box -->
-      <div class="bg-[#f8fafc] border border-gray-200 rounded-xl p-4 flex justify-between items-center shadow-sm">
-        <span class="text-[11px] text-gray-500 font-medium tracking-wide">You will send</span>
-        <div class="text-right">
-          <p class="text-sm font-bold text-gray-800 tracking-wide"><span id="convertedAmount">0.00</span> <span id="selectedCoinLabel">USDT</span></p>
-          <p class="text-[9px] text-gray-400 mt-0.5 tracking-wide">1 <span id="rateCoinLabel">USDT</span> = $<span id="rateValueLabel">1.00</span></p>
-        </div>
+      <!-- Feature pills -->
+      <div class="flex flex-wrap gap-2">
+        <div class="step-pill"><div class="pulse-dot"></div> Auto-credited to wallet</div>
+        <div class="step-pill"><i class="fas fa-shield-halved text-blue-400 text-[10px]"></i> Blockchain verified</div>
+        <div class="step-pill"><i class="fas fa-clock text-orange-400 text-[10px]"></i> ~5–30 min confirmation</div>
       </div>
 
-      <!-- Submit Button -->
-      <button id="proceedBtn" class="w-full btn-disabled text-white font-bold py-3.5 rounded-xl text-sm transition mt-2 shadow-sm">
-        Proceed to Payment
+      <!-- Continue button -->
+      <button id="continueBtn" onclick="proceedToPayment()"
+        class="w-full btn-green text-white font-bold py-4 rounded-2xl text-sm shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2 mt-2">
+        <i class="fas fa-arrow-right"></i>
+        Continue to Payment
       </button>
 
-      <!-- Info Box -->
-      <div class="bg-[#f0f7ff] rounded-xl p-4 flex items-start gap-3 border border-[#e0efff] mt-4 shadow-sm">
-        <i class="fas fa-info-circle text-[#4f8cff] text-[13px] mt-0.5 shrink-0"></i>
-        <p class="text-[10px] text-[#4f8cff] leading-relaxed">
-          Please ensure you send the exact amount to the provided wallet address. Transactions are typically confirmed within 10-30 minutes.
+    </div><!-- /selectScreen -->
+
+
+    <!-- ═══════════════════════════════════════════════
+         STEP 2 — OxaPay USDT TRC20 Payment Screen
+    ════════════════════════════════════════════════ -->
+    <div id="oxapayScreen" class="px-5 pt-5 pb-8 flex-1 space-y-5">
+
+      <!-- Back + title -->
+      <div class="flex items-center gap-3">
+        <button onclick="backToSelect()" class="w-9 h-9 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center text-slate-500 hover:bg-slate-50 transition">
+          <i class="fas fa-chevron-left text-sm"></i>
+        </button>
+        <div>
+          <h2 class="text-[15px] font-bold text-slate-800">USDT Payment</h2>
+          <p class="text-[9.5px] text-slate-400 font-medium">Send any amount you wish · Auto-credited</p>
+        </div>
+        <div class="ml-auto flex items-center gap-1.5 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
+          <div class="pulse-dot"></div>
+          <span class="text-[9px] font-bold text-green-600 uppercase tracking-wide">Live</span>
+        </div>
+      </div>
+
+      <!-- Amount badge -->
+      <div class="bg-blue-50 border border-blue-100 rounded-2xl px-4 py-3 flex items-center justify-between">
+        <div>
+          <p class="text-[9px] text-blue-400 font-semibold uppercase tracking-wider">Amount to Send</p>
+          <p class="text-[20px] font-black text-blue-700 mt-0.5">$<span id="displayAmount">0.00</span></p>
+        </div>
+        <div class="text-right">
+          <p class="text-[9px] text-blue-400 font-semibold uppercase tracking-wider">Network</p>
+          <p class="text-[13px] font-bold text-blue-700 mt-0.5">USDT TRC20</p>
+        </div>
+      </div>
+
+      <!-- QR Code -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <p class="text-[10px] font-bold text-slate-400 text-center uppercase tracking-widest mb-4">Scan QR Code</p>
+        <div class="qr-wrap" id="qrWrapper">
+          <div class="spinner"></div>
+        </div>
+        <p class="text-[9px] text-slate-400 text-center mt-3">Scan with Trust Wallet, Binance, or any TRC20 wallet</p>
+      </div>
+
+      <!-- Wallet Address -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Wallet Address (TRC20)</p>
+        <div class="address-box">
+          <span class="address-text" id="walletAddress">Loading...</span>
+          <button class="copy-btn" id="copyBtn" onclick="copyAddress()" title="Copy address">
+            <i class="fas fa-copy text-xs"></i>
+          </button>
+        </div>
+        <p class="text-[9px] text-red-400 font-semibold mt-2 pl-1">⚠️ Only send USDT on the TRC20 network to this address.</p>
+      </div>
+
+      <!-- How it works steps -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
+        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">How it works</p>
+        <div class="flex items-start gap-3">
+          <div class="step-num">1</div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">Copy the wallet address or scan the QR code above.</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="step-num">2</div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">Send exactly <strong class="text-blue-600">$<span id="displayAmount2">0.00</span> USDT</strong> from your wallet on the <strong>TRC20</strong> network.</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="step-num">3</div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">Once the payment is sent, it will be <strong class="text-green-600">credited to your wallet automatically</strong> after blockchain confirmation (5–30 min).</p>
+        </div>
+      </div>
+
+      <!-- I've Sent Payment button -->
+      <button id="notifyBtn" onclick="notifyPayment()"
+        class="w-full btn-blue text-white font-bold py-4 rounded-2xl text-sm shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2">
+        <i class="fas fa-paper-plane"></i>
+        I've Sent the Payment
+      </button>
+
+      <!-- Safety note -->
+      <div class="bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3 flex items-start gap-3">
+        <i class="fas fa-triangle-exclamation text-amber-400 mt-0.5 flex-shrink-0 text-sm"></i>
+        <p class="text-[9.5px] text-amber-700 leading-relaxed">
+          Do <strong>not</strong> close this page until your transaction is submitted. Only use USDT on the TRC20 network — sending other tokens or using the wrong network will result in permanent loss.
         </p>
       </div>
 
-    </div>
+    </div><!-- /oxapayScreen -->
 
-  </div>
+  </div><!-- /app -->
 
   <script>
-    let activeCoin = "USDT";
-    let activeRate = 1;
+    const API = "https://stakewiseai-server.onrender.com";
 
-    // Handle crypto selection
-    function selectCrypto(buttonElement) {
-      // Remove active class from all
-      document.querySelectorAll('.crypto-btn').forEach(btn => btn.classList.remove('active'));
-      // Add to clicked
-      buttonElement.classList.add('active');
+    // ─── State ───────────────────────────────────────────
+    let chosenAmount = 0;
+    // Hardcoded USDT TRC20 deposit address (from OxaPay merchant static address)
+    // Replace with your actual OxaPay merchant static address
+    const USDT_TRC20_ADDRESS = "TFoPJE6H5uHWV7X69EMavqyUxF9B1HnmwY";
 
-      // Update state
-      activeCoin = buttonElement.getAttribute('data-coin');
-      activeRate = parseFloat(buttonElement.getAttribute('data-rate'));
-
-      calculateAmount();
+    // ─── Toast helper ─────────────────────────────────────
+    function showToast(msg, duration = 2500) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), duration);
     }
 
-    // Handle typing in the amount box
-    function calculateAmount() {
-      const input = document.getElementById('depositAmount').value;
-      const parsedAmount = parseFloat(input);
-      
-      const convertedDisplay = document.getElementById('convertedAmount');
-      const coinLabels = document.querySelectorAll('#selectedCoinLabel, #rateCoinLabel');
-      const rateDisplay = document.getElementById('rateValueLabel');
-      const btn = document.getElementById('proceedBtn');
-
-      // Update structural labels
-      coinLabels.forEach(el => el.innerText = activeCoin);
-      
-      // We assume activeRate is the price of the coin in USD
-      // e.g., if Bitcoin is 66000, and user enters 1000 USD, they send 1000 / 66000 BTC.
-      let finalAmount = 0;
-      if (!isNaN(parsedAmount) && parsedAmount > 0) {
-        finalAmount = parsedAmount / activeRate;
-      }
-
-      // Format correctly depending on coin
-      if (activeCoin === 'BTC' || activeCoin === 'BNB') {
-        convertedDisplay.innerText = finalAmount.toFixed(6);
-      } else {
-        convertedDisplay.innerText = finalAmount.toFixed(2);
-      }
-
-      // Format the static rate label for the bottom
-      rateDisplay.innerText = activeRate >= 1000 ? activeRate.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : activeRate.toFixed(2);
-
-      // Toggle button states
-      if (!isNaN(parsedAmount) && parsedAmount >= 1) {
-        btn.classList.remove('btn-disabled');
-        btn.classList.add('btn-gradient');
-        btn.onclick = () => { alert('Redirecting to Payment Gateway...'); };
-      } else {
-        btn.classList.add('btn-disabled');
-        btn.classList.remove('btn-gradient');
-        btn.onclick = null;
-      }
+    // ─── Copy address ─────────────────────────────────────
+    function copyAddress() {
+      const addr = document.getElementById("walletAddress").textContent.trim();
+      navigator.clipboard.writeText(addr).then(() => {
+        const btn = document.getElementById("copyBtn");
+        btn.innerHTML = '<i class="fas fa-check text-xs"></i>';
+        btn.style.background = "#22c55e";
+        showToast("✅ Address copied to clipboard!");
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fas fa-copy text-xs"></i>';
+          btn.style.background = "";
+        }, 2000);
+      }).catch(() => showToast("Failed to copy — please copy manually."));
     }
 
-    // Initialize state on load
-    calculateAmount();
+    // ─── Method selection (only OxaPay for now) ──────────
+    function selectMethod(method) {
+      // Currently only OxaPay is shown, so nothing to toggle
+    }
+
+    // ─── Proceed from Step 1 → Step 2 ────────────────────
+    function proceedToPayment() {
+      const raw = parseFloat(document.getElementById("depositAmount").value);
+
+      if (isNaN(raw) || raw < 100) {
+        showToast("⚠️ Minimum deposit is $100");
+        document.getElementById("depositAmount").focus();
+        return;
+      }
+      if (raw > 1_000_000) {
+        showToast("⚠️ Maximum deposit is $1,000,000");
+        return;
+      }
+
+      chosenAmount = raw;
+
+      // Update UI
+      document.getElementById("displayAmount").textContent  = raw.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      document.getElementById("displayAmount2").textContent = raw.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+      // Switch screens
+      document.getElementById("selectScreen").style.display  = "none";
+      document.getElementById("oxapayScreen").style.display  = "block";
+
+      // Load QR + address
+      loadPaymentDetails();
+    }
+
+    // ─── Back to Step 1 ───────────────────────────────────
+    function backToSelect() {
+      document.getElementById("oxapayScreen").style.display = "none";
+      document.getElementById("selectScreen").style.display = "block";
+    }
+
+    // ─── Load wallet address + QR code ───────────────────
+    async function loadPaymentDetails() {
+      const addrEl   = document.getElementById("walletAddress");
+      const qrWrap   = document.getElementById("qrWrapper");
+
+      // Try to get a dynamic address from backend (OxaPay invoice API)
+      let address = USDT_TRC20_ADDRESS; // fallback to static address
+
+      try {
+        const res = await fetch(`${API}/api/deposits/oxapay-address`, {
+          credentials: "include"
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.data?.address) {
+            address = data.data.address;
+          }
+        }
+      } catch (_) {
+        // Use static fallback silently
+      }
+
+      // Render address
+      addrEl.textContent = address;
+
+      // Generate QR code using free QR API
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(address)}&margin=6&color=000000&bgcolor=ffffff`;
+      const img = document.createElement("img");
+      img.src = qrUrl;
+      img.alt = "USDT TRC20 QR Code";
+      img.className = "w-full h-full object-contain";
+      img.onload = () => { qrWrap.innerHTML = ""; qrWrap.appendChild(img); };
+      img.onerror = () => {
+        qrWrap.innerHTML = `<div class="text-center p-2"><i class="fas fa-qrcode text-3xl text-slate-300"></i><p class="text-[9px] text-slate-400 mt-1">Scan unavailable</p></div>`;
+      };
+    }
+
+    // ─── "I've Sent Payment" — notify backend ─────────────
+    async function notifyPayment() {
+      const btn = document.getElementById("notifyBtn");
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0 auto;border-top-color:white;border-color:rgba(255,255,255,.3)"></div>';
+
+      try {
+        const res = await fetch(`${API}/api/deposits/oxapay-notify`, {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: chosenAmount, crypto: "USDT", network: "TRC20" })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok) {
+          showToast("✅ We've noted your payment! Crediting soon.", 4000);
+          btn.innerHTML = '<i class="fas fa-check mr-2"></i>Payment Noted — Thank you!';
+          btn.style.background = "#22c55e";
+          btn.disabled = false;
+          // Redirect to history after brief delay
+          setTimeout(() => { window.location.href = "./history.html"; }, 3000);
+        } else {
+          showToast(data?.message || "⚠️ Could not record payment. Please contact support.");
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>I\'ve Sent the Payment';
+        }
+      } catch (err) {
+        showToast("⚠️ Network error. Please try again or contact support.");
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>I\'ve Sent the Payment';
+      }
+    }
   </script>
+
+  <script src="./translator.js"></script>
 </body>
 </html>
