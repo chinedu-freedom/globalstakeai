@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./loader.js"></script>
+
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -88,6 +90,7 @@
   </style>
 
   <script src="./translator.js"></script>
+  <script src="./toast.js"></script>
 </head>
 <body class="flex flex-col min-h-screen items-center">
 
@@ -245,8 +248,8 @@
              </button>
            </div>
         </div>
-        <p id="pwdError" class="text-[10px] text-red-500 hidden text-center"></p>
-        <p id="pwdSuccess" class="text-[10px] text-green-500 hidden text-center">Password successfully updated!</p>
+           </div>
+        </div>
       </div>
 
       <div class="flex flex-col gap-3">
@@ -668,26 +671,19 @@
       const currentPwd = document.getElementById('currentPasswordInput').value.trim();
       const newPwd = document.getElementById('newPasswordInput').value.trim();
       const confirmPwd = document.getElementById('confirmPasswordInput').value.trim();
-      const errEl = document.getElementById('pwdError');
-      const succEl = document.getElementById('pwdSuccess');
       const btn = document.getElementById('changePwdBtn');
-      
-      errEl.classList.add('hidden');
-      succEl.classList.add('hidden');
+
 
       if(!currentPwd || !newPwd || !confirmPwd) {
-          errEl.innerText = "Please fill out all fields";
-          errEl.classList.remove('hidden');
+          window.showToast({ message: "Please fill out all fields", type: "warning" });
           return;
       }
       if(newPwd.length < 6) {
-          errEl.innerText = "New password must be at least 6 characters";
-          errEl.classList.remove('hidden');
+          window.showToast({ message: "New password must be at least 6 characters", type: "warning" });
           return;
       }
       if(newPwd !== confirmPwd) {
-          errEl.innerText = "New password and Confirm password do not match";
-          errEl.classList.remove('hidden');
+          window.showToast({ message: "New password and Confirm password do not match", type: "warning" });
           return;
       }
 
@@ -708,19 +704,16 @@
 
           const data = await response.json();
           if(response.ok || data.success) {
-              succEl.innerText = data.message || "Password successfully updated!";
-              succEl.classList.remove('hidden');
+              window.showToast({ message: data.message || "Password successfully updated!", type: "success" });
               document.getElementById('currentPasswordInput').value = '';
               document.getElementById('newPasswordInput').value = '';
               document.getElementById('confirmPasswordInput').value = '';
-              setTimeout(() => togglePasswordModal(false), 2000);
+              setTimeout(() => togglePasswordModal(false), 1500);
           } else {
-              errEl.innerText = data.message || "Failed to update password";
-              errEl.classList.remove('hidden');
+              window.showToast({ message: data.message || "Failed to update password", type: "error" });
           }
       } catch (error) {
-          errEl.innerText = "A network error occurred. Please try again later.";
-          errEl.classList.remove('hidden');
+          window.showToast({ message: "A network error occurred. Please try again later.", type: "error" });
       } finally {
           btn.innerText = oldText;
           btn.disabled = false;

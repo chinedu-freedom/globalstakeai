@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./loader.js"></script>
+
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -77,6 +79,7 @@
   </style>
 
   <script src="./translator.js"></script>
+  <script src="./toast.js"></script>
 </head>
 <body class="flex flex-col min-h-screen items-center">
 
@@ -108,7 +111,7 @@
         </div>
         
         <!-- Right: Settings Icon -->
-        <a href="/settings.html" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition shadow-sm">
+        <a href="/settings.html" class="w-8 h-8 rounded-full bg-white/20 hidden sm:flex items-center justify-center hover:bg-white/30 transition shadow-sm">
           <i class="fas fa-cog text-sm"></i>
         </a>
       </div>
@@ -223,23 +226,21 @@
           <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </div>
 
-        <a href="/login.html" class="flex items-center justify-between p-4 hover:bg-red-50 transition last:rounded-b-2xl group">
+        <button id="logoutBtn" onclick="handleLogout()" class="w-full flex items-center justify-between p-4 hover:bg-red-50 transition last:rounded-b-2xl group text-left">
           <div class="flex items-center gap-3">
             <div class="w-7 h-7 rounded-full bg-red-50 flex items-center justify-center text-red-500 group-hover:bg-red-100 transition">
-              <i class="fas fa-sign-out-alt text-xs"></i>
+              <i class="fas fa-sign-out-alt text-xs" id="logoutIcon"></i>
+              <i class="fas fa-spinner fa-spin text-xs hidden" id="logoutSpinner"></i>
             </div>
-            <span class="text-sm text-red-500 font-medium tracking-wide">Logout</span>
+            <span class="text-sm text-red-500 font-medium tracking-wide" id="logoutLabel">Logout</span>
           </div>
-        </a>
+        </button>
 
       </div>
     </div>
 
 
-    <!-- NOTIFICATION TOAST -->
-    <div id="toast" class="fixed top-10 left-1/2 -translate-x-1/2 bg-[#4f8cff] text-white px-6 py-3 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50 text-xs font-semibold">
-      ID copied successfully!
-    </div>
+    <!-- Notification Toast removed in favor of global toast.js -->
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
@@ -270,6 +271,47 @@
     </div>
 
   </div>
+
+  <script>
+    async function handleLogout() {
+      const btn       = document.getElementById('logoutBtn');
+      const icon      = document.getElementById('logoutIcon');
+      const spinner   = document.getElementById('logoutSpinner');
+      const label     = document.getElementById('logoutLabel');
+
+      // Show loading state
+      btn.disabled    = true;
+      icon.classList.add('hidden');
+      spinner.classList.remove('hidden');
+      label.textContent = 'Logging out...';
+
+      try {
+        const res = await fetch('https://stakewiseai-server.onrender.com/api/auth/logout', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (res.ok || res.status === 200 || res.status === 204) {
+          // Clear local storage on successful logout
+          localStorage.clear();
+          sessionStorage.clear();
+          // Redirect to login
+          window.location.href = '/login.html';
+        } else {
+          throw new Error('Logout failed with status ' + res.status);
+        }
+      } catch (err) {
+        console.error('Logout error:', err);
+        window.showToast({ message: 'Logout failed. Please try again.', type: 'error' });
+        // Restore button
+        btn.disabled = false;
+        icon.classList.remove('hidden');
+        spinner.classList.add('hidden');
+        label.textContent = 'Logout';
+      }
+    }
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
         // const storedPhone = localStorage.getItem("userPhone");
@@ -335,7 +377,31 @@
                         }
                     };
 
-                    if (user.profilePicture) {
+                    if (user.image && user.image.asset && user.image.asset._ref) {
+                        const ref = user.image.asset._ref;
+                        const parts = ref.split('-'); 
+                        if (parts.length === 4) {
+                            const assetId = parts[1];
+                            const dimensions = parts[2];
+                            const extension = parts[3];
+                            const projectId = "hr3iao8d";
+                            const dataset = "production"; 
+                            const imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${dimensions}.${extension}`;
+                            
+                            if (avatarEl) {
+                                avatarEl.onload = () => {
+                                    avatarEl.classList.remove('hidden');
+                                    if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse');
+                                    if (initialsEl) initialsEl.classList.add('hidden');
+                                };
+                                avatarEl.onerror = () => setInitialsFallback();
+                                avatarEl.src = imageUrl;
+                            }
+                            localStorage.setItem('userAvatar', imageUrl);
+                        } else {
+                             setInitialsFallback();
+                        }
+                    } else if (user.profilePicture) {
                         if (avatarEl) {
                             avatarEl.onload = () => {
                                 avatarEl.classList.remove('hidden');
@@ -404,10 +470,7 @@
           
           localStorage.setItem('userAvatar', base64Image);
 
-          const toast = document.getElementById("toast");
-          toast.innerText = "Uploading picture...";
-          toast.classList.remove("opacity-0", "bg-[#4f8cff]");
-          toast.classList.add("opacity-100", "bg-orange-500");
+          window.showToast({ message: "Uploading picture...", type: "info", duration: 2000 });
 
           try {
             // Because the expected payload might vary, we can try `multipart/form-data` first,
@@ -438,31 +501,15 @@
             }
 
             if (response.ok) {
-                toast.innerText = "Profile picture updated!";
-                toast.classList.remove("bg-orange-500");
-                toast.classList.add("bg-green-500");
+                window.showToast({ message: "Profile picture updated!", type: "success" });
             } else {
                 const errData = await response.json().catch(() => ({}));
-                toast.innerText = errData.message || "Failed to update picture";
-                toast.classList.remove("bg-orange-500");
-                toast.classList.add("bg-red-500");
+                window.showToast({ message: errData.message || "Failed to update picture", type: "error" });
             }
           } catch (err) {
             console.error("Upload error:", err);
-            toast.innerText = "Error uploading picture";
-            toast.classList.remove("bg-orange-500");
-            toast.classList.add("bg-red-500");
+            window.showToast({ message: "Error uploading picture", type: "error" });
           }
-
-          setTimeout(() => {
-            toast.classList.remove("opacity-100");
-            toast.classList.add("opacity-0");
-            setTimeout(() => {
-                toast.classList.remove("bg-green-500", "bg-red-500", "bg-orange-500");
-                toast.classList.add("bg-[#4f8cff]");
-                toast.innerText = "ID copied successfully!"; // Reset toast message text back
-            }, 300);
-          }, 3000);
         };
         
         reader.readAsDataURL(file);
@@ -472,15 +519,7 @@
     function copyId() {
       const idText = document.getElementById("userIdDisplay").innerText.replace('ID: ', '');
       navigator.clipboard.writeText(idText);
-      
-      const toast = document.getElementById("toast");
-      toast.innerText = "ID copied successfully!";
-      toast.classList.remove("opacity-0");
-      toast.classList.add("opacity-100");
-      setTimeout(() => {
-        toast.classList.remove("opacity-100");
-        toast.classList.add("opacity-0");
-      }, 2000);
+      window.showToast({ message: "ID copied successfully!", type: "success" });
     }
   </script>
 </body>

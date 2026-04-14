@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script src="./loader.js"></script>
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>StakeWiseAi</title>
@@ -8,6 +10,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"/>
 <link rel="stylesheet" href="./global.css">
+<script src="./toast.js"></script>
 
 <style>
 body {
@@ -194,7 +197,7 @@ body {
       <img src="./logo.jpeg" alt="StakeWiseAI Logo" class="w-full h-full object-cover">
     </div>
     <h1 class="text-xl font-bold tracking-wide">StakeWiseAI</h1>
-    <p class="text-[10px] uppercase tracking-[4px] text-white/75 mt-0.5">TECH</p>
+    <p class="text-[10px] uppercase font-semibold  tracking-[4px] text-white/75 mt-0.5">TECH</p>
   </div>
 </div>
 
@@ -248,7 +251,7 @@ body {
   <div class="flex items-center text-sm text-gray-500">
     <input type="checkbox" class="mr-2" id="loginAgreement" onchange="toggleLoginBtn()" />
     I have read and accept the
-    <span class="text-blue-500 ml-1 cursor-pointer">User Agreement</span>
+    <a href="/terms.html" class="text-blue-500 ml-1 cursor-pointer hover:underline">User Agreement</a>
   </div>
 
   <div class="text-center text-blue-500 text-sm">
@@ -323,7 +326,7 @@ body {
     <div class="flex items-center text-sm text-gray-500">
       <input type="checkbox" class="mr-2" id="registerAgreement" onchange="toggleRegisterBtn(); clearErr('registerAgreement')" />
       I have read and accept the
-      <span class="text-blue-500 ml-1 cursor-pointer">User Agreement</span>
+      <a href="/terms.html" class="text-blue-500 ml-1 cursor-pointer hover:underline">User Agreement</a>
     </div>
     <p class="text-red-500 text-[11px] mt-1 hidden" id="registerAgreementErr"></p>
   </div>
@@ -337,12 +340,6 @@ body {
 
 </div>
 </div>
-</div>
-
-<!-- TOAST NOTIFICATION -->
-<div id="appToast" class="fixed top-6 left-1/2 -translate-x-1/2 z-[999] px-5 py-3 rounded-full text-white text-xs font-semibold shadow-xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2" style="min-width:200px;justify-content:center;">
-  <i id="appToastIcon" class="fas fa-check-circle"></i>
-  <span id="appToastMsg"></span>
 </div>
 
 <script>
@@ -548,8 +545,8 @@ const COUNTRIES = [
 
 // Default: Nigeria
 const selectedCC = {
-  login: { ...COUNTRIES.find(c => c.iso === 'ng') },
-  register: { ...COUNTRIES.find(c => c.iso === 'ng') }
+  login: { ...COUNTRIES.find(c => c.iso === 'ca') },
+  register: { ...COUNTRIES.find(c => c.iso === 'ca') }
 };
 
 function buildCCList(form, filter = '') {
@@ -680,46 +677,37 @@ document.addEventListener('DOMContentLoaded', () => {
             // document.getElementById('registerTab').click();
         }
     }
+
+    // Auto-tick agreement checkbox if user accepted terms and came back
+    if (sessionStorage.getItem('termsAccepted') === '1') {
+        sessionStorage.removeItem('termsAccepted');
+        // Tick both so whichever tab the user is on, they are ready
+        const loginChk = document.getElementById('loginAgreement');
+        const regChk   = document.getElementById('registerAgreement');
+        if (loginChk) { loginChk.checked = true; toggleLoginBtn(); }
+        if (regChk)   { regChk.checked   = true; toggleRegisterBtn(); }
+    }
 });
 
 const API_BASE = 'https://stakewiseai-server.onrender.com';
 
 function showToast(msg, type = 'success') {
-  const toast = document.getElementById('appToast');
-  const msgEl = document.getElementById('appToastMsg');
-  const iconEl = document.getElementById('appToastIcon');
-
-  msgEl.textContent = msg;
-  toast.className = toast.className
-    .replace(/bg-\S+/g, '')
-    .replace(/opacity-\S+/g, 'opacity-0');
-
-  if (type === 'success') {
-    toast.classList.add('bg-[#4f8cff]');
-    iconEl.className = 'fas fa-check-circle';
-  } else {
-    toast.classList.add('bg-red-500');
-    iconEl.className = 'fas fa-exclamation-circle';
-  }
-
-  toast.classList.remove('opacity-0');
-  toast.classList.add('opacity-100');
-  setTimeout(() => {
-    toast.classList.remove('opacity-100');
-    toast.classList.add('opacity-0');
-  }, 3500);
+  window.showToast({ message: msg, type: type });
 }
 
 // ─── BUTTON LOADING STATE ───
 function setLoading(form, loading) {
-  const btn     = document.getElementById(`${form}Btn`);
-  const btnText = document.getElementById(`${form}BtnText`);
-  const spinner = document.getElementById(`${form}Spinner`);
+  const btn     = document.getElementById(form + 'Btn');
+  const btnText = document.getElementById(form + 'BtnText');
+  const spinner = document.getElementById(form + 'Spinner');
   btn.disabled  = loading;
-  btnText.textContent = loading ? (form === 'login' ? <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="10" height="10" x="1" y="1" fill="currentColor" rx="1"><animate id="SVG7WybndBt" fill="freeze" attributeName="x" begin="0;SVGo3aOUHlJ.end" dur="0.2s" values="1;13"/><animate id="SVGVoKldbWM" fill="freeze" attributeName="y" begin="SVGFpk9ncYc.end" dur="0.2s" values="1;13"/><animate id="SVGKsXgPbui" fill="freeze" attributeName="x" begin="SVGaI8owdNK.end" dur="0.2s" values="13;1"/><animate id="SVG7JzAfdGT" fill="freeze" attributeName="y" begin="SVG28A4To9L.end" dur="0.2s" values="13;1"/></rect><rect width="10" height="10" x="1" y="13" fill="currentColor" rx="1"><animate id="SVGUiS2jeZq" fill="freeze" attributeName="y" begin="SVG7WybndBt.end" dur="0.2s" values="13;1"/><animate id="SVGU0vu2GEM" fill="freeze" attributeName="x" begin="SVGVoKldbWM.end" dur="0.2s" values="1;13"/><animate id="SVGOIboFeLf" fill="freeze" attributeName="y" begin="SVGKsXgPbui.end" dur="0.2s" values="1;13"/><animate id="SVG14lAaeuv" fill="freeze" attributeName="x" begin="SVG7JzAfdGT.end" dur="0.2s" values="13;1"/></rect><rect width="10" height="10" x="13" y="13" fill="currentColor" rx="1"><animate id="SVGFpk9ncYc" fill="freeze" attributeName="x" begin="SVGUiS2jeZq.end" dur="0.2s" values="13;1"/><animate id="SVGaI8owdNK" fill="freeze" attributeName="y" begin="SVGU0vu2GEM.end" dur="0.2s" values="13;1"/><animate id="SVG28A4To9L" fill="freeze" attributeName="x" begin="SVGOIboFeLf.end" dur="0.2s" values="1;13"/><animate id="SVGo3aOUHlJ" fill="freeze" attributeName="y" begin="SVG14lAaeuv.end" dur="0.2s" values="1;13"/></rect></svg> : <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="10" height="10" x="1" y="1" fill="currentColor" rx="1"><animate id="SVG7WybndBt" fill="freeze" attributeName="x" begin="0;SVGo3aOUHlJ.end" dur="0.2s" values="1;13"/><animate id="SVGVoKldbWM" fill="freeze" attributeName="y" begin="SVGFpk9ncYc.end" dur="0.2s" values="1;13"/><animate id="SVGKsXgPbui" fill="freeze" attributeName="x" begin="SVGaI8owdNK.end" dur="0.2s" values="13;1"/><animate id="SVG7JzAfdGT" fill="freeze" attributeName="y" begin="SVG28A4To9L.end" dur="0.2s" values="13;1"/></rect><rect width="10" height="10" x="1" y="13" fill="currentColor" rx="1"><animate id="SVGUiS2jeZq" fill="freeze" attributeName="y" begin="SVG7WybndBt.end" dur="0.2s" values="13;1"/><animate id="SVGU0vu2GEM" fill="freeze" attributeName="x" begin="SVGVoKldbWM.end" dur="0.2s" values="1;13"/><animate id="SVGOIboFeLf" fill="freeze" attributeName="y" begin="SVGKsXgPbui.end" dur="0.2s" values="1;13"/><animate id="SVG14lAaeuv" fill="freeze" attributeName="x" begin="SVG7JzAfdGT.end" dur="0.2s" values="13;1"/></rect><rect width="10" height="10" x="13" y="13" fill="currentColor" rx="1"><animate id="SVGFpk9ncYc" fill="freeze" attributeName="x" begin="SVGUiS2jeZq.end" dur="0.2s" values="13;1"/><animate id="SVGaI8owdNK" fill="freeze" attributeName="y" begin="SVGU0vu2GEM.end" dur="0.2s" values="13;1"/><animate id="SVG28A4To9L" fill="freeze" attributeName="x" begin="SVGOIboFeLf.end" dur="0.2s" values="1;13"/><animate id="SVGo3aOUHlJ" fill="freeze" attributeName="y" begin="SVG14lAaeuv.end" dur="0.2s" values="1;13"/></rect></svg>) : (form === 'login' ? 'Sign In' : 'Register');
-  spinner.classList.toggle('hidden', !loading);
-  // When done loading, restore disabled state based on checkbox
-  if (!loading) {
+  if (loading) {
+    btnText.textContent = '';
+    spinner.classList.remove('hidden');
+  } else {
+    btnText.textContent = (form === 'login') ? 'Sign In' : 'Register';
+    spinner.classList.add('hidden');
+    // Restore disabled state based on checkbox
     if (form === 'login') toggleLoginBtn();
     if (form === 'register') toggleRegisterBtn();
   }
@@ -818,7 +806,7 @@ async function handleLogin(e) {
       if (userPayload) localStorage.setItem('userData', JSON.stringify(userPayload));
       if (userPayload?.username) localStorage.setItem('userName', userPayload.username);
       if (userPayload?.phoneNumber) localStorage.setItem('userPhone', userPayload.phoneNumber);
-      showToast('Login successful! Redirecting...', 'success');
+      showToast('Login successful!', 'success');
       setTimeout(() => window.location.href = '/index.html', 1200);
     } else {
       showToast(data.message || 'Invalid credentials. Please try again.', 'error');

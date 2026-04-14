@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./loader.js"></script>
+
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -88,6 +90,7 @@
   </style>
 
   <script src="./translator.js"></script>
+  <script src="./toast.js"></script>
 </head>
 <body class="flex flex-col min-h-screen items-center bg-[#f4f6f8]">
 
@@ -110,38 +113,11 @@
       <div class="bg-[#e4f0fa] rounded-xl px-5 py-4 flex items-center justify-between border border-[#d2e4f7] shadow-sm">
         <p class="text-[13px] text-gray-500 font-medium tracking-wide">Available Balance</p>
         <div class="flex items-center">
-            <span class="text-xl font-bold text-[#427ced] tracking-tight">$1606.00</span>
+            <span id="availableBalanceDisplay" class="text-xl font-bold text-[#427ced] tracking-tight">$0.00</span>
         </div>
       </div>
 
-      <!-- Today's Limit Card -->
-      <div class="bg-[#fcf3e6] rounded-xl p-5 shadow-sm border border-[#f5ead8]">
-        
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-sm font-bold text-gray-800 flex items-center gap-2">
-            <span class="bg-amber-400 text-white w-4 h-4 flex items-center justify-center rounded-sm text-[10px]">
-              <i class="fas fa-percent"></i>
-            </span>
-            Today's Limit
-          </span>
-          <span class="bg-[#fae7c8] text-[#e69f33] font-bold text-[10px] px-3 py-1 rounded-2xl tracking-wide uppercase">VIP 3</span>
-        </div>
-        
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-[12px] text-[#8e8d8d] font-medium tracking-wide">Remaining Today</span>
-          <span class="text-[14px] font-bold text-[#f5a623]">$100.00</span>
-        </div>
-        
-        <div class="w-full bg-[#f4e6d4] h-1.5 mb-2 rounded-full overflow-hidden">
-          <div class="bg-[#e69f33] h-full rounded-full" style="width: 0%"></div>
-        </div>
-        
-        <div class="flex justify-between text-[11px] text-[#9a9a9a] font-medium">
-          <span>$0.00 / $100.00</span>
-          <span>0/2 today</span>
-        </div>
 
-      </div>
 
       <!-- Select Payout Method Container -->
       <div class="space-y-3 pt-1">
@@ -157,10 +133,9 @@
           </div>
         </div> -->
 
-        <!-- Select Cryptocurrency Button -->
+        <!-- Select Cryptocurrency Button (Always Active) -->
         <div class="pt-2">
-          <label class="block text-[13px] font-medium text-[#849ab3] mb-2 pl-1">Select Cryptocurrency</label>
-          <button id="usdt-btn" class="w-full flex items-center gap-3 bg-[#fbfdfc] border border-[#e2e8f0] rounded-xl p-3 focus:outline-none hover:border-[#0e7bee] transition shadow-sm">
+          <div id="usdt-btn" class="w-full flex items-center gap-3 bg-blue-50/30 border border-[#0e7bee] rounded-xl p-3 shadow-sm">
             <div class="w-[42px] h-[42px] rounded-full bg-[#e6f7f3] flex items-center justify-center border border-[#d2eee7] shrink-0">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12" cy="12" r="12" fill="#26A17B"/>
@@ -171,11 +146,11 @@
               <span class="text-[13px] font-bold text-[#1e293b] leading-tight mb-0.5 tracking-wide">USDT</span>
               <span class="text-[11px] text-[#94a3b8] font-medium leading-tight uppercase">BEP20</span>
             </div>
-          </button>
+          </div>
         </div>
 
-        <!-- Dynamically Revealed Form Elements -->
-        <div id="expanded-form" class="hidden space-y-4 pt-1 animate-fade-in">
+        <!-- Withdrawal Form Elements (Always Visible) -->
+        <div id="expanded-form" class="space-y-4 pt-1 animate-fade-in">
           
           <!-- Amount Input -->
           <div>
@@ -223,11 +198,7 @@
             </div>
           </div>
 
-          <!-- Error Alert -->
-          <div id="error-alert" class="bg-red-50/80 border border-red-100 rounded-xl p-3.5 flex items-start gap-3 hidden shadow-sm">
-            <i class="fas fa-exclamation-circle text-red-500 text-sm mt-[3px]"></i>
-            <p id="error-msg" class="text-[12px] font-medium text-red-600 leading-snug flex-1 tracking-wide"></p>
-          </div>
+          <!-- Error Alert removed in favor of Toast -->
 
           <!-- Submit Button -->
           <div class="pt-2">
@@ -287,24 +258,41 @@
     const errorAlert = document.getElementById('error-alert');
     const submitBtn = document.getElementById('submit-btn');
     
-    // Limits and variables based on user data
-    const remainingLimit = 100.00;
-    const minimumAmount = 20.00;
-    const availableBalance = 1606.00;
+    // Limits and variables
+    let remainingLimit = 100000.00; // Updated dynamically or default high
+    let minimumAmount = 20.00;
+    let availableBalance = 0.00;
 
-    // Load previously saved address
-    const savedAddress = localStorage.getItem('savedWithdrawalAddress');
-    if (savedAddress) {
-      walletInput.value = savedAddress;
+    // Fetch Dashboard Stats
+    async function fetchStats() {
+        try {
+            const statsRes = await fetch('https://stakewiseai-server.onrender.com/api/users/dashboard-stats', {
+                credentials: 'include'
+            });
+            if (statsRes.ok) {
+                const statsData = await statsRes.json();
+                const stats = statsData.data || statsData;
+                
+                if (stats.currentAssets !== undefined) {
+                    availableBalance = Number(stats.currentAssets);
+                    document.getElementById("availableBalanceDisplay").innerText = `$${availableBalance.toFixed(2)}`;
+                }
+                // Optional: currentAssets could also be the limit source or backend can provide explicit limit field in future
+            }
+        } catch (error) {
+            console.error("Error fetching dashboard stats:", error);
+        }
     }
 
-    // Toggle expansion logic
-    usdtBtn.addEventListener('click', () => {
-      // Style button as active
-      usdtBtn.classList.remove('border-[#e2e8f0]');
-      usdtBtn.classList.add('border-[#0e7bee]', 'bg-blue-50/30');
-      // Show form
-      expandedForm.classList.remove('hidden');
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchStats();
+        
+        // Load previously saved address
+        const savedAddress = localStorage.getItem('savedWithdrawalAddress');
+        if (savedAddress) {
+            walletInput.value = savedAddress;
+            validateForm();
+        }
     });
 
     // Validate and update summary on input
@@ -355,8 +343,7 @@
     }
 
     function showError(msg) {
-      errorAlert.classList.remove('hidden');
-      document.getElementById('error-msg').innerText = msg;
+      window.showToast({ message: msg, type: "error" });
     }
 
     submitBtn.addEventListener('click', () => {
@@ -364,22 +351,19 @@
       
       // Save address locally
       localStorage.setItem('savedWithdrawalAddress', walletInput.value.trim());
-
-      // Show success toast
-      const successToast = document.getElementById('success-toast');
-      successToast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
       
       // Update button state
       const originalText = submitBtn.innerText;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
       submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
 
-      // Hide toast after 5 seconds and reset
+      // Simulate submission & show success
+      // Note: This matches existing logic which just showed a toast on click
       setTimeout(() => {
-        successToast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-20px]');
+        window.showToast({ message: "Withdrawal request submitted successfully!", type: "success" });
         submitBtn.innerHTML = originalText;
         submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
-      }, 5000);
+      }, 1500);
     });
   </script>
 </body>

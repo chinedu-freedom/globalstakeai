@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./loader.js"></script>
+
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -201,6 +203,7 @@
   </style>
 
   <script src="./translator.js"></script>
+  <script src="./toast.js"></script>
 </head>
 <body class="flex flex-col min-h-screen items-center">
 
@@ -266,14 +269,9 @@
   <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100">
 
     <!-- HEADER / TOP NAV (Restoring curved bottom layout) -->
-    <div class="gradient-bg text-white px-5 pt-5 pb-8 rounded-b-[30px] shadow-md relative z-10">
-      <div class="flex justify-between items-start mb-5">
+    <div class="gradient-bg text-white px-5 py-5 rounded-b-[30px] shadow-md relative z-10">
+      <div class="flex justify-between items-center mb-2">
         <div class="flex items-center gap-2.5">
-    <div class=" h-16  overflow-hidden shadow-lg mb-3 border-2 border-white/30" style="background:#0a0f1e;">
-          
-          <!-- <div class="w-9 h-9 rounded-xl overflow-hidden shadow-md border border-white/20 flex-shrink-0" style="background:#0a0f1e;"> -->
-            <img src="./logo.jpeg" alt="StakeWiseAI" class="w-full h-full object-cover">
-          </div>
           <div>
             <h1 class="text-base sm:text-lg font-bold leading-tight tracking-wide">StakeWiseAI</h1>
             <p class="text-[8px] uppercase tracking-widest text-white/90">TECH</p>
@@ -283,8 +281,8 @@
         <!-- Language Selector Dropdown -->
         <div class="relative inline-block text-left z-[100]">
           <div class="flex items-center gap-1.5 cursor-pointer mt-0.5 px-1 py-0.5 rounded hover:bg-white/10 transition" id="lang-menu-btn" onclick="toggleLangMenu(event)">
-            <img src="https://flagcdn.com/w20/us.png" id="navFlag" class="w-4 h-3 object-cover rounded-[2px] shadow-sm" alt="EN">
-            <span class="text-[10px] font-medium" id="navLangText">EN</span>
+            <img src="https://flagcdn.com/w20/us.png" id="navFlag" class="w-5 h-4 object-cover rounded-[2px] shadow-sm" alt="EN">
+            <span class="text-[12px] font-medium" id="navLangText">EN</span>
             <i class="fas fa-chevron-down text-[8px] opacity-80 transition-transform duration-200" id="navLangIcon"></i>
           </div>
 
@@ -358,11 +356,11 @@
       <div class="flex justify-between items-end">
         <div>
           <p class="text-[9px] text-white/80 mb-0.5 font-medium">Total Earning</p>
-          <p class="text-base font-bold">$0.00</p>
+          <p class="text-base font-bold" id="dashboardTotalEarning">$0.00</p>
         </div>
         <div class="text-right">
           <p class="text-[9px] text-white/80 mb-0.5 font-medium">Total Investment</p>
-          <p class="text-base font-bold">$0.00</p>
+          <p class="text-base font-bold" id="dashboardTotalInvestment">$0.00</p>
         </div>
       </div>
     </div>
@@ -662,10 +660,10 @@ const feedData = [
       window.selectLang = function(shortCode, flagUrl) {
         if (window.setSiteLanguage) {
             window.setSiteLanguage(shortCode, flagUrl);
-            return;
         }
         document.getElementById('navLangText').innerText = shortCode;
         document.getElementById('navFlag').src = flagUrl;
+        window.showToast({ message: `Language changed to ${shortCode}`, type: "success", duration: 1500 });
         
         // Hide menu
         const menu = document.getElementById('langDropdown');
@@ -818,6 +816,28 @@ const feedData = [
           selectedCard.classList.remove('border', 'border-gray-100');
           selectedCard.classList.add('border-2', 'border-black');
       };
+
+      // Fetch Dashboard Stats for index.html
+      (async function fetchIndexStats() {
+          try {
+              const statsRes = await fetch('https://stakewiseai-server.onrender.com/api/users/dashboard-stats', {
+                  credentials: 'include'
+              });
+              if (statsRes.ok) {
+                  const statsData = await statsRes.json();
+                  const stats = statsData.data || statsData;
+                  
+                  if (stats.commission !== undefined) {
+                      document.getElementById("dashboardTotalEarning").innerText = `$${Number(stats.commission).toFixed(2)}`;
+                  }
+                  if (stats.totalStaked !== undefined) {
+                      document.getElementById("dashboardTotalInvestment").innerText = `$${Number(stats.totalStaked).toFixed(2)}`;
+                  }
+              }
+          } catch (error) {
+              console.error("Error fetching dashboard stats:", error);
+          }
+      })();
 
     });
   </script>

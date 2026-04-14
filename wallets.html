@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./loader.js"></script>
+
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -499,40 +501,57 @@
                       const networkName = parts[1] || baseCoin;
                       const initials = baseCoin.substring(0, 2).toUpperCase();
 
-                      const card = `
-                        <div class="bg-white rounded-[28px] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 flex flex-col gap-6 mb-2">
-                          
-                          <!-- Top row (Icon, Title, Trash) -->
-                          <div class="flex justify-between items-start">
-                            <div class="flex gap-4 items-center">
-                              <!-- Blue circle -->
-                              <div class="w-14 h-14 rounded-full bg-[#167bee] text-white flex items-center justify-center font-bold text-[19px] shrink-0">
-                                ${initials}
-                              </div>
-                              <div class="flex flex-col justify-center">
-                                <h3 class="text-base font-bold text-[#1e293b] leading-tight mb-1">${baseCoin} ${parts.length > 1 ? '(' + networkName + ')' : ''}</h3>
-                                <p class="text-[12px] text-gray-400 font-medium tracking-wide">${networkName.toUpperCase()}</p>
-                              </div>
-                            </div>
-                            <!-- Trash Icon -->
-                            <button onclick="deleteWallet('${w._id || w.id}', '${safeLabel}')" class="text-red-400 hover:text-red-500 transition pt-2.5 cursor-pointer pr-1">
-                              <i class="far fa-trash-alt text-[20px]"></i>
-                            </button>
-                          </div>
+              const card = `
+  <div class="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between mb-3 hover:shadow-sm transition">
+    
+    <!-- Left: Icon + Info -->
+    <div class="flex items-center gap-3">
+      
+      <!-- Icon -->
+      <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-semibold text-sm">
+        ${initials}
+      </div>
 
-                          <!-- Address Box -->
-                          <div class="bg-[#f8fafc] rounded-[20px] p-4.5 py-5 -mt-1">
-                            <span class="block text-[13px] font-semibold text-gray-400 mb-2.5 ml-1.5">Wallet Address</span>
-                            <span class="block text-[14px] text-gray-700 font-mono break-all ml-1.5 leading-relaxed tracking-wide">${address}</span>
-                          </div>
+      <!-- Text -->
+      <div class="flex flex-col gap-1">
+        <span class="text-sm font-semibold text-gray-800">
+          ${baseCoin} ${parts.length > 1 ? '(' + networkName + ')' : ''}
+        </span>
 
-                          <!-- Label Footer -->
-                          <div class="px-1 text-[13px] text-gray-400 font-medium pb-2">
-                            Label: <span class="text-gray-500">${label}</span>
-                          </div>
-                          
-                        </div>
-                      `;
+        <span class="text-xs text-gray-400">
+          ${label}
+        </span>
+
+        <!-- Address + Copy -->
+        <div class="flex items-center gap-2 max-w-[220px]">
+          <span class="truncate text-xs text-gray-500 font-mono">
+            ${address}
+          </span>
+
+          <button 
+            onclick="navigator.clipboard.writeText('${address}')"
+            class="text-gray-400 hover:text-gray-600 transition text-xs shrink-0"
+            title="Copy Address"
+          >
+            <i class="far fa-copy"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Delete -->
+    <div>
+      <button 
+        onclick="deleteWallet('${w._id || w.id}', '${safeLabel}')"
+        class="text-red-400 hover:text-red-500 transition text-sm"
+        title="Delete"
+      >
+        <i class="far fa-trash-alt"></i>
+      </button>
+    </div>
+
+  </div>
+`;
                       listContainer.innerHTML += card;
                   });
               }

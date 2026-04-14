@@ -1,6 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./loader.js"></script>
+
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,11 +10,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <script src="./toast.js"></script>
   <style>
     body { font-family: "Poppins", sans-serif; background-color: #f0f4f8; padding-bottom: 30px; }
 
     /* ── Header ── */
-    .header-bg { background: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%); }
+    .header-bg { background: linear-gradient(135deg, #4f8cff, #6ee7ff); }
 
     /* ── Method Selection Modal ── */
     #methodModal {
@@ -39,8 +42,8 @@
       background: #f8fafc;
     }
     .method-card:hover  { border-color: #94a3b8; background: #f1f5f9; }
-    .method-card.active { border-color: #22c55e; background: #f0fdf4; }
-    .method-card.active .method-badge-auto { background: #22c55e; color: white; }
+    .method-card.active { border-color: #4f8cff; background: #f0f6ff; }
+    .method-card.active .method-badge-auto { background: #4f8cff; color: white; }
 
     .method-badge {
       font-size: 9px; font-weight: 700; letter-spacing: .5px;
@@ -98,7 +101,7 @@
     }
 
     /* ── Pulse dot ── */
-    .pulse-dot { width:8px;height:8px;border-radius:50%;background:#22c55e;
+    .pulse-dot { width:8px;height:8px;border-radius:50%;background:#4f8cff;
       animation: pdot 1.5s ease-in-out infinite; }
     @keyframes pdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
 
@@ -108,18 +111,11 @@
       animation: spin .7s linear infinite; }
     @keyframes spin { to { transform:rotate(360deg); } }
 
-    /* ── Toast ── */
-    #toast {
-      position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
-      background:#1e293b; color:white; font-size:12px; font-weight:600;
-      padding:10px 20px; border-radius:50px; z-index:9999;
-      transition: transform .3s ease, opacity .3s ease; opacity:0; white-space:nowrap;
-    }
     #toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
     /* ── CTA button ── */
-    .btn-green { background: linear-gradient(90deg,#22c55e,#16a34a); color:white; }
-    .btn-blue  { background: linear-gradient(90deg,#3b82f6,#2563eb); color:white; }
+    .btn-primary { background: linear-gradient(90deg, #14b8a6, #2563eb); color:white; }
+    .btn-blue  { background: linear-gradient(90deg, #14b8a6, #2563eb); color:white; }
 
     /* ── Amount section ── */
     .amount-input {
@@ -132,8 +128,7 @@
 </head>
 <body class="flex flex-col min-h-screen items-center">
 
-  <!-- Toast -->
-  <div id="toast"></div>
+  <!-- Toast removed in favor of global toast.js -->
 
   <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
 
@@ -150,7 +145,7 @@
     <!-- ═══════════════════════════════════════════════
          STEP 1 — Method Selection UI (default view)
     ════════════════════════════════════════════════ -->
-    <div id="selectScreen" class="px-5 pt-6 space-y-5 flex-1">
+    <div id="selectScreen" class="px-5 pt-6 pb-24 space-y-5 flex-1">
 
       <!-- Info card -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-start gap-3">
@@ -159,19 +154,18 @@
         </div>
         <div>
           <p class="text-[13px] font-bold text-slate-800">Add Funds to Your Account</p>
-          <p class="text-[10px] text-slate-500 mt-0.5 leading-relaxed">Choose your preferred deposit method below. Automatic payments are credited instantly.</p>
+          <p class="text-[10px] text-slate-500 mt-0.5 leading-relaxed">Automatic payments via our secure gateway are credited instantly.</p>
         </div>
       </div>
 
-      <!-- Method label -->
-      <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest pl-1">Select Deposit Method</p>
+      <!-- Method label removed -->
 
       <!-- OxaPay card -->
       <div class="method-card active" id="card-oxapay" onclick="selectMethod('oxapay')">
         <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0">
-            <img src="https://oxapay.com/landing/img/oxapay-logo.svg" class="w-7 h-7 object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="OxaPay">
-            <i class="fas fa-bolt text-emerald-500 text-lg hidden"></i>
+          <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+            <img src="./oxapay.png" class="w-12 h-12 object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="OxaPay">
+            <i class="fas fa-bolt text-blue-500 text-lg hidden"></i>
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
@@ -180,7 +174,7 @@
             </div>
             <p class="text-[10px] text-slate-400 mt-0.5">USDT · TRC20 Network</p>
           </div>
-          <div id="check-oxapay" class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
+          <div id="check-oxapay" class="w-6 h-6 rounded-full bg-[#4f8cff] flex items-center justify-center">
             <i class="fas fa-check text-white text-[10px]"></i>
           </div>
         </div>
@@ -205,7 +199,7 @@
 
       <!-- Continue button -->
       <button id="continueBtn" onclick="proceedToPayment()"
-        class="w-full btn-green text-white font-bold py-4 rounded-2xl text-sm shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2 mt-2">
+        class="w-full btn-primary text-white font-bold py-4 rounded-2xl text-sm shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2 mt-2">
         <i class="fas fa-arrow-right"></i>
         Continue to Payment
       </button>
@@ -216,7 +210,7 @@
     <!-- ═══════════════════════════════════════════════
          STEP 2 — OxaPay USDT TRC20 Payment Screen
     ════════════════════════════════════════════════ -->
-    <div id="oxapayScreen" class="px-5 pt-5 pb-8 flex-1 space-y-5">
+    <div id="oxapayScreen" class="px-5 pt-5 pb-24 flex-1 space-y-5">
 
       <!-- Back + title -->
       <div class="flex items-center gap-3">
@@ -227,9 +221,9 @@
           <h2 class="text-[15px] font-bold text-slate-800">USDT Payment</h2>
           <p class="text-[9.5px] text-slate-400 font-medium">Send any amount you wish · Auto-credited</p>
         </div>
-        <div class="ml-auto flex items-center gap-1.5 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
+        <div class="ml-auto flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100">
           <div class="pulse-dot"></div>
-          <span class="text-[9px] font-bold text-green-600 uppercase tracking-wide">Live</span>
+          <span class="text-[9px] font-bold text-blue-600 uppercase tracking-wide">Live</span>
         </div>
       </div>
 
@@ -300,6 +294,28 @@
 
     </div><!-- /oxapayScreen -->
 
+    <!-- BOTTOM NAV -->
+    <div class="fixed bottom-0 left-0 w-full bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 border-t border-gray-100 h-16" style="padding-bottom: env(safe-area-inset-bottom);">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium">Home</span>
+        </a>
+        <a href="/plans.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium">Team</span>
+        </a>
+        <a href="/account.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium">Account</span>
+        </a>
+      </div>
+    </div>
+
   </div><!-- /app -->
 
   <script>
@@ -311,12 +327,14 @@
     // Replace with your actual OxaPay merchant static address
     const USDT_TRC20_ADDRESS = "TFoPJE6H5uHWV7X69EMavqyUxF9B1HnmwY";
 
-    // ─── Toast helper ─────────────────────────────────────
-    function showToast(msg, duration = 2500) {
-      const t = document.getElementById("toast");
-      t.textContent = msg;
-      t.classList.add("show");
-      setTimeout(() => t.classList.remove("show"), duration);
+    // ─── Toast helper ──────────
+    function showToast(msg, duration = 3000) {
+      let type = "info";
+      let cleanMsg = msg;
+      if (msg.includes("✅")) { type = "success"; cleanMsg = msg.replace("✅", "").trim(); }
+      else if (msg.includes("⚠️")) { type = "error"; cleanMsg = msg.replace("⚠️", "").trim(); }
+      
+      window.showToast({ message: cleanMsg, type, duration });
     }
 
     // ─── Copy address ─────────────────────────────────────
