@@ -319,6 +319,28 @@
   </div><!-- /app -->
 
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const amount = params.get('amount');
+      const plan = params.get('plan');
+
+      if (amount) {
+        document.getElementById("depositAmount").value = amount;
+      }
+      
+      if (plan) {
+         // Optionally show a contextual badge
+         const section = document.getElementById("amountSection");
+         const badge = document.createElement("div");
+         badge.className = "mb-3 flex items-center gap-2 bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-lg";
+         badge.innerHTML = `
+           <i class="fas fa-info-circle text-blue-500 text-[10px]"></i>
+           <p class="text-[9px] font-bold text-blue-600 uppercase tracking-widest">Depositing for: ${plan}</p>
+         `;
+         section.prepend(badge);
+      }
+    });
+
     const API = "https://stakewiseai-server.onrender.com";
 
     // ─── State ───────────────────────────────────────────

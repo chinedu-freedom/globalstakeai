@@ -437,8 +437,10 @@
                 if (stats.totalStaked !== undefined) {
                     document.getElementById("statTotalStaked").innerText = `$${Number(stats.totalStaked).toFixed(2)}`;
                 }
-                if (stats.currentAssets !== undefined) {
-                    document.getElementById("statCurrentAssets").innerText = `$${Number(stats.currentAssets).toFixed(2)}`;
+                // Use accountBalance from user object if currentAssets from stats is 0 or missing
+                const resolvedAssets = stats.currentAssets || user.accountBalance || 0;
+                if (document.getElementById("statCurrentAssets")) {
+                    document.getElementById("statCurrentAssets").innerText = `$${Number(resolvedAssets).toFixed(2)}`;
                 }
                 if (stats.commission !== undefined) {
                     document.getElementById("statCommission").innerText = `$${Number(stats.commission).toFixed(2)}`;

@@ -268,6 +268,11 @@
               <span class="detail-label">Cycle duration:</span>
               <span class="detail-value" id="cycleDays"></span>
             </div>
+            <!-- Added Balance Display -->
+            <div class="detail-row mt-2 pt-2 border-t border-gray-50">
+              <span class="detail-label text-[#4f8cff]">Available Balance:</span>
+              <span class="detail-value text-[#4f8cff]" id="modalBalance">$0.00</span>
+            </div>
           </div>
 
           <!-- Amount Input -->
@@ -307,6 +312,7 @@
   <script>
     let currentPlan = {};
     let allPlans = [];
+    let userBalance = 0;
 
     // Store scrollbar width to prevent shift
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -428,33 +434,39 @@
             return;
         }
 
-        // Reset modal - show loading skeleton, hide actual content
+        // Reset modal - show loading skeleton
         document.getElementById('loadingSkeleton').style.display = 'block';
         document.getElementById('actualContent').style.display = 'none';
         
-        // Open modal
         openStakeModal();
 
+        // parallel fetch plan and user data
         try {
-            const response = await fetch(`https://stakewiseai-server.onrender.com/api/investment/plans/${planId}`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
+            const [planRes, userRes] = await Promise.all([
+                fetch(`https://stakewiseai-server.onrender.com/api/investment/plans/${planId}`, {
+                    credentials: 'include'
+                }),
+                fetch('https://stakewiseai-server.onrender.com/api/users/me', {
+                    credentials: 'include'
+                })
+            ]);
 
-            if (response.status === 401 || response.status === 403) {
+            if (planRes.status === 401 || userRes.status === 401) {
                 window.location.href = '/login.html';
                 return;
             }
 
-            if (response.ok || response.status === 304) {
-                const result = await response.json();
-                console.log("Plan Detail Response:", result);
+            if (planRes.ok && userRes.ok) {
+                const planResult = await planRes.json();
+                const userResult = await userRes.json();
                 
-                const plan = result.data?.plan || result.data || result;
+                const plan = planResult.data?.plan || planResult.data || planResult;
+                const user = userResult.data || userResult;
                 
+                // Check both accountBalance (main balance) and currentAssets (stats fallback)
+                userBalance = Number(user.accountBalance !== undefined ? user.accountBalance : (user.currentAssets || 0));
+                document.getElementById('modalBalance').textContent = `$${userBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
                 const title = plan.title || "Investment Plan";
                 const min = Number(plan.minDeposit || 0);
                 const max = plan.maxDeposit ? Number(plan.maxDeposit) : null;
@@ -522,37 +534,79 @@
         }, 300);
     }
 
-    function confirmStake() {
+    window.confirmStake = async function() {
         const amount = parseFloat(document.getElementById('stakeAmountInput').value);
         const errorEl = document.getElementById('stakeError');
+        const btn = document.getElementById('stakeConfirmBtn');
         errorEl.classList.add('hidden');
 
         if (!currentPlan.name) {
-            errorEl.textContent = 'Please select a valid plan first.';
-            errorEl.classList.remove('hidden');
+            showModalError('Please select a valid plan first.');
             return;
         }
 
         if (!amount || amount <= 0) {
-            errorEl.textContent = 'Please enter a valid investment amount.';
-            errorEl.classList.remove('hidden');
+            showModalError('Please enter a valid investment amount.');
             return;
         }
         
         if (amount < currentPlan.min) {
-            errorEl.textContent = `Minimum investment is $${currentPlan.min.toLocaleString()}.`;
-            errorEl.classList.remove('hidden');
+            showModalError(`Minimum investment is $${currentPlan.min.toLocaleString()}.`);
             return;
         }
         
         if (currentPlan.max && amount > currentPlan.max) {
-            errorEl.textContent = `Maximum investment is $${currentPlan.max.toLocaleString()}.`;
-            errorEl.classList.remove('hidden');
+            showModalError(`Maximum investment is $${currentPlan.max.toLocaleString()}.`);
             return;
         }
 
-        closeStakeModal();
-        window.location.href = `deposit.html?plan=${encodeURIComponent(currentPlan.name)}&amount=${amount}&planId=${currentPlan.id}`;
+        // --- SMART LOGIC ---
+        if (amount > userBalance) {
+            // Insufficient balance -> Redirect to deposit with pre-fill
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Redirecting to Deposit...';
+            btn.disabled = true;
+            setTimeout(() => {
+                window.location.href = `deposit.html?plan=${encodeURIComponent(currentPlan.name)}&amount=${amount}&planId=${currentPlan.id}`;
+            }, 1000);
+            return;
+        }
+
+        // Sufficient balance -> Direct Stake
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Staking...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('https://stakewiseai-server.onrender.com/api/users/investments', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    planId: currentPlan.id,
+                    amount: amount
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                window.pToast({ message: "Investment started successfully!", type: "success" });
+                btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Success!';
+                btn.style.background = "#10b981";
+                setTimeout(() => {
+                    closeStakeModal();
+                    window.location.href = '/miner.html';
+                }, 1500);
+            } else {
+                showModalError(data.message || "Staking failed. Please try again.");
+                btn.innerHTML = 'Stake Now';
+                btn.disabled = false;
+            }
+        } catch (err) {
+            console.error("Staking error:", err);
+            window.pToast({ message: "Network error occurred.", type: "error" });
+            btn.innerHTML = 'Stake Now';
+            btn.disabled = false;
+        }
     }
 
     // Close modal on escape key
