@@ -303,7 +303,7 @@
         }
       } catch (err) {
         console.error('Logout error:', err);
-        window.showToast({ message: 'Logout failed. Please try again.', type: 'error' });
+        window.pToast({ message: 'Logout failed. Please try again.', type: 'error' });
         // Restore button
         btn.disabled = false;
         icon.classList.remove('hidden');
@@ -470,7 +470,7 @@
           
           localStorage.setItem('userAvatar', base64Image);
 
-          window.showToast({ message: "Uploading picture...", type: "info", duration: 2000 });
+          window.pToast({ message: "Uploading picture...", type: "info", duration: 2000 });
 
           try {
             // Because the expected payload might vary, we can try `multipart/form-data` first,
@@ -501,10 +501,10 @@
             }
 
             if (response.ok) {
-                window.showToast({ message: "Profile picture updated!", type: "success" });
+                window.pToast({ message: "Profile picture updated!", type: "success" });
             } else {
                 const errData = await response.json().catch(() => ({}));
-                window.showToast({ message: errData.message || "Failed to update picture", type: "error" });
+                window.pToast({ message: errData.message || "Failed to update picture", type: "error" });
             }
           } catch (err) {
             console.error("Upload error:", err);
@@ -519,7 +519,7 @@
     function copyId() {
       const idText = document.getElementById("userIdDisplay").innerText.replace('ID: ', '');
       navigator.clipboard.writeText(idText);
-      window.showToast({ message: "ID copied successfully!", type: "success" });
+      window.pToast({ message: "ID copied successfully!", type: "success" });
     }
   </script>
 </body>

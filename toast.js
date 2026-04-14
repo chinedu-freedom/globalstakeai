@@ -5,34 +5,34 @@
     style.id = "pst-toast-styles";
     style.textContent = `
       #toast-container {
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 10000;
-        display: flex;
+        position: fixed !important;
+        top: 30px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 2147483647 !important; /* Max possible z-index */
+        display: flex !important;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
         width: 90%;
-        max-width: 350px;
+        max-width: 380px;
         pointer-events: none;
       }
       .pst-toast {
-        background: white;
-        color: #1e293b;
-        padding: 12px 16px;
-        border-radius: 16px;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        background: white !important;
+        color: #1e293b !important;
+        padding: 14px 18px;
+        border-radius: 18px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 13px;
-        font-weight: 500;
-        border: 1px solid rgba(226, 232, 240, 0.8);
+        gap: 14px;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 14px;
+        font-weight: 600;
+        border: 1px solid rgba(226, 232, 240, 1) !important;
         opacity: 0;
         transform: translateY(-20px) scale(0.95);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         pointer-events: auto;
       }
       .pst-toast.show {
@@ -72,7 +72,7 @@
    * @param {string} options.type - success, error, info, warning
    * @param {number} options.duration - MS to show (default 3000)
    */
-  window.showToast = function({ message, type = "info", duration = 3000 }) {
+  window.pToast = function({ message, type = "info", duration = 3000 }) {
     let container = document.getElementById("toast-container");
     if (!container) {
       container = document.createElement("div");

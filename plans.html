@@ -488,12 +488,12 @@
                 
             } else {
                 console.error("Fetch failed with status:", response.status);
-                window.showToast({ message: "Failed to fetch plan details. Please try again.", type: "error" });
+                window.pToast({ message: "Failed to fetch plan details. Please try again.", type: "error" });
                 setTimeout(() => closeStakeModal(), 2000);
             }
         } catch (err) {
             console.error("Fetch Error:", err);
-            window.showToast({ message: "Network error. Please check your connection.", type: "error" });
+            window.pToast({ message: "Network error. Try again.", type: "error" });
             setTimeout(() => closeStakeModal(), 2000);
         }
     }

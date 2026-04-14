@@ -334,7 +334,7 @@
       if (msg.includes("✅")) { type = "success"; cleanMsg = msg.replace("✅", "").trim(); }
       else if (msg.includes("⚠️")) { type = "error"; cleanMsg = msg.replace("⚠️", "").trim(); }
       
-      window.showToast({ message: cleanMsg, type, duration });
+      window.pToast({ message: cleanMsg, type, duration });
     }
 
     // ─── Copy address ─────────────────────────────────────

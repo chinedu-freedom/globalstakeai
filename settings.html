@@ -675,15 +675,15 @@
 
 
       if(!currentPwd || !newPwd || !confirmPwd) {
-          window.showToast({ message: "Please fill out all fields", type: "warning" });
+          window.pToast({ message: "Please fill out all fields", type: "warning" });
           return;
       }
       if(newPwd.length < 6) {
-          window.showToast({ message: "New password must be at least 6 characters", type: "warning" });
+          window.pToast({ message: "New password must be at least 6 characters", type: "warning" });
           return;
       }
       if(newPwd !== confirmPwd) {
-          window.showToast({ message: "New password and Confirm password do not match", type: "warning" });
+          window.pToast({ message: "New password and Confirm password do not match", type: "warning" });
           return;
       }
 
@@ -704,16 +704,16 @@
 
           const data = await response.json();
           if(response.ok || data.success) {
-              window.showToast({ message: data.message || "Password successfully updated!", type: "success" });
+              window.pToast({ message: data.message || "Password successfully updated!", type: "success" });
               document.getElementById('currentPasswordInput').value = '';
               document.getElementById('newPasswordInput').value = '';
               document.getElementById('confirmPasswordInput').value = '';
               setTimeout(() => togglePasswordModal(false), 1500);
           } else {
-              window.showToast({ message: data.message || "Failed to update password", type: "error" });
+              window.pToast({ message: data.message || "Failed to update password", type: "error" });
           }
       } catch (error) {
-          window.showToast({ message: "A network error occurred. Please try again later.", type: "error" });
+          window.pToast({ message: "A network error occurred. Please try again later.", type: "error" });
       } finally {
           btn.innerText = oldText;
           btn.disabled = false;

@@ -663,7 +663,7 @@ const feedData = [
         }
         document.getElementById('navLangText').innerText = shortCode;
         document.getElementById('navFlag').src = flagUrl;
-        window.showToast({ message: `Language changed to ${shortCode}`, type: "success", duration: 1500 });
+        window.pToast({ message: `Language changed to ${shortCode}`, type: "success", duration: 1500 });
         
         // Hide menu
         const menu = document.getElementById('langDropdown');
