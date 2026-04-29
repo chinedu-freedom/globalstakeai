@@ -784,7 +784,6 @@ async function handleLogin(e) {
     const res  = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
       body: JSON.stringify({ email, password, keepMeLoggedIn: true })
     });
     const data = await res.json();
@@ -793,6 +792,7 @@ async function handleLogin(e) {
       localStorage.setItem('isLoggedIn', 'true');
       const userPayload = data.data || data.user || data;
       if (userPayload) localStorage.setItem('userData', JSON.stringify(userPayload));
+      if (userPayload?.token) localStorage.setItem('token', userPayload.token);
       if (userPayload?.username) localStorage.setItem('userName', userPayload.username);
       if (userPayload?.phoneNumber) localStorage.setItem('userPhone', userPayload.phoneNumber);
       showToast('Login successful!', 'success');

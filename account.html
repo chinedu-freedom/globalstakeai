@@ -196,27 +196,18 @@
           <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </a>
 
-        <a href="/vip.html" class="flex items-center justify-between p-4 hover:bg-gray-50 transition">
+        <a href="/teams.html" class="flex items-center justify-between p-4 hover:bg-gray-50 transition">
           <div class="flex items-center gap-3">
             <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#4f8cff]">
-              <i class="fas fa-crown text-xs"></i>
+              <i class="fas fa-users text-xs"></i>
             </div>
-            <span class="text-sm text-gray-700 font-medium tracking-wide">VIP Levels</span>
+            <span class="text-sm text-gray-700 font-medium tracking-wide">My Team</span>
           </div>
           <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </a>
 
-        <a href="/company.html" class="flex items-center justify-between p-4 hover:bg-gray-50 transition">
-          <div class="flex items-center gap-3">
-            <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#4f8cff]">
-              <i class="fas fa-building text-xs"></i>
-            </div>
-            <span class="text-sm text-gray-700 font-medium tracking-wide">Company Information</span>
-          </div>
-          <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
-        </a>
 
-        <div onclick="alert('Coming Soon...')" class="flex items-center justify-between p-4 hover:bg-gray-50 transition cursor-pointer">
+        <div onclick="window.pToast({message: 'Coming soon', type: 'info'}); return false;" class="flex items-center justify-between p-4 hover:bg-gray-50 transition cursor-pointer">
           <div class="flex items-center gap-3">
             <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#4f8cff]">
               <i class="fas fa-download text-xs"></i>
@@ -288,7 +279,6 @@
       try {
         const res = await fetch('https://stakewiseai-server.onrender.com/api/auth/logout', {
           method: 'POST',
-          credentials: 'include',
           headers: { 'Content-Type': 'application/json' }
         });
 

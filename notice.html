@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="./loader.js"></script>
+  <script src="./protect.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notice - StakeWiseAi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #f0f4f8; padding-bottom: 80px; }
+    .gradient-header { background: linear-gradient(135deg, #4f8cff 0%, #226ddc 100%); }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: white; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); z-index: 50; border-top: 1px solid #f1f5f9; height: 64px; }
+  </style>
+</head>
+<body class="flex flex-col items-center">
+  <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+    <!-- HEADER -->
+    <div class="gradient-header px-6 pt-10 pb-6 flex items-center gap-4 text-white rounded-b-[30px] shadow-md z-10 relative">
+      <a href="index.html" class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition">
+        <i class="fas fa-chevron-left text-sm"></i>
+      </a>
+      <h1 class="text-xl font-bold tracking-tight">Notice</h1>
+    </div>
+
+    <!-- NOTICES LIST -->
+    <div class="px-4 pb-4 mt-6 space-y-4">
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fas fa-bullhorn text-[#4f8cff] text-lg"></i>
+          <h2 class="text-[15px] font-bold text-gray-800">Latest Announcements</h2>
+        </div>
+        <div class="space-y-5 mt-2">
+          <!-- Item 1 -->
+          <div class="border-b border-gray-100 pb-4">
+            <p class="text-[12px] font-medium text-gray-700 mb-2 leading-relaxed">StakeWiseAi AI-driven financial system officially upgraded and launched.</p>
+            <p class="text-[10px] text-gray-400 font-medium">04/04/26</p>
+          </div>
+          <!-- Item 2 -->
+          <div class="border-b border-gray-100 pb-4">
+            <p class="text-[12px] font-medium text-gray-700 mb-2 leading-relaxed">🚀 StakeWiseAi Newly Upgraded and Launched</p>
+            <p class="text-[10px] text-gray-400 font-medium">01/04/26</p>
+          </div>
+          <!-- Item 3 -->
+          <div class="border-b border-gray-100 pb-4">
+            <p class="text-[12px] font-medium text-gray-700 mb-2 leading-relaxed">📢 Platform Announcement | StakeWiseAi Launches New Upgrade</p>
+            <p class="text-[10px] text-gray-400 font-medium">21/03/26</p>
+          </div>
+          <!-- Item 4 -->
+          <div class="border-b border-gray-100 pb-4 relative">
+            <p class="text-[12px] font-medium text-gray-700 mb-2 w-[85%] leading-relaxed">[StakeWiseAi Announcement] Eid Lucky Blind Box Event Now Live</p>
+            <p class="text-[10px] text-gray-400 font-medium">18/03/26</p>
+            <div class="absolute right-0 bottom-4 w-8 h-10 bg-blue-50 border border-blue-100 rounded-lg flex items-center justify-center text-[#4f8cff] text-base shadow-sm">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+          </div>
+          <!-- Item 5 -->
+          <div class="pb-1">
+            <p class="text-[12px] font-medium text-gray-700 mb-2 leading-relaxed">Website Announcement</p>
+            <p class="text-[10px] text-gray-400 font-medium">04/03/26</p>
+          </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
+        <a href="/index.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="text-[10px] font-medium">Home</span>
+        </a>
+        <a href="/plans.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <span class="text-[10px] font-medium">Staking Plans</span>
+        </a>
+        <a href="/teams.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-medium">Team</span>
+        </a>
+        <a href="/account.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="text-[10px] font-medium">Account</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="./translator.js"></script>
+</body>
+</html>

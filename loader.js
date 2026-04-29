@@ -98,4 +98,44 @@
         }
     }, 10000);
 
+    // 6. Global Fetch Interceptor for Token Auth
+    const originalFetch = window.fetch;
+    window.fetch = async function() {
+        let [resource, config] = arguments;
+        
+        // Only intercept requests to the backend API
+        if (typeof resource === 'string' && resource.includes('stakewiseai-server.onrender.com')) {
+            const token = localStorage.getItem('token');
+            
+            config = config || {};
+            
+            // If token exists, inject Authorization header
+            if (token) {
+                config.headers = config.headers || {};
+                
+                // If headers is a Headers object
+                if (config.headers instanceof Headers) {
+                    if (!config.headers.has('Authorization')) {
+                        config.headers.append('Authorization', 'Bearer ' + token);
+                    }
+                } else {
+                    // Plain object
+                    if (!config.headers['Authorization'] && !config.headers['authorization']) {
+                        config.headers['Authorization'] = 'Bearer ' + token;
+                    }
+                }
+            }
+            
+            // Remove legacy cookie-based auth directive to prevent CORS errors
+            if (config.credentials === 'include') {
+                delete config.credentials;
+            }
+            
+            // Put modified config back into arguments
+            arguments[1] = config;
+        }
+        
+        return originalFetch.apply(this, arguments);
+    };
+
 })();

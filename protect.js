@@ -56,11 +56,18 @@
   }
 
   // -------------------------------------------------------
-  // Hit the server with the session cookie attached.
+  // Check for token first; if missing, redirect immediately
+  // -------------------------------------------------------
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return redirectToLogin();
+  }
+
+  // -------------------------------------------------------
+  // Hit the server with the token attached (via interceptor).
   // -------------------------------------------------------
   fetch(API_BASE + "/api/users/me", {
     method: "GET",
-    credentials: "include", // sends the httpOnly cookie
     headers: { "Content-Type": "application/json" },
   })
     .then(function (res) {

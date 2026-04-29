@@ -3,7 +3,6 @@ export async function authFetch(url, options = {}) {
   try {
     const res = await fetch(url, {
       ...options,
-      credentials: "include", // include cookies (httpOnly session)
     });
 
     if (res.status === 401) {
