@@ -46,6 +46,15 @@
             style.id = 'pst-loader-styles';
             style.textContent = css;
             document.head.appendChild(style);
+
+            // Inject favicon
+            if (!document.querySelector('link[rel="icon"]')) {
+                const favicon = document.createElement('link');
+                favicon.rel = 'icon';
+                favicon.type = 'image/x-icon';
+                favicon.href = './images/favicon.ico';
+                document.head.appendChild(favicon);
+            }
         } else {
             setTimeout(styleInject, 10);
         }
