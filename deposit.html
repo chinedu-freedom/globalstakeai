@@ -399,10 +399,10 @@
 
     const API = "https://stakewiseai-server.onrender.com";
 
-    // ─── State ───────────────────────────────────────────
     let chosenAmount = 0;
     let chosenCrypto = "USDT";
     let chosenNetwork = "TRC20";
+    let currentTrackId = null;
 
     // Fallback addresses in case the backend request fails
     const FALLBACK_ADDRESSES = {
@@ -518,17 +518,21 @@
       let address = FALLBACK_ADDRESSES[key] || FALLBACK_ADDRESSES['USDT_TRC20'];
 
       try {
-        const res = await fetch(`${API}/api/deposits/oxapay-address?currency=${chosenCrypto}&network=${chosenNetwork}`, {
-          credentials: "include"
-        });
+        const res = await fetch(`${API}/api/deposits/oxapay-address?currency=${chosenCrypto}&network=${chosenNetwork}`);
         if (res.ok) {
           const data = await res.json();
           if (data?.data?.address) {
             address = data.data.address;
           }
+          if (data?.data?.trackId) {
+            currentTrackId = data.data.trackId;
+          } else {
+            currentTrackId = null;
+          }
         }
       } catch (_) {
         // Use static fallback silently
+        currentTrackId = null;
       }
 
       // Render address
@@ -555,9 +559,8 @@
       try {
         const res = await fetch(`${API}/api/deposits/oxapay-notify`, {
           method: "POST",
-          credentials: "include",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: chosenAmount, crypto: chosenCrypto, network: chosenNetwork })
+          body: JSON.stringify({ amount: chosenAmount, crypto: chosenCrypto, network: chosenNetwork, trackId: currentTrackId })
         });
 
         const data = await res.json().catch(() => ({}));
