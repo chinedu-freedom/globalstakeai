@@ -259,7 +259,7 @@
     const submitBtn = document.getElementById('submit-btn');
     
     // Limits and variables
-    let remainingLimit = 100000.00; // Updated dynamically or default high
+    let remainingLimit = 100.00; // Hardcoded max daily limit
     let minimumAmount = 20.00;
     let availableBalance = 0.00;
 
@@ -346,24 +346,41 @@
       window.pToast({ message: msg, type: "error" });
     }
 
-    submitBtn.addEventListener('click', () => {
+    submitBtn.addEventListener('click', async () => {
       if (submitBtn.disabled) return;
       
+      const amount = parseFloat(amountInput.value);
+      const wallet = walletInput.value.trim();
+      
       // Save address locally
-      localStorage.setItem('savedWithdrawalAddress', walletInput.value.trim());
+      localStorage.setItem('savedWithdrawalAddress', wallet);
       
       // Update button state
       const originalText = submitBtn.innerText;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
       submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
 
-      // Simulate submission & show success
-      // Note: This matches existing logic which just showed a toast on click
-      setTimeout(() => {
-        window.pToast({ message: "Withdrawal request submitted successfully!", type: "success" });
+      try {
+        const res = await fetch('https://stakewiseai-server.onrender.com/api/withdrawals', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount, walletAddress: wallet })
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok) {
+          window.pToast({ message: data.message || "Withdrawal request submitted successfully!", type: "success" });
+          setTimeout(() => { window.location.href = './history.html'; }, 2000);
+        } else {
+          showError(data.message || "Failed to submit withdrawal");
+        }
+      } catch (err) {
+        showError("Network error. Please try again.");
+      } finally {
         submitBtn.innerHTML = originalText;
         submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
-      }, 1500);
+      }
     });
   </script>
 </body>
