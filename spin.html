@@ -213,7 +213,7 @@
 
         <!-- Spin Cost -->
         <div class="bg-blue-50 text-blue-600 px-4 py-1 rounded-full border border-blue-100 mb-8">
-            <span class="text-[10px] font-bold">Spin Cost: <span class="text-emerald-500">10 USDT</span></span>
+            <span class="text-[10px] font-bold">Spin Cost: <span class="text-emerald-500">20 USDT</span></span>
         </div>
 
         <!-- Title below stats -->
@@ -277,9 +277,9 @@
                 <button onclick="toggleModal('infoModal')" class="text-gray-400"><i class="fas fa-times"></i></button>
             </div>
             <div class="space-y-4 text-sm text-gray-600">
-                <p>1. Each spin costs <strong>10 USDT</strong> or uses <strong>1 Free Spin</strong>.</p>
-                <p>2. You earn 1 Free Spin for every <strong>$30</strong> you deposit into your account.</p>
-                <p>3. Prizes range from 0.1 USDT to 20 USDT.</p>
+                <p>1. Each spin costs <strong>20 USDT</strong> or uses <strong>1 Free Spin</strong>.</p>
+                <p>2. You earn 1 Free Spin for every <strong>$100</strong> you deposit into your account.</p>
+                <p>3. Prizes range from 0.1 USDT to 18 USDT.</p>
                 <p>4. All winnings are instantly credited to your main balance.</p>
                 <p>5. Spin results are determined by our secure RNG (Random Number Generator) algorithm.</p>
             </div>
@@ -314,24 +314,26 @@
     <!-- Scripts -->
     <script>
         const segments = [
-            { label: "USDT 0.1", value: 0.1 },
-            { label: "USDT 0.2", value: 0.2 },
-            { label: "USDT 0.3", value: 0.3 },
-            { label: "USDT 0.4", value: 0.4 },
-            { label: "USDT 0.5", value: 0.5 },
+            { label: "0.1 USDT", value: 0.1 },
+            { label: "0.2 USDT", value: 0.2 },
+            { label: "0.3 USDT", value: 0.3 },
+            { label: "0.4 USDT", value: 0.4 },
+            { label: "0.5 USDT", value: 0.5 },
             { label: "5 USDT", value: 5.0 },
             { label: "10 USDT", value: 10.0 },
             { label: "15 USDT", value: 15.0 },
-            { label: "20 USDT", value: 20.0 },
+            { label: "18 USDT", value: 18.0 },
             { label: "GOOD LUCK", value: 0 }
         ];
 
-        let balance = 1170.90;
+        let balance = 0;
         let freeSpins = 0;
         let isSpinning = false;
         let currentRotation = 0;
 
-        function init() {
+        const API_BASE = "https://stakewiseai-server.onrender.com/api"; // Replace with your actual backend URL
+
+        async function init() {
             const wheel = document.getElementById('wheel');
             const lights = document.getElementById('lightsContainer');
             
@@ -342,13 +344,6 @@
                 div.style.transform = `rotate(${i * 36 + 18}deg)`;
                 div.innerHTML = `<span>${seg.label}</span>`;
                 wheel.appendChild(div);
-                
-                // Lights on outer ring
-                const light = document.createElement('div');
-                light.className = 'wheel-light';
-                light.style.transform = `translateX(-50%) rotate(${i * 36}deg)`;
-                light.style.animationDelay = `${i * 0.1}s`;
-                lights.appendChild(div.cloneNode()); // Using clones or simpler divs
             });
 
             // Correct light implementation
@@ -360,6 +355,67 @@
                 light.style.animationDelay = `${i * 0.05}s`;
                 lights.appendChild(light);
             }
+
+            await fetchUserData();
+            await fetchHistory();
+        }
+
+        async function fetchUserData() {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await fetch(`${API_BASE}/users/profile`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    balance = data.data.accountBalance || 0;
+                    freeSpins = data.data.freeSpins || 0;
+                    updateUI();
+                }
+            } catch (err) {
+                console.error("Failed to fetch user data:", err);
+            }
+        }
+
+        async function fetchHistory() {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await fetch(`${API_BASE}/spin/history`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    renderHistory(data.data.history);
+                }
+            } catch (err) {
+                console.error("Failed to fetch history:", err);
+            }
+        }
+
+        function renderHistory(history) {
+            const historyList = document.getElementById('historyList');
+            if (history.length === 0) {
+                historyList.innerHTML = '<p class="text-center text-gray-400 py-10">No spins yet today.</p>';
+                return;
+            }
+
+            historyList.innerHTML = '';
+            history.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-xl border border-gray-100';
+                const time = new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                div.innerHTML = `
+                    <div>
+                        <p class="font-bold text-gray-800">${item.resultLabel === 'GOOD LUCK' ? 'Lost' : 'Won ' + item.reward + ' USDT'}</p>
+                        <p class="text-[10px] text-gray-400">${time}</p>
+                    </div>
+                    <div class="text-[10px] font-bold ${item.reward > 0 ? 'text-emerald-500' : 'text-red-400'}">
+                        ${item.reward > 0 ? '+' + item.reward : '0.00'}
+                    </div>
+                `;
+                historyList.appendChild(div);
+            });
         }
 
         function toggleModal(id) {
@@ -375,79 +431,62 @@
             }
         }
 
-        function startSpin() {
+        async function startSpin() {
             if (isSpinning) return;
             
-            if (freeSpins <= 0 && balance < 10) {
-                alert("Insufficient balance!");
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("Please log in to spin.");
+                window.location.href = "login.html";
                 return;
             }
 
-            if (freeSpins > 0) {
-                freeSpins--;
-            } else {
-                balance -= 10;
+            try {
+                // Request spin from backend
+                const res = await fetch(`${API_BASE}/spin`, {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}` 
+                    }
+                });
+                const data = await res.json();
+
+                if (!data.success) {
+                    alert(data.message || "Failed to spin");
+                    return;
+                }
+
+                // Start animation
+                isSpinning = true;
+                const { reward, resultLabel, newBalance, freeSpins: updatedFreeSpins } = data.data;
+                
+                const targetSegment = segments.findIndex(s => s.label === resultLabel);
+                const extraSpins = 8 + Math.floor(Math.random() * 5);
+                const degrees = extraSpins * 360 - (targetSegment * 36 + 18);
+                
+                const wheel = document.getElementById('wheel');
+                wheel.style.transform = `rotate(${degrees}deg)`;
+                
+                setTimeout(() => {
+                    isSpinning = false;
+                    balance = newBalance;
+                    freeSpins = updatedFreeSpins;
+                    updateUI();
+                    
+                    if (reward > 0) {
+                        document.getElementById('winAmount').innerText = `${reward} USDT`;
+                        toggleModal('winModal');
+                    } else {
+                        alert("Better luck next time!");
+                    }
+                    fetchHistory(); // Refresh history
+                }, 4000);
+
+            } catch (err) {
+                console.error("Spin error:", err);
+                alert("Something went wrong. Please try again.");
             }
-
-            updateUI();
-            
-            isSpinning = true;
-            const wheel = document.getElementById('wheel');
-            
-            // Random prize calculation (weighted logic can be added here)
-            const targetSegment = Math.floor(Math.random() * segments.length);
-            const extraSpins = 5 + Math.floor(Math.random() * 5);
-            
-            // Calculate final rotation
-            // The wheel spins CLOCKWISE. We want to land a segment under the pointer (at top).
-            // Pointer is at 0 deg.
-            // Segment 0 is at 18 deg initial.
-            // Deg for segment i to be at top: -(i * 36 + 18)
-            const degrees = extraSpins * 360 - (targetSegment * 36 + 18);
-            currentRotation = degrees;
-            
-            wheel.style.transform = `rotate(${degrees}deg)`;
-            
-            setTimeout(() => {
-                isSpinning = false;
-                const win = segments[targetSegment];
-                handleWin(win);
-            }, 4000);
-        }
-
-        function handleWin(win) {
-            balance += win.value;
-            updateUI();
-            
-            if (win.value > 0) {
-                document.getElementById('winAmount').innerText = `${win.value} USDT`;
-                toggleModal('winModal');
-            } else {
-                alert("Better luck next time!");
-            }
-            
-            addToHistory(win);
-        }
-
-        function addToHistory(win) {
-            const historyList = document.getElementById('historyList');
-            if (historyList.querySelector('p')) historyList.innerHTML = '';
-            
-            const div = document.createElement('div');
-            div.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-xl border border-gray-100';
-            const now = new Date();
-            const time = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
-            
-            div.innerHTML = `
-                <div>
-                    <p class="font-bold text-gray-800">${win.label === 'GOOD LUCK' ? 'Lost' : 'Won ' + win.value + ' USDT'}</p>
-                    <p class="text-[10px] text-gray-400">${time}</p>
-                </div>
-                <div class="text-[10px] font-bold ${win.value > 0 ? 'text-emerald-500' : 'text-red-400'}">
-                    ${win.value > 0 ? '+' + win.value : '0.00'}
-                </div>
-            `;
-            historyList.prepend(div);
         }
 
         function updateUI() {
