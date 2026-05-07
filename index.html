@@ -253,10 +253,10 @@
       </div>
 
       <!-- News text -->
-      <p class="update-body-text">
-        📝 In the last 24 hours, Bitcoin's price moved +0.12% to $90.47k and trading volume moved -11.79% to $38.05b. 🔵 Bitcoin nears $100K driven by ETF inf...
+      <p class="update-body-text" id="updateBodyText">
+        Loading...
       </p>
-      <a href="./update-detail.html" class="update-view-more">view_more</a>
+      <a href="./update-detail.html" class="update-view-more" id="updateViewMore">view_more</a>
 
       <!-- CTA Button -->
       <button id="updateCtaBtn" onclick="window.location.href='./update-detail.html'">
@@ -610,6 +610,62 @@
   </div>
   <script>
     // ===== UPDATE POPUP LOGIC =====
+
+    // Pool of updates — add / edit freely
+    const UPDATE_POOL = [
+      {
+        label: "UPDATE 1",
+        text: "📝 In the last 24 hours, Bitcoin's price moved +0.12% to $90.47k and trading volume moved -11.79% to $38.05b. 🔵 Bitcoin nears $100K driven by ETF inflows.",
+        link: "./update-detail.html"
+      },
+      {
+        label: "UPDATE 2",
+        text: "🚀 Ethereum completed a major network upgrade. Gas fees dropped 38% — now is a great time to stake! ETH is trading at $3,210.",
+        link: "./update-detail.html"
+      },
+      {
+        label: "UPDATE 3",
+        text: "🎁 StakeWiseAI Lucky Blind Box Event is LIVE! Spin now to claim rewards up to $1,000. Limited slots available today only.",
+        link: "./spin.html"
+      },
+      {
+        label: "UPDATE 4",
+        text: "📢 New staking plans just dropped! Earn up to 4.2% daily on our new Platinum Plan. Deposits start from just $500. Offer ends soon.",
+        link: "./plans.html"
+      },
+      {
+        label: "UPDATE 5",
+        text: "🔵 BNB surged +5.4% in 24 hours, reaching $612. StakeWiseAI users holding BNB plans are seeing record returns this week.",
+        link: "./update-detail.html"
+      },
+      {
+        label: "UPDATE 6",
+        text: "💰 Referral bonus boosted! Invite a friend and earn $50 instantly when they make their first deposit. Share your link now.",
+        link: "./invite.html"
+      },
+      {
+        label: "UPDATE 7",
+        text: "📈 USDT total market cap crosses $140B. Stablecoins continue to dominate DeFi. StakeWiseAI USDT plans yield up to 3.8% daily.",
+        link: "./update-detail.html"
+      },
+      {
+        label: "UPDATE 8",
+        text: "⚡ Platform upgrade complete! Withdrawal speeds improved by 60%. All pending withdrawals before 12:00 UTC have been processed.",
+        link: "./update-detail.html"
+      }
+    ];
+
+    // Pick a random update and render it
+    (function loadRandomUpdate() {
+      const pick = UPDATE_POOL[Math.floor(Math.random() * UPDATE_POOL.length)];
+      document.getElementById('updateTitle').textContent = pick.label;
+      document.getElementById('updateBodyText').textContent = pick.text;
+      const viewMore = document.getElementById('updateViewMore');
+      if (viewMore) viewMore.href = pick.link;
+      const ctaBtn = document.getElementById('updateCtaBtn');
+      if (ctaBtn) ctaBtn.onclick = function() { window.location.href = pick.link; };
+    })();
+
     window.closeUpdatePopup = function() {
       const overlay = document.getElementById('updateOverlay');
       overlay.classList.remove('visible');
