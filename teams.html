@@ -242,7 +242,33 @@
     document.addEventListener("DOMContentLoaded", () => {
         fetchReferralData();
         fetchUserDataForLink();
+        fetchReferralConfig();
     });
+
+    async function fetchReferralConfig() {
+        try {
+            const res = await fetch('https://stakewiseai-server.onrender.com/api/users/referral-config');
+            if (res.ok) {
+                const data = await res.json();
+                const config = data.data || data;
+                
+                // Update button labels
+                const tabs = document.querySelectorAll('.level-tab');
+                if (tabs.length >= 3) {
+                    tabs[0].innerHTML = `Level 1 (${config.level1}%)`;
+                    tabs[1].innerHTML = `Level 2 (${config.level2}%)`;
+                    tabs[2].innerHTML = `Level 3 (${config.level3}%)`;
+                }
+
+                // Update "earn up to" text
+                const totalMax = Number(config.level1) + Number(config.level2) + Number(config.level3);
+                const earnText = document.querySelector('.px-3.-mt-10 p.text-xs.text-gray-400');
+                if (earnText) {
+                    earnText.innerText = `Share this link to earn up to ${totalMax}% commissions`;
+                }
+            }
+        } catch (e) { console.error("Error fetching referral config:", e); }
+    }
 
     async function fetchUserDataForLink() {
         try {
