@@ -342,7 +342,7 @@
                     }
                     if (user.phoneNumber || user.phone) {
                         phoneEl.innerText = user.phoneNumber || user.phone;
-         ~               phoneEl.classList.remove('animate-pulse', 'bg-white/20', 'h-3', 'w-32', 'rounded-md', 'mt-1.5');
+                        phoneEl.classList.remove('animate-pulse', 'bg-white/20', 'h-3', 'w-32', 'rounded-md', 'mt-1.5');
                         phoneEl.classList.add('mt-0.5'); // Restore original margin
                         localStorage.setItem("userPhone", user.phoneNumber || user.phone);
                     }

@@ -19,7 +19,7 @@
     }
 
     .header-bg {
-      background: linear-gradient(90deg, #1fa2d0, #167bee);
+      background: linear-gradient(135deg, #1fa2d0, #167bee);
     }
     
     .bottom-nav {
@@ -34,10 +34,6 @@
       height: 64px;
     }
     
-    
-    
-    
-    
     .nav-item svg {
       width: 20px;
       height: 20px;
@@ -49,26 +45,6 @@
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
-    
-    .nav-item svg {
-      width: 20px;
-      height: 20px;
-      margin-bottom: 4px;
-      stroke-width: 2;
-    }
-    
-    .nav-item span {
-      font-size: 10px;
-      font-weight: 500;
-    }
-    
-    
-    
-    
 
     /* Toggle Switch */
     .toggle-checkbox:checked {
@@ -248,8 +224,6 @@
              </button>
            </div>
         </div>
-           </div>
-        </div>
       </div>
 
       <div class="flex flex-col gap-3">
@@ -262,7 +236,7 @@
   </div>
 
     <!-- MAIN CONTENT START -->
-    <div class="px-3 pt-5 pb-6 space-y-4">
+    <div class="px-3 pt-5 pb-24 space-y-4">
       
       <!-- User Info Top Card -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center gap-4 transition overflow-hidden">
@@ -382,14 +356,8 @@
         </a>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
   </div>
+
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
         // FETCH REAL DATA
@@ -556,8 +524,6 @@
 
       if(show) {
         modal.classList.remove('hidden');
-        document.getElementById('pwdError').classList.add('hidden');
-        document.getElementById('pwdSuccess').classList.add('hidden');
         setTimeout(() => {
           overlay.classList.remove('opacity-0');
           overlay.classList.add('opacity-100');
@@ -596,45 +562,6 @@
         setTimeout(() => {
           modal.classList.add('hidden');
         }, 300);
-      }
-    }
-
-    function changeLanguage(langName, flagUrl) {
-      if (window.setSiteLanguage) {
-          window.setSiteLanguage(langName, flagUrl);
-      }
-      document.getElementById('activeLangText').innerText = langName;
-      document.getElementById('activeLangFlag').src = flagUrl;
-
-      // Update checkmarks
-      document.querySelectorAll('[id^="check-"]').forEach(el => el.classList.add('hidden'));
-      const checkEl = document.getElementById('check-' + langName);
-      if (checkEl) checkEl.classList.remove('hidden');
-
-      toggleLanguageModal(false);
-    }
-
-    function toggleLanguageModal(show) {
-      const modal = document.getElementById('langModal');
-      const modalContent = document.getElementById('langModalContent');
-      const overlay = document.getElementById('langOverlay');
-
-      if(show) {
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-          overlay.classList.remove('opacity-0');
-          overlay.classList.add('opacity-100');
-          modalContent.classList.remove('scale-95', 'opacity-0');
-          modalContent.classList.add('scale-100', 'opacity-100');
-        }, 10);
-      } else {
-        overlay.classList.remove('opacity-100');
-        overlay.classList.add('opacity-0');
-        modalContent.classList.remove('scale-100', 'opacity-100');
-        modalContent.classList.add('scale-95', 'opacity-0');
-        setTimeout(() => {
-          modal.classList.add('hidden');
-        }, 300); // Wait for transition out
       }
     }
 
