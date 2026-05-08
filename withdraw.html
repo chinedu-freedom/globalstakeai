@@ -133,19 +133,20 @@
           </div>
         </div> -->
 
-        <!-- Select Cryptocurrency Button (Always Active) -->
+        <!-- Select Cryptocurrency Button -->
         <div class="pt-2">
-          <div id="usdt-btn" class="w-full flex items-center gap-3 bg-blue-50/30 border border-[#0e7bee] rounded-xl p-3 shadow-sm">
-            <div class="w-[42px] h-[42px] rounded-full bg-[#e6f7f3] flex items-center justify-center border border-[#d2eee7] shrink-0">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="12" fill="#26A17B"/>
-                <path d="M13.25 10H17V8H7V10H10.75V17H13.25V10Z" fill="white"/>
-              </svg>
+          <label class="block text-[13px] font-medium text-[#849ab3] mb-2 pl-1">Select Currency</label>
+          <div id="select-crypto-btn" class="w-full flex items-center justify-between bg-[#fbfdfc] border border-[#e2e8f0] rounded-xl p-3 shadow-sm cursor-pointer hover:border-[#0e7bee] transition">
+            <div id="selected-crypto-info" class="flex items-center gap-3">
+              <div class="w-[36px] h-[36px] rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                <i class="fas fa-coins text-[#0e7bee]"></i>
+              </div>
+              <div class="text-left flex flex-col justify-center">
+                <span id="selected-crypto-name" class="text-[13px] font-bold text-[#1e293b] tracking-wide">Select Crypto</span>
+                <span id="selected-crypto-network" class="text-[10px] text-[#94a3b8] font-medium uppercase">...</span>
+              </div>
             </div>
-            <div class="text-left flex flex-col justify-center">
-              <span class="text-[13px] font-bold text-[#1e293b] leading-tight mb-0.5 tracking-wide">USDT</span>
-              <span class="text-[11px] text-[#94a3b8] font-medium leading-tight uppercase">BEP20</span>
-            </div>
+            <i class="fas fa-chevron-down text-xs text-[#94a3b8]"></i>
           </div>
         </div>
 
@@ -182,8 +183,8 @@
                 <span id="summary-amount" class="font-bold text-[#1e293b] tracking-wide">$0.00</span>
               </div>
               <div class="flex justify-between items-center text-[13px]">
-                <span class="text-[#64748b] font-medium tracking-wide">Fee (0% + $0.00)</span>
-                <span class="font-bold text-red-500 tracking-wide">-$0.00</span>
+                <span class="text-[#64748b] font-medium tracking-wide">Fee (6%)</span>
+                <span id="summary-fee" class="font-bold text-red-500 tracking-wide">-$0.00</span>
               </div>
               <div class="pt-4 border-t border-[#e2e8f0]">
                 <div class="flex justify-between items-end">
@@ -208,14 +209,27 @@
           </div>
 
           <!-- Info Warning -->
-          <div class="bg-[#fdf8f0] border border-[#f5ead8] rounded-xl p-4 flex gap-3 text-[11px] text-[#b3833d] shadow-sm mb-4">
-            <i class="fas fa-exclamation-triangle text-[#e69f33] mt-0.5 text-xs shrink-0"></i>
-            <p class="leading-relaxed font-medium tracking-wide pr-1">Withdrawals are processed within 24 hours. Make sure your wallet address is correct as transactions cannot be reversed.</p>
-          </div>
-
         </div>
       </div>
       
+    </div>
+
+    <!-- CRYPTO SELECTION MODAL -->
+    <div id="cryptoModal" class="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-end justify-center opacity-0 pointer-events-none transition-all duration-300">
+      <div id="cryptoSheet" class="w-full max-w-md bg-white rounded-t-[30px] p-6 pb-10 translate-y-full transition-transform duration-300">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-[16px] font-bold text-[#1e293b]">Choose Currency</h3>
+          <button onclick="closeCryptoModal()" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
+            <i class="fas fa-times text-xs"></i>
+          </button>
+        </div>
+        <div id="crypto-list" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+          <!-- Items will be injected here -->
+          <div class="flex justify-center py-10">
+            <i class="fas fa-spinner fa-spin text-[#0e7bee] text-2xl"></i>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- BOTTOM NAV -->
@@ -242,7 +256,11 @@
   </div>
   <script>
     // Elements
-    const usdtBtn = document.getElementById('usdt-btn');
+    const selectCryptoBtn = document.getElementById('select-crypto-btn');
+    const cryptoModal = document.getElementById('cryptoModal');
+    const cryptoSheet = document.getElementById('cryptoSheet');
+    const cryptoList = document.getElementById('crypto-list');
+    
     const expandedForm = document.getElementById('expanded-form');
     const maxBtn = document.getElementById('max-btn');
     const amountInput = document.getElementById('amount-input');
@@ -250,10 +268,97 @@
     const summaryCard = document.getElementById('summary-card');
     const submitBtn = document.getElementById('submit-btn');
     
-    // Limits and variables
-    let remainingLimit = 100.00; // Hardcoded max daily limit
+    // Variables
+    let remainingLimit = 1000000; // Default large
     let minimumAmount = 20.00;
+    let withdrawalFeePercent = 6;
     let availableBalance = 0.00;
+    let chosenCrypto = null;
+    let allWallets = [];
+
+    // Crypto Modal Logic
+    selectCryptoBtn.addEventListener('click', () => {
+      cryptoModal.classList.remove('opacity-0', 'pointer-events-none');
+      cryptoSheet.classList.remove('translate-y-full');
+    });
+
+    function closeCryptoModal() {
+      cryptoModal.classList.add('opacity-0', 'pointer-events-none');
+      cryptoSheet.classList.add('translate-y-full');
+    }
+
+    cryptoModal.addEventListener('click', (e) => {
+      if (e.target === cryptoModal) closeCryptoModal();
+    });
+
+    async function fetchWithdrawalConfig() {
+      try {
+        // Fetch limits
+        const limitRes = await fetch('https://stakewiseai-server.onrender.com/api/withdrawals/limits', { credentials: 'include' });
+        if (limitRes.ok) {
+          const limitData = await limitRes.json();
+          const d = limitData.data;
+          minimumAmount = d.minWithdrawal || 20;
+          withdrawalFeePercent = d.withdrawalFeePercent || 6;
+          // Update UI helper text
+          document.querySelector('p[class*="Minimum amount"]').innerText = `Minimum amount: $${minimumAmount.toFixed(2)}`;
+        }
+
+        // Fetch available cryptos (reuse deposit addresses)
+        const walletsRes = await fetch('https://stakewiseai-server.onrender.com/api/deposits/deposit-addresses', { credentials: 'include' });
+        if (walletsRes.ok) {
+          const walletsData = await walletsRes.json();
+          allWallets = walletsData.data || [];
+          renderCryptoList();
+          if (allWallets.length > 0) selectCrypto(allWallets[0]);
+        }
+      } catch (err) {
+        console.error("Config fetch error:", err);
+      }
+    }
+
+    function renderCryptoList() {
+      cryptoList.innerHTML = '';
+      allWallets.forEach(wallet => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center gap-4 p-4 rounded-2xl border border-[#e2e8f0] hover:border-[#0e7bee] hover:bg-blue-50/30 transition cursor-pointer';
+        item.onclick = () => {
+          selectCrypto(wallet);
+          closeCryptoModal();
+        };
+
+        const iconHtml = wallet.iconUrl 
+          ? `<img src="${wallet.iconUrl}" class="w-8 h-8 rounded-full object-contain" />`
+          : `<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-[10px] font-bold text-[#0e7bee]">${wallet.symbol[0]}</div>`;
+
+        item.innerHTML = `
+          ${iconHtml}
+          <div class="flex-1">
+            <p class="text-[14px] font-bold text-[#1e293b]">${wallet.symbol}</p>
+            <p class="text-[10px] text-[#94a3b8] font-medium uppercase">${wallet.network || 'Mainnet'}</p>
+          </div>
+          <i class="fas fa-chevron-right text-slate-300 text-[10px]"></i>
+        `;
+        cryptoList.appendChild(item);
+      });
+    }
+
+    function selectCrypto(wallet) {
+      chosenCrypto = wallet;
+      document.getElementById('selected-crypto-name').innerText = wallet.symbol;
+      document.getElementById('selected-crypto-network').innerText = wallet.network || 'Mainnet';
+      const iconWrap = document.querySelector('#selected-crypto-info .shrink-0');
+      if (wallet.iconUrl) {
+        iconWrap.innerHTML = `<img src="${wallet.iconUrl}" class="w-6 h-6 rounded-full object-contain" />`;
+      } else {
+        iconWrap.innerHTML = `<i class="fas fa-coins text-[#0e7bee]"></i>`;
+      }
+      
+      // Update summary text if visible
+      if (!summaryCard.classList.contains('hidden')) {
+        document.getElementById('summary-final').innerText = `${(parseFloat(amountInput.value || 0) * 0.94).toFixed(2)} ${wallet.symbol}`;
+      }
+    }
 
     // Fetch Dashboard Stats
     async function fetchStats() {
@@ -269,7 +374,6 @@
                     availableBalance = Number(stats.currentAssets);
                     document.getElementById("availableBalanceDisplay").innerText = `$${availableBalance.toFixed(2)}`;
                 }
-                // Optional: currentAssets could also be the limit source or backend can provide explicit limit field in future
             }
         } catch (error) {
             console.error("Error fetching dashboard stats:", error);
@@ -278,6 +382,7 @@
 
     document.addEventListener("DOMContentLoaded", () => {
         fetchStats();
+        fetchWithdrawalConfig();
         
         // Load previously saved address
         const savedAddress = localStorage.getItem('savedWithdrawalAddress');
@@ -302,6 +407,9 @@
       const hasValidAmount = !isNaN(amount) && amountStr.trim() !== '';
       const hasAddress = walletInput.value.trim().length > 0;
 
+      // 6% Fee constant
+      const feePercent = 0.06;
+
       // Reset states
       summaryCard.classList.add('hidden');
       submitBtn.disabled = true;
@@ -309,26 +417,22 @@
       submitBtn.classList.remove('bg-[#0e7bee]', 'text-white', 'shadow-lg', 'shadow-[#0e7bee]/30', 'hover:bg-[#0c6cd6]', 'active:scale-[0.98]');
 
       if (hasValidAmount) {
+        // Calculate fee
+        const calculatedFee = amount * feePercent;
+        const netAmount = Math.max(0, amount - calculatedFee);
+
         // Show summary
         summaryCard.classList.remove('hidden');
         document.getElementById('summary-amount').innerText = `$${amount.toFixed(2)}`;
-        document.getElementById('summary-final').innerText = `${amount.toFixed(2)} USDT`;
-        document.getElementById('summary-fiat').innerText = `≈ $${amount.toFixed(2)}`;
+        document.getElementById('summary-fee').innerText = `-$${calculatedFee.toFixed(2)}`;
+        document.getElementById('summary-final').innerText = `${netAmount.toFixed(2)} USDT`;
+        document.getElementById('summary-fiat').innerText = `≈ $${netAmount.toFixed(2)}`;
 
-        // Validations
-        if (amount < minimumAmount) {
-          showError(`Minimum withdrawal amount is $${minimumAmount.toFixed(2)}`);
-        } else if (amount > remainingLimit) {
-          showError(`Amount exceeds remaining daily limit of $${remainingLimit.toFixed(2)}`);
-        } else if (amount > availableBalance) {
-          showError(`Amount exceeds available balance.`);
-        } else {
-          // Valid numbers, now check if address is empty
-          if (hasAddress) {
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
-            submitBtn.classList.add('bg-[#0e7bee]', 'text-white', 'shadow-lg', 'shadow-[#0e7bee]/30', 'hover:bg-[#0c6cd6]', 'active:scale-[0.98]');
-          }
+        // Enable button if has amount and address (no toasts here)
+        if (amount > 0 && hasAddress) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
+          submitBtn.classList.add('bg-[#0e7bee]', 'text-white', 'shadow-lg', 'shadow-[#0e7bee]/30', 'hover:bg-[#0c6cd6]', 'active:scale-[0.98]');
         }
       }
     }
@@ -338,10 +442,22 @@
     }
 
     submitBtn.addEventListener('click', async () => {
-      if (submitBtn.disabled) return;
-      
       const amount = parseFloat(amountInput.value);
       const wallet = walletInput.value.trim();
+
+      // Final validation on click
+      if (isNaN(amount) || amount < minimumAmount) {
+        showError(`Minimum withdrawal amount is $${minimumAmount.toFixed(2)}`);
+        return;
+      }
+      if (amount > availableBalance) {
+        showError(`Amount exceeds available balance.`);
+        return;
+      }
+      if (wallet.length < 5) {
+        showError(`Please enter a valid wallet address.`);
+        return;
+      }
       
       // Save address locally
       localStorage.setItem('savedWithdrawalAddress', wallet);
@@ -356,7 +472,11 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body: JSON.stringify({ amount, walletAddress: wallet })
+          body: JSON.stringify({ 
+            amount, 
+            walletAddress: wallet,
+            crypto: chosenCrypto ? chosenCrypto.symbol : 'USDT'
+          })
         });
         
         const data = await res.json();
