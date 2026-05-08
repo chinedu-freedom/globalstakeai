@@ -341,7 +341,7 @@
             const dailyProfitAmount = amount * (dailyProfitRate / 100);
             const totalAmount = dailyProfitAmount * duration;
             
-            const startDate = new Date(inv.createdAt);
+            const startDate = new Date(inv.startDate || inv.createdAt);
             const now = new Date();
             const msPerDay = 1000 * 60 * 60 * 24;
             let daysPassed = Math.floor((now - startDate) / msPerDay);
