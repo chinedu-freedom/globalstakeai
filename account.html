@@ -91,7 +91,7 @@
         <!-- Left: Avatar & Info -->
         <div class="flex items-center gap-3">
           <div class="relative group cursor-pointer" onclick="document.getElementById('avatarInput').click()">
-            <div id="avatarSkeletonContainer" class="w-14 h-14 rounded-full overflow-hidden border-2 border-white/20 shadow-sm transition active:scale-95 bg-gray-200 animate-pulse flex items-center justify-center text-white text-xl font-bold tracking-widest relative">
+            <div id="avatarSkeletonContainer" class="w-14 h-14 rounded-full overflow-hidden border-2 border-white/20 shadow-sm transition active:scale-95 bg-gray-200 animate-pulse flex items-center justify-center text-white text-base font-bold tracking-widest relative">
               <span id="profileInitials" class="hidden drop-shadow-md"></span>
               <img src="" alt="Avatar" class="w-full h-full object-cover hidden absolute inset-0 z-10" id="profileAvatar">
             </div>
@@ -103,7 +103,7 @@
           <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="updateAvatar(this)">
           <div>
             <div class="flex items-center gap-2">
-              <p class="text-sm tracking-wide animate-pulse bg-white/20 h-4 w-24 rounded-md" id="userIdDisplay"></p>
+              <p class="text-xs tracking-wide animate-pulse bg-white/20 h-4 w-24 rounded-md" id="userIdDisplay"></p>
               <i class="far fa-copy text-xs opacity-80 cursor-pointer hover:opacity-100 transition hidden" id="copyIdIcon" onclick="copyId()"></i>
             </div>
             <p class="text-[11px] text-white/90 mt-1.5 animate-pulse bg-white/20 h-3 w-32 rounded-md" id="userPhoneDisplay"></p>
@@ -112,7 +112,7 @@
         
         <!-- Right: Settings Icon -->
         <a href="/settings.html" class="w-8 h-8 rounded-full bg-white/20 hidden sm:flex items-center justify-center hover:bg-white/30 transition shadow-sm">
-          <i class="fas fa-cog text-sm"></i>
+          <i class="fas fa-cog text-xs"></i>
         </a>
       </div>
     </div>
@@ -134,19 +134,19 @@
         <div class="flex justify-between items-center text-center">
           <div class="flex-1">
             <p class="text-[10px] text-gray-400 mb-1">Total Staked</p>
-            <p class="text-sm font-bold text-gray-800" id="statTotalStaked">$0.00</p>
+            <p class="text-xs font-bold text-gray-800" id="statTotalStaked">$0.00</p>
           </div>
           <!-- Vertical Divider -->
           <div class="w-px h-8 bg-gray-100"></div>
           <div class="flex-1">
             <p class="text-[10px] text-gray-400 mb-1">Current Assets</p>
-            <p class="text-sm font-bold text-gray-800" id="statCurrentAssets">$0.00</p>
+            <p class="text-xs font-bold text-gray-800" id="statCurrentAssets">$0.00</p>
           </div>
           <!-- Vertical Divider -->
           <div class="w-px h-8 bg-gray-100"></div>
           <div class="flex-1">
             <p class="text-[10px] text-gray-400 mb-1">Commission</p>
-            <p class="text-sm font-bold text-gray-800" id="statCommission">$0.00</p>
+            <p class="text-xs font-bold text-gray-800" id="statCommission">$0.00</p>
           </div>
         </div>
       </div>
@@ -154,10 +154,10 @@
 
     <!-- ACTION BUTTONS ROW -->
     <div class="px-4 flex gap-3 mb-6">
-      <button onclick="window.location.href='/deposit.html'" class="flex-1 btn-deposit text-white text-sm font-semibold py-3.5 rounded-xl shadow-sm hover:opacity-90 transition">
+      <button onclick="window.location.href='/deposit.html'" class="flex-1 btn-deposit text-white text-xs font-semibold py-3.5 rounded-xl shadow-sm hover:opacity-90 transition">
         Deposit
       </button>
-      <button onclick="window.location.href='/withdraw.html'" class="flex-1 btn-withdraw text-white text-sm font-semibold py-3.5 rounded-xl shadow-sm hover:opacity-90 transition">
+      <button onclick="window.location.href='/withdraw.html'" class="flex-1 btn-withdraw text-white text-xs font-semibold py-3.5 rounded-xl shadow-sm hover:opacity-90 transition">
         Withdraw
       </button>
     </div>
@@ -171,7 +171,7 @@
             <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#4f8cff]">
               <i class="fas fa-cog text-xs"></i>
             </div>
-            <span class="text-sm text-gray-700 font-medium tracking-wide">Account Settings</span>
+            <span class="text-xs text-gray-700 font-medium tracking-wide">Account Settings</span>
           </div>
           <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </a>
@@ -181,7 +181,7 @@
             <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#4f8cff]">
               <i class="fas fa-user text-xs"></i>
             </div>
-            <span class="text-sm text-gray-700 font-medium tracking-wide">My Profile</span>
+            <span class="text-xs text-gray-700 font-medium tracking-wide">My Profile</span>
           </div>
           <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </a>
@@ -191,7 +191,7 @@
             <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#4f8cff]">
               <i class="fas fa-file-invoice-dollar text-xs"></i>
             </div>
-            <span class="text-sm text-gray-700 font-medium tracking-wide">Transaction History</span>
+            <span class="text-xs text-gray-700 font-medium tracking-wide">Transaction History</span>
           </div>
           <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </a>
@@ -201,7 +201,7 @@
             <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#4f8cff]">
               <i class="fas fa-users text-xs"></i>
             </div>
-            <span class="text-sm text-gray-700 font-medium tracking-wide">My Team</span>
+            <span class="text-xs text-gray-700 font-medium tracking-wide">My Team</span>
           </div>
           <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </a>
@@ -212,7 +212,7 @@
             <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#4f8cff]">
               <i class="fas fa-download text-xs"></i>
             </div>
-            <span class="text-sm text-gray-700 font-medium tracking-wide">Download App</span>
+            <span class="text-xs text-gray-700 font-medium tracking-wide">Download App</span>
           </div>
           <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
         </div>
@@ -223,7 +223,7 @@
               <i class="fas fa-sign-out-alt text-xs" id="logoutIcon"></i>
               <i class="fas fa-spinner fa-spin text-xs hidden" id="logoutSpinner"></i>
             </div>
-            <span class="text-sm text-red-500 font-medium tracking-wide" id="logoutLabel">Logout</span>
+            <span class="text-xs text-red-500 font-medium tracking-wide" id="logoutLabel">Logout</span>
           </div>
         </button>
 

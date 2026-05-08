@@ -145,7 +145,7 @@
     <!-- ═══════════════════════════════════════════════
          STEP 1 — Method Selection UI (default view)
     ════════════════════════════════════════════════ -->
-    <div id="selectScreen" class="px-5 pt-6 pb-24 space-y-5 flex-1">
+    <div id="selectScreen" class="px-3 pt-6 pb-24 space-y-5 flex-1">
 
       <!-- Info card -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-start gap-3">
@@ -240,7 +240,7 @@
       <div id="amountSection">
         <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 pl-1">Amount (USD)</label>
         <div class="relative">
-          <!-- <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span> -->
+          <!-- <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">$</span> -->
           <input type="number" id="depositAmount" class="amount-input pl-4" placeholder="Minimum $2" min="2" />
         </div>
         <p class="text-[9.5px] text-slate-400 mt-1.5 pl-1">Minimum deposit: <strong>$2</strong> · Maximum: <strong>$1,000,000</strong></p>
@@ -255,7 +255,7 @@
 
       <!-- Continue button -->
       <button id="continueBtn" onclick="proceedToPayment()"
-        class="w-full btn-primary text-white font-bold py-4 rounded-2xl text-sm shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2 mt-2">
+        class="w-full btn-primary text-white font-bold py-4 rounded-2xl text-xs shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2 mt-2">
         <i class="fas fa-arrow-right"></i>
         Continue to Payment
       </button>
@@ -266,12 +266,12 @@
     <!-- ═══════════════════════════════════════════════
          STEP 2 — OxaPay USDT TRC20 Payment Screen
     ════════════════════════════════════════════════ -->
-    <div id="oxapayScreen" class="px-5 pt-5 pb-24 flex-1 space-y-5">
+    <div id="oxapayScreen" class="px-3 pt-5 pb-24 flex-1 space-y-5">
 
       <!-- Back + title -->
       <div class="flex items-center gap-3">
         <button onclick="backToSelect()" class="w-9 h-9 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center text-slate-500 hover:bg-slate-50 transition">
-          <i class="fas fa-chevron-left text-sm"></i>
+          <i class="fas fa-chevron-left text-xs"></i>
         </button>
         <div>
           <h2 class="text-[15px] font-bold text-slate-800" id="paymentTitle">USDT Payment</h2>
@@ -335,14 +335,14 @@
 
       <!-- I've Sent Payment button -->
       <button id="notifyBtn" onclick="notifyPayment()"
-        class="w-full btn-blue text-white font-bold py-4 rounded-2xl text-sm shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2">
+        class="w-full btn-blue text-white font-bold py-4 rounded-2xl text-xs shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2">
         <i class="fas fa-paper-plane"></i>
         I've Sent the Payment
       </button>
 
       <!-- Safety note -->
       <div class="bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3 flex items-start gap-3">
-        <i class="fas fa-triangle-exclamation text-amber-400 mt-0.5 flex-shrink-0 text-sm"></i>
+        <i class="fas fa-triangle-exclamation text-amber-400 mt-0.5 flex-shrink-0 text-xs"></i>
         <p class="text-[9.5px] text-amber-700 leading-relaxed" id="safetyNote">
           Do <strong>not</strong> close this page until your transaction is submitted. Only use USDT on the TRC20 network — sending other tokens or using the wrong network will result in permanent loss.
         </p>
@@ -355,19 +355,19 @@
       <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
         <a href="/index.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          <span class="text-[10px] font-medium">Home</span>
+          <span class="text-[8px] font-medium">Home</span>
         </a>
         <a href="/plans.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
-          <span class="text-[10px] font-medium">Staking Plans</span>
+          <span class="text-[8px] font-medium">Staking Plans</span>
         </a>
         <a href="/teams.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span class="text-[10px] font-medium">Team</span>
+          <span class="text-[8px] font-medium">Team</span>
         </a>
         <a href="/account.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span class="text-[10px] font-medium">Account</span>
+          <span class="text-[8px] font-medium">Account</span>
         </a>
       </div>
     </div>
@@ -546,7 +546,7 @@
       img.className = "w-full h-full object-contain";
       img.onload = () => { qrWrap.innerHTML = ""; qrWrap.appendChild(img); };
       img.onerror = () => {
-        qrWrap.innerHTML = `<div class="text-center p-2"><i class="fas fa-qrcode text-3xl text-slate-300"></i><p class="text-[9px] text-slate-400 mt-1">Scan unavailable</p></div>`;
+        qrWrap.innerHTML = `<div class="text-center p-2"><i class="fas fa-qrcode text-xl text-slate-300"></i><p class="text-[9px] text-slate-400 mt-1">Scan unavailable</p></div>`;
       };
     }
 

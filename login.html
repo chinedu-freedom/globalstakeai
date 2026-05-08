@@ -198,7 +198,7 @@ body {
     <div class=" h-16  overflow-hidden shadow-lg mb-3 border-2 border-white/30" style="background:#0a0f1e;">
       <img src="./logo.jpeg" alt="StakeWiseAI Logo" class="w-full h-full object-cover">
     </div>
-    <h1 class="text-xl font-bold tracking-wide">StakeWiseAI</h1>
+    <h1 class="text-base font-bold tracking-wide">StakeWiseAI</h1>
     <p class="text-[10px] uppercase font-semibold  tracking-[4px] text-white/75 mt-0.5">TECH</p>
   </div>
 </div>
@@ -225,13 +225,13 @@ body {
 <form id="loginForm" class="space-y-5 absolute w-full transition-all duration-500 ease-in-out opacity-100 translate-x-0 overflow-x-hidden" onsubmit="handleLogin(event)">
 
   <div>
-    <label class="text-sm text-gray-500">Email Address</label>
+    <label class="text-xs text-gray-500">Email Address</label>
     <input type="email" id="loginEmail" placeholder="Enter your email" class="input mt-1" oninput="clearErr('loginEmail')"/>
     <p class="text-red-500 text-[11px] mt-1 hidden" id="loginEmailErr"></p>
   </div>
 
   <div>
-    <label class="text-sm text-gray-500">Password</label>
+    <label class="text-xs text-gray-500">Password</label>
     <div class="relative mt-1">
       <input type="password" id="loginPassword" class="input pr-10" placeholder="Enter your password" oninput="clearErr('loginPassword')"/>
       <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
@@ -239,13 +239,13 @@ body {
     <p class="text-red-500 text-[11px] mt-1 hidden" id="loginPasswordErr"></p>
   </div>
 
-  <div class="flex items-center text-sm text-gray-500">
+  <div class="flex items-center text-xs text-gray-500">
     <input type="checkbox" class="mr-2" id="loginAgreement" onchange="toggleLoginBtn()" />
     I have read and accept the
     <a href="/terms.html" class="text-blue-500 ml-1 cursor-pointer hover:underline">User Agreement</a>
   </div>
 
-  <div class="text-center text-blue-500 text-sm">
+  <div class="text-center text-blue-500 text-xs">
     <a href="/forgotPassword.html">Forgot Password?</a>
   </div>
 
@@ -261,18 +261,18 @@ body {
 
   
   <div>
-    <label class="text-sm text-gray-500">Username</label>
+    <label class="text-xs text-gray-500">Username</label>
     <input type="text" id="registerUsername" placeholder="Enter username" class="input mt-1" oninput="clearErr('registerUsername')"/>
     <p class="text-red-500 text-[11px] mt-1 hidden" id="registerUsernameErr"></p>
   </div>
     <div>
-    <label class="text-sm text-gray-500">Email</label>
+    <label class="text-xs text-gray-500">Email</label>
     <input type="email" id="registerEmail" placeholder="Enter email" class="input mt-1" oninput="clearErr('registerEmail')"/>
     <p class="text-red-500 text-[11px] mt-1 hidden" id="registerEmailErr"></p>
   </div>
 
 <div>
-    <label class="text-sm text-gray-500">Phone Number</label>
+    <label class="text-xs text-gray-500">Phone Number</label>
     <div class="phone-input-group mt-1" id="registerPhoneWrap">
       <div class="cc-trigger" id="registerCCTrigger" onclick="toggleCC('register')">
         <span class="fi" id="registerCCFlag"></span>
@@ -292,7 +292,7 @@ body {
 
 
   <div>
-    <label class="text-sm text-gray-500">Password</label>
+    <label class="text-xs text-gray-500">Password</label>
     <div class="relative mt-1">
       <input type="password" id="registerPassword" class="input pr-10" placeholder="Enter password" oninput="clearErr('registerPassword')"/>
       <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
@@ -301,7 +301,7 @@ body {
   </div>
 
   <div>
-    <label class="text-sm text-gray-500">Confirm Password</label>
+    <label class="text-xs text-gray-500">Confirm Password</label>
     <div class="relative mt-1">
       <input type="password" id="registerConfirmPassword" class="input pr-10" placeholder="Repeat password" oninput="clearErr('registerConfirmPassword')"/>
       <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer toggle-password"></i>
@@ -310,12 +310,12 @@ body {
   </div>
 
   <div>
-    <label class="text-sm text-gray-500">Invitation Code <span class="text-gray-400 text-xs">(Optional)</span></label>
+    <label class="text-xs text-gray-500">Invitation Code <span class="text-gray-400 text-xs">(Optional)</span></label>
     <input type="text" id="registerReferral" placeholder="Enter referral code" class="input mt-1"/>
   </div>
 
   <div>
-    <div class="flex items-center text-sm text-gray-500">
+    <div class="flex items-center text-xs text-gray-500">
       <input type="checkbox" class="mr-2" id="registerAgreement" onchange="toggleRegisterBtn(); clearErr('registerAgreement')" />
       I have read and accept the
       <a href="/terms.html" class="text-blue-500 ml-1 cursor-pointer hover:underline">User Agreement</a>

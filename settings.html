@@ -112,7 +112,7 @@
     <div id="langModalContent" class="relative w-full max-w-sm bg-white rounded-[32px] shadow-2xl scale-95 opacity-0 transition-all duration-300 max-h-[75vh] flex flex-col">
       <!-- Handle -->
       <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-4 mb-1 flex-shrink-0"></div>
-      <h3 class="text-sm font-bold text-gray-800 text-center py-4 border-b border-gray-50 flex-shrink-0">Select Language</h3>
+      <h3 class="text-xs font-bold text-gray-800 text-center py-4 border-b border-gray-50 flex-shrink-0">Select Language</h3>
 
       <!-- Search Bar -->
       <div class="px-4 py-3 flex-shrink-0 border-b border-gray-50">
@@ -123,7 +123,7 @@
             type="text"
             placeholder="Search language..."
             oninput="filterLanguages(this.value)"
-            class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-2xl text-sm text-gray-700 placeholder-gray-300 outline-none focus:border-[#4f8cff] focus:ring-2 focus:ring-[#4f8cff]/10 transition"
+            class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-2xl text-xs text-gray-700 placeholder-gray-300 outline-none focus:border-[#4f8cff] focus:ring-2 focus:ring-[#4f8cff]/10 transition"
           />
         </div>
       </div>
@@ -133,78 +133,78 @@
         <!-- Language options -->
         <button onclick="changeLanguage('English', 'https://flagcdn.com/w20/us.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/us.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="EN">
-          <span class="text-sm font-medium text-gray-700 flex-1">English</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">English</span>
           <i class="fas fa-check text-[#4f8cff] text-xs" id="check-English"></i>
         </button>
         <button onclick="changeLanguage('Español', 'https://flagcdn.com/w20/es.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/es.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="ES">
-          <span class="text-sm font-medium text-gray-700 flex-1">Español</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">Español</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Español"></i>
         </button>
         <button onclick="changeLanguage('Français', 'https://flagcdn.com/w20/fr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/fr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="FR">
-          <span class="text-sm font-medium text-gray-700 flex-1">Français</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">Français</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Français"></i>
         </button>
         <button onclick="changeLanguage('Deutsch', 'https://flagcdn.com/w20/de.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/de.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="DE">
-          <span class="text-sm font-medium text-gray-700 flex-1">Deutsch</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">Deutsch</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Deutsch"></i>
         </button>
         <button onclick="changeLanguage('Português', 'https://flagcdn.com/w20/pt.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/pt.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="PT">
-          <span class="text-sm font-medium text-gray-700 flex-1">Português</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">Português</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Português"></i>
         </button>
         <button onclick="changeLanguage('中文', 'https://flagcdn.com/w20/cn.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/cn.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="CN">
-          <span class="text-sm font-medium text-gray-700 flex-1">中文</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">中文</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-中文"></i>
         </button>
         <button onclick="changeLanguage('日本語', 'https://flagcdn.com/w20/jp.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="JP">
-          <span class="text-sm font-medium text-gray-700 flex-1">日本語</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">日本語</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-日本語"></i>
         </button>
         <button onclick="changeLanguage('한국어', 'https://flagcdn.com/w20/kr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/kr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="KR">
-          <span class="text-sm font-medium text-gray-700 flex-1">한국어</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">한국어</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-한국어"></i>
         </button>
         <button onclick="changeLanguage('Русский', 'https://flagcdn.com/w20/ru.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/ru.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="RU">
-          <span class="text-sm font-medium text-gray-700 flex-1">Русский</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">Русский</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Русский"></i>
         </button>
         <button onclick="changeLanguage('العربية', 'https://flagcdn.com/w20/sa.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/sa.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="AR">
-          <span class="text-sm font-medium text-gray-700 flex-1">العربية</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">العربية</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-العربية"></i>
         </button>
         <button onclick="changeLanguage('हिन्दी', 'https://flagcdn.com/w20/in.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/in.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IN">
-          <span class="text-sm font-medium text-gray-700 flex-1">हिन्दी</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">हिन्दी</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-हिन्दी"></i>
         </button>
         <button onclick="changeLanguage('Türkçe', 'https://flagcdn.com/w20/tr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/tr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="TR">
-          <span class="text-sm font-medium text-gray-700 flex-1">Türkçe</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">Türkçe</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Türkçe"></i>
         </button>
         <button onclick="changeLanguage('Bahasa Indonesia', 'https://flagcdn.com/w20/id.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/id.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="ID">
-          <span class="text-sm font-medium text-gray-700 flex-1">Bahasa Indonesia</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">Bahasa Indonesia</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Bahasa Indonesia"></i>
         </button>
         <button onclick="changeLanguage('Tiếng Việt', 'https://flagcdn.com/w20/vn.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
           <img src="https://flagcdn.com/w20/vn.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="VN">
-          <span class="text-sm font-medium text-gray-700 flex-1">Tiếng Việt</span>
+          <span class="text-xs font-medium text-gray-700 flex-1">Tiếng Việt</span>
           <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Tiếng Việt"></i>
         </button>
       </div>
 
       <div class="flex-shrink-0 px-5 py-4 border-t border-gray-50">
-        <button onclick="toggleLanguageModal(false)" class="w-full py-3 rounded-2xl text-sm font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 transition">
+        <button onclick="toggleLanguageModal(false)" class="w-full py-3 rounded-2xl text-xs font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 transition">
           Cancel
         </button>
       </div>
@@ -222,7 +222,7 @@
         <div>
           <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">Current Password</label>
           <div class="relative flex items-center">
-            <input type="password" id="currentPasswordInput" class="w-full bg-[#f8fafc] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter current password">
+            <input type="password" id="currentPasswordInput" class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter current password">
             <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
               <i class="far fa-eye text-xs"></i>
             </button>
@@ -232,7 +232,7 @@
         <div>
            <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">New Password</label>
            <div class="relative flex items-center">
-             <input type="password" id="newPasswordInput" class="w-full bg-[#f8fafc] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter new password">
+             <input type="password" id="newPasswordInput" class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter new password">
              <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
                <i class="far fa-eye text-xs"></i>
              </button>
@@ -242,7 +242,7 @@
         <div>
            <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">Confirm New Password</label>
            <div class="relative flex items-center">
-             <input type="password" id="confirmPasswordInput" class="w-full bg-[#f8fafc] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Confirm new password">
+             <input type="password" id="confirmPasswordInput" class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Confirm new password">
              <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
                <i class="far fa-eye text-xs"></i>
              </button>
