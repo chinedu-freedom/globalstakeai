@@ -261,37 +261,49 @@
 
     async function fetchReferralData() {
         try {
-            const response = await fetch('https://stakewiseai-server.onrender.com/api/users/referrals', {
-                credentials: 'include'
-            });
+            const p1 = fetch('https://stakewiseai-server.onrender.com/api/users/referrals?level=1', { credentials: 'include' });
+            const p2 = fetch('https://stakewiseai-server.onrender.com/api/users/referrals?level=2', { credentials: 'include' });
+            const p3 = fetch('https://stakewiseai-server.onrender.com/api/users/referrals?level=3', { credentials: 'include' });
+            const pMe = fetch('https://stakewiseai-server.onrender.com/api/users/me', { credentials: 'include' });
+
+            const [res1, res2, res3, resMe] = await Promise.all([p1, p2, p3, pMe]);
             
-            if (response.status === 401 || response.status === 403) {
+            if (res1.status === 401 || res1.status === 403) {
                 window.location.href = '/login.html';
                 return;
             }
 
-            if (response.ok) {
-                const totalData = await response.json();
-                
-                // Based on provided JSON structure: totalData.data.referrals
-                const dataObj = totalData.data || {};
-                const members = dataObj.referrals || [];
-                const pagination = dataObj.pagination || {};
+            let totalInvites = 0;
 
-                // Overall Stats
-                document.getElementById("totalInvites").innerText = pagination.totalItems || members.length || "0";
-                
-                // Note: The sample JSON didn't show earnings, keeping as $0.00 or fetching from elsewhere if available
-                // If it's in the data object but not the referrals array:
-                if (dataObj.totalEarnings !== undefined) {
-                    document.getElementById("totalEarnings").innerText = `$${Number(dataObj.totalEarnings).toFixed(2)}`;
+            if (resMe.ok) {
+                const meData = await resMe.json();
+                const userObj = meData.user || meData.data || meData;
+                if (userObj.totalReferralEarnings !== undefined) {
+                    document.getElementById("totalEarnings").innerText = `$${Number(userObj.totalReferralEarnings).toFixed(2)}`;
                 }
-
-                // Rendering logic - Mapping provided list to Level 1
-                renderLevel(1, members);
-                renderLevel(2, []); // Snippet only showed flat list
-                renderLevel(3, []);
             }
+
+            if (res1.ok) {
+                const d1 = await res1.json();
+                const members1 = d1.data?.referrals || [];
+                totalInvites += d1.data?.pagination?.totalItems || members1.length || 0;
+                renderLevel(1, members1);
+            }
+            if (res2.ok) {
+                const d2 = await res2.json();
+                const members2 = d2.data?.referrals || [];
+                totalInvites += d2.data?.pagination?.totalItems || members2.length || 0;
+                renderLevel(2, members2);
+            }
+            if (res3.ok) {
+                const d3 = await res3.json();
+                const members3 = d3.data?.referrals || [];
+                totalInvites += d3.data?.pagination?.totalItems || members3.length || 0;
+                renderLevel(3, members3);
+            }
+
+            document.getElementById("totalInvites").innerText = totalInvites;
+
         } catch (error) {
             console.error("Error fetching referrals:", error);
         }

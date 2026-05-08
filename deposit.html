@@ -240,8 +240,8 @@
       <div id="amountSection">
         <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 pl-1">Amount (USD)</label>
         <div class="relative">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span>
-          <input type="number" id="depositAmount" class="amount-input pl-8" placeholder="Minimum $100" min="100" />
+          <!-- <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">$</span> -->
+          <input type="number" id="depositAmount" class="amount-input pl-4" placeholder="Minimum $2" min="2" />
         </div>
         <p class="text-[9.5px] text-slate-400 mt-1.5 pl-1">Minimum deposit: <strong>$2</strong> · Maximum: <strong>$1,000,000</strong></p>
       </div>
@@ -469,8 +469,8 @@
     function proceedToPayment() {
       const raw = parseFloat(document.getElementById("depositAmount").value);
 
-      if (isNaN(raw) || raw < 100) {
-        showToast("⚠️ Minimum deposit is $100");
+      if (isNaN(raw) || raw < 2) {
+        showToast("⚠️ Minimum deposit is $2");
         document.getElementById("depositAmount").focus();
         return;
       }
