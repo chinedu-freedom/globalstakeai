@@ -566,10 +566,10 @@
         const data = await res.json().catch(() => ({}));
 
         if (res.ok) {
-          showToast("✅ We've noted your payment! Crediting soon.", 4000);
+          showToast("✅ Deposit request received successfully. Your account will be credited automatically once the transaction is confirmed.", 4000);
           btn.innerHTML = '<i class="fas fa-check mr-2"></i>Payment Noted — Thank you!';
           btn.style.background = "#22c55e";
-          btn.disabled = false;
+          btn.disabled = false; 
           // Redirect to history after brief delay
           setTimeout(() => { window.location.href = "./history.html"; }, 3000);
         } else {
