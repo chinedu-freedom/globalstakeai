@@ -61,7 +61,7 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-  <div class="w-full bg-[#f3f6f9] min-h-screen relative mx-auto">
+  <div class="w-full max-w-md bg-[#f3f6f9] min-h-screen relative mx-auto border-x border-gray-100 overflow-x-hidden">
 
     <!-- HEADER / TOP NAV -->
     <div class="top-header-gradient text-white flex items-center shadow-md relative z-10 w-full mb-4">
@@ -71,7 +71,7 @@
       <h1 class="flex-1 text-center font-bold text-[16px] tracking-wide pr-14">Active Staking</h1>
     </div>
 
-    <div class="px-3 md:px-6 w-full max-w-7xl mx-auto space-y-4">
+    <div class="px-3 space-y-4">
         <!-- STATS CARD -->
         <div class="bg-white rounded-xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 flex p-4 justify-between items-center w-full">
             <div class="flex-1 text-center border-r border-gray-100">
@@ -98,8 +98,8 @@
             </button>
         </div>
 
-        <!-- CONTENT SECTIONS -->
-        <div class="relative min-h-[400px]">
+        <!-- CONTENT SECTIONS (Wrapped in overflow-hidden to prevent scrollbars during transition) -->
+        <div class="relative min-h-[400px] overflow-hidden">
             
             <!-- ACTIVE PLANS SECTION -->
             <div id="activePlansSection" class="absolute w-full flex flex-col items-center justify-center pt-20 transition-all duration-500 opacity-100 translate-x-0">
@@ -229,13 +229,6 @@
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>
       </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
 
   </div>
