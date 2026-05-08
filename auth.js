@@ -1,8 +1,18 @@
 // Auth-aware fetch wrapper
 export async function authFetch(url, options = {}) {
   try {
+    const token = localStorage.getItem("token");
+    const headers = {
+      ...options.headers,
+    };
+
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
     const res = await fetch(url, {
       ...options,
+      headers,
     });
 
     if (res.status === 401) {
