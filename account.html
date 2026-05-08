@@ -254,13 +254,6 @@
         </a>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
   </div>
 
   <script>
@@ -341,7 +334,9 @@
                     const copyIcon = document.getElementById("copyIdIcon");
 
                     if (user._id || user.id) {
-                        idEl.innerText = `ID: ${user._id || user.id}`;
+                        const fullId = user._id || user.id;
+                        idEl.innerText = `ID: ${fullId.toString().slice(0, 7)}`;
+                        idEl.setAttribute('data-full-id', fullId);
                         idEl.classList.remove('animate-pulse', 'bg-white/20', 'h-4', 'w-24', 'rounded-md');
                         if (copyIcon) copyIcon.classList.remove('hidden');
                     }
@@ -509,7 +504,8 @@
     }
 
     function copyId() {
-      const idText = document.getElementById("userIdDisplay").innerText.replace('ID: ', '');
+      const idEl = document.getElementById("userIdDisplay");
+      const idText = idEl.getAttribute('data-full-id') || idEl.innerText.replace('ID: ', '');
       navigator.clipboard.writeText(idText);
       window.pToast({ message: "ID copied successfully!", type: "success" });
     }

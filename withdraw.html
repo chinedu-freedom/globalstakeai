@@ -239,13 +239,6 @@
         </a>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
   </div>
   <script>
     // Elements
@@ -255,7 +248,6 @@
     const amountInput = document.getElementById('amount-input');
     const walletInput = document.getElementById('wallet-input');
     const summaryCard = document.getElementById('summary-card');
-    const errorAlert = document.getElementById('error-alert');
     const submitBtn = document.getElementById('submit-btn');
     
     // Limits and variables
@@ -312,7 +304,6 @@
 
       // Reset states
       summaryCard.classList.add('hidden');
-      errorAlert.classList.add('hidden');
       submitBtn.disabled = true;
       submitBtn.classList.add('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
       submitBtn.classList.remove('bg-[#0e7bee]', 'text-white', 'shadow-lg', 'shadow-[#0e7bee]/30', 'hover:bg-[#0c6cd6]', 'active:scale-[0.98]');
@@ -364,6 +355,7 @@
         const res = await fetch('https://stakewiseai-server.onrender.com/api/withdrawals', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({ amount, walletAddress: wallet })
         });
         
