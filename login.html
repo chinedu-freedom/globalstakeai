@@ -651,6 +651,12 @@ document.querySelectorAll(".toggle-password").forEach(icon => {
 
 // Init flags on load
 document.addEventListener('DOMContentLoaded', () => {
+    // Redirect to dashboard if already logged in
+    if (localStorage.getItem('token') && localStorage.getItem('isLoggedIn') === 'true') {
+        window.location.href = '/index.html';
+        return;
+    }
+
     ['register'].forEach(form => {
         const c = selectedCC[form];
         document.getElementById(`${form}CCFlag`).className = `fi fi-${c.iso}`;

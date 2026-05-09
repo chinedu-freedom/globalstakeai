@@ -241,8 +241,9 @@
         <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 pl-1">Amount (USD)</label>
         <div class="relative">
           <!-- <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">$</span> -->
-          <input type="number" id="depositAmount" class="amount-input pl-4" placeholder="Minimum $2" min="2" />
+          <input type="number" id="depositAmount" class="amount-input pl-4 transition-colors" placeholder="Minimum $2" min="2" oninput="clearAmountErr()" />
         </div>
+        <p id="amountError" class="text-red-500 text-[11px] mt-1.5 pl-1 hidden"></p>
         <p class="text-[9.5px] text-slate-400 mt-1.5 pl-1">Minimum deposit: <strong>$2</strong> · Maximum: <strong>$1,000,000</strong></p>
       </div>
 
@@ -469,17 +470,34 @@
       }
     }
 
+    function clearAmountErr() {
+      const inputEl = document.getElementById("depositAmount");
+      const errEl = document.getElementById("amountError");
+      if (inputEl) inputEl.style.borderColor = "";
+      if (errEl) {
+        errEl.classList.add("hidden");
+        errEl.textContent = "";
+      }
+    }
+
     // ─── Proceed from Step 1 → Step 2 ────────────────────
     function proceedToPayment() {
       const raw = parseFloat(document.getElementById("depositAmount").value);
+      const inputEl = document.getElementById("depositAmount");
+      const errEl = document.getElementById("amountError");
 
       if (isNaN(raw) || raw < 2) {
-        showToast("⚠️ Minimum deposit is $2");
-        document.getElementById("depositAmount").focus();
+        inputEl.style.borderColor = "#ef4444";
+        errEl.textContent = "Minimum deposit amount is $2";
+        errEl.classList.remove("hidden");
+        inputEl.focus();
         return;
       }
       if (raw > 1_000_000) {
-        showToast("⚠️ Maximum deposit is $1,000,000");
+        inputEl.style.borderColor = "#ef4444";
+        errEl.textContent = "Maximum deposit amount is $1,000,000";
+        errEl.classList.remove("hidden");
+        inputEl.focus();
         return;
       }
 
