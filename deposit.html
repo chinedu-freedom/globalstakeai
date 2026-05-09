@@ -337,7 +337,7 @@
       <button id="notifyBtn" onclick="notifyPayment()"
         class="w-full btn-blue text-white font-bold py-4 rounded-2xl text-xs shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2">
         <i class="fas fa-paper-plane"></i>
-        I've Sent the Payment
+        Deposit Completed
       </button>
 
       <!-- Safety note -->
@@ -588,7 +588,7 @@
 
         if (res.ok) {
           showToast("✅ Deposit request received successfully. Your account will be credited automatically once the transaction is confirmed.", 4000);
-          btn.innerHTML = '<i class="fas fa-check mr-2"></i>Payment Noted — Thank you!';
+          btn.innerHTML = '<i class="fas fa-check mr-2"></i>Deposit Request Received — Thank you!';
           btn.style.background = "#22c55e";
           btn.disabled = false; 
           // Redirect to history after brief delay
