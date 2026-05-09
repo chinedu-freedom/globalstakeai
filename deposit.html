@@ -404,6 +404,10 @@
     let chosenNetwork = "TRC20";
     let currentTrackId = null;
 
+    function getToken() {
+      return localStorage.getItem("token");
+    }
+
     // Fallback addresses in case the backend request fails
     const FALLBACK_ADDRESSES = {
       'USDT_TRC20': "TFoPJE6H5uHWV7X69EMavqyUxF9B1HnmwY",
@@ -518,7 +522,20 @@
       let address = FALLBACK_ADDRESSES[key] || FALLBACK_ADDRESSES['USDT_TRC20'];
 
       try {
-        const res = await fetch(`${API}/api/deposits/oxapay-address?currency=${chosenCrypto}&network=${chosenNetwork}`);
+        const token = getToken();
+        const res = await fetch(`${API}/api/deposits/oxapay-address`, {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": token ? `Bearer ${token}` : ""
+          },
+          body: JSON.stringify({
+            currency: chosenCrypto,
+            network: chosenNetwork,
+            amount: chosenAmount
+          })
+        });
+        
         if (res.ok) {
           const data = await res.json();
           if (data?.data?.address) {
@@ -557,9 +574,13 @@
       btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0 auto;border-top-color:white;border-color:rgba(255,255,255,.3)"></div>';
 
       try {
+        const token = getToken();
         const res = await fetch(`${API}/api/deposits/oxapay-notify`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": token ? `Bearer ${token}` : ""
+          },
           body: JSON.stringify({ amount: chosenAmount, crypto: chosenCrypto, network: chosenNetwork, trackId: currentTrackId })
         });
 
