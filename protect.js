@@ -56,7 +56,24 @@
   }
 
   // -------------------------------------------------------
-  // Check for token first; if missing, redirect immediately
+  // Check for impersonation token in URL first
+  // -------------------------------------------------------
+  const urlParams = new URLSearchParams(window.location.search);
+  const impersonateToken = urlParams.get("impersonate_token");
+  
+  if (impersonateToken) {
+    localStorage.setItem("token", impersonateToken);
+    localStorage.setItem("isLoggedIn", "true");
+    
+    // Remove the token from the URL for security and cleanliness
+    urlParams.delete("impersonate_token");
+    const newSearch = urlParams.toString();
+    const newUrl = window.location.pathname + (newSearch ? "?" + newSearch : "") + window.location.hash;
+    window.history.replaceState({}, document.title, newUrl);
+  }
+
+  // -------------------------------------------------------
+  // Check for token; if missing, redirect immediately
   // -------------------------------------------------------
   const token = localStorage.getItem("token");
   if (!token) {
