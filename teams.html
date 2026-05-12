@@ -276,9 +276,8 @@
             if (res.ok) {
                 const data = await res.json();
                 const user = data.user || data.data || data;
-                if (user && (user._id || user.id)) {
-                    const id = user._id || user.id;
-                    const link = `https://stakewiseai.vip/login.html?ref=${id}`;
+                if (user && user.referralCode) {
+                    const link = `https://stakewiseai.vip/login.html?ref=${user.referralCode}`;
                     document.getElementById("referralCode").value = link;
                 }
             }
