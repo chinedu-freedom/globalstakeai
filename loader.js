@@ -113,7 +113,7 @@
         let [resource, config] = arguments;
         
         // Only intercept requests to the backend API
-        if (typeof resource === 'string' && resource.includes('satrixai-server.onrender.com')) {
+        if (typeof resource === 'string' && resource.includes('satrixnow-server.onrender.com')) {
             const token = localStorage.getItem('token');
             
             config = config || {};

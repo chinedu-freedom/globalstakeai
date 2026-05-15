@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <title>Dashboard - SatrixAi</title>
+  <title>Dashboard - SatrixNow</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js for the market quote chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -228,7 +228,7 @@
       <div class="flex justify-between items-center mb-2">
         <div class="flex items-center gap-2.5">
           <div>
-            <h1 class="text-base sm:text-sm font-bold leading-tight tracking-wide">SatrixAi</h1>
+            <h1 class="text-base sm:text-sm font-bold leading-tight tracking-wide">SatrixNow</h1>
             <p class="text-[8px] uppercase tracking-widest text-white/90">TECH</p>
           </div>
         </div>
@@ -399,14 +399,14 @@
       <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-start gap-3">
         <!-- Exact image downloaded -->
         <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
-          <img src="./idea.png" alt="About SatrixAi" class="w-full h-full object-contain">
+          <img src="./idea.png" alt="About SatrixNow" class="w-full h-full object-contain">
         </div>
         <div class="flex-1">
           <h3 class="text-[9px] sm:text-[10px] font-bold text-gray-800 mb-1 leading-snug">
-            SatrixAi: Leading the Future of Computing Power. Building the Foundation for a Sustainable Digital Infrastructure.
+            SatrixNow: Leading the Future of Computing Power. Building the Foundation for a Sustainable Digital Infrastructure.
           </h3>
           <p class="text-[8px] sm:text-[9px] text-gray-500 leading-relaxed text-left">
-            SatrixAi (full name: Crypto-Ecosystem Mining) is a global leader in cryptocurrency mining solutions, dedicated to making digital asset mining accessible, efficient, and profitable for everyone. Founded by a team of blockchain technology experts and financial professionals, we have built a state-of-the-art mining ecosystem that leverages the latest advancements in hardware and software to deliver unparalleled results.
+            SatrixNow (full name: Crypto-Ecosystem Mining) is a global leader in cryptocurrency mining solutions, dedicated to making digital asset mining accessible, efficient, and profitable for everyone. Founded by a team of blockchain technology experts and financial professionals, we have built a state-of-the-art mining ecosystem that leverages the latest advancements in hardware and software to deliver unparalleled results.
           </p>
           <div class="mt-2">
             <a href="about.html" class="inline-block bg-[#4f8cff] text-white text-[8px] font-semibold px-3 py-1.5 rounded-full shadow-sm hover:opacity-90 transition">
@@ -776,7 +776,7 @@ const feedData = [
       // Fetch Dashboard Stats for index.html
       (async function fetchIndexStats() {
           try {
-              const statsRes = await fetch('https://satrixai-server.onrender.com/api/users/dashboard-stats', {
+              const statsRes = await fetch('https://satrixnow-server.onrender.com/api/users/dashboard-stats', {
                   credentials: 'include'
               });
               if (statsRes.ok) {

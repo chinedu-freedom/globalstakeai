@@ -10,7 +10,7 @@
  *        as the FIRST script in <head> on every protected page.
  */
 (function () {
-  const API_BASE = "https://satrixai-server.onrender.com";
+  const API_BASE = "https://satrixnow-server.onrender.com";
   const LOGIN_PAGE = "/login.html";
 
   // Pages that are publicly accessible — no redirect needed.

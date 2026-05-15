@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <title>My Team - SatrixAi</title>
+  <title>My Team - SatrixNow</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -247,7 +247,7 @@
 
     async function fetchReferralConfig() {
         try {
-            const res = await fetch('https://satrixai-server.onrender.com/api/users/referral-config');
+            const res = await fetch('https://satrixnow-server.onrender.com/api/users/referral-config');
             if (res.ok) {
                 const data = await res.json();
                 const config = data.data || data;
@@ -272,12 +272,12 @@
 
     async function fetchUserDataForLink() {
         try {
-            const res = await fetch('https://satrixai-server.onrender.com/api/users/me', { credentials: 'include' });
+            const res = await fetch('https://satrixnow-server.onrender.com/api/users/me', { credentials: 'include' });
             if (res.ok) {
                 const data = await res.json();
                 const user = data.user || data.data || data;
                 if (user && user.referralCode) {
-                    const link = `https://satrixai.vip/login.html?ref=${user.referralCode}`;
+                    const link = `https://satrixnow.vip/login.html?ref=${user.referralCode}`;
                     document.getElementById("referralCode").value = link;
                 }
             }
@@ -286,10 +286,10 @@
 
     async function fetchReferralData() {
         try {
-            const p1 = fetch('https://satrixai-server.onrender.com/api/users/referrals?level=1', { credentials: 'include' });
-            const p2 = fetch('https://satrixai-server.onrender.com/api/users/referrals?level=2', { credentials: 'include' });
-            const p3 = fetch('https://satrixai-server.onrender.com/api/users/referrals?level=3', { credentials: 'include' });
-            const pMe = fetch('https://satrixai-server.onrender.com/api/users/me', { credentials: 'include' });
+            const p1 = fetch('https://satrixnow-server.onrender.com/api/users/referrals?level=1', { credentials: 'include' });
+            const p2 = fetch('https://satrixnow-server.onrender.com/api/users/referrals?level=2', { credentials: 'include' });
+            const p3 = fetch('https://satrixnow-server.onrender.com/api/users/referrals?level=3', { credentials: 'include' });
+            const pMe = fetch('https://satrixnow-server.onrender.com/api/users/me', { credentials: 'include' });
 
             const [res1, res2, res3, resMe] = await Promise.all([p1, p2, p3, pMe]);
             
