@@ -713,7 +713,7 @@ const feedData = [
       // Fetch Dashboard Stats for index.html
       (async function fetchIndexStats() {
           try {
-              const statsRes = await fetch('https://satrixnow-server.onrender.com/api/users/dashboard-stats', {
+              const statsRes = await fetch('https://api.satrixai.com/api/users/dashboard-stats', {
                   credentials: 'include'
               });
               if (statsRes.ok) {

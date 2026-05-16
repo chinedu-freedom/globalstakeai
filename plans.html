@@ -324,7 +324,7 @@
 
     async function fetchInvestmentPlans() {
         try {
-            const response = await fetch('https://satrixnow-server.onrender.com/api/investment/plans', {
+            const response = await fetch('https://api.satrixai.com/api/investment/plans', {
                 credentials: 'include'
             });
 
@@ -443,10 +443,10 @@
         // parallel fetch plan and user data
         try {
             const [planRes, userRes] = await Promise.all([
-                fetch(`https://satrixnow-server.onrender.com/api/investment/plans/${planId}`, {
+                fetch(`https://api.satrixai.com/api/investment/plans/${planId}`, {
                     credentials: 'include'
                 }),
-                fetch('https://satrixnow-server.onrender.com/api/users/me', {
+                fetch('https://api.satrixai.com/api/users/me', {
                     credentials: 'include'
                 })
             ]);
@@ -576,7 +576,7 @@
         btn.disabled = true;
 
         try {
-            const res = await fetch('https://satrixnow-server.onrender.com/api/users/investments', {
+            const res = await fetch('https://api.satrixai.com/api/users/investments', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },

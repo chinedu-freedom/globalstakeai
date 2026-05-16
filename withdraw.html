@@ -270,7 +270,7 @@
     async function fetchWithdrawalConfig() {
       try {
         // Fetch limits
-        const limitRes = await fetch('https://satrixnow-server.onrender.com/api/withdrawals/limits', { credentials: 'include' });
+        const limitRes = await fetch('https://api.satrixai.com/api/withdrawals/limits', { credentials: 'include' });
         if (limitRes.ok) {
           const limitData = await limitRes.json();
           const d = limitData.data;
@@ -287,7 +287,7 @@
     // Fetch Dashboard Stats
     async function fetchStats() {
         try {
-            const statsRes = await fetch('https://satrixnow-server.onrender.com/api/users/dashboard-stats', {
+            const statsRes = await fetch('https://api.satrixai.com/api/users/dashboard-stats', {
                 credentials: 'include'
             });
             if (statsRes.ok) {
@@ -392,7 +392,7 @@
       submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
 
       try {
-        const res = await fetch('https://satrixnow-server.onrender.com/api/withdrawals', {
+        const res = await fetch('https://api.satrixai.com/api/withdrawals', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
