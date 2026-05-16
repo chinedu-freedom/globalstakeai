@@ -277,7 +277,7 @@
                 const data = await res.json();
                 const user = data.user || data.data || data;
                 if (user && user.referralCode) {
-                    const link = `https://satrixnow.vip/login.html?ref=${user.referralCode}`;
+                    const link = `https://satrixai.com/login.html?ref=${user.referralCode}`;
                     document.getElementById("referralCode").value = link;
                 }
             }
