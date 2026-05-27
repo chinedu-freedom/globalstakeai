@@ -238,8 +238,8 @@
        ]);
        
        // API shape: { success, data: { data: [...], pagination: {...} } }
-       let deposits   = Array.isArray(depRes?.data?.data)  ? depRes.data.data  : (Array.isArray(depRes?.data)  ? depRes.data  : []);
-       let withdrawals = Array.isArray(withRes?.data?.data) ? withRes.data.data : (Array.isArray(withRes?.data) ? withRes.data : []);
+       let deposits    = Array.isArray(depRes?.data?.data) ? depRes.data.data : (Array.isArray(depRes?.data) ? depRes.data : []);
+       let withdrawals = Array.isArray(withRes?.data?.withdrawals) ? withRes.data.withdrawals : (Array.isArray(withRes?.data?.data) ? withRes.data.data : (Array.isArray(withRes?.data) ? withRes.data : []));
 
        const formatData = (items, type) => {
            return items.map(item => ({
