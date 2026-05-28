@@ -334,6 +334,13 @@
         </div>
       </div>
 
+      <!-- Manual Fallback TxHash Input (Hidden by default) -->
+      <div id="txHashSection" class="hidden bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-3">
+        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 pl-1">Transaction Hash (Required)</label>
+        <input type="text" id="txHashInput" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 text-[13px] focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="Enter TxID/Hash to verify payment" />
+        <p id="txHashError" class="text-red-500 text-[11px] mt-1.5 pl-1 hidden">Transaction Hash is required</p>
+      </div>
+
       <!-- I've Sent Payment button -->
       <button id="notifyBtn" onclick="notifyPayment()"
         class="w-full btn-blue text-white font-bold py-4 rounded-2xl text-xs shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2">
@@ -561,13 +568,16 @@
           }
           if (data?.data?.trackId) {
             currentTrackId = data.data.trackId;
+            document.getElementById("txHashSection").classList.add("hidden");
           } else {
             currentTrackId = null;
+            document.getElementById("txHashSection").classList.remove("hidden");
           }
         }
       } catch (_) {
         // Use static fallback silently
         currentTrackId = null;
+        document.getElementById("txHashSection").classList.remove("hidden");
       }
 
       // Render address
@@ -587,6 +597,19 @@
 
     // ─── "I've Sent Payment" — notify backend ─────────────
     async function notifyPayment() {
+      let txHash = "";
+      if (!currentTrackId) {
+        txHash = document.getElementById("txHashInput").value.trim();
+        if (!txHash) {
+          document.getElementById("txHashInput").style.borderColor = "#ef4444";
+          document.getElementById("txHashError").classList.remove("hidden");
+          return;
+        } else {
+          document.getElementById("txHashInput").style.borderColor = "";
+          document.getElementById("txHashError").classList.add("hidden");
+        }
+      }
+
       const btn = document.getElementById("notifyBtn");
       btn.disabled = true;
       btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0 auto;border-top-color:white;border-color:rgba(255,255,255,.3)"></div>';
@@ -599,7 +622,7 @@
             "Content-Type": "application/json",
             "Authorization": token ? `Bearer ${token}` : ""
           },
-          body: JSON.stringify({ amount: chosenAmount, crypto: chosenCrypto, network: chosenNetwork, trackId: currentTrackId })
+          body: JSON.stringify({ amount: chosenAmount, crypto: chosenCrypto, network: chosenNetwork, trackId: currentTrackId, txHash: txHash })
         });
 
         const data = await res.json().catch(() => ({}));
