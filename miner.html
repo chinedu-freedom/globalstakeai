@@ -348,10 +348,11 @@
             if (daysPassed < 0) daysPassed = 0;
             if (daysPassed > duration || status === 'completed') daysPassed = duration;
             const progressPct = duration > 0 ? (daysPassed / duration) * 100 : 0;
-
+            
             let badgeBg = status === 'active' ? 'bg-[#10b981]' : 'bg-gray-200';
             let badgeText = status === 'active' ? 'text-white' : 'text-gray-600';
             
+            // <p class="text-[#10b981] font-bold text-[12px]">${isFixed}</p>
             return `
             <div class="plan-card bg-white rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.04)] p-4 border border-gray-100 flex flex-col relative w-full mb-4">
               <div class="flex justify-between items-start w-full">
@@ -375,13 +376,13 @@
                 <div class="flex flex-col items-center justify-center">
                   <p class="text-gray-800 font-bold text-[12px]">${duration}d</p>
                   <p class="text-gray-400 text-[9px] mt-0.5">Revenue Days</p>
-                </div>
+                  </div>
                 <div class="flex flex-col items-center justify-center">
                   <p class="text-gray-800 font-bold text-[12px]">$${totalAmount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
                   <p class="text-gray-400 text-[9px] mt-0.5">Total</p>
                 </div>
                 <div class="flex flex-col items-center justify-center">
-                  <p class="text-[#10b981] font-bold text-[12px]">${isFixed}</p>
+                  <p class="text-[#10b981] font-bold text-[12px]">Yes</p>
                   <p class="text-gray-400 text-[9px] mt-0.5">Capital</p>
                 </div>
               </div>
