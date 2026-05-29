@@ -166,14 +166,18 @@
     <!-- TEAM STATS -->
     <div class="px-3 mb-6">
       <h3 class="text-xs font-semibold text-gray-800 mb-3 px-1">Team Overview</h3>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="stat-card shadow-sm">
-          <p class="text-gray-500 text-xs mb-1">Total Invites</p>
-          <p class="text-base font-bold text-gray-800" id="totalInvites">0</p>
+      <div class="grid grid-cols-3 gap-3">
+        <div class="stat-card shadow-sm p-3">
+          <p class="text-gray-500 text-[10px] mb-1 leading-tight">Total Invites</p>
+          <p class="text-sm font-bold text-gray-800" id="totalInvites">0</p>
         </div>
-        <div class="stat-card shadow-sm">
-          <p class="text-gray-500 text-xs mb-1">Total Earnings</p>
-          <p class="text-base font-bold text-[#4f8cff]" id="totalEarnings">$0.00</p>
+        <div class="stat-card shadow-sm p-3">
+          <p class="text-gray-500 text-[10px] mb-1 leading-tight">Total Deposit</p>
+          <p class="text-sm font-bold text-teal-500" id="totalDeposit">$0.00</p>
+        </div>
+        <div class="stat-card shadow-sm p-3">
+          <p class="text-gray-500 text-[10px] mb-1 leading-tight">Total Earnings</p>
+          <p class="text-sm font-bold text-[#4f8cff]" id="totalEarnings">$0.00</p>
         </div>
       </div>
     </div>
@@ -299,6 +303,7 @@
             }
 
             let totalInvites = 0;
+            let totalDeposit = 0;
 
             if (resMe.ok) {
                 const meData = await resMe.json();
@@ -312,22 +317,26 @@
                 const d1 = await res1.json();
                 const members1 = d1.data?.referrals || [];
                 totalInvites += d1.data?.pagination?.totalItems || members1.length || 0;
+                members1.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
                 renderLevel(1, members1);
             }
             if (res2.ok) {
                 const d2 = await res2.json();
                 const members2 = d2.data?.referrals || [];
                 totalInvites += d2.data?.pagination?.totalItems || members2.length || 0;
+                members2.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
                 renderLevel(2, members2);
             }
             if (res3.ok) {
                 const d3 = await res3.json();
                 const members3 = d3.data?.referrals || [];
                 totalInvites += d3.data?.pagination?.totalItems || members3.length || 0;
+                members3.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
                 renderLevel(3, members3);
             }
 
             document.getElementById("totalInvites").innerText = totalInvites;
+            document.getElementById("totalDeposit").innerText = `$${totalDeposit.toFixed(2)}`;
 
         } catch (error) {
             console.error("Error fetching referrals:", error);
