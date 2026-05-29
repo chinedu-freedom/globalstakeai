@@ -247,6 +247,8 @@
                type,
                status:   String(item.status || 'pending').toLowerCase(),
                amount:   parseFloat(item.amount || 0),
+               fee:      parseFloat(item.fee || 0),
+               netAmount: parseFloat(item.netAmount || (item.amount ? item.amount * 0.94 : 0)),
                // crypto field already contains the full label e.g. "USDT (TRC20)"
                currency: item.crypto || item.currency || item.coinType || 'USDT',
                // _createdAt is the Sanity timestamp field
@@ -283,6 +285,9 @@
                let amountColor = isDeposit ? 'text-emerald-500' : 'text-red-500';
                if (badgeClass === 'badge-failed') amountColor = isDeposit ? 'text-emerald-400' : 'text-red-400';
 
+               const displayAmount = isDeposit ? item.amount : item.netAmount;
+               const feeText = isDeposit ? '' : ` • Fee: $${item.fee > 0 ? item.fee.toFixed(2) : (item.amount * 0.06).toFixed(2)}`;
+
                return `
                <div class="tx-row">
                  <div class="tx-icon">
@@ -293,11 +298,11 @@
                      <span class="text-xs font-bold text-gray-800">${title}</span>
                      <span class="${badgeClass}">${badgeText}</span>
                    </div>
-                    <p class="text-[10px] text-gray-400 uppercase">${item.currency} • ${formatDate(item.date)}</p>
+                    <p class="text-[10px] text-gray-400 uppercase">${item.currency} • ${formatDate(item.date)}${feeText}</p>
                  </div>
                  <div class="text-right flex-shrink-0 mr-1">
-                   <p class="text-xs font-bold ${amountColor}">${amountSign}$${item.amount.toFixed(2)}</p>
-                   <p class="text-[9px] text-gray-400 uppercase">${item.amount.toFixed(2)} ${item.currency}</p>
+                   <p class="text-xs font-bold ${amountColor}">${amountSign}$${displayAmount.toFixed(2)}</p>
+                   <p class="text-[9px] text-gray-400 uppercase">${displayAmount.toFixed(2)} ${item.currency}</p>
                  </div>
                </div>
                `;

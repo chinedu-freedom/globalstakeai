@@ -357,8 +357,10 @@
             const date = dateStr ? new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently";
             const status = m.accountStatus || "active";
             
-            // Note: If invested amount isn't in this specific referral object, we show 0 or status
-            const invested = m.totalInvested !== undefined ? `$${Number(m.totalInvested).toFixed(2)}` : (status.charAt(0).toUpperCase() + status.slice(1));
+            const balance = m.accountBalance !== undefined ? Number(m.accountBalance).toFixed(2) : '0.00';
+            const invested = m.totalInvestment !== undefined ? Number(m.totalInvestment).toFixed(2) : '0.00';
+            const statusDisplay = (status.charAt(0).toUpperCase() + status.slice(1));
+            const statusColor = status.toLowerCase() === 'active' ? 'text-emerald-500' : (status.toLowerCase() === 'pending' ? 'text-orange-500' : 'text-gray-500');
 
             return `
                 <div class="member-card">
@@ -366,10 +368,13 @@
                   <div class="flex-1 min-w-0">
                     <p class="text-xs font-bold text-gray-800">${name}</p>
                     <p class="text-[10px] text-gray-400">Joined ${date}</p>
+                    <p class="text-[9px] font-semibold mt-0.5 ${statusColor}">${statusDisplay}</p>
                   </div>
                   <div class="text-right flex-shrink-0">
-                    <p class="text-xs font-bold text-[#4f8cff]">${invested}</p>
-                    <p class="text-[9px] text-gray-400">${m.totalInvested !== undefined ? 'Invested' : 'Status'}</p>
+                    <p class="text-xs font-bold text-[#4f8cff]">$${balance}</p>
+                    <p class="text-[9px] text-gray-400">Balance</p>
+                    <p class="text-[10px] font-bold text-teal-500 mt-0.5">$${invested}</p>
+                    <p class="text-[8px] text-gray-400">Invested</p>
                   </div>
                 </div>
             `;
