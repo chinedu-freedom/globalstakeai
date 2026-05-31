@@ -425,8 +425,13 @@
                 if (stats.totalStaked !== undefined) {
                     document.getElementById("statTotalStaked").innerText = `$${Number(stats.totalStaked).toFixed(2)}`;
                 }
-                // Use accountBalance from user object if currentAssets from stats is 0 or missing
-                const resolvedAssets = stats.currentAssets || (currentUser ? currentUser.accountBalance : 0) || 0;
+                // Fallback: calculate as Total Staked + Commission if currentAssets is 0 or missing
+                let resolvedAssets = stats.currentAssets || (currentUser ? currentUser.accountBalance : 0) || 0;
+                if (!resolvedAssets || resolvedAssets === 0) {
+                    const staked = stats.totalStaked || 0;
+                    const comm = stats.totalCommission !== undefined ? stats.totalCommission : (stats.commission || 0);
+                    resolvedAssets = staked + comm;
+                }
                 if (document.getElementById("statCurrentAssets")) {
                     document.getElementById("statCurrentAssets").innerText = `$${Number(resolvedAssets).toFixed(2)}`;
                 }

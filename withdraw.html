@@ -293,7 +293,10 @@
                 const stats = statsData.data || statsData;
                 
                 if (stats.currentAssets !== undefined) {
-                    availableBalance = Number(stats.currentAssets);
+                    // Set available balance to strictly Earnings (Commission)
+                    let comm = stats.totalCommission !== undefined ? stats.totalCommission : (stats.commission || 0);
+                    availableBalance = comm;
+                    
                     document.getElementById("availableBalanceDisplay").innerText = `$${availableBalance.toFixed(2)}`;
                 }
             }
@@ -347,8 +350,8 @@
         summaryCard.classList.remove('hidden');
         document.getElementById('summary-amount').innerText = `$${amount.toFixed(2)}`;
         document.getElementById('summary-fee').innerText = `-$${calculatedFee.toFixed(2)}`;
-        document.getElementById('summary-final').innerText = `${netAmount.toFixed(2)} ${getSelectedCryptoSymbol()}`;
-        document.getElementById('summary-fiat').innerText = `≈ $${netAmount.toFixed(2)}`;
+        document.getElementById('summary-final').innerText = `$${netAmount.toFixed(2)}`;
+        document.getElementById('summary-fiat').innerText = `Payout via ${getSelectedCryptoSymbol()}`;
 
         // Enable button if has amount and address (no toasts here)
         if (amount > 0 && hasAddress) {
