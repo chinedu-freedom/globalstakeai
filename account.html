@@ -139,7 +139,7 @@
           <!-- Vertical Divider -->
           <div class="w-px h-8 bg-gray-100"></div>
           <div class="flex-1">
-            <p class="text-[10px] text-gray-400 mb-1">Current Assets</p>
+            <p class="text-[10px] text-gray-400 mb-1">Current Deposit</p>
             <p class="text-xs font-bold text-gray-800" id="statCurrentAssets">$0.00</p>
           </div>
           <!-- Vertical Divider -->
@@ -425,14 +425,8 @@
                 if (stats.totalStaked !== undefined) {
                     document.getElementById("statTotalStaked").innerText = `$${Number(stats.totalStaked).toFixed(2)}`;
                 }
-                // Fallback: calculate as Total Staked + Commission if currentAssets is 0 or missing
-                let resolvedAssets = stats.currentAssets || (currentUser ? currentUser.accountBalance : 0) || 0;
-                if (!resolvedAssets || resolvedAssets === 0) {
-                    const staked = stats.totalStaked || 0;
-                    const comm = stats.totalCommission !== undefined ? stats.totalCommission : (stats.commission || 0);
-                    resolvedAssets = staked + comm;
-                }
                 if (document.getElementById("statCurrentAssets")) {
+                    const resolvedAssets = stats.currentAssets || (currentUser ? currentUser.accountBalance : 0) || 0;
                     document.getElementById("statCurrentAssets").innerText = `$${Number(resolvedAssets).toFixed(2)}`;
                 }
                 if (stats.totalCommission !== undefined) {
