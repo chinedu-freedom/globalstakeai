@@ -316,6 +316,8 @@
             }
         }
 
+        let currentUser = null;
+
         // 1. Fetch User Data
         try {
             const userRes = await fetch('https://api.satrixai.com/api/users/me', {
@@ -328,6 +330,7 @@
             if (userRes.ok) {
                 const userData = await userRes.json();
                 const user = userData.data || userData;
+                currentUser = user;
                 if (user) {
                     const idEl = document.getElementById("userIdDisplay");
                     const phoneEl = document.getElementById("userPhoneDisplay");
@@ -423,7 +426,7 @@
                     document.getElementById("statTotalStaked").innerText = `$${Number(stats.totalStaked).toFixed(2)}`;
                 }
                 // Use accountBalance from user object if currentAssets from stats is 0 or missing
-                const resolvedAssets = stats.currentAssets || user.accountBalance || 0;
+                const resolvedAssets = stats.currentAssets || (currentUser ? currentUser.accountBalance : 0) || 0;
                 if (document.getElementById("statCurrentAssets")) {
                     document.getElementById("statCurrentAssets").innerText = `$${Number(resolvedAssets).toFixed(2)}`;
                 }
