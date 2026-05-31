@@ -145,7 +145,7 @@
           <!-- Vertical Divider -->
           <div class="w-px h-8 bg-gray-100"></div>
           <div class="flex-1">
-            <p class="text-[10px] text-gray-400 mb-1">Commission</p>
+            <p class="text-[10px] text-gray-400 mb-1">Total Earning</p>
             <p class="text-xs font-bold text-gray-800" id="statCommission">$0.00</p>
           </div>
         </div>
@@ -427,7 +427,9 @@
                 if (document.getElementById("statCurrentAssets")) {
                     document.getElementById("statCurrentAssets").innerText = `$${Number(resolvedAssets).toFixed(2)}`;
                 }
-                if (stats.commission !== undefined) {
+                if (stats.totalCommission !== undefined) {
+                    document.getElementById("statCommission").innerText = `$${Number(stats.totalCommission).toFixed(2)}`;
+                } else if (stats.commission !== undefined) {
                     document.getElementById("statCommission").innerText = `$${Number(stats.commission).toFixed(2)}`;
                 }
             }

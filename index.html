@@ -720,7 +720,9 @@ const feedData = [
                   const statsData = await statsRes.json();
                   const stats = statsData.data || statsData;
                   
-                  if (stats.commission !== undefined) {
+                  if (stats.totalCommission !== undefined) {
+                      document.getElementById("dashboardTotalEarning").innerText = `$${Number(stats.totalCommission).toFixed(2)}`;
+                  } else if (stats.commission !== undefined) {
                       document.getElementById("dashboardTotalEarning").innerText = `$${Number(stats.commission).toFixed(2)}`;
                   }
                   if (stats.totalStaked !== undefined) {
