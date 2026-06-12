@@ -461,8 +461,10 @@
                 const plan = planResult.data?.plan || planResult.data || planResult;
                 const user = userResult.data || userResult;
                 
-                // Check both accountBalance (main balance) and currentAssets (stats fallback)
-                userBalance = Number(user.accountBalance !== undefined ? user.accountBalance : (user.currentAssets || 0));
+                // Combined balance (accountBalance + availableProfit)
+                const balance = Number(user.accountBalance || 0);
+                const profit = Number(user.availableProfit || 0);
+                userBalance = balance + profit;
                 document.getElementById('modalBalance').textContent = `$${userBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
 
                 const title = plan.title || "Investment Plan";
