@@ -245,14 +245,12 @@ input[type="checkbox"] {
     <p class="text-red-500 text-[11px] mt-1 hidden" id="loginPasswordErr"></p>
   </div>
 
-  <div class="flex items-center text-xs text-gray-500">
-    <input type="checkbox" class="mr-2" id="loginAgreement" checked onchange="toggleLoginBtn()" />
-    I have read and accept the
-    <a href="/terms.html" class="text-blue-500 ml-1 cursor-pointer hover:underline">User Agreement</a>
-  </div>
-
-  <div class="text-center text-blue-500 text-xs">
-    <a href="/forgotPassword.html">Forgot Password?</a>
+  <div class="flex items-center justify-between text-xs text-gray-400">
+    <label class="flex items-center cursor-pointer select-none hover:text-white transition">
+      <input type="checkbox" class="mr-2 accent-[#00ff00] w-4 h-4 rounded cursor-pointer" id="keepMeLoggedIn" checked />
+      <span>Keep me logged in</span>
+    </label>
+    <a href="/forgotPassword.html" class="text-[#00ff00] hover:underline text-xs">Forgot Password?</a>
   </div>
 
   <button type="submit" id="loginBtn"
@@ -682,10 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-tick agreement checkbox if user accepted terms and came back
     if (sessionStorage.getItem('termsAccepted') === '1') {
         sessionStorage.removeItem('termsAccepted');
-        // Tick both so whichever tab the user is on, they are ready
-        const loginChk = document.getElementById('loginAgreement');
         const regChk   = document.getElementById('registerAgreement');
-        if (loginChk) { loginChk.checked = true; toggleLoginBtn(); }
         if (regChk)   { regChk.checked   = true; toggleRegisterBtn(); }
     }
 });
@@ -716,12 +711,12 @@ function setLoading(form, loading) {
 
 // ─── CHECKBOX TOGGLE HELPERS ───
 function toggleLoginBtn() {
-  const checked = document.getElementById('loginAgreement').checked;
-  const btn     = document.getElementById('loginBtn');
-  btn.disabled  = !checked;
-  btn.classList.toggle('opacity-50', !checked);
-  btn.classList.toggle('cursor-not-allowed', !checked);
-  btn.classList.toggle('cursor-pointer', checked);
+  const btn = document.getElementById('loginBtn');
+  if (btn) {
+    btn.disabled = false;
+    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+    btn.classList.add('cursor-pointer');
+  }
 }
 
 function toggleRegisterBtn() {
@@ -791,10 +786,11 @@ async function handleLogin(e) {
 
   setLoading('login', true);
   try {
+    const keepMeLoggedIn = document.getElementById('keepMeLoggedIn')?.checked ?? true;
     const res  = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, keepMeLoggedIn: true })
+      body: JSON.stringify({ email, password, keepMeLoggedIn })
     });
     const data = await res.json();
 
