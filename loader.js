@@ -123,24 +123,40 @@
             resource.includes('127.0.0.1:5000')
         );
 
-        if (isApiReq) {
-            const token = localStorage.getItem('token');
+        // Exclude public auth endpoints from token injection
+        const isPublicAuthRoute = typeof resource === 'string' && (
+            resource.includes('/api/auth/login') ||
+            resource.includes('/api/auth/register') ||
+            resource.includes('/api/auth/verify-otp') ||
+            resource.includes('/api/auth/forgot-password') ||
+            resource.includes('/api/auth/reset-password')
+        );
+
+        if (isApiReq && !isPublicAuthRoute) {
+            let rawToken = localStorage.getItem('token');
+            const cleanToken = (rawToken && typeof rawToken === 'string')
+                ? rawToken.trim()
+                    .replace(/^['"]+|['"]+$/g, '')
+                    .replace(/^Bearer\s+/i, '')
+                    .replace(/[\r\n\t]/g, '')
+                    .replace(/[^\x21-\x7E]/g, '')
+                : '';
             
             config = config || {};
             
-            // If token exists, inject Authorization header
-            if (token) {
+            // If clean valid token exists, inject Authorization header
+            if (cleanToken && cleanToken !== 'null' && cleanToken !== 'undefined') {
                 config.headers = config.headers || {};
                 
                 // If headers is a Headers object
                 if (config.headers instanceof Headers) {
                     if (!config.headers.has('Authorization')) {
-                        config.headers.append('Authorization', 'Bearer ' + token);
+                        config.headers.append('Authorization', 'Bearer ' + cleanToken);
                     }
                 } else {
                     // Plain object
                     if (!config.headers['Authorization'] && !config.headers['authorization']) {
-                        config.headers['Authorization'] = 'Bearer ' + token;
+                        config.headers['Authorization'] = 'Bearer ' + cleanToken;
                     }
                 }
             }
