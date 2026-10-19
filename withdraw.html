@@ -184,7 +184,7 @@
               </div>
               <input type="number" id="amount-input" class="w-full bg-[#050806] border border-[#00ff00]/35 text-white text-[15px] font-bold rounded-xl py-3.5 pl-8 pr-4 focus:outline-none focus:border-[#00ff00] focus:ring-1 focus:ring-[#00ff00] transition shadow-sm placeholder:text-gray-500" placeholder="0.00" step="0.01">
             </div>
-            <p id="min-amount-label" class="text-[11px] text-gray-400 mt-1.5 pl-1 tracking-wide font-medium">Minimum amount: <strong class="text-[#00ff00]">$20.00</strong></p>
+            <p id="min-amount-label" class="text-[11px] text-gray-400 mt-1.5 pl-1 tracking-wide font-medium">Minimum amount: <strong class="text-[#00ff00]">$15.00</strong></p>
           </div>
 
           <!-- Wallet Address Input -->
@@ -202,7 +202,7 @@
                 <span id="summary-amount" class="font-bold text-white tracking-wide">$0.00</span>
               </div>
               <div class="flex justify-between items-center text-[13px]">
-                <span id="fee-label" class="text-gray-400 font-medium tracking-wide">Fee (6%)</span>
+                <span id="fee-label" class="text-gray-400 font-medium tracking-wide">Fee (4%)</span>
                 <span id="summary-fee" class="font-bold text-red-400 tracking-wide">-$0.00</span>
               </div>
               <div class="pt-4 border-t border-[#00ff00]/20">
@@ -265,8 +265,8 @@
     
     // Variables
     let remainingLimit = 1000000;
-    let minimumAmount = 20.00;
-    let withdrawalFeePercent = 6;
+    let minimumAmount = 15.00;
+    let withdrawalFeePercent = 4;
     let availableBalance = 0.00;
 
     function getSelectedCryptoSymbol() {
@@ -299,8 +299,8 @@
         if (limitRes.ok) {
           const limitData = await limitRes.json();
           const d = limitData.data;
-          minimumAmount = d.minWithdrawal || 20;
-          withdrawalFeePercent = d.withdrawalFeePercent || 6;
+          minimumAmount = d.minWithdrawal || 15;
+          withdrawalFeePercent = d.withdrawalFeePercent || 4;
           
           const minLabel = document.getElementById('min-amount-label');
           if (minLabel) minLabel.innerHTML = `Minimum amount: <strong class="text-[#00ff00]">$${minimumAmount.toFixed(2)}</strong>`;
