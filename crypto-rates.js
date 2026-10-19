@@ -66,7 +66,7 @@ async function updateCryptoUI() {
         if (bnbData) {
             const price = bnbData.usd;
             const change = bnbData.usd_24h_change;
-            UPDATE_POOL[4].text = `🔵 BNB current price: $${price.toLocaleString()} (${change >= 0 ? '+' : ''}${change.toFixed(2)}%). SatrixNow users holding BNB plans are seeing consistent returns this week.`;
+            UPDATE_POOL[4].text = `🔵 BNB current price: $${price.toLocaleString()} (${change >= 0 ? '+' : ''}${change.toFixed(2)}%). Blockvextrade users holding BNB plans are seeing consistent returns this week.`;
         }
 
         // Refresh currently visible update if it matches one we updated

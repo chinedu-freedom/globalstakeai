@@ -6,7 +6,7 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(8, 12, 10, 0.88);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             display: flex;
@@ -24,11 +24,11 @@
         .pst-loader-spinner {
             width: 50px;
             height: 50px;
-            border: 5px solid #f1f5f9;
-            border-top: 5px solid #4f8cff;
+            border: 4px solid #14241c;
+            border-top: 4px solid #00ff00;
             border-radius: 50%;
             animation: pst-spin 0.8s linear infinite;
-            box-shadow: 0 0 15px rgba(79, 140, 255, 0.1);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
         }
         @keyframes pst-spin {
             0% { transform: rotate(0deg); }
@@ -48,13 +48,14 @@
             document.head.appendChild(style);
 
             // Inject favicon
-            if (!document.querySelector('link[rel="icon"]')) {
-                const favicon = document.createElement('link');
+            let favicon = document.querySelector('link[rel="icon"]');
+            if (!favicon) {
+                favicon = document.createElement('link');
                 favicon.rel = 'icon';
-                favicon.type = 'image/x-icon';
-                favicon.href = './images/favicon.ico';
                 document.head.appendChild(favicon);
             }
+            favicon.type = 'image/jpeg';
+            favicon.href = './logo.jpeg';
         } else {
             setTimeout(styleInject, 10);
         }
@@ -112,8 +113,17 @@
     window.fetch = async function() {
         let [resource, config] = arguments;
         
-        // Only intercept requests to the backend API
-        if (typeof resource === 'string' && resource.includes('api.satrixai.com')) {
+        // Intercept requests to the backend API (local port 5000, production, or /api/)
+        const apiBase = window.API_BASE || '';
+        const isApiReq = typeof resource === 'string' && (
+            (apiBase && resource.startsWith(apiBase)) ||
+            resource.includes('/api/') ||
+            resource.includes('api.blockvextrade.com') ||
+            resource.includes('localhost:5000') ||
+            resource.includes('127.0.0.1:5000')
+        );
+
+        if (isApiReq) {
             const token = localStorage.getItem('token');
             
             config = config || {};

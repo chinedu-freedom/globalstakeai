@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
-
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <title>Dashboard - SatrixNow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <title>Dashboard - Blockvextrade</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js for the market quote chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #f0f4f8; /* Soft light background matching screenshot */
+      background-color: #000000 !important;
+      color: #ffffff;
       padding-bottom: 70px; 
     }
 
@@ -23,9 +24,9 @@
     #whatsappOverlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -38,7 +39,8 @@
       opacity: 1;
     }
     #whatsappCard {
-      background: white;
+      background: #0a0f0c;
+      border: 1.5px solid #00ff00;
       border-radius: 24px;
       width: 100%;
       max-width: 350px;
@@ -47,7 +49,7 @@
       position: relative;
       transform: scale(0.9);
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 0 35px rgba(0,255,0,0.25);
     }
     #whatsappOverlay.visible #whatsappCard {
       transform: scale(1);
@@ -55,15 +57,16 @@
     .whatsapp-icon-wrap {
       width: 72px;
       height: 72px;
-      background: #25d366;
+      background: #0d1711;
+      border: 1.5px solid #00ff00;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 20px;
-      color: white;
+      color: #00ff00;
       font-size: 38px;
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
     }
     #whatsappCloseBtn {
       position: absolute;
@@ -72,53 +75,57 @@
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background: #f3f4f6;
+      background: rgba(255,255,255,0.1);
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #6b7280;
+      color: #9ca3af;
       font-size: 14px;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
     #whatsappCloseBtn:hover {
-      background: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
     }
     .whatsapp-title {
       font-size: 19px;
       font-weight: 800;
-      color: #1e293b;
+      color: #ffffff;
       margin-bottom: 12px;
     }
     .whatsapp-body {
       font-size: 13px;
-      color: #64748b;
+      color: #9ca3af;
       line-height: 1.6;
       margin-bottom: 24px;
     }
     .whatsapp-btn {
       width: 100%;
-      background: #4f8cff;
-      color: white;
+      background: #00ff00;
+      color: #000000;
       border: none;
       border-radius: 50px;
       padding: 14px;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       transition: opacity 0.2s, transform 0.1s;
       display: block;
       text-decoration: none;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    }
+    .whatsapp-btn:hover {
+      background: #00e000;
     }
     .whatsapp-btn:active {
       transform: scale(0.98);
     }
 
-
-
     .gradient-bg {
-      background: linear-gradient(135deg, #4f8cff, #6ee7ff);
+      background: #00ff00;
+      color: #000000;
     }
     
     .bottom-nav {
@@ -126,17 +133,13 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: white;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      background-color: #000000 !important;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.7);
       z-index: 50;
-      border-top: 1px solid #f1f5f9;
+      border-top: 1px solid #00ff00;
       height: 64px;
     }
-    
-    
-    
-    
-    
+
     .nav-item svg {
       width: 20px;
       height: 20px;
@@ -148,26 +151,6 @@
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
-    
-    .nav-item svg {
-      width: 20px;
-      height: 20px;
-      margin-bottom: 4px;
-      stroke-width: 2;
-    }
-    
-    .nav-item span {
-      font-size: 10px;
-      font-weight: 500;
-    }
-    
-    
-    
-    
 
     /* Slider logic */
     .slider-img {
@@ -197,12 +180,13 @@
   <script src="./translator.js"></script>
   <script src="./toast.js"></script>
   <script src="./crypto-rates.js"></script>
+  <link rel="stylesheet" href="./global.css">
 </head>
-<body class="bg-[#f0f4f8]">
+<body class="bg-[#000000] text-white">
 
   <!-- ===== WHATSAPP RELEASE MODAL ===== -->
-  <div id="whatsappOverlay" role="dialog" aria-modal="true">
-    <div id="whatsappCard">
+  <div id="whatsappOverlay" role="dialog" aria-modal="true" onclick="if(event.target === this) closeWhatsappPopup()">
+    <div id="whatsappCard" onclick="event.stopPropagation()">
       <button id="whatsappCloseBtn" onclick="closeWhatsappPopup()" aria-label="Close">
         <i class="fas fa-times"></i>
       </button>
@@ -213,7 +197,7 @@
       
       <h2 class="whatsapp-title">Official Information Release</h2>
       <p class="whatsapp-body">
-        Join our official WhatsApp group to get the latest news and welfare information about SatrixNow Platform.
+        Join our official WhatsApp group to get the latest news and welfare information about Blockvextrade Platform.
       </p>
       
       <a href="https://chat.whatsapp.com/Eo9RuUkxVUzDeMtzwy2WbC?mode=gi_t" target="_blank" class="whatsapp-btn">
@@ -223,156 +207,187 @@
   </div>
 
   <!-- Mobile sized app container that sits in the middle of desktop screens -->
-  <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+  <div class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-[#00ff00]/20 flex flex-col text-white">
 
-    <!-- HEADER / TOP NAV (Restoring curved bottom layout) -->
-    <div class="gradient-bg text-white px-5 py-5 rounded-b-[30px] shadow-md relative z-10">
+    <!-- HEADER / TOP NAV -->
+    <div class="gradient-bg text-black px-5 py-5 rounded-b-[30px] shadow-[0_0_20px_rgba(0,255,0,0.3)] relative z-10">
       <div class="flex justify-between items-center mb-2">
         <div class="flex items-center gap-2.5">
+          <img src="./logo.jpeg" alt="Blockvextrade" class="w-7 h-7 rounded-lg object-cover shadow-sm border border-black/20">
           <div>
-            <h1 class="text-base sm:text-sm font-bold leading-tight tracking-wide">SatrixNow</h1>
-            <p class="text-[8px] uppercase tracking-widest text-white/90">TECH</p>
+            <h1 class="text-base sm:text-sm font-extrabold leading-tight tracking-wide text-black">Blockvextrade</h1>
           </div>
         </div>
         
         <!-- Language Selector Dropdown -->
-        <div class="relative inline-block text-left z-[100]">
-          <div class="flex items-center gap-1.5 cursor-pointer mt-0.5 px-1 py-0.5 rounded hover:bg-white/10 transition" id="lang-menu-btn" onclick="toggleLangMenu(event)">
+        <div class="relative inline-block text-left z-[100] notranslate" translate="no">
+          <div class="flex items-center gap-1.5 cursor-pointer mt-0.5 px-2 py-1 rounded-lg bg-black/15 hover:bg-black/25 text-black transition" id="lang-menu-btn" onclick="toggleLangMenu(event)">
             <img src="https://flagcdn.com/w20/us.png" id="navFlag" class="w-5 h-4 object-cover rounded-[2px] shadow-sm" alt="EN">
-            <span class="text-[12px] font-medium" id="navLangText">EN</span>
+            <span class="text-[12px] font-bold" id="navLangText">EN</span>
             <i class="fas fa-chevron-down text-[8px] opacity-80 transition-transform duration-200" id="navLangIcon"></i>
           </div>
 
-          <div id="langDropdown" class="absolute right-0 mt-2 w-36 origin-top-right rounded-xl bg-white shadow-xl ring-1 ring-black ring-opacity-5 hidden opacity-0 scale-95 transition-all duration-200 overflow-hidden max-h-60 overflow-y-auto no-scrollbar">
+          <div id="langDropdown" class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-[#0a0f0c] border border-[#00ff00] shadow-[0_4px_25px_rgba(0,255,0,0.3)] hidden opacity-0 scale-95 transition-all duration-200 overflow-hidden max-h-72 overflow-y-auto no-scrollbar z-[99999]" translate="no">
             <div class="py-1">
-              <button onclick="selectLang('EN', 'https://flagcdn.com/w20/us.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/us.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="EN"><span class="text-[11px] font-medium flex-1">English</span>
+              <button type="button" onclick="selectLang('EN', 'https://flagcdn.com/w20/us.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/us.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="EN"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">English</span>
               </button>
-              <button onclick="selectLang('ES', 'https://flagcdn.com/w20/es.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/es.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="ES"><span class="text-[11px] font-medium flex-1">Español</span>
+              <button type="button" onclick="selectLang('ES', 'https://flagcdn.com/w20/es.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/es.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="ES"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Español</span>
               </button>
-              <button onclick="selectLang('FR', 'https://flagcdn.com/w20/fr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/fr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="FR"><span class="text-[11px] font-medium flex-1">Français</span>
+              <button type="button" onclick="selectLang('FR', 'https://flagcdn.com/w20/fr.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/fr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="FR"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Français</span>
               </button>
-              <button onclick="selectLang('DE', 'https://flagcdn.com/w20/de.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/de.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="DE"><span class="text-[11px] font-medium flex-1">Deutsch</span>
+              <button type="button" onclick="selectLang('DE', 'https://flagcdn.com/w20/de.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/de.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="DE"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Deutsch</span>
               </button>
-              <button onclick="selectLang('IT', 'https://flagcdn.com/w20/it.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/it.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="IT"><span class="text-[11px] font-medium flex-1">Italiano</span>
+              <button type="button" onclick="selectLang('IT', 'https://flagcdn.com/w20/it.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/it.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="IT"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Italiano</span>
               </button>
-              <button onclick="selectLang('PT', 'https://flagcdn.com/w20/pt.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/pt.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="PT"><span class="text-[11px] font-medium flex-1">Português</span>
+              <button type="button" onclick="selectLang('PT', 'https://flagcdn.com/w20/pt.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/pt.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="PT"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Português</span>
               </button>
-              <button onclick="selectLang('CN', 'https://flagcdn.com/w20/cn.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/cn.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="CN"><span class="text-[11px] font-medium flex-1">中文</span>
+              <button type="button" onclick="selectLang('CN', 'https://flagcdn.com/w20/cn.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/cn.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="CN"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">中文</span>
               </button>
-              <button onclick="selectLang('JP', 'https://flagcdn.com/w20/jp.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/jp.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="JP"><span class="text-[11px] font-medium flex-1">日本語</span>
+              <button type="button" onclick="selectLang('JP', 'https://flagcdn.com/w20/jp.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/jp.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="JP"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">日本語</span>
               </button>
-              <button onclick="selectLang('KR', 'https://flagcdn.com/w20/kr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/kr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="KR"><span class="text-[11px] font-medium flex-1">한국어</span>
+              <button type="button" onclick="selectLang('KR', 'https://flagcdn.com/w20/kr.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/kr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="KR"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">한국어</span>
               </button>
-              <button onclick="selectLang('RU', 'https://flagcdn.com/w20/ru.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/ru.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="RU"><span class="text-[11px] font-medium flex-1">Русский</span>
+              <button type="button" onclick="selectLang('RU', 'https://flagcdn.com/w20/ru.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/ru.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="RU"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Русский</span>
               </button>
-              <button onclick="selectLang('IN', 'https://flagcdn.com/w20/in.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/in.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="IN"><span class="text-[11px] font-medium flex-1">हिन्दी</span>
+              <button type="button" onclick="selectLang('AR', 'https://flagcdn.com/w20/sa.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/sa.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="AR"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">العربية</span>
               </button>
-              <button onclick="selectLang('SA', 'https://flagcdn.com/w20/sa.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/sa.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="SA"><span class="text-[11px] font-medium flex-1">العربية</span>
+              <button type="button" onclick="selectLang('IN', 'https://flagcdn.com/w20/in.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/in.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="IN"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">हिन्दी</span>
               </button>
-              <button onclick="selectLang('TR', 'https://flagcdn.com/w20/tr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/tr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="TR"><span class="text-[11px] font-medium flex-1">Türkçe</span>
+              <button type="button" onclick="selectLang('TR', 'https://flagcdn.com/w20/tr.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/tr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="TR"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Türkçe</span>
               </button>
-              <button onclick="selectLang('NL', 'https://flagcdn.com/w20/nl.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/nl.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="NL"><span class="text-[11px] font-medium flex-1">Nederlands</span>
+              <button type="button" onclick="selectLang('NL', 'https://flagcdn.com/w20/nl.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/nl.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="NL"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Nederlands</span>
               </button>
-              <button onclick="selectLang('ID', 'https://flagcdn.com/w20/id.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/id.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="ID"><span class="text-[11px] font-medium flex-1">Bahasa Indonesia</span>
+              <button type="button" onclick="selectLang('ID', 'https://flagcdn.com/w20/id.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/id.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="ID"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Bahasa Indonesia</span>
               </button>
-              <button onclick="selectLang('VN', 'https://flagcdn.com/w20/vn.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/vn.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="VN"><span class="text-[11px] font-medium flex-1">Tiếng Việt</span>
+              <button type="button" onclick="selectLang('VN', 'https://flagcdn.com/w20/vn.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/vn.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="VN"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Tiếng Việt</span>
               </button>
-              <button onclick="selectLang('TH', 'https://flagcdn.com/w20/th.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/th.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="TH"><span class="text-[11px] font-medium flex-1">ไทย</span>
+              <button type="button" onclick="selectLang('TH', 'https://flagcdn.com/w20/th.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/th.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="TH"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">ไทย</span>
               </button>
-              <button onclick="selectLang('GR', 'https://flagcdn.com/w20/gr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/gr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="GR"><span class="text-[11px] font-medium flex-1">Ελληνικά</span>
+              <button type="button" onclick="selectLang('GR', 'https://flagcdn.com/w20/gr.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/gr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="GR"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Ελληνικά</span>
               </button>
-              <button onclick="selectLang('SE', 'https://flagcdn.com/w20/se.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/se.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="SE"><span class="text-[11px] font-medium flex-1">Svenska</span>
+              <button type="button" onclick="selectLang('SE', 'https://flagcdn.com/w20/se.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/se.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="SE"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Svenska</span>
               </button>
-              <button onclick="selectLang('PL', 'https://flagcdn.com/w20/pl.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/pl.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="PL"><span class="text-[11px] font-medium flex-1">Polski</span>
+              <button type="button" onclick="selectLang('PL', 'https://flagcdn.com/w20/pl.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/pl.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="PL"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Polski</span>
+              </button>
+              <button type="button" onclick="selectLang('PH', 'https://flagcdn.com/w20/ph.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/ph.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="PH"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Filipino</span>
+              </button>
+              <button type="button" onclick="selectLang('RO', 'https://flagcdn.com/w20/ro.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/ro.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="RO"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Română</span>
+              </button>
+              <button type="button" onclick="selectLang('BD', 'https://flagcdn.com/w20/bd.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/bd.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="BD"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">বাংলা</span>
+              </button>
+              <button type="button" onclick="selectLang('UA', 'https://flagcdn.com/w20/ua.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/ua.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="UA"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Українська</span>
+              </button>
+              <button type="button" onclick="selectLang('IR', 'https://flagcdn.com/w20/ir.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/ir.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="IR"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">فارسی</span>
+              </button>
+              <button type="button" onclick="selectLang('MY', 'https://flagcdn.com/w20/my.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/my.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="MY"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Bahasa Melayu</span>
+              </button>
+              <button type="button" onclick="selectLang('CZ', 'https://flagcdn.com/w20/cz.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/cz.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="CZ"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Čeština</span>
+              </button>
+              <button type="button" onclick="selectLang('HU', 'https://flagcdn.com/w20/hu.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/hu.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="HU"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Magyar</span>
+              </button>
+              <button type="button" onclick="selectLang('KE', 'https://flagcdn.com/w20/ke.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/ke.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="KE"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">Kiswahili</span>
+              </button>
+              <button type="button" onclick="selectLang('IL', 'https://flagcdn.com/w20/il.png')" class="w-full flex items-center gap-2.5 px-3.5 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white group">
+                <img src="https://flagcdn.com/w20/il.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px] shrink-0" alt="IL"><span class="text-[12px] font-medium text-white group-hover:text-black flex-1" style="color: #ffffff !important;">עברית</span>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="flex justify-between items-end">
+      <!-- Quick Earnings Snapshot Inside Header -->
+      <div class="flex justify-between items-center mt-3 pt-3 border-t border-black/20 text-black">
         <div>
-          <p class="text-[9px] text-white/80 mb-0.5 font-medium">Total Earning</p>
-          <p class="text-base font-bold" id="dashboardTotalEarning">$0.00</p>
+          <p class="text-[9px] text-black/80 mb-0.5 font-bold uppercase tracking-wider">Total Earnings</p>
+          <p class="text-xl font-extrabold text-black" id="dashboardTotalEarning">$0.00</p>
         </div>
         <div class="text-right">
-          <p class="text-[9px] text-white/80 mb-0.5 font-medium">Total Investment</p>
-          <p class="text-base font-bold" id="dashboardTotalInvestment">$0.00</p>
+          <p class="text-[9px] text-black/80 mb-0.5 font-bold uppercase tracking-wider">Total Investment</p>
+          <p class="text-base font-extrabold text-black" id="dashboardTotalInvestment">$0.00</p>
         </div>
       </div>
     </div>
 
     <!-- QUICK ACTIONS & INFO CARD -->
     <div class="px-3 mt-3">
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-        <div class="grid grid-cols-4 gap-y-5 gap-x-2">
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-4 shadow-[0_0_15px_rgba(0,255,0,0.12)]">
+        <div class="grid grid-cols-4 gap-y-4 gap-x-2">
           
           <!-- Deposit -->
-          <a href="./deposit.html" class="flex flex-col items-center">
-            <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center mb-1.5 text-[#4f8cff] shadow-inner transition hover:scale-105">
-              <i class="fas fa-wallet text-sm"></i>
+          <a href="./deposit.html" class="flex flex-col items-center group">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center mb-1.5 text-[#00ff00] shadow-sm group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-wallet text-base"></i>
             </div>
-            <p class="text-[9px] font-semibold text-gray-700">Deposit</p>
+            <p class="text-[11px] font-semibold text-white">Deposit</p>
           </a>
 
           <!-- Withdraw -->
-          <a href="./withdraw.html" class="flex flex-col items-center">
-            <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center mb-1.5 text-[#4f8cff] shadow-inner transition hover:scale-105">
-              <i class="fas fa-money-bill-transfer text-sm"></i>
+          <a href="./withdraw.html" class="flex flex-col items-center group">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center mb-1.5 text-[#00ff00] shadow-sm group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-money-bill-transfer text-base"></i>
             </div>
-            <p class="text-[9px] font-semibold text-gray-700">Withdraw</p>
+            <p class="text-[11px] font-semibold text-white">Withdraw</p>
           </a>
 
           <!-- Invite -->
-          <a href="./teams.html" class="flex flex-col items-center">
-            <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center mb-1.5 text-[#4f8cff] shadow-inner transition hover:scale-105">
-              <i class="fas fa-user-plus text-sm"></i>
+          <a href="./teams.html" class="flex flex-col items-center group">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center mb-1.5 text-[#00ff00] shadow-sm group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-user-plus text-base"></i>
             </div>
-            <p class="text-[9px] font-semibold text-gray-700">Invite</p>
+            <p class="text-[11px] font-semibold text-white">Invite</p>
           </a>
 
           <!-- Cert -->
-          <a href="#" onclick="window.pToast({message: 'Coming soon', type: 'info'}); return false;" class="flex flex-col items-center">
-            <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center mb-1.5 text-[#4f8cff] shadow-inner transition hover:scale-105">
-              <i class="fas fa-certificate text-sm"></i>
+          <a href="#" onclick="window.pToast({message: 'Coming soon', type: 'info'}); return false;" class="flex flex-col items-center group">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center mb-1.5 text-[#00ff00] shadow-sm group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-certificate text-base"></i>
             </div>
-            <p class="text-[9px] font-semibold text-gray-700">Cert</p>
+            <p class="text-[11px] font-semibold text-white">Cert</p>
           </a>
 
           <!-- Award -->
-          <a href="./award.html" class="flex flex-col items-center">
-            <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center mb-1.5 text-[#4f8cff] shadow-inner transition hover:scale-105">
-              <i class="fas fa-trophy text-sm"></i>
+          <a href="./award.html" class="flex flex-col items-center group">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center mb-1.5 text-[#00ff00] shadow-sm group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-trophy text-base"></i>
             </div>
-            <p class="text-[9px] font-semibold text-gray-700">Award</p>
+            <p class="text-[11px] font-semibold text-white">Award</p>
           </a>
 
           <!-- Service -->
-          <a href="https://chat.whatsapp.com/Eo9RuUkxVUzDeMtzwy2WbC?s=cl&p=a&mlu=3" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center">
-            <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center mb-1.5 text-emerald-500 shadow-inner transition hover:scale-105">
-              <i class="fab fa-whatsapp text-sm"></i>
+          <a href="https://chat.whatsapp.com/Eo9RuUkxVUzDeMtzwy2WbC?s=cl&p=a&mlu=3" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center group">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center mb-1.5 text-[#00ff00] shadow-sm group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fab fa-whatsapp text-base"></i>
             </div>
-            <p class="text-[9px] font-semibold text-gray-700 text-center">Whatsapp Group</p>
+            <p class="text-[11px] font-semibold text-white text-center">Whatsapp Group</p>
           </a>
 
         </div>
@@ -381,75 +396,81 @@
     
     <!-- LIVE INVESTMENT FEED -->
     <div class="px-3 mt-3">
-      <div id="liveFeedContainer" class="bg-white rounded-full px-1.5 py-1 border border-gray-100 shadow-sm relative overflow-hidden h-[36px] w-full flex items-center">
+      <div id="liveFeedContainer" class="bg-black border border-[#00ff00] rounded-full px-3 py-1.5 shadow-sm relative overflow-hidden h-[36px] w-full flex items-center">
         <!-- JS will inject single notification items here smoothly -->
       </div>
     </div>
     
-    <!-- SECOND QUICK ACTIONS & INFO CARD (from image) -->
+    <!-- SECOND QUICK ACTIONS & INFO CARD -->
     <div class="px-3 mt-3">
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-4 shadow-[0_0_15px_rgba(0,255,0,0.12)]">
         
-        <!-- Top Row (2 columns) -->
-        <div class="flex gap-3 mb-5">
+        <!-- Top Row (2 distinct interactive action cards) -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
           <!-- Active Staking -->
-          <a href="./miner.html" class="flex-1 bg-gray-50 rounded-xl p-3 flex justify-between items-start hover:bg-gray-100 transition relative">
-            <span class="text-[11px] font-bold text-gray-700 leading-tight">Active<br>Staking</span>
-            <div class="bg-[#4f8cff] text-white rounded-[4px] px-1 py-0.5 mt-0.5">
-              <i class="fas fa-money-check-alt text-[10px]"></i>
+          <a href="./miner.html" class="group relative flex items-center justify-between p-3.5 rounded-xl bg-[#0d1711] border border-[#00ff00]/40 hover:border-[#00ff00] hover:bg-[#14261b] transition-all duration-200">
+            <div>
+              <p class="text-xs font-bold text-white tracking-wide leading-snug">Active</p>
+              <p class="text-xs font-bold text-white tracking-wide leading-snug">Staking</p>
             </div>
-            <!-- Small yellow badge -->
-            <div class="absolute top-1 right-1 bg-[#f59e0b] text-white text-[7px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center border border-white">
-              B
+            <div class="relative flex items-center justify-center">
+              <div class="w-9 h-9 rounded-xl bg-[#00ff00] flex items-center justify-center text-black shadow-md group-hover:scale-105 transition-transform">
+                <i class="fas fa-money-check-alt text-sm text-black"></i>
+              </div>
+              <!-- Small orange badge -->
+              <div class="absolute -top-1.5 -right-1.5 bg-[#f59e0b] text-black text-[8px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center border-2 border-black">
+                B
+              </div>
             </div>
           </a>
           
           <!-- Company Information -->
-          <a href="./company.html" class="flex-1 bg-gray-50 rounded-xl p-3 flex justify-between items-start hover:bg-gray-100 transition">
-            <span class="text-[11px] font-bold text-gray-700 leading-tight">Company<br>Information</span>
-            <div class="text-[#4f8cff] mt-0.5">
-              <i class="far fa-building text-base"></i>
+          <a href="./company.html" class="group relative flex items-center justify-between p-3.5 rounded-xl bg-[#0d1711] border border-[#00ff00]/40 hover:border-[#00ff00] hover:bg-[#14261b] transition-all duration-200">
+            <div>
+              <p class="text-xs font-bold text-white tracking-wide leading-snug">Company</p>
+              <p class="text-xs font-bold text-white tracking-wide leading-snug">Information</p>
+            </div>
+            <div class="w-9 h-9 rounded-xl bg-[#00ff00] flex items-center justify-center text-black shadow-md group-hover:scale-105 transition-transform">
+              <i class="fas fa-building text-sm text-black"></i>
             </div>
           </a>
         </div>
 
-        <!-- Bottom Row (4 columns) -->
-        <div class="flex justify-between px-1">
+        <!-- Bottom Row (3 distinct quick action buttons) -->
+        <div class="grid grid-cols-3 gap-2 pt-3 border-t border-[#16291e]">
           
           <!-- About Us -->
-          <a href="./about.html" class="flex flex-col items-center gap-1.5">
-            <div class="w-10 h-10 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#4f8cff] shadow-inner transition hover:scale-105">
-              <i class="fas fa-info-circle text-xs"></i>
+          <a href="./about.html" class="flex flex-col items-center group py-1">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center text-[#00ff00] shadow-sm mb-1.5 group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-info-circle text-base"></i>
             </div>
-            <span class="text-[9px] font-medium text-gray-600">About Us</span>
+            <span class="text-[11px] font-semibold text-white tracking-tight">About Us</span>
           </a>
 
           <!-- Announcement -->
-          <a href="./notice.html" class="flex flex-col items-center gap-1.5">
-            <div class="w-10 h-10 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#4f8cff] shadow-inner transition hover:scale-105">
-              <i class="fas fa-bullhorn text-xs"></i>
+          <a href="./notice.html" class="flex flex-col items-center group py-1">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center text-[#00ff00] shadow-sm mb-1.5 group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-bullhorn text-base"></i>
             </div>
-            <span class="text-[9px] font-medium text-gray-600">Announcement</span>
+            <span class="text-[11px] font-semibold text-white tracking-tight">Announcement</span>
           </a>
 
           <!-- Help Line -->
-          <a href="https://wa.me/447455906836" target="_blank" class="flex flex-col items-center gap-1.5">
-            <div class="w-10 h-10 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#4f8cff] shadow-inner transition hover:scale-105">
-              <i class="fas fa-headset text-xs"></i>
+          <a href="https://wa.me/447455906836" target="_blank" class="flex flex-col items-center group py-1">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center text-[#00ff00] shadow-sm mb-1.5 group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-headset text-base"></i>
             </div>
-            <span class="text-[9px] font-medium text-gray-600">Help Line</span>
+            <span class="text-[11px] font-semibold text-white tracking-tight">Help Line</span>
           </a>
 
         </div>
 
       </div>
     </div>
-    
-
 
     <!-- CAROUSEL BANNER SECTION (Local Images) -->
     <div class="px-3 mt-3">
-      <div class="w-full rounded-xl shadow-sm overflow-hidden relative border border-gray-100" style="aspect-ratio: 24/9;" id="imageSlider">
+      <div class="w-full rounded-xl shadow-sm overflow-hidden relative border border-[#00ff00]/30" style="aspect-ratio: 24/9;" id="imageSlider">
         <img src="./slider1.svg" class="slider-img active slide" alt="Promo 1">
         <img src="./slider2.svg" class="slider-img slide" alt="Promo 2">
       </div>
@@ -457,48 +478,48 @@
 
     <!-- NOTICE SECTION -->
     <div class="px-3 mt-3">
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-xl p-4 shadow-sm">
         <div class="flex items-center gap-2 mb-3">
-          <i class="fas fa-bullhorn text-[#4f8cff]"></i>
-          <h3 class="text-[13px] font-bold text-gray-800">Notice</h3>
+          <i class="fas fa-bullhorn text-[#00ff00]"></i>
+          <h3 class="text-[13px] font-bold text-white">Notice</h3>
         </div>
         
         <div class="space-y-3">
           <!-- Item 1 -->
-          <div class="border-b border-gray-100 pb-3">
-            <p class="text-[11px] font-medium text-gray-700 mb-1 leading-snug">SatrixNow AI-driven financial system officially upgraded and launched.</p>
-            <p class="text-[9px] text-gray-400">04/04/26</p>
+          <div class="border-b border-[#16291e] pb-3">
+            <p class="text-[11px] font-medium text-white mb-1 leading-snug">Blockvextrade AI-driven financial system officially upgraded and launched.</p>
+            <p class="text-[9px] text-gray-400">25/11/26</p>
           </div>
           
           <!-- Item 2 -->
-          <div class="border-b border-gray-100 pb-3">
-            <p class="text-[11px] font-medium text-gray-700 mb-1 leading-snug">🚀 SatrixNow Newly Upgraded and Launched</p>
-            <p class="text-[9px] text-gray-400">01/04/26</p>
+          <div class="border-b border-[#16291e] pb-3">
+            <p class="text-[11px] font-medium text-white mb-1 leading-snug">🚀 Blockvextrade Newly Upgraded and Launched</p>
+            <p class="text-[9px] text-gray-400">22/11/26</p>
           </div>
           
           <!-- Item 3 -->
-          <div class="border-b border-gray-100 pb-3">
-            <p class="text-[11px] font-medium text-gray-700 mb-1 leading-snug">📢 Platform Announcement | SatrixNow Launches New Upgrade</p>
-            <p class="text-[9px] text-gray-400">21/03/26</p>
+          <div class="border-b border-[#16291e] pb-3">
+            <p class="text-[11px] font-medium text-white mb-1 leading-snug">📢 Platform Announcement | Blockvextrade Launches New Upgrade</p>
+            <p class="text-[9px] text-gray-400">11/11/26</p>
           </div>
           
           <!-- Item 4 -->
-          <div class="border-b border-gray-100 pb-3 relative">
-            <p class="text-[11px] font-medium text-gray-700 mb-1 w-[85%] leading-snug">[SatrixNow Announcement] Eid Lucky Blind Box Event Now Live</p>
-            <p class="text-[9px] text-gray-400">18/03/26</p>
-            <div class="absolute right-0 bottom-3 w-6 h-8 bg-blue-50 border border-blue-100 rounded flex items-center justify-center text-[#4f8cff] text-[12px]">
+          <div class="border-b border-[#16291e] pb-3 relative">
+            <p class="text-[11px] font-medium text-white mb-1 w-[85%] leading-snug">[Blockvextrade Announcement] Eid Lucky Blind Box Event Now Live</p>
+            <p class="text-[9px] text-gray-400">08/11/26</p>
+            <div class="absolute right-0 bottom-3 w-6 h-8 bg-[#0d1711] border border-[#00ff00]/30 rounded flex items-center justify-center text-[#00ff00] text-[12px]">
               <i class="fas fa-mobile-alt"></i>
             </div>
           </div>
           
           <!-- Item 5 -->
           <div class="pb-1">
-            <p class="text-[11px] font-medium text-gray-700 mb-1 leading-snug">Website Announcement</p>
-            <p class="text-[9px] text-gray-400">04/03/26</p>
+            <p class="text-[11px] font-medium text-white mb-1 leading-snug">Website Announcement</p>
+            <p class="text-[9px] text-gray-400">25/10/26</p>
           </div>
         </div>
         
-        <a href="./notice.html" class="mt-4 block w-full text-center py-2.5 rounded-lg border border-[#4f8cff] text-[#4f8cff] text-[11px] font-semibold hover:bg-blue-50 transition">
+        <a href="./notice.html" class="mt-4 block w-full text-center py-2.5 rounded-lg border border-[#00ff00] text-[#00ff00] text-[11px] font-semibold hover:bg-[#00ff00]/10 transition">
           View more
         </a>
       </div>
@@ -506,20 +527,19 @@
 
     <!-- ABOUT US EXACT SECTION -->
     <div class="px-3 mt-3 mb-6">
-      <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-start gap-3">
-        <!-- Exact image downloaded -->
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-xl p-3 shadow-sm flex items-start gap-3">
         <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
-          <img src="./idea.png" alt="About SatrixNow" class="w-full h-full object-contain">
+          <img src="./idea.png" alt="About Blockvextrade" class="w-full h-full object-contain">
         </div>
         <div class="flex-1">
-          <h3 class="text-[9px] sm:text-[10px] font-bold text-gray-800 mb-1 leading-snug">
-            SatrixNow: Leading the Future of Computing Power. Building the Foundation for a Sustainable Digital Infrastructure.
+          <h3 class="text-[11px] sm:text-xs font-bold text-white mb-1 leading-snug">
+            Blockvextrade: Leading the Future of Computing Power. Building the Foundation for a Sustainable Digital Infrastructure.
           </h3>
-          <p class="text-[8px] sm:text-[9px] text-gray-500 leading-relaxed text-left">
-            SatrixNow (full name: Crypto-Ecosystem Mining) is a global leader in cryptocurrency mining solutions, dedicated to making digital asset mining accessible, efficient, and profitable for everyone. Founded by a team of blockchain technology experts and financial professionals, we have built a state-of-the-art mining ecosystem that leverages the latest advancements in hardware and software to deliver unparalleled results.
+          <p class="text-[10px] sm:text-[11px] text-gray-300 leading-relaxed text-left">
+            Blockvextrade (full name: Crypto-Ecosystem Mining) is a global leader in cryptocurrency mining solutions, dedicated to making digital asset mining accessible, efficient, and profitable for everyone. Founded by a team of blockchain technology experts and financial professionals, we have built a state-of-the-art mining ecosystem that leverages the latest advancements in hardware and software to deliver unparalleled results.
           </p>
           <div class="mt-2">
-            <a href="about.html" class="inline-block bg-[#4f8cff] text-white text-[8px] font-semibold px-3 py-1.5 rounded-full shadow-sm hover:opacity-90 transition">
+            <a href="about.html" class="inline-block bg-[#00ff00] text-black text-[10px] font-extrabold px-4 py-1.5 rounded-full shadow-sm hover:opacity-90 transition">
               Learn More
             </a>
           </div>
@@ -531,7 +551,7 @@
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
       <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
-        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+        <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
         </a>
@@ -549,18 +569,9 @@
         </a>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
 
   </div>
   <script>
-    // ===== UPDATE POPUP LOGIC =====
-
-    // Pool of updates — add / edit freely
     // ===== WHATSAPP RELEASE POPUP LOGIC =====
     window.closeWhatsappPopup = function() {
       const overlay = document.getElementById('whatsappOverlay');
@@ -577,28 +588,28 @@
 
     // Live Feed Single-Line Scroller
     document.addEventListener("DOMContentLoaded", function () {
-const feedData = [
-  "Michael just withdrew $3,200 in BTC",
-  "Emily just invested $15,000 in Premium Plan",
-  "Daniel successfully withdrew $4,850",
-  "Sophia just invested $22,000 in Standard Plan",
-  "James claimed staking bonus $750",
-  "Olivia just withdrew $1,980 in ETH",
-  "William invested $30,000 in Gold Plan",
-  "Charlotte successfully withdrew $6,400",
-  "Benjamin just invested $12,500 in Basic Plan",
-  "Amelia claimed referral bonus $300",
-  "Lucas just withdrew $2,750 in USDT",
-  "Mia invested $18,000 in Premium Plan",
-  "Henry successfully withdrew $5,900",
-  "Evelyn just invested $27,000 in Standard Plan",
-  "Alexander claimed staking bonus $620",
-  "Harper just withdrew $3,450 in BTC",
-  "Sebastian invested $40,000 in Platinum Plan",
-  "Abigail successfully withdrew $7,200",
-  "Jack just invested $9,800 in Basic Plan",
-  "Ella claimed bonus $280"
-];
+      const feedData = [
+        "Michael just withdrew $3,200 in BTC",
+        "Emily just invested $15,000 in Premium Plan",
+        "Daniel successfully withdrew $4,850",
+        "Sophia just invested $22,000 in Standard Plan",
+        "James claimed staking bonus $750",
+        "Olivia just withdrew $1,980 in LTC",
+        "William invested $30,000 in Gold Plan",
+        "Charlotte successfully withdrew $6,400",
+        "Benjamin just invested $12,500 in Basic Plan",
+        "Amelia claimed referral bonus $300",
+        "Lucas just withdrew $2,750 in USDT",
+        "Mia invested $18,000 in Premium Plan",
+        "Henry successfully withdrew $5,900",
+        "Evelyn just invested $27,000 in Standard Plan",
+        "Alexander claimed staking bonus $620",
+        "Harper just withdrew $3,450 in BTC",
+        "Sebastian invested $40,000 in Platinum Plan",
+        "Abigail successfully withdrew $7,200",
+        "Jack just invested $9,800 in Basic Plan",
+        "Ella claimed bonus $280"
+      ];
       
       const container = document.getElementById("liveFeedContainer");
       if (container) {
@@ -609,13 +620,13 @@ const feedData = [
           div.className = "flex items-center w-full px-2 absolute left-0 transition-transform duration-500 ease-in-out";
           div.style.transform = "translateY(150%)";
           div.innerHTML = `
-            <div class="w-6 h-6 rounded-full bg-[#e8f1ff] flex items-center justify-center text-[#4f8cff] shrink-0">
+            <div class="w-6 h-6 rounded-full bg-black border border-[#00ff00] flex items-center justify-center text-[#00ff00] shrink-0">
               <i class="fas fa-check-circle text-xs"></i>
             </div>
-            <p class="text-[10px] font-medium text-gray-500 ml-2 truncate pr-16">${text}</p>
+            <p class="text-[10px] font-medium text-white ml-2 truncate pr-16">${text}</p>
             <div class="flex flex-row items-center gap-1 absolute right-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></div>
-              <span class="text-[8px] font-bold text-[#10b981] uppercase tracking-wide">LIVE</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#00ff00] animate-pulse"></div>
+              <span class="text-[8px] font-bold text-[#00ff00] uppercase tracking-wide">LIVE</span>
             </div>
           `;
           
@@ -649,7 +660,7 @@ const feedData = [
           slides[currentSlide].classList.remove("active");
           currentSlide = (currentSlide + 1) % slides.length;
           slides[currentSlide].classList.add("active");
-        }, 4000); // Crossfade duration interval (every 4s)
+        }, 4000);
       }
 
       // Language dropdown logic
@@ -683,7 +694,6 @@ const feedData = [
         document.getElementById('navFlag').src = flagUrl;
         window.pToast({ message: `Language changed to ${shortCode}`, type: "success", duration: 1500 });
         
-        // Hide menu
         const menu = document.getElementById('langDropdown');
         const icon = document.getElementById('navLangIcon');
         menu.classList.remove('opacity-100', 'scale-100');
@@ -694,7 +704,6 @@ const feedData = [
         }, 200);
       };
 
-      // Close dropdown when clicking outside
       document.addEventListener('click', (e) => {
         const menu = document.getElementById('langDropdown');
         const btn = document.getElementById('lang-menu-btn');
@@ -708,12 +717,10 @@ const feedData = [
         }
       });
 
-
-
       // Fetch Dashboard Stats for index.html
       (async function fetchIndexStats() {
           try {
-              const statsRes = await fetch('https://api.satrixai.com/api/users/dashboard-stats', {
+              const statsRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/dashboard-stats`, {
                   credentials: 'include'
               });
               if (statsRes.ok) {

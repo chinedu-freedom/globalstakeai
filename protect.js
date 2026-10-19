@@ -10,7 +10,7 @@
  *        as the FIRST script in <head> on every protected page.
  */
 (function () {
-  const API_BASE = "https://api.satrixai.com";
+  const API_BASE = window.API_BASE || "http://localhost:5000";
   const LOGIN_PAGE = "/login.html";
 
   // Pages that are publicly accessible — no redirect needed.
@@ -29,9 +29,12 @@
 
   function redirectToLogin() {
     // Remember where the user wanted to go so we can send them back
-    // after a successful login (login.html can read this).
+    // after a successful login (avoid saving login or auth pages).
     try {
-      localStorage.setItem("redirectAfterLogin", window.location.pathname + window.location.search);
+      const current = window.location.pathname + window.location.search;
+      if (!currentPathIsPublic() && !current.toLowerCase().includes("login")) {
+        localStorage.setItem("redirectAfterLogin", current);
+      }
     } catch (_) {}
     window.location.replace(LOGIN_PAGE);
   }
@@ -81,11 +84,18 @@
   }
 
   // -------------------------------------------------------
-  // Hit the server with the token attached (via interceptor).
+  // Hit the server with the token attached.
   // -------------------------------------------------------
-  fetch(API_BASE + "/api/users/me", {
+  const currentApiBase = window.API_BASE || API_BASE;
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + token
+  };
+
+  fetch(currentApiBase + "/api/users/me", {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: headers,
+    credentials: "include",
   })
     .then(function (res) {
       if (res.status === 401 || res.status === 403) {

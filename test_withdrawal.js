@@ -14,7 +14,7 @@ async function testWithdrawalFlow() {
     
     console.log(`\n[1] Registering test user: ${testUser.username}`);
     
-    const regRes = await fetch('https://api.satrixai.com/api/auth/register', {
+    const regRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(testUser)
@@ -32,7 +32,7 @@ async function testWithdrawalFlow() {
     
     // 2. Fetch Dashboard Stats
     console.log("\n[2] Fetching initial dashboard stats to check Available Profit...");
-    const statsRes = await fetch('https://api.satrixai.com/api/users/dashboard-stats', {
+    const statsRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/dashboard-stats`, {
         headers: { 'Cookie': cookies }
     });
     const statsData = await statsRes.json();
@@ -40,7 +40,7 @@ async function testWithdrawalFlow() {
     
     // 3. Attempt to withdraw $50 (Should Fail due to 0 earnings)
     console.log("\n[3] Attempting to withdraw $50 with $0 Available Profit...");
-    const withdrawRes = await fetch('https://api.satrixai.com/api/users/withdrawals', {
+    const withdrawRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/withdrawals`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',

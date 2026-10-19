@@ -1,112 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
-
   <script src="./protect.js"></script>
+  <script src="./toast.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deposit - SatrixNow</title>
+  <title>Deposit Funds - Blockvextrade</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-  <script src="./toast.js"></script>
   <style>
-    body { font-family: "Poppins", sans-serif; background-color: #f0f4f8; padding-bottom: 30px; }
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      background: #000000 !important; 
+      color: #ffffff;
+    }
 
-    /* ── Header ── */
-    .header-bg { background: linear-gradient(135deg, #4f8cff, #6ee7ff); }
+    .header-bg {
+      background: #00ff00 !important;
+      color: #000000 !important;
+    }
 
-    /* ── Method Selection Modal ── */
     #methodModal {
-      position: fixed; inset: 0; z-index: 999;
-      background: rgba(0,0,0,.5);
+      position: fixed; inset: 0; z-index: 60;
+      background: rgba(0,0,0,.85);
       backdrop-filter: blur(5px);
       display: flex; align-items: flex-end; justify-content: center;
       opacity: 0; transition: opacity .3s ease;
     }
     #methodModal.show { opacity: 1; }
     #methodSheet {
-      background: #fff; width: 100%; max-width: 448px;
+      background: #0a0f0c !important; 
+      border: 1.5px solid #00ff00 !important;
+      width: 100%; max-width: 448px;
       border-radius: 28px 28px 0 0;
       padding: 24px 20px 36px;
       transform: translateY(100%);
       transition: transform .35s cubic-bezier(.32,1.2,.58,1);
+      color: #ffffff;
     }
     #methodModal.show #methodSheet { transform: translateY(0); }
 
     .method-card {
-      border: 2px solid #e2e8f0;
+      border: 1.5px solid rgba(0, 255, 0, 0.25) !important;
       border-radius: 16px; padding: 14px 16px;
       cursor: pointer; transition: all .2s ease;
-      background: #f8fafc;
+      background: #000000 !important;
     }
-    .method-card:hover  { border-color: #94a3b8; background: #f1f5f9; }
-    .method-card.active { border-color: #4f8cff; background: #f0f6ff; }
-    .method-card.active .method-badge-auto { background: #4f8cff; color: white; }
+    .method-card:hover { border-color: #00ff00 !important; background: #0a0f0c !important; }
+    .method-card.active {
+      border-color: #00ff00 !important;
+      background: #0d1711 !important;
+      box-shadow: 0 0 18px rgba(0, 255, 0, 0.25) !important;
+    }
+    .method-card.active .method-badge-auto {
+      background: #00ff00 !important;
+      color: #000000 !important;
+      font-weight: 800;
+    }
 
     .method-badge {
       font-size: 9px; font-weight: 700; letter-spacing: .5px;
       padding: 2px 8px; border-radius: 20px; text-transform: uppercase;
     }
-    .method-badge-auto { background: #dcfce7; color: #16a34a; }
-    .method-badge-manual { background: #fef3c7; color: #b45309; }
+    .method-badge-auto { background: rgba(0, 255, 0, 0.15); color: #00ff00; border: 1px solid rgba(0, 255, 0, 0.3); }
+    .method-badge-manual { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
 
     /* ── OxaPay Payment Screen ── */
     #oxapayScreen { display: none; }
 
     .qr-wrap {
-      width: 160px; height: 160px;
-      border: 3px solid #e2e8f0;
+      width: 170px; height: 170px;
+      border: 2px solid #00ff00;
       border-radius: 16px; overflow: hidden;
       margin: 0 auto;
       background: white;
+      padding: 8px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
       display: flex; align-items: center; justify-content: center;
     }
     .qr-wrap img { width: 100%; height: 100%; object-fit: contain; }
 
     .address-box {
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
+      background: #050806 !important;
+      border: 1.5px solid #00ff00 !important;
       border-radius: 14px;
       padding: 14px 16px;
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
     .address-text {
-      font-size: 11px; font-weight: 600; color: #374151;
+      font-size: 11px; font-weight: 700; color: #00ff00 !important;
       word-break: break-all; flex: 1;
       font-family: monospace; letter-spacing: .3px;
     }
     .copy-btn {
-      flex-shrink: 0; width: 32px; height: 32px;
-      border-radius: 10px; background: #3b82f6; color: white;
-      border: none; cursor: pointer; font-size: 12px;
+      flex-shrink: 0; width: 34px; height: 34px;
+      border-radius: 10px; background: #00ff00 !important; color: #000000 !important;
+      border: none; cursor: pointer; font-size: 13px; font-weight: 800;
       display: flex; align-items: center; justify-content: center;
       transition: background .2s, transform .15s;
     }
-    .copy-btn:hover  { background: #2563eb; }
+    .copy-btn:hover { background: #00e000 !important; }
     .copy-btn:active { transform: scale(.92); }
 
     .step-pill {
       display: inline-flex; align-items: center; gap: 6px;
-      background: white; border: 1px solid #e2e8f0;
+      background: #0a0f0c !important; border: 1px solid rgba(0, 255, 0, 0.3) !important;
       border-radius: 50px; padding: 6px 14px;
-      font-size: 10px; font-weight: 600; color: #374151;
+      font-size: 10px; font-weight: 600; color: #e5e7eb !important;
     }
     .step-num {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: #3b82f6; color: white;
-      font-size: 9px; font-weight: 800;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #00ff00 !important; color: #000000 !important;
+      font-size: 10px; font-weight: 900;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
 
     /* ── Pulse dot ── */
-    .pulse-dot { width:8px;height:8px;border-radius:50%;background:#4f8cff;
+    .pulse-dot { width:8px;height:8px;border-radius:50%;background:#00ff00;
+      box-shadow: 0 0 8px #00ff00;
       animation: pdot 1.5s ease-in-out infinite; }
     @keyframes pdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
 
     /* ── Spinner ── */
-    .spinner { border:3px solid #e2e8f0; border-top-color:#3b82f6;
+    .spinner { border:3px solid rgba(0,255,0,0.2); border-top-color:#00ff00;
       border-radius:50%; width:28px; height:28px;
       animation: spin .7s linear infinite; }
     @keyframes spin { to { transform:rotate(360deg); } }
@@ -114,31 +133,43 @@
     #toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
     /* ── CTA button ── */
-    .btn-primary { background: linear-gradient(90deg, #14b8a6, #2563eb); color:white; }
-    .btn-blue  { background: linear-gradient(90deg, #14b8a6, #2563eb); color:white; }
+    .btn-primary { background: #00ff00 !important; color:#000000 !important; font-weight: 800; }
+    .btn-blue  { background: #00ff00 !important; color:#000000 !important; font-weight: 800; }
 
     /* ── Amount section ── */
     .amount-input {
-      width:100%; background:#f8fafc; border:1.5px solid #e2e8f0;
+      width:100%; background:#050806 !important; border:1.5px solid rgba(0, 255, 0, 0.35) !important;
       border-radius:14px; padding:12px 16px; font-size:15px; font-weight:700;
-      color:#1e293b; outline:none; transition:border-color .2s;
+      color:#ffffff !important; outline:none; transition:border-color .2s;
     }
-    .amount-input:focus { border-color:#3b82f6; }
+    .amount-input:focus { border-color:#00ff00 !important; box-shadow: 0 0 12px rgba(0,255,0,0.25); }
+  
+/* Remove native number input spinners (arrows) across all browsers */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
+}
+
   </style>
+  <link rel="stylesheet" href="./global.css">
 </head>
-<body class="flex flex-col min-h-screen items-center">
+<body class="flex flex-col min-h-screen items-center bg-black text-white">
 
-  <!-- Toast removed in favor of global toast.js -->
-
-  <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+  <div class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-[#00ff00]/20 flex flex-col">
 
     <!-- HEADER -->
-    <div class="header-bg text-white px-5 pt-6 pb-6 sticky top-0 z-40">
+    <div class="bg-[#00ff00] text-black px-5 pt-6 pb-6 sticky top-0 z-40 shadow-[0_0_20px_rgba(0,255,0,0.25)]">
       <div class="flex items-center relative">
-        <a href="javascript:history.back()" class="absolute left-0 text-white hover:opacity-80 transition">
-          <i class="fas fa-chevron-left text-[15px]"></i>
+        <a href="javascript:history.back()" class="absolute left-0 text-black hover:opacity-80 transition cursor-pointer">
+          <i class="fas fa-chevron-left text-[16px]"></i>
         </a>
-        <h1 class="text-base font-bold w-full text-center tracking-wide">Deposit</h1>
+        <h1 class="text-base font-extrabold w-full text-center tracking-wide text-black">Deposit</h1>
       </div>
     </div>
 
@@ -148,33 +179,31 @@
     <div id="selectScreen" class="px-3 pt-6 pb-24 space-y-5 flex-1">
 
       <!-- Info card -->
-      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-start gap-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
-          <i class="fas fa-wallet text-blue-500"></i>
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-4 shadow-sm flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-black border border-[#00ff00]/40 flex items-center justify-center flex-shrink-0 text-[#00ff00]">
+          <i class="fas fa-wallet text-sm"></i>
         </div>
         <div>
-          <p class="text-[13px] font-bold text-slate-800">Add Funds to Your Account</p>
-          <p class="text-[10px] text-slate-500 mt-0.5 leading-relaxed">Automatic payments via our secure gateway are credited instantly.</p>
+          <p class="text-[13px] font-bold text-white">Add Funds to Your Account</p>
+          <p class="text-[10px] text-gray-400 mt-0.5 leading-relaxed">Automatic payments via our secure gateway are credited instantly.</p>
         </div>
       </div>
-
-      <!-- Method label removed -->
 
       <!-- USDT TRC20 -->
       <div class="method-card active" id="card-usdt-trc20" onclick="selectMethod('USDT', 'TRC20', 'card-usdt-trc20')">
         <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+          <div class="w-11 h-11 rounded-xl bg-black border border-[#00ff00]/30 flex items-center justify-center flex-shrink-0">
             <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-7 h-7 object-contain" alt="USDT">
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <p class="text-[13px] font-bold text-slate-800">USDT</p>
+              <p class="text-[13px] font-bold text-white">USDT</p>
               <span class="method-badge method-badge-auto">Automatic</span>
             </div>
-            <p class="text-[10px] text-slate-400 mt-0.5">TRC20 Network</p>
+            <p class="text-[10px] text-gray-400 mt-0.5">TRC20 Network</p>
           </div>
-          <div id="check-usdt-trc20" class="method-check w-6 h-6 rounded-full bg-[#4f8cff] flex items-center justify-center">
-            <i class="fas fa-check text-white text-[10px]"></i>
+          <div id="check-usdt-trc20" class="method-check w-6 h-6 rounded-full bg-[#00ff00] flex items-center justify-center">
+            <i class="fas fa-check text-black text-[11px] font-bold"></i>
           </div>
         </div>
       </div>
@@ -182,18 +211,18 @@
       <!-- USDT BEP20 -->
       <div class="method-card" id="card-usdt-bep20" onclick="selectMethod('USDT', 'BEP20', 'card-usdt-bep20')">
         <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+          <div class="w-11 h-11 rounded-xl bg-black border border-[#00ff00]/30 flex items-center justify-center flex-shrink-0">
             <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-7 h-7 object-contain" alt="USDT">
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <p class="text-[13px] font-bold text-slate-800">USDT</p>
+              <p class="text-[13px] font-bold text-white">USDT</p>
               <span class="method-badge method-badge-auto">Automatic</span>
             </div>
-            <p class="text-[10px] text-slate-400 mt-0.5">BEP20 Network</p>
+            <p class="text-[10px] text-gray-400 mt-0.5">BEP20 Network</p>
           </div>
           <div id="check-usdt-bep20" class="method-check w-6 h-6 rounded-full bg-transparent flex items-center justify-center hidden">
-            <i class="fas fa-check text-white text-[10px]"></i>
+            <i class="fas fa-check text-black text-[11px] font-bold"></i>
           </div>
         </div>
       </div>
@@ -201,18 +230,18 @@
       <!-- BITCOIN -->
       <div class="method-card" id="card-btc" onclick="selectMethod('BTC', 'Bitcoin', 'card-btc')">
         <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0">
+          <div class="w-11 h-11 rounded-xl bg-black border border-[#00ff00]/30 flex items-center justify-center flex-shrink-0">
             <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-7 h-7 object-contain" alt="BTC">
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <p class="text-[13px] font-bold text-slate-800">Bitcoin</p>
+              <p class="text-[13px] font-bold text-white">Bitcoin</p>
               <span class="method-badge method-badge-auto">Automatic</span>
             </div>
-            <p class="text-[10px] text-slate-400 mt-0.5">BTC Network</p>
+            <p class="text-[10px] text-gray-400 mt-0.5">BTC Network</p>
           </div>
           <div id="check-btc" class="method-check w-6 h-6 rounded-full bg-transparent flex items-center justify-center hidden">
-            <i class="fas fa-check text-white text-[10px]"></i>
+            <i class="fas fa-check text-black text-[11px] font-bold"></i>
           </div>
         </div>
       </div>
@@ -220,43 +249,42 @@
       <!-- LITECOIN -->
       <div class="method-card" id="card-ltc" onclick="selectMethod('LTC', 'Litecoin', 'card-ltc')">
         <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <div class="w-11 h-11 rounded-xl bg-black border border-[#00ff00]/30 flex items-center justify-center flex-shrink-0">
             <img src="https://assets.coingecko.com/coins/images/2/small/litecoin.png" class="w-7 h-7 object-contain" alt="LTC">
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <p class="text-[13px] font-bold text-slate-800">Litecoin</p>
+              <p class="text-[13px] font-bold text-white">Litecoin</p>
               <span class="method-badge method-badge-auto">Automatic</span>
             </div>
-            <p class="text-[10px] text-slate-400 mt-0.5">LTC Network</p>
+            <p class="text-[10px] text-gray-400 mt-0.5">LTC Network</p>
           </div>
           <div id="check-ltc" class="method-check w-6 h-6 rounded-full bg-transparent flex items-center justify-center hidden">
-            <i class="fas fa-check text-white text-[10px]"></i>
+            <i class="fas fa-check text-black text-[11px] font-bold"></i>
           </div>
         </div>
       </div>
 
       <!-- Amount input (shown for OxaPay) -->
       <div id="amountSection">
-        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 pl-1">Amount (USD)</label>
+        <label class="block text-[11px] font-bold text-gray-300 uppercase tracking-widest mb-2 pl-1">Amount (USD)</label>
         <div class="relative">
-          <!-- <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">$</span> -->
           <input type="number" id="depositAmount" class="amount-input pl-4 transition-colors" placeholder="Minimum $2" min="2" oninput="clearAmountErr()" />
         </div>
-        <p id="amountError" class="text-red-500 text-[11px] mt-1.5 pl-1 hidden"></p>
-        <p class="text-[9.5px] text-slate-400 mt-1.5 pl-1">Minimum deposit: <strong>$2</strong> · Maximum: <strong>$1,000,000</strong></p>
+        <p id="amountError" class="text-red-400 text-[11px] mt-1.5 pl-1 hidden"></p>
+        <p class="text-[9.5px] text-gray-400 mt-1.5 pl-1">Minimum deposit: <strong class="text-[#00ff00]">$2</strong> · Maximum: <strong class="text-[#00ff00]">$1,000,000</strong></p>
       </div>
 
       <!-- Feature pills -->
       <div class="flex flex-wrap gap-2">
         <div class="step-pill"><div class="pulse-dot"></div> Auto-credited to wallet</div>
-        <div class="step-pill"><i class="fas fa-shield-halved text-blue-400 text-[10px]"></i> Blockchain verified</div>
-        <div class="step-pill"><i class="fas fa-clock text-orange-400 text-[10px]"></i> ~5–30 min confirmation</div>
+        <div class="step-pill"><i class="fas fa-shield-halved text-[#00ff00] text-[10px]"></i> Blockchain verified</div>
+        <div class="step-pill"><i class="fas fa-clock text-amber-400 text-[10px]"></i> ~5–30 min confirmation</div>
       </div>
 
       <!-- Continue button -->
       <button id="continueBtn" onclick="proceedToPayment()"
-        class="w-full btn-primary text-white font-bold py-4 rounded-2xl text-xs shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2 mt-2">
+        class="w-full bg-[#00ff00] hover:bg-[#00e000] text-black font-extrabold py-4 rounded-2xl text-xs shadow-[0_0_20px_rgba(0,255,0,0.35)] active:scale-[.98] transition-all flex items-center justify-center gap-2 mt-2 cursor-pointer">
         <i class="fas fa-arrow-right"></i>
         Continue to Payment
       </button>
@@ -265,49 +293,49 @@
 
 
     <!-- ═══════════════════════════════════════════════
-         STEP 2 — OxaPay USDT TRC20 Payment Screen
+         STEP 2 — OxaPay Payment Screen
     ════════════════════════════════════════════════ -->
     <div id="oxapayScreen" class="px-3 pt-5 pb-24 flex-1 space-y-5">
 
       <!-- Back + title -->
       <div class="flex items-center gap-3">
-        <button onclick="backToSelect()" class="w-9 h-9 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center text-slate-500 hover:bg-slate-50 transition">
+        <button onclick="backToSelect()" class="w-9 h-9 bg-[#0a0f0c] border border-[#00ff00]/40 rounded-xl shadow-sm flex items-center justify-center text-white hover:bg-black transition cursor-pointer">
           <i class="fas fa-chevron-left text-xs"></i>
         </button>
         <div>
-          <h2 class="text-[15px] font-bold text-slate-800" id="paymentTitle">USDT Payment</h2>
-          <p class="text-[9.5px] text-slate-400 font-medium">Send any amount you wish · Auto-credited</p>
+          <h2 class="text-[15px] font-bold text-white" id="paymentTitle">USDT Payment</h2>
+          <p class="text-[9.5px] text-gray-400 font-medium">Send any amount you wish · Auto-credited</p>
         </div>
-        <div class="ml-auto flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100">
+        <div class="ml-auto flex items-center gap-1.5 bg-[#0a0f0c] px-3 py-1.5 rounded-full border border-[#00ff00]/40">
           <div class="pulse-dot"></div>
-          <span class="text-[9px] font-bold text-blue-600 uppercase tracking-wide">Live</span>
+          <span class="text-[9px] font-extrabold text-[#00ff00] uppercase tracking-wide">Live</span>
         </div>
       </div>
 
       <!-- Amount badge -->
-      <div class="bg-blue-50 border border-blue-100 rounded-2xl px-4 py-3 flex items-center justify-between">
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl px-4 py-3 flex items-center justify-between shadow-[0_0_15px_rgba(0,255,0,0.15)]">
         <div>
-          <p class="text-[9px] text-blue-400 font-semibold uppercase tracking-wider">Amount to Send</p>
-          <p class="text-[20px] font-black text-blue-700 mt-0.5">$<span id="displayAmount">0.00</span></p>
+          <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-wider">Amount to Send</p>
+          <p class="text-[20px] font-black text-[#00ff00] mt-0.5">$<span id="displayAmount">0.00</span></p>
         </div>
         <div class="text-right">
-          <p class="text-[9px] text-blue-400 font-semibold uppercase tracking-wider">Network</p>
-          <p class="text-[13px] font-bold text-blue-700 mt-0.5" id="paymentNetwork">USDT TRC20</p>
+          <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-wider">Network</p>
+          <p class="text-[13px] font-bold text-white mt-0.5" id="paymentNetwork">USDT TRC20</p>
         </div>
       </div>
 
       <!-- QR Code -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <p class="text-[10px] font-bold text-slate-400 text-center uppercase tracking-widest mb-4">Scan QR Code</p>
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-5 shadow-sm">
+        <p class="text-[10px] font-bold text-gray-300 text-center uppercase tracking-widest mb-4">Scan QR Code</p>
         <div class="qr-wrap" id="qrWrapper">
           <div class="spinner"></div>
         </div>
-        <p class="text-[9px] text-slate-400 text-center mt-3">Scan with Trust Wallet, Binance, or any TRC20 wallet</p>
+        <p class="text-[9px] text-gray-400 text-center mt-3">Scan with Trust Wallet, Binance, or any compatible wallet</p>
       </div>
 
       <!-- Wallet Address -->
-      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
-        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Wallet Address (<span id="addressNetwork">TRC20</span>)</p>
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-4 shadow-sm">
+        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-widest mb-3">Wallet Address (<span id="addressNetwork">TRC20</span>)</p>
         <div class="address-box">
           <span class="address-text" id="walletAddress">Loading...</span>
           <button class="copy-btn" id="copyBtn" onclick="copyAddress()" title="Copy address">
@@ -318,40 +346,40 @@
       </div>
 
       <!-- How it works steps -->
-      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
-        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">How it works</p>
+      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-4 shadow-sm space-y-3">
+        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-widest">How it works</p>
         <div class="flex items-start gap-3">
           <div class="step-num">1</div>
-          <p class="text-[11px] text-slate-600 leading-relaxed">Copy the wallet address or scan the QR code above.</p>
+          <p class="text-[11px] text-gray-300 leading-relaxed">Copy the wallet address or scan the QR code above.</p>
         </div>
         <div class="flex items-start gap-3">
           <div class="step-num">2</div>
-          <p class="text-[11px] text-slate-600 leading-relaxed">Send exactly <strong class="text-blue-600">$<span id="displayAmount2">0.00</span> <span id="paymentCrypto">USDT</span></strong> from your wallet on the <strong id="instructionNetwork">TRC20</strong> network.</p>
+          <p class="text-[11px] text-gray-300 leading-relaxed">Send exactly <strong class="text-[#00ff00]">$<span id="displayAmount2">0.00</span> <span id="paymentCrypto">USDT</span></strong> from your wallet on the <strong id="instructionNetwork" class="text-white">TRC20</strong> network.</p>
         </div>
         <div class="flex items-start gap-3">
           <div class="step-num">3</div>
-          <p class="text-[11px] text-slate-600 leading-relaxed">Once the payment is sent, it will be <strong class="text-green-600">credited to your wallet automatically</strong> after blockchain confirmation (5–30 min).</p>
+          <p class="text-[11px] text-gray-300 leading-relaxed">Once the payment is sent, it will be <strong class="text-[#00ff00]">credited to your wallet automatically</strong> after blockchain confirmation (5–30 min).</p>
         </div>
       </div>
 
       <!-- Manual Fallback TxHash Input (Hidden by default) -->
-      <div id="txHashSection" class="hidden bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-3">
-        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2 pl-1">Transaction Hash (Required)</label>
-        <input type="text" id="txHashInput" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 text-[13px] focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="Enter TxID/Hash to verify payment" />
-        <p id="txHashError" class="text-red-500 text-[11px] mt-1.5 pl-1 hidden">Transaction Hash is required</p>
+      <div id="txHashSection" class="hidden bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-4 shadow-sm mb-3">
+        <label class="block text-[11px] font-bold text-gray-300 uppercase tracking-widest mb-2 pl-1">Transaction Hash (Required)</label>
+        <input type="text" id="txHashInput" class="w-full bg-[#050806] border border-[#00ff00]/40 rounded-xl px-4 py-3 text-white text-[13px] focus:outline-none focus:border-[#00ff00] transition-colors" placeholder="Enter TxID/Hash to verify payment" />
+        <p id="txHashError" class="text-red-400 text-[11px] mt-1.5 pl-1 hidden">Transaction Hash is required</p>
       </div>
 
       <!-- I've Sent Payment button -->
       <button id="notifyBtn" onclick="notifyPayment()"
-        class="w-full btn-blue text-white font-bold py-4 rounded-2xl text-xs shadow-md active:scale-[.98] transition-transform flex items-center justify-center gap-2">
+        class="w-full bg-[#00ff00] hover:bg-[#00e000] text-black font-extrabold py-4 rounded-2xl text-xs shadow-[0_0_20px_rgba(0,255,0,0.35)] active:scale-[.98] transition-all flex items-center justify-center gap-2 cursor-pointer">
         <i class="fas fa-paper-plane"></i>
         Deposit Completed
       </button>
 
       <!-- Safety note -->
-      <div class="bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3 flex items-start gap-3">
+      <div class="bg-amber-950/40 border border-amber-500/30 rounded-2xl px-4 py-3 flex items-start gap-3">
         <i class="fas fa-triangle-exclamation text-amber-400 mt-0.5 flex-shrink-0 text-xs"></i>
-        <p class="text-[9.5px] text-amber-700 leading-relaxed" id="safetyNote">
+        <p class="text-[9.5px] text-amber-300 leading-relaxed" id="safetyNote">
           Do <strong>not</strong> close this page until your transaction is submitted. Only use USDT on the TRC20 network — sending other tokens or using the wrong network will result in permanent loss.
         </p>
       </div>
@@ -359,7 +387,7 @@
     </div><!-- /oxapayScreen -->
 
     <!-- BOTTOM NAV -->
-    <div class="fixed bottom-0 left-0 w-full bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 border-t border-gray-100 h-16" style="padding-bottom: env(safe-area-inset-bottom);">
+    <div class="fixed bottom-0 left-0 w-full bg-[#000000] shadow-[0_-4px_20px_rgba(0,0,0,0.7)] z-50 border-t border-[#00ff00] h-16" style="padding-bottom: env(safe-area-inset-bottom);">
       <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
         <a href="/index.html" class="flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -393,19 +421,18 @@
       }
       
       if (plan) {
-         // Optionally show a contextual badge
          const section = document.getElementById("amountSection");
          const badge = document.createElement("div");
-         badge.className = "mb-3 flex items-center gap-2 bg-blue-50 border border-blue-100 px-3 py-1.5 rounded-lg";
+         badge.className = "mb-3 flex items-center gap-2 bg-[#0a0f0c] border border-[#00ff00]/40 px-3 py-1.5 rounded-lg";
          badge.innerHTML = `
-           <i class="fas fa-info-circle text-blue-500 text-[10px]"></i>
-           <p class="text-[9px] font-bold text-blue-600 uppercase tracking-widest">Depositing for: ${plan}</p>
+           <i class="fas fa-info-circle text-[#00ff00] text-[10px]"></i>
+           <p class="text-[9px] font-bold text-[#00ff00] uppercase tracking-widest">Depositing for: ${plan}</p>
          `;
          section.prepend(badge);
       }
     });
 
-    const API = "https://api.satrixai.com";
+    const API = window.API_BASE || "http://localhost:5000";
 
     let chosenAmount = 0;
     let chosenCrypto = "USDT";
@@ -416,15 +443,13 @@
       return localStorage.getItem("token");
     }
 
-    // Fallback addresses in case the backend request fails
     const FALLBACK_ADDRESSES = {
       'USDT_TRC20': "TFoPJE6H5uHWV7X69EMavqyUxF9B1HnmwY",
-      'USDT_BEP20': "0xYourBscFallbackAddressHere", // Ask user to provide this or use a dummy
-      'BTC_Bitcoin': "bc1qYourBtcFallbackAddressHere", // Ask user to provide this or use a dummy
-      'LTC_Litecoin': "ltc1qYourLtcFallbackAddressHere" // Ask user to provide this or use a dummy
+      'USDT_BEP20': "0xYourBscFallbackAddressHere",
+      'BTC_Bitcoin': "bc1qYourBtcFallbackAddressHere",
+      'LTC_Litecoin': "ltc1qYourLtcFallbackAddressHere"
     };
 
-    // ─── Toast helper ──────────
     function showToast(msg, duration = 3000) {
       let type = "info";
       let cleanMsg = msg;
@@ -434,13 +459,12 @@
       window.pToast({ message: cleanMsg, type, duration });
     }
 
-    // ─── Copy address ─────────────────────────────────────
     function copyAddress() {
       const addr = document.getElementById("walletAddress").textContent.trim();
       navigator.clipboard.writeText(addr).then(() => {
         const btn = document.getElementById("copyBtn");
         btn.innerHTML = '<i class="fas fa-check text-xs"></i>';
-        btn.style.background = "#22c55e";
+        btn.style.background = "#00ff00";
         showToast("✅ Address copied to clipboard!");
         setTimeout(() => {
           btn.innerHTML = '<i class="fas fa-copy text-xs"></i>';
@@ -449,7 +473,6 @@
       }).catch(() => showToast("Failed to copy — please copy manually."));
     }
 
-    // ─── Method selection ──────────
     function selectMethod(crypto, network, cardId) {
       chosenCrypto = crypto;
       chosenNetwork = network;
@@ -460,7 +483,7 @@
         const check = c.querySelector('.method-check');
         if(check) {
           check.classList.add('hidden');
-          check.classList.remove('bg-[#4f8cff]');
+          check.classList.remove('bg-[#00ff00]');
           check.classList.add('bg-transparent');
         }
       });
@@ -472,7 +495,7 @@
         const check = activeCard.querySelector('.method-check');
         if(check) {
           check.classList.remove('hidden', 'bg-transparent');
-          check.classList.add('bg-[#4f8cff]');
+          check.classList.add('bg-[#00ff00]');
         }
       }
     }
@@ -487,7 +510,6 @@
       }
     }
 
-    // ─── Proceed from Step 1 → Step 2 ────────────────────
     function proceedToPayment() {
       const raw = parseFloat(document.getElementById("depositAmount").value);
       const inputEl = document.getElementById("depositAmount");
@@ -532,13 +554,11 @@
       loadPaymentDetails();
     }
 
-    // ─── Back to Step 1 ───────────────────────────────────
     function backToSelect() {
       document.getElementById("oxapayScreen").style.display = "none";
       document.getElementById("selectScreen").style.display = "block";
     }
 
-    // ─── Load wallet address + QR code ───────────────────
     async function loadPaymentDetails() {
       const addrEl   = document.getElementById("walletAddress");
       const qrWrap   = document.getElementById("qrWrapper");
@@ -575,27 +595,23 @@
           }
         }
       } catch (_) {
-        // Use static fallback silently
         currentTrackId = null;
         document.getElementById("txHashSection").classList.remove("hidden");
       }
 
-      // Render address
       addrEl.textContent = address;
 
-      // Generate QR code using free QR API
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(address)}&margin=6&color=000000&bgcolor=ffffff`;
       const img = document.createElement("img");
       img.src = qrUrl;
-      img.alt = "USDT TRC20 QR Code";
+      img.alt = `${chosenCrypto} QR Code`;
       img.className = "w-full h-full object-contain";
       img.onload = () => { qrWrap.innerHTML = ""; qrWrap.appendChild(img); };
       img.onerror = () => {
-        qrWrap.innerHTML = `<div class="text-center p-2"><i class="fas fa-qrcode text-xl text-slate-300"></i><p class="text-[9px] text-slate-400 mt-1">Scan unavailable</p></div>`;
+        qrWrap.innerHTML = `<div class="text-center p-2"><i class="fas fa-qrcode text-xl text-gray-400"></i><p class="text-[9px] text-gray-400 mt-1">Scan unavailable</p></div>`;
       };
     }
 
-    // ─── "I've Sent Payment" — notify backend ─────────────
     async function notifyPayment() {
       let txHash = "";
       if (!currentTrackId) {
@@ -612,7 +628,7 @@
 
       const btn = document.getElementById("notifyBtn");
       btn.disabled = true;
-      btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0 auto;border-top-color:white;border-color:rgba(255,255,255,.3)"></div>';
+      btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0 auto;border-top-color:#000000;border-color:rgba(0,0,0,.2)"></div>';
 
       try {
         const token = getToken();
@@ -628,21 +644,21 @@
         const data = await res.json().catch(() => ({}));
 
         if (res.ok) {
-          showToast("✅ Deposit request received successfully. Your account will be credited automatically once the transaction is confirmed.", 4000);
+          showToast("✅ Deposit request received successfully. Your account will be credited automatically once confirmed.", 4000);
           btn.innerHTML = '<i class="fas fa-check mr-2"></i>Deposit Request Received — Thank you!';
-          btn.style.background = "#22c55e";
+          btn.style.background = "#00ff00";
+          btn.style.color = "#000000";
           btn.disabled = false; 
-          // Redirect to history after brief delay
           setTimeout(() => { window.location.href = "./history.html"; }, 3000);
         } else {
           showToast(data?.message || "⚠️ Could not record payment. Please contact support.");
           btn.disabled = false;
-          btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>I\'ve Sent the Payment';
+          btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Deposit Completed';
         }
       } catch (err) {
         showToast("⚠️ Network error. Please try again or contact support.");
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>I\'ve Sent the Payment';
+        btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Deposit Completed';
       }
     }
   </script>

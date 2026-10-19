@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const folder = 'c:\\Users\\Spark.DESKTOP-F75SGV0\\Desktop\\SatrixNow';
+const folder = 'c:\\Users\\Spark.DESKTOP-F75SGV0\\Desktop\\Blockvextrade';
 const files = fs.readdirSync(folder).filter(f => f.endsWith('.html'));
 
 files.forEach(fname => {

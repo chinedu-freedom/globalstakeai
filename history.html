@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
-
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <title>Transaction History - SatrixNow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Transaction History - Blockvextrade</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #f0f4f8; 
+      background-color: #000000 !important; 
+      color: #ffffff;
       padding-bottom: 70px; 
     }
 
     .header-bg {
-      background: linear-gradient(90deg, #1fa2d0, #167bee);
+      background: #00ff00;
     }
     
     .bottom-nav {
@@ -26,17 +27,13 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: white;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      background-color: #000000 !important;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.7);
       z-index: 50;
-      border-top: 1px solid #f1f5f9;
+      border-top: 1px solid #00ff00;
       height: 64px;
     }
-    
-    
-    
-    
-    
+
     .nav-item svg {
       width: 20px;
       height: 20px;
@@ -48,49 +45,38 @@
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
-    
-    .nav-item svg {
-      width: 20px;
-      height: 20px;
-      margin-bottom: 4px;
-      stroke-width: 2;
-    }
-    
-    .nav-item span {
-      font-size: 10px;
-      font-weight: 500;
-    }
-    
-    
-    
-    
 
     .tab-item {
       position: relative;
       color: #9ca3af;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
-      padding: 14px 0;
+      padding: 10px 0;
       cursor: pointer;
-      transition: color 0.3s;
+      transition: all 0.25s ease;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+
+    .tab-item:hover {
+      color: #ffffff;
     }
 
     .tab-item.active {
-      color: #1fa2d0;
+      background: #00ff00 !important;
+      color: #000000 !important;
+      font-weight: 800 !important;
+      box-shadow: 0 0 14px rgba(0, 255, 0, 0.35) !important;
     }
 
-    .tab-item.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: #1fa2d0;
+    .tab-item.active::after,
+    .tab-item::after {
+      display: none !important;
+      content: none !important;
+      height: 0 !important;
+      border: none !important;
     }
 
     /* Hide scrollbar */
@@ -101,74 +87,91 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+
+    .tx-row {
+      display: flex;
+      align-items: center;
+      background: #0a0f0c;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(0, 255, 0, 0.15);
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .tx-row:hover { background: #0e1711; }
+    
+    .tx-icon {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: #000000;
+      border: 1.5px solid #00ff00;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+    }
+    .tx-icon svg {
+      fill: #00ff00;
+    }
+
+    .badge-pending {
+      font-size: 9px; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3);
+    }
+    .badge-approved {
+      font-size: 9px; font-weight: 800; padding: 2px 8px;
+      border-radius: 999px; background: rgba(0, 255, 0, 0.15); color: #00ff00; border: 1px solid rgba(0, 255, 0, 0.3);
+    }
+    .badge-failed {
+      font-size: 9px; font-weight: 700; padding: 2px 8px;
+      border-radius: 999px; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);
+    }
   </style>
 
   <script src="./translator.js"></script>
+  <link rel="stylesheet" href="./global.css">
 </head>
-<body class="flex flex-col min-h-screen items-center">
+<body class="flex flex-col min-h-screen items-center bg-black text-white">
 
-  <div class="w-full max-w-md bg-[#eaf0f6] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+  <div class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-[#00ff00]/20 flex flex-col">
 
     <!-- HEADER -->
-    <div class="header-bg text-white px-5 pt-5 pb-5 sticky top-0 z-40">
+    <div class="header-bg text-black px-5 pt-5 pb-5 sticky top-0 z-40 shadow-[0_0_20px_rgba(0,255,0,0.25)]">
       <div class="flex items-center relative">
-        <a href="javascript:history.back()" class="absolute left-0 p-2 -ml-2 text-white">
-          <i class="fas fa-chevron-left text-[15px]"></i>
+        <a href="javascript:history.back()" class="absolute left-0 p-2 -ml-2 text-black hover:opacity-80 transition cursor-pointer">
+          <i class="fas fa-chevron-left text-[16px]"></i>
         </a>
-        <h1 class="text-base font-bold w-full text-center tracking-wide">Transactions</h1>
+        <h1 class="text-base font-extrabold w-full text-center tracking-wide text-black">Transactions</h1>
       </div>
     </div>
 
-    <!-- TABS ROW -->
-    <div class="bg-white flex items-center justify-around sticky top-[60px] z-30 shadow-sm">
-      <div class="flex-1 text-center tab-item active" onclick="switchTab(this, 'deposits')">Deposits</div>
-      <div class="flex-1 text-center tab-item" onclick="switchTab(this, 'withdrawals')">Withdrawals</div>
+    <!-- TABS ROW (Clean capsule pills with active background, no bottom border) -->
+    <div class="px-3 pt-3 pb-2 bg-black sticky top-[60px] z-30">
+      <div class="flex gap-2 p-1 bg-[#0a0f0c] border border-[#00ff00]/30 rounded-xl shadow-sm">
+        <button type="button" class="flex-1 text-center tab-item active" onclick="switchTab(this, 'deposits')">Deposits</button>
+        <button type="button" class="flex-1 text-center tab-item" onclick="switchTab(this, 'withdrawals')">Withdrawals</button>
+      </div>
     </div>
 
-    <!-- TRANSACTION LIST STYLES (inline for quick access) -->
-    <style>
-      .tx-row {
-        display: flex;
-        align-items: center;
-        background: white;
-        padding: 14px 16px;
-        border-bottom: 1px solid #f1f5f9;
-        gap: 12px;
-        cursor: pointer;
-        transition: background 0.15s;
-      }
-      .tx-row:hover { background: #f8faff; }
-      .tx-icon {
-        width: 42px; height: 42px; border-radius: 50%;
-        background: linear-gradient(135deg, #14b8a6, #2563eb);
-        display: flex; align-items: center; justify-content: center;
-        flex-shrink: 0;
-      }
-      .badge-pending {
-        font-size: 9px; font-weight: 700; padding: 2px 8px;
-        border-radius: 999px; background: #fef9c3; color: #b45309; border: 1px solid #fde68a;
-      }
-      .badge-approved {
-        font-size: 9px; font-weight: 700; padding: 2px 8px;
-        border-radius: 999px; background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7;
-      }
-      .badge-failed {
-        font-size: 9px; font-weight: 700; padding: 2px 8px;
-        border-radius: 999px; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5;
-      }
-    </style>
-
     <!-- MAIN CONTENT -->
-    <div class="flex-1 bg-white">
+    <div class="flex-1 bg-black pb-10">
 
       <!-- DEPOSITS panel (default active) -->
       <div id="tab-deposits" class="tx-panel">
-        <div class="text-center text-gray-400 py-10 text-xs">Loading transactions...</div>
+        <div class="text-center text-gray-400 py-12 text-xs">
+          <div class="w-12 h-12 rounded-full border border-[#00ff00]/30 flex items-center justify-center mx-auto mb-3 text-[#00ff00]">
+            <i class="fas fa-spinner fa-spin text-lg"></i>
+          </div>
+          Loading transactions...
+        </div>
       </div>
 
       <!-- WITHDRAWALS panel (hidden by default) -->
       <div id="tab-withdrawals" class="tx-panel hidden">
-        <div class="text-center text-gray-400 py-10 text-xs">Loading transactions...</div>
+        <div class="text-center text-gray-400 py-12 text-xs">
+          <div class="w-12 h-12 rounded-full border border-[#00ff00]/30 flex items-center justify-center mx-auto mb-3 text-[#00ff00]">
+            <i class="fas fa-spinner fa-spin text-lg"></i>
+          </div>
+          Loading transactions...
+        </div>
       </div>
 
     </div>
@@ -188,20 +191,15 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
         </a>
-        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
 
   </div>
+
   <script>
     function switchTab(el, type) {
       document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
@@ -227,17 +225,16 @@
                }
                if (!res.ok) return null;
                return await res.json();
-           } catch(err) {
+           } catch(e) {
                return null;
            }
        };
 
        const [depRes, withRes] = await Promise.all([
-           doFetch('https://api.satrixai.com/api/deposits/history'),
-           doFetch('https://api.satrixai.com/api/withdrawals/history')
+           doFetch(`${window.API_BASE || "http://localhost:5000"}/api/deposits/my`),
+           doFetch(`${window.API_BASE || "http://localhost:5000"}/api/withdrawals/history`)
        ]);
        
-       // API shape: { success, data: { data: [...], pagination: {...} } }
        let deposits    = Array.isArray(depRes?.data?.data) ? depRes.data.data : (Array.isArray(depRes?.data) ? depRes.data : []);
        let withdrawals = Array.isArray(withRes?.data?.withdrawals) ? withRes.data.withdrawals : (Array.isArray(withRes?.data?.data) ? withRes.data.data : (Array.isArray(withRes?.data) ? withRes.data : []));
 
@@ -249,9 +246,7 @@
                amount:   parseFloat(item.amount || 0),
                fee:      parseFloat(item.fee || 0),
                netAmount: parseFloat(item.netAmount || (item.amount ? item.amount * 0.94 : 0)),
-               // crypto field already contains the full label e.g. "USDT (TRC20)"
                currency: item.crypto || item.currency || item.coinType || 'USDT',
-               // _createdAt is the Sanity timestamp field
                date:     item._createdAt || item.requestedAt || item.createdAt || item.fundedAt || item.date || new Date().toISOString()
            }));
        };
@@ -264,7 +259,15 @@
            if (!container) return;
 
            if (items.length === 0) {
-               container.innerHTML = '<div class="text-center text-gray-400 py-10 text-xs">No transactions found</div>';
+               container.innerHTML = `
+                 <div class="text-center text-gray-400 py-16 text-xs">
+                   <div class="w-14 h-14 rounded-2xl bg-[#0a0f0c] border border-[#00ff00]/30 flex items-center justify-center mx-auto mb-3 shadow-[0_0_15px_rgba(0,255,0,0.1)]">
+                     <i class="fas fa-receipt text-[#00ff00] text-lg"></i>
+                   </div>
+                   <p class="font-bold text-white text-sm mb-1">No Transactions Found</p>
+                   <p class="text-gray-400 text-[11px]">Records for this category will appear here</p>
+                 </div>
+               `;
                return;
            }
 
@@ -282,8 +285,7 @@
                if (item.status === 'failed' || item.status === 'rejected') { badgeClass = 'badge-failed'; badgeText = 'Failed'; }
 
                let amountSign = isDeposit ? '+' : '-';
-               let amountColor = isDeposit ? 'text-emerald-500' : 'text-red-500';
-               if (badgeClass === 'badge-failed') amountColor = isDeposit ? 'text-emerald-400' : 'text-red-400';
+               let amountColor = isDeposit ? 'text-[#00ff00]' : 'text-red-400';
 
                const displayAmount = isDeposit ? item.amount : item.netAmount;
                const feeText = isDeposit ? '' : ` • Fee: $${item.fee > 0 ? item.fee.toFixed(2) : (item.amount * 0.06).toFixed(2)}`;
@@ -291,17 +293,17 @@
                return `
                <div class="tx-row">
                  <div class="tx-icon">
-                   <svg width="22" height="22" viewBox="0 0 24 24" fill="white">${svgIcon}</svg>
+                   <svg width="20" height="20" viewBox="0 0 24 24">${svgIcon}</svg>
                  </div>
                  <div class="flex-1 min-w-0">
                    <div class="flex items-center gap-2 mb-0.5">
-                     <span class="text-xs font-bold text-gray-800">${title}</span>
+                     <span class="text-xs font-bold text-white">${title}</span>
                      <span class="${badgeClass}">${badgeText}</span>
                    </div>
                     <p class="text-[10px] text-gray-400 uppercase">${item.currency} • ${formatDate(item.date)}${feeText}</p>
                  </div>
                  <div class="text-right flex-shrink-0 mr-1">
-                   <p class="text-xs font-bold ${amountColor}">${amountSign}$${displayAmount.toFixed(2)}</p>
+                   <p class="text-xs font-extrabold ${amountColor}">${amountSign}$${displayAmount.toFixed(2)}</p>
                    <p class="text-[9px] text-gray-400 uppercase">${displayAmount.toFixed(2)} ${item.currency}</p>
                  </div>
                </div>

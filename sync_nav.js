@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const folder = 'c:\\Users\\Spark.DESKTOP-F75SGV0\\Desktop\\SatrixNow';
+const folder = 'c:\\Users\\Spark.DESKTOP-F75SGV0\\Desktop\\Blockvextrade';
 const files = fs.readdirSync(folder).filter(f => f.endsWith('.html'));
 
 // The precise, correct CSS for the bottom nav
@@ -25,7 +25,7 @@ function processHTMLForActiveNav(filename) {
     const isTeam = filename === 'teams.html';
     const isAccount = !isHome && !isStaking && !isTeam;
 
-    const activeClass = 'text-[#4f8cff]';
+    const activeClass = 'text-[#00ff00]';
     const inactiveClass = 'text-[#94a3b8]';
 
     return `<!-- BOTTOM NAV -->

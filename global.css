@@ -1,10 +1,1097 @@
-::-webkit-scrollbar {
-  width: 4px;
-  display: none;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5f5;
-  border-radius: 10px;
+/* ============================================================
+   GLOBAL STAKE AI - PURE GREEN AND PURE BLACK THEME (NO GRADIENTS)
+   ============================================================ */
+
+:root {
+  --pure-black: #000000;
+  --pure-green: #00ff00;
+  --pure-green-hover: #059669;
+  --pure-white: #ffffff;
 }
 
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  display: block;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border-radius: 4px;
+}
+
+/* Base Body & Document - PURE BLACK */
+html, body {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Containers & Wrappers - PURE BLACK */
+body.bg-\[\#f0f4f8\],
+div.bg-\[\#f0f4f8\],
+.bg-\[\#f0f4f8\],
+.bg-\[\#f8fafc\],
+.bg-\[\#f4f6f8\],
+.bg-\[\#eef1f6\],
+.bg-\[\#f3f6f9\],
+.bg-\[\#e4f0fa\],
+.bg-gray-100,
+.bg-gray-50,
+.bg-white,
+.bg-slate-50,
+.bg-slate-100 {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #00ff00 !important;
+}
+
+/* ALL Headers & Banners - PURE GREEN (NO GRADIENTS) */
+.gradient-bg,
+.gradient-top,
+.header-bg,
+.gradient-header,
+.top-header-gradient,
+.gradient-banner,
+[class*="bg-gradient"] {
+  background: #00ff00 !important;
+  background-color: #00ff00 !important;
+  background-image: none !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+/* Text, headings, and icons inside Pure Green Headers - SOLID BOLD BLACK (except settings-btn and langDropdown) */
+.gradient-bg *:not(.settings-btn):not(.settings-btn *):not(#langDropdown):not(#langDropdown *),
+.gradient-top *:not(.settings-btn):not(.settings-btn *):not(#langDropdown):not(#langDropdown *),
+.header-bg *:not(.settings-btn):not(.settings-btn *):not(#langDropdown):not(#langDropdown *),
+.gradient-header *:not(.settings-btn):not(.settings-btn *):not(#langDropdown):not(#langDropdown *),
+.top-header-gradient *:not(.settings-btn):not(.settings-btn *):not(#langDropdown):not(#langDropdown *),
+.gradient-banner *:not(.settings-btn):not(.settings-btn *):not(#langDropdown):not(#langDropdown *) {
+  color: #000000 !important;
+}
+
+/* Settings button - Circular Solid Black Pill with Electric Green Gear */
+.settings-btn,
+.gradient-bg .settings-btn,
+.gradient-top .settings-btn {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+  color: #00ff00 !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.settings-btn i,
+.settings-btn *,
+.gradient-bg .settings-btn *,
+.gradient-top .settings-btn * {
+  color: #00ff00 !important;
+}
+
+/* Stat cards inside green banners - dark translucent pill with bold black text */
+.gradient-top .stat-card,
+.gradient-bg .stat-card,
+.stat-card {
+  background: rgba(0, 0, 0, 0.12) !important;
+  border: 1px solid rgba(0, 0, 0, 0.22) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.gradient-top .stat-card *,
+.gradient-bg .stat-card *,
+.stat-card * {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+.gradient-top .stat-card p,
+.gradient-bg .stat-card p,
+.stat-card p {
+  color: #000000 !important;
+}
+
+/* Buttons - PURE GREEN BACKGROUND with BLACK TEXT */
+.btn-gradient,
+.btn-deposit,
+.btn-primary,
+.btn-gradient-active,
+.whatsapp-btn,
+button[type="submit"],
+.btn {
+  background: #00ff00 !important;
+  background-color: #00ff00 !important;
+  background-image: none !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.btn-withdraw {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+  color: #00ff00 !important;
+  border: 1px solid #00ff00 !important;
+}
+
+/* Tabs & Tab Indicator (Login / Register etc) */
+.tabs-wrapper {
+  background: #000000 !important;
+  border: 1px solid #00ff00 !important;
+  border-radius: 9999px !important;
+  padding: 4px !important;
+  position: relative !important;
+}
+
+#tabIndicator {
+  background: #00ff00 !important;
+  background-color: #00ff00 !important;
+  background-image: none !important;
+  border-radius: 9999px !important;
+  z-index: 1 !important;
+  position: absolute !important;
+  top: 4px !important;
+  left: 4px !important;
+  width: calc(50% - 4px) !important;
+  height: calc(100% - 8px) !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.auth-tab-btn {
+  flex: 1 !important;
+  padding: 8px 16px !important;
+  position: relative !important;
+  z-index: 10 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  border-radius: 9999px !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: color 0.25s ease !important;
+}
+
+/* Active tab text (over pure neon green pill) MUST BE SOLID BLACK */
+.auth-tab-btn.active-tab,
+#loginTab.active-tab,
+#registerTab.active-tab {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+/* Inactive tab text (over pure black background) MUST BE PURE NEON GREEN */
+.auth-tab-btn.inactive-tab,
+#loginTab.inactive-tab,
+#registerTab.inactive-tab {
+  color: #00ff00 !important;
+  font-weight: 700 !important;
+}
+
+/* Inputs, Textareas, Selects - PURE BLACK WITH PURE GREEN BORDER */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea,
+.input,
+.phone-input,
+.cc-search,
+.cc-trigger,
+.phone-input-group .phone-input {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #00ff00 !important;
+  outline: none !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.input:focus,
+.phone-input:focus,
+.cc-search:focus {
+  border: 2px solid #00ff00 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Checkboxes & Radios - PURE GREEN ACCENT */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: #00ff00 !important;
+  cursor: pointer !important;
+  width: 15px;
+  height: 15px;
+}
+
+input::placeholder,
+textarea::placeholder,
+.cc-search::placeholder {
+  color: #ffffff !important;
+  opacity: 0.8 !important;
+}
+
+::-webkit-input-placeholder {
+  color: #ffffff !important;
+  opacity: 0.8 !important;
+}
+:-moz-placeholder {
+  color: #ffffff !important;
+  opacity: 0.8 !important;
+}
+::-moz-placeholder {
+  color: #ffffff !important;
+  opacity: 0.8 !important;
+}
+:-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 0.8 !important;
+}
+
+/* Chrome / Safari Autofill Override (Fix white background on password/email) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #000000 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid #00ff00 !important;
+  caret-color: #ffffff !important;
+}
+
+/* All Text, Labels, Headings & Descriptions - CRISP WHITE ON DARK BACKGROUNDS */
+body,
+p:not(.gradient-bg *):not(.gradient-top *):not(.gradient-header *):not(.btn-gradient *),
+span:not(.text-accent):not([class*="text-[#00ff00]"]):not(.btn-gradient *):not(.gradient-bg *):not(.gradient-top *):not(.gradient-header *),
+h1:not(.gradient-bg *):not(.gradient-top *):not(.gradient-header *):not([class*="text-[#00ff00]"]):not(.text-accent),
+h2:not(.gradient-bg *):not(.gradient-top *):not(.gradient-header *):not([class*="text-[#00ff00]"]):not(.text-accent),
+h3:not(.gradient-bg *):not(.gradient-top *):not(.gradient-header *):not([class*="text-[#00ff00]"]):not(.text-accent),
+h4:not(.gradient-bg *):not(.gradient-top *):not(.gradient-header *):not([class*="text-[#00ff00]"]):not(.text-accent),
+h5:not(.gradient-bg *):not(.gradient-top *):not(.gradient-header *):not([class*="text-[#00ff00]"]):not(.text-accent),
+label,
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+.text-gray-600,
+.text-gray-500,
+.text-slate-800,
+.text-slate-700,
+.text-slate-600,
+.text-slate-500,
+.text-gray-400,
+.text-slate-400,
+.text-gray-300,
+.text-slate-300,
+.text-gray-200,
+.text-slate-200,
+.text-neutral-400,
+.text-zinc-400,
+.text-white,
+.text-muted {
+  color: #ffffff !important;
+}
+
+/* Secondary subtle text (timestamps, minor notes) */
+.text-sub,
+.text-secondary {
+  color: #d1d5db !important;
+}
+
+.tab-item {
+  color: #9ca3af !important;
+  transition: all 0.25s ease;
+  border-radius: 8px;
+}
+
+.tab-item:hover {
+  color: #ffffff !important;
+}
+
+.tab-item.active {
+  background: #00ff00 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 12px rgba(0, 255, 0, 0.35) !important;
+}
+
+.tab-item.active::after,
+.tab-item::after {
+  display: none !important;
+  content: none !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+/* Accent texts and links */
+.text-\[\#4f8cff\],
+.text-blue-500,
+.text-blue-600,
+.text-blue-400,
+a.text-blue-500,
+[class*="text-[#00ff00]"],
+.text-neon-green {
+  color: #00ff00 !important;
+}
+
+/* Icon Bubbles & Badges */
+.bg-blue-50,
+.bg-blue-100,
+.bg-emerald-50,
+.bg-emerald-100,
+.bg-green-50,
+.bg-green-100,
+.bg-teal-50,
+.bg-teal-100,
+.bg-cyan-50,
+.bg-indigo-50,
+.bg-purple-50,
+.bg-purple-100,
+.bg-orange-50,
+.bg-amber-50,
+.bg-yellow-50,
+.bg-yellow-100,
+.bg-\[\#e8f1ff\],
+.bg-\[\#e8efff\],
+.bg-\[\#f0f6ff\],
+[class*="e8f1ff"],
+[class*="e8efff"],
+[class*="f0f6ff"],
+#liveFeedContainer .rounded-full,
+[id*="liveFeed"] .rounded-full,
+.plan-card .rounded-full {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border: 1px solid #00ff00 !important;
+  color: #00ff00 !important;
+  box-shadow: none !important;
+}
+
+div:has(> .fa-whatsapp),
+div:has(> .fab.fa-whatsapp),
+div:has(> i.fa-whatsapp),
+div:has(> i.fab.fa-whatsapp),
+div:has(> .fa-check-circle),
+a[href*="whatsapp"] div.rounded-2xl,
+a[href*="whatsapp"] div.rounded-xl {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border: 1px solid #00ff00 !important;
+  color: #00ff00 !important;
+  box-shadow: none !important;
+}
+
+.text-emerald-500,
+.text-emerald-600,
+.text-green-500,
+.text-green-600 {
+  color: #00ff00 !important;
+}
+
+/* Feature Cards across About and Info pages */
+.feature-card {
+  background: #0a0f0c !important;
+  background-color: #0a0f0c !important;
+  border: 1px solid rgba(0, 255, 0, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: #00ff00 !important;
+  box-shadow: 0 8px 25px rgba(0, 255, 0, 0.22) !important;
+}
+
+/* Feature card hover - Icon turns solid black over pure neon green badge */
+.feature-card:hover .feature-icon-box,
+.feature-card.group:hover .feature-icon-box,
+.feature-icon-box:hover {
+  background: #00ff00 !important;
+  background-color: #00ff00 !important;
+  border-color: #00ff00 !important;
+  color: #000000 !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.45) !important;
+}
+
+.feature-card:hover .feature-icon-box i,
+.feature-card:hover .feature-icon-box .fas,
+.feature-card:hover .feature-icon-box *,
+.feature-card.group:hover .feature-icon-box i,
+.feature-card.group:hover .feature-icon-box .fas,
+.feature-card.group:hover .feature-icon-box *,
+.feature-icon-box:hover i,
+.feature-icon-box:hover .fas,
+.feature-icon-box:hover * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Feature card title turns neon green on card hover */
+.feature-card:hover .feature-card-title,
+.feature-card.group:hover .feature-card-title,
+.feature-card:hover [class*="group-hover:text-[#00ff00]"],
+.group:hover [class*="group-hover:text-[#00ff00]"] {
+  color: #00ff00 !important;
+}
+
+/* Generic group-hover overrides for text-black and text-[#00ff00] */
+.group:hover .group-hover\:text-black,
+.group:hover [class*="group-hover:text-black"],
+.group:hover [class*="group-hover:text-black"] * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+.group:hover .group-hover\:bg-\[\#00ff00\],
+.group:hover [class*="group-hover:bg-[#00ff00]"] {
+  background-color: #00ff00 !important;
+}
+
+/* Oval / Pill Badges */
+span.rounded-full,
+.badge-pill,
+[class*="rounded-full"] {
+  border-radius: 9999px !important;
+}
+
+/* Dark Theme Hover Overrides (Eliminate blinding white hover states across app) */
+.hover\:bg-gray-50:hover,
+.hover\:bg-slate-50:hover,
+.hover\:bg-gray-100:hover,
+.hover\:bg-slate-100:hover,
+.hover\:bg-gray-200:hover,
+.hover\:bg-blue-50:hover,
+[class*="hover:bg-gray-50"]:hover,
+[class*="hover:bg-slate-50"]:hover,
+[class*="hover:bg-gray-100"]:hover,
+[class*="hover:bg-slate-100"]:hover,
+[class*="hover:bg-gray-200"]:hover,
+[class*="hover:bg-blue-50"]:hover,
+.divide-y > a:hover,
+.divide-y > div:hover,
+.divide-y > button:not(#logoutBtn):hover {
+  background-color: #0d1811 !important;
+  background: #0d1811 !important;
+  color: #ffffff !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease !important;
+}
+
+.hover\:bg-red-50:hover,
+[class*="hover:bg-red-50"]:hover {
+  background-color: #1f0b0b !important;
+  background: #1f0b0b !important;
+  color: #ef4444 !important;
+}
+
+/* Ensure hovered list items keep crisp white text and neon green chevrons */
+.divide-y > a:hover span,
+.divide-y > div:hover span,
+.divide-y > a:hover .text-gray-700,
+.divide-y > div:hover .text-gray-700,
+.divide-y > a:hover .text-gray-800,
+.divide-y > div:hover .text-gray-800 {
+  color: #ffffff !important;
+}
+
+.divide-y > a:hover .fa-chevron-right,
+.divide-y > div:hover .fa-chevron-right {
+  color: #00ff00 !important;
+}
+
+/* All borders */
+.border-gray-100,
+.border-gray-200,
+.border-gray-300,
+.border-slate-100,
+.border-slate-200,
+.border-blue-100,
+.border-blue-200,
+.border-\[\#4f8cff\] {
+  border-color: #00ff00 !important;
+}
+
+/* Bottom Navigation Bar - PURE BLACK WITH PURE GREEN ACCENTS */
+.bottom-nav {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border-top: 2px solid #00ff00 !important;
+  box-shadow: none !important;
+}
+
+.bottom-nav .nav-item {
+  color: #555555 !important;
+}
+
+.bottom-nav .nav-item.text-\[\#4f8cff\],
+.bottom-nav .nav-item.text-\[\#00ff00\],
+.bottom-nav .nav-item.active {
+  color: #00ff00 !important;
+  font-weight: 700 !important;
+}
+
+.bottom-nav .nav-item:hover {
+  color: #00ff00 !important;
+}
+
+/* Cards & Modals */
+#whatsappOverlay {
+  background: rgba(0, 0, 0, 0.9) !important;
+}
+
+#whatsappCard {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border: 2px solid #00ff00 !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+
+.whatsapp-title {
+  color: #00ff00 !important;
+}
+
+.whatsapp-body {
+  color: #ffffff !important;
+}
+
+.whatsapp-icon-wrap {
+  background: #00ff00 !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+#whatsappCloseBtn {
+  background: #000000 !important;
+  border: 1px solid #00ff00 !important;
+  color: #00ff00 !important;
+}
+
+/* Country Picker Dropdown */
+.cc-dropdown {
+  background: #000000 !important;
+  border: 1px solid #00ff00 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+}
+
+.cc-search-wrap {
+  background: #000000 !important;
+  border-bottom: 1px solid #00ff00 !important;
+}
+
+.cc-item {
+  color: #ffffff !important;
+  background: #000000 !important;
+  transition: background 0.15s ease, color 0.15s ease !important;
+}
+
+/* Country names explicitly PURE WHITE */
+.cc-item .name {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+/* Country dial code in electric neon green */
+.cc-item .code {
+  color: #00ff00 !important;
+  font-weight: 600 !important;
+}
+
+/* Hover & Selected states - neon green pill background with crisp black text */
+.cc-item:hover,
+.cc-item.selected {
+  background: #00ff00 !important;
+  color: #000000 !important;
+}
+
+.cc-item:hover .name,
+.cc-item.selected .name,
+.cc-item:hover .code,
+.cc-item.selected .code {
+  color: #000000 !important;
+}
+
+/* Language Dropdown Guarantee */
+#langDropdown {
+  background: #0a0f0c !important;
+  background-color: #0a0f0c !important;
+  border: 1px solid #00ff00 !important;
+  box-shadow: 0 4px 25px rgba(0, 255, 0, 0.3) !important;
+  z-index: 99999 !important;
+}
+
+#langDropdown div {
+  background: transparent !important;
+}
+
+#langDropdown button {
+  background: transparent !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  cursor: pointer !important;
+}
+
+#langDropdown button span,
+#langDropdown button font {
+  color: #ffffff !important;
+}
+
+#langDropdown button:hover {
+  background: #00ff00 !important;
+  background-color: #00ff00 !important;
+  color: #000000 !important;
+}
+
+#langDropdown button:hover span,
+#langDropdown button:hover font {
+  color: #000000 !important;
+}
+
+/* Universal Modal Dark Theme Guarantee */
+.modal-overlay,
+.modal-backdrop,
+#stakeModal {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.modal-container,
+#stakeModal .modal-container,
+[class*="modal-container"] {
+  background: #0a0f0c !important;
+  background-color: #0a0f0c !important;
+  border: 1.5px solid #00ff00 !important;
+  box-shadow: 0 0 35px rgba(0, 255, 0, 0.25), 0 20px 45px rgba(0, 0, 0, 0.95) !important;
+  color: #ffffff !important;
+}
+
+.modal-container .detail-label {
+  color: #e5e7eb !important;
+}
+
+.modal-container .detail-value {
+  color: #ffffff !important;
+}
+
+.modal-container .detail-row {
+  border-bottom: 1px solid rgba(0, 255, 0, 0.2) !important;
+}
+
+.modal-container input {
+  background-color: #050806 !important;
+  color: #ffffff !important;
+  border-color: rgba(0, 255, 0, 0.35) !important;
+}
+
+/* Method Cards Guarantee in Deposit */
+.method-card {
+  background-color: #000000 !important;
+  border-color: rgba(0, 255, 0, 0.25) !important;
+}
+
+.method-card:hover {
+  background-color: #0a0f0c !important;
+  border-color: #00ff00 !important;
+}
+
+.method-card.active,
+#selectScreen .method-card.active,
+.method-card[class*="active"] {
+  background-color: #0d1711 !important;
+  background: #0d1711 !important;
+  border-color: #00ff00 !important;
+  box-shadow: 0 0 18px rgba(0, 255, 0, 0.25) !important;
+}
+
+.method-card.active p,
+.method-card.active span:not(.method-badge) {
+  color: #ffffff !important;
+}
+
+.method-card.active .method-badge-auto {
+  background: #00ff00 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+#methodSheet {
+  background: #0a0f0c !important;
+  border: 1.5px solid #00ff00 !important;
+}
+
+
+
+/* Remove native number input spinners (arrows) across all browsers */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
+}
+
+/* ============================================================
+   SHADCN UI SELECT COMPONENT STYLES
+   ============================================================ */
+.shadcn-select {
+  position: relative;
+  width: 100%;
+}
+
+.shadcn-select-trigger {
+  background: #0a0f0c !important;
+  background-color: #0a0f0c !important;
+  border: 1px solid #00ff00 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.12) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.shadcn-select-trigger:hover,
+.shadcn-select-trigger:focus {
+  border-color: #00ff00 !important;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.25) !important;
+  outline: none !important;
+}
+
+.shadcn-select-trigger .select-value-text {
+  color: #ffffff !important;
+}
+
+.shadcn-select-trigger .select-chevron {
+  color: #00ff00 !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.shadcn-select-content {
+  background: #0a0f0c !important;
+  background-color: #0a0f0c !important;
+  border: 1px solid #00ff00 !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 255, 0, 0.2) !important;
+  border-radius: 14px !important;
+  z-index: 9999 !important;
+}
+
+.shadcn-select-item {
+  color: #ffffff !important;
+  background: transparent !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+  cursor: pointer !important;
+}
+
+.shadcn-select-item span {
+  color: #ffffff !important;
+}
+
+.shadcn-select-item .item-check {
+  color: #00ff00 !important;
+}
+
+.shadcn-select-item:hover,
+.shadcn-select-item[aria-selected="true"] {
+  background: rgba(0, 255, 0, 0.1) !important;
+}
+
+.shadcn-select-item:hover {
+  background: #00ff00 !important;
+  background-color: #00ff00 !important;
+  color: #000000 !important;
+}
+
+.shadcn-select-item:hover span {
+  color: #000000 !important;
+}
+
+.shadcn-select-item:hover .item-check {
+  color: #000000 !important;
+}
+
+
+
+/* Universal Header Back Button Styling & Hover Effect */
+.header-bg a[href*="back"],
+.header-bg a[href*="index.html"],
+.header-bg a[href*="account.html"],
+.gradient-header a[href*="back"],
+.gradient-header a[href*="index.html"],
+.gradient-header a[href*="account.html"],
+.gradient-top a[href*="back"],
+.gradient-top a[href*="index.html"],
+.gradient-top a[href*="account.html"],
+.top-header-gradient a[href*="back"],
+.top-header-gradient a[href*="index.html"],
+.top-header-gradient a[href*="account.html"],
+a[href*="history.back()"],
+a:has(> i.fa-chevron-left),
+a:has(> i.fa-arrow-left),
+button:has(> i.fa-chevron-left),
+button:has(> i.fa-arrow-left) {
+  transition: all 0.2s ease !important;
+}
+
+/* Ensure hover NEVER turns pitch black and icon is always crisp */
+.header-bg a:has(i.fa-chevron-left):hover,
+.header-bg a:has(i.fa-arrow-left):hover,
+.gradient-header a:has(i.fa-chevron-left):hover,
+.gradient-header a:has(i.fa-arrow-left):hover,
+.gradient-top a:has(i.fa-chevron-left):hover,
+.gradient-top a:has(i.fa-arrow-left):hover,
+.top-header-gradient a:has(i.fa-chevron-left):hover,
+.top-header-gradient a:has(i.fa-arrow-left):hover,
+a[href*="index.html"].hover\:bg-black:hover,
+a[href*="account.html"].hover\:bg-black:hover,
+a[href*="history.back()"]:hover {
+  background-color: rgba(0, 0, 0, 0.18) !important;
+  color: #000000 !important;
+}
+
+.header-bg a:has(i.fa-chevron-left):hover *,
+.header-bg a:has(i.fa-arrow-left):hover *,
+.gradient-header a:has(i.fa-chevron-left):hover *,
+.gradient-header a:has(i.fa-arrow-left):hover *,
+.gradient-top a:has(i.fa-chevron-left):hover *,
+.gradient-top a:has(i.fa-arrow-left):hover *,
+.top-header-gradient a:has(i.fa-chevron-left):hover *,
+.top-header-gradient a:has(i.fa-arrow-left):hover *,
+a[href*="index.html"].hover\:bg-black:hover *,
+a[href*="account.html"].hover\:bg-black:hover *,
+a[href*="history.back()"]:hover * {
+  color: #000000 !important;
+}
+
+/* Tactile click active state */
+.header-bg a:has(i.fa-chevron-left):active,
+.header-bg a:has(i.fa-arrow-left):active,
+.gradient-header a:has(i.fa-chevron-left):active,
+.gradient-header a:has(i.fa-arrow-left):active,
+.gradient-top a:has(i.fa-chevron-left):active,
+.gradient-top a:has(i.fa-arrow-left):active,
+.top-header-gradient a:has(i.fa-chevron-left):active,
+.top-header-gradient a:has(i.fa-arrow-left):active,
+a[href*="index.html"].hover\:bg-black:active,
+a[href*="account.html"].hover\:bg-black:active,
+a[href*="history.back()"]:active {
+  transform: scale(0.92) !important;
+  background-color: rgba(0, 0, 0, 0.28) !important;
+}
+
+/* ========================================================
+   SHADCN UI SELECT COMPONENT STYLES
+   ======================================================== */
+.shadcn-select {
+  position: relative;
+  width: 100%;
+  font-family: inherit;
+  user-select: none;
+}
+
+.shadcn-select-trigger {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background-color: #0a0f0c !important;
+  border: 1px solid #00ff00 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.12) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.875rem 1rem !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.shadcn-select-trigger:hover {
+  border-color: #00ff00 !important;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.25) !important;
+}
+
+.shadcn-select-trigger:focus,
+.shadcn-select-trigger[aria-expanded="true"] {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.35), 0 0 25px rgba(0, 255, 0, 0.3) !important;
+  border-color: #00ff00 !important;
+}
+
+.shadcn-select-trigger .select-chevron {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  color: #00ff00 !important;
+}
+
+.shadcn-select-content {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin-top: 0.5rem !important;
+  background-color: #0a0f0c !important;
+  border: 1px solid #00ff00 !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 255, 0, 0.25) !important;
+  padding: 0.375rem !important;
+  z-index: 100 !important;
+  overflow-y: auto !important;
+  max-height: 16rem !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  transform-origin: top !important;
+  transition: opacity 150ms ease, transform 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.shadcn-select-content::-webkit-scrollbar {
+  width: 5px;
+}
+.shadcn-select-content::-webkit-scrollbar-track {
+  background: #0a0f0c;
+  border-radius: 4px;
+}
+.shadcn-select-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.3);
+  border-radius: 4px;
+}
+.shadcn-select-content::-webkit-scrollbar-thumb:hover {
+  background: #00ff00;
+}
+
+.shadcn-select-item {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: 0.625rem 0.75rem 0.625rem 2.25rem !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  border-radius: 0.5rem !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+}
+
+.shadcn-select-item:hover,
+.shadcn-select-item:focus {
+  background-color: #00ff00 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+.shadcn-select-item:hover .item-check,
+.shadcn-select-item:focus .item-check {
+  color: #000000 !important;
+}
+
+.shadcn-select-item[aria-selected="true"] {
+  background-color: rgba(0, 255, 0, 0.12) !important;
+}
+
+.shadcn-select-item[aria-selected="true"]:hover {
+  background-color: #00ff00 !important;
+  color: #000000 !important;
+}
+
+.item-check {
+  position: absolute !important;
+  left: 0.625rem !important;
+  color: #00ff00 !important;
+  font-size: 0.75rem !important;
+  transition: color 0.15s ease !important;
+}
+
+
+
+/* ============================================================
+   ACTIVE TABS UNIVERSAL RULE:
+   Any active tab (over pure green background) MUST HAVE SOLID BOLD BLACK TEXT
+   ============================================================ */
+.tab-item.active,
+.level-tab.active,
+.btn-gradient-active,
+.active-tab,
+.auth-tab-btn.active-tab,
+#loginTab.active-tab,
+#registerTab.active-tab,
+button[class*="tab"].active,
+div[class*="tab"].active,
+a[class*="tab"].active,
+button.active,
+[role="tab"][aria-selected="true"],
+.nav-pills .active {
+  background: #00ff00 !important;
+  background-color: #00ff00 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+.tab-item.active *,
+.level-tab.active *,
+.btn-gradient-active *,
+.active-tab *,
+button[class*="tab"].active *,
+div[class*="tab"].active *,
+a[class*="tab"].active * {
+  color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+/* ============================================================
+   DEPOSIT & GREEN ACTION BUTTONS:
+   Guarantee Solid Black Text (#000000) on all Deposit / Green buttons
+   ============================================================ */
+.btn-deposit,
+button.btn-deposit,
+a.btn-deposit,
+.btn-deposit.text-white,
+button.btn-deposit.text-white,
+[class*="btn-deposit"],
+.btn-deposit *,
+button.btn-deposit *,
+a.btn-deposit *,
+a[href*="deposit.html"].btn-deposit,
+button[onclick*="deposit.html"],
+.btn-gradient,
+button.btn-gradient,
+a.btn-gradient,
+[class*="btn-gradient"],
+button.header-bg,
+a.header-bg,
+button[class*="header-bg"],
+button[class*="bg-[#00ff00]"],
+a[class*="bg-[#00ff00]"],
+button.bg-\[\#00ff00\],
+a.bg-\[\#00ff00\],
+.btn-primary,
+button.btn-primary {
+  background: #00ff00 !important;
+  background-color: #00ff00 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+.btn-gradient *,
+button.btn-gradient *,
+a.btn-gradient *,
+[class*="btn-gradient"] *,
+button.header-bg *,
+a.header-bg *,
+button[class*="header-bg"] *,
+button[class*="bg-[#00ff00]"] *,
+a[class*="bg-[#00ff00]"] *,
+button.bg-\[\#00ff00\] *,
+a.bg-\[\#00ff00\] *,
+.btn-primary *,
+button.btn-primary * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
 
   <script src="./protect.js"></script>
@@ -8,21 +9,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <title>My Team - SatrixNow</title>
+  <title>My Team - Blockvextrade</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #f0f4f8;
+      background-color: #000000;
       padding-bottom: 70px; 
     }
 
     .gradient-bg {
-      background: linear-gradient(135deg, #4f8cff, #6ee7ff);
+      background: #00ff00;
     }
     
     .btn-gradient {
-      background: linear-gradient(90deg, #5eead4, #93c5fd);
+      background: #00ff00;
       transition: all 0.3s ease;
     }
 
@@ -41,14 +42,14 @@
     }
     
     .stat-card:hover {
-      border-color: #93c5fd;
+      border-color: #00ff00;
       transform: translateY(-2px);
     }
 
     .member-card {
       background: white;
       border-radius: 20px;
-      border: 1px solid #f1f5f9;
+      border: 1px solid #00ff00;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       display: flex;
       align-items: center;
@@ -61,7 +62,7 @@
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #14b8a6, #2563eb);
+      background: #00ff00;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -72,11 +73,14 @@
     }
     .level-tab {
       transition: all 0.3s ease;
+      color: #ffffff !important;
+      font-weight: 600;
     }
     .level-tab.active {
-      background: linear-gradient(135deg, #4f8cff, #6ee7ff);
-      color: white;
-      font-weight: 600;
+      background: #00ff00 !important;
+      color: #000000 !important;
+      font-weight: 800 !important;
+      box-shadow: 0 0 14px rgba(0, 255, 0, 0.35) !important;
     }
 
     .bottom-nav {
@@ -87,7 +91,7 @@
       background-color: white;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
       z-index: 50;
-      border-top: 1px solid #f1f5f9;
+      border-top: 1px solid #00ff00;
       height: 64px;
     }
     
@@ -129,10 +133,11 @@
   </style>
 
   <script src="./translator.js"></script>
+  <link rel="stylesheet" href="./global.css">
 </head>
 <body class="flex flex-col min-h-screen items-center">
 
-  <div class="w-full max-w-md mx-auto border-x border-gray-100 bg-[#f0f4f8] min-h-screen relative shadow-xl">
+  <div class="w-full max-w-md mx-auto border-x border-gray-100 bg-[#000000] min-h-screen relative shadow-xl">
 
     <!-- HEADER -->
     <div class="gradient-bg text-white pt-5 pb-10 px-5 rounded-b-[40px] shadow-md relative">
@@ -151,11 +156,11 @@
 
     <!-- REFERRAL LINK AREA -->
     <div class="px-3 -mt-10 relative z-10 w-full mb-6">
-      <div class="w-full rounded-2xl p-5 bg-white shadow-lg border border-gray-100">
+      <div class="w-full rounded-2xl p-5 bg-black border border-[#00ff00] shadow-lg border border-gray-100">
         <p class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">My Referral Link</p>
         <div class="flex bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
           <input type="text" id="referralCode" class="w-full bg-transparent p-3 text-gray-700 text-xs outline-none" value="" placeholder="Fetching referral link..." readonly />
-          <button onclick="copyLink()" class="btn-gradient text-white px-5 font-semibold text-xs">
+          <button onclick="copyLink()" class="btn-gradient text-black font-bold px-5 text-xs">
             Copy
           </button>
         </div>
@@ -177,24 +182,24 @@
         </div>
         <div class="stat-card shadow-sm p-3">
           <p class="text-gray-500 text-[10px] mb-1 leading-tight">Referral Commission</p>
-          <p class="text-sm font-bold text-[#4f8cff]" id="totalEarnings">$0.00</p>
+          <p class="text-sm font-bold text-[#00ff00]" id="totalEarnings">$0.00</p>
         </div>
       </div>
     </div>
 
     <!-- LEVELS -->
     <div class="px-3 mb-6">
-      <div class="flex bg-gray-100 rounded-full p-1 mb-4 border border-gray-200">
-        <button class="level-tab active flex-1 py-2 text-xs rounded-full text-gray-600" onclick="switchLevel(this, 1)">Level 1 (10%)</button>
-        <button class="level-tab flex-1 py-2 text-xs rounded-full text-gray-600" onclick="switchLevel(this, 2)">Level 2 (5%)</button>
-        <button class="level-tab flex-1 py-2 text-xs rounded-full text-gray-600" onclick="switchLevel(this, 3)">Level 3 (1%)</button>
+      <div class="flex bg-[#0a0f0c] rounded-full p-1.5 mb-4 border border-[#00ff00]/30 shadow-md">
+        <button class="level-tab active flex-1 py-2 text-xs rounded-full text-black font-extrabold" onclick="switchLevel(this, 1)">Level 1 (10%)</button>
+        <button class="level-tab flex-1 py-2 text-xs rounded-full text-white font-medium hover:text-[#00ff00]" onclick="switchLevel(this, 2)">Level 2 (5%)</button>
+        <button class="level-tab flex-1 py-2 text-xs rounded-full text-white font-medium hover:text-[#00ff00]" onclick="switchLevel(this, 3)">Level 3 (1%)</button>
       </div>
 
       <!-- MEMBER LIST: Level panels -->
       <div id="level-1" class="level-panel space-y-3">
         <!-- Dynmically loaded -->
         <div class="py-10 text-center">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4f8cff] mx-auto mb-3"></div>
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00ff00] mx-auto mb-3"></div>
             <p class="text-xs text-gray-400">Fetching team...</p>
         </div>
       </div>
@@ -209,7 +214,7 @@
     </div>
 
     <!-- NOTIFICATION TOAST -->
-    <div id="toast" class="fixed top-10 right-1/2 translate-x-1/2 bg-[#4f8cff] text-white px-6 py-3 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+    <div id="toast" class="fixed top-10 right-1/2 translate-x-1/2 bg-[#00ff00] text-black font-bold text-xs px-6 py-3 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50">
       Link Copied successfully!
     </div>
 
@@ -224,7 +229,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
         </a>
-        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+        <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
         </a>
@@ -251,7 +256,7 @@
 
     async function fetchReferralConfig() {
         try {
-            const res = await fetch('https://api.satrixai.com/api/users/referral-config');
+            const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referral-config`);
             if (res.ok) {
                 const data = await res.json();
                 const config = data.data || data;
@@ -276,12 +281,12 @@
 
     async function fetchUserDataForLink() {
         try {
-            const res = await fetch('https://api.satrixai.com/api/users/me', { credentials: 'include' });
+            const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, { credentials: 'include' });
             if (res.ok) {
                 const data = await res.json();
                 const user = data.user || data.data || data;
                 if (user && user.referralCode) {
-                    const link = `https://satrixai.com/login.html?ref=${user.referralCode}`;
+                    const link = `https://blockvextrade.com/login.html?ref=${user.referralCode}`;
                     document.getElementById("referralCode").value = link;
                 }
             }
@@ -290,10 +295,10 @@
 
     async function fetchReferralData() {
         try {
-            const p1 = fetch('https://api.satrixai.com/api/users/referrals?level=1', { credentials: 'include' });
-            const p2 = fetch('https://api.satrixai.com/api/users/referrals?level=2', { credentials: 'include' });
-            const p3 = fetch('https://api.satrixai.com/api/users/referrals?level=3', { credentials: 'include' });
-            const pMe = fetch('https://api.satrixai.com/api/users/me', { credentials: 'include' });
+            const p1 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=1`, { credentials: 'include' });
+            const p2 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=2`, { credentials: 'include' });
+            const p3 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=3`, { credentials: 'include' });
+            const pMe = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, { credentials: 'include' });
 
             const [res1, res2, res3, resMe] = await Promise.all([p1, p2, p3, pMe]);
             
@@ -349,7 +354,7 @@
 
         if (!members || members.length === 0) {
             container.innerHTML = `
-                <div class="py-12 text-center bg-white rounded-2xl border border-dashed border-gray-200">
+                <div class="py-12 text-center bg-black border border-[#00ff00] rounded-2xl border border-dashed border-gray-200">
                     <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
                         <i class="fas fa-user-friends text-gray-300"></i>
                     </div>
@@ -380,7 +385,7 @@
                     <p class="text-[9px] font-semibold mt-0.5 ${statusColor}">${statusDisplay}</p>
                   </div>
                   <div class="text-right flex-shrink-0">
-                    <p class="text-xs font-bold text-[#4f8cff]">$${balance}</p>
+                    <p class="text-xs font-bold text-[#00ff00]">$${balance}</p>
                     <p class="text-[9px] text-gray-400">Balance</p>
                     <p class="text-[10px] font-bold text-teal-500 mt-0.5">$${invested}</p>
                     <p class="text-[8px] text-gray-400">Invested</p>
@@ -405,11 +410,13 @@
 
     function switchLevel(element, level) {
       document.querySelectorAll('.level-tab').forEach(el => {
-        el.classList.remove('active');
-        el.classList.add('text-gray-600');
+        el.classList.remove('active', 'text-black', 'font-extrabold');
+        el.classList.add('text-white', 'font-medium');
+        el.style.color = '#ffffff';
       });
-      element.classList.add('active');
-      element.classList.remove('text-gray-600');
+      element.classList.add('active', 'text-black', 'font-extrabold');
+      element.classList.remove('text-white', 'font-medium');
+      element.style.color = '#000000';
 
       document.querySelectorAll('.level-panel').forEach(panel => panel.classList.add('hidden'));
       const activePanel = document.getElementById('level-' + level);

@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SatrixNow</title>
+<title>Blockvextrade</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"/>
@@ -18,11 +19,11 @@ body {
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #4f8cff, #6ee7ff);
+  background: #00ff00;
 }
 
 .input {
-  background: #f8fafc;
+  background: #000000;
   border-radius: 12px;
   padding: 12px 16px;
   width: 100%;
@@ -32,11 +33,16 @@ body {
 }
 
 .input:focus {
-  border-color: #93c5fd;
+  border-color: #00ff00;
 }
 
 .btn-gradient {
-  background: linear-gradient(90deg, #5eead4, #93c5fd);
+  background: #00ff00;
+}
+
+input[type="checkbox"] {
+  accent-color: #00ff00 !important;
+  cursor: pointer !important;
 }
 
 /* Country Picker */
@@ -44,7 +50,7 @@ body {
   display: flex;
   align-items: center;
   gap: 7px;
-  background: #f8fafc;
+  background: #000000;
   border: 1px solid #e5e7eb;
   border-right: none;
   border-radius: 12px 0 0 12px;
@@ -52,7 +58,7 @@ body {
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: #ffffff;
   white-space: nowrap;
   user-select: none;
   min-width: 80px;
@@ -100,7 +106,7 @@ body {
 
 .cc-search {
   width: 100%;
-  background: #f8fafc;
+  background: #000000;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   padding: 8px 12px;
@@ -110,7 +116,7 @@ body {
 }
 
 .cc-search:focus {
-  border-color: #93c5fd;
+  border-color: #00ff00;
 }
 
 .cc-list {
@@ -131,33 +137,36 @@ body {
   padding: 9px 14px;
   cursor: pointer;
   font-size: 12px;
-  color: #374151;
+  color: #ffffff;
+  background: #000000;
   transition: background 0.15s;
 }
 
 .cc-item:hover {
-  background: #f0f6ff;
+  background: #00ff00;
+  color: #000000;
 }
 
 .cc-item.selected {
-  background: #e8efff;
+  background: #00ff00;
+  color: #000000;
   font-weight: 600;
-  color: #2563eb;
+  color: #00ff00;
 }
 
 .cc-item .code {
   min-width: 38px;
   font-weight: 600;
-  color: #4b5563;
+  color: #00ff00;
   font-size: 11px;
 }
 
 .cc-item.selected .code {
-  color: #2563eb;
+  color: #00ff00;
 }
 
 .cc-item .name {
-  color: #374151;
+  color: #ffffff;
   font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
@@ -172,7 +181,7 @@ body {
 .phone-input-group .phone-input {
   flex: 1;
   min-width: 0;
-  background: #f8fafc;
+  background: #000000;
   border: 1px solid #e5e7eb;
   border-radius: 0 12px 12px 0;
   padding: 12px 12px;
@@ -182,7 +191,7 @@ body {
 }
 
 .phone-input-group .phone-input:focus {
-  border-color: #93c5fd;
+  border-color: #00ff00;
 }
 </style>
 
@@ -195,27 +204,24 @@ body {
 <div class="gradient-bg text-white text-center py-12 px-6 relative">
   <!-- Logo centered -->
   <div class="flex flex-col items-center">
-    <div class=" h-16  overflow-hidden shadow-lg mb-3 border-2 border-white/30" style="background:#0a0f1e;">
-      <img src="./logo.jpeg" alt="SatrixNow Logo" class="w-full h-full object-cover">
+    <div class="w-16 h-16 rounded-2xl overflow-hidden shadow-lg mb-3 border border-[#00ff00]/40 bg-black">
+      <img src="./logo.jpeg" alt="Blockvextrade Logo" class="w-full h-full object-cover">
     </div>
-    <h1 class="text-base font-bold tracking-wide">SatrixNow</h1>
-    <p class="text-[10px] uppercase font-semibold  tracking-[4px] text-white/75 mt-0.5">TECH</p>
+    <h1 class="text-base font-bold tracking-wide">Blockvextrade</h1>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="flex-1 flex justify-center px-4">
-<!-- <div class="bg-white w-full p-6"> -->
-<div class="bg-white w-full py-6 px-3 sm:p-6">
+<!-- <div class="bg-black border border-[#00ff00] w-full p-6"> -->
+<div class="bg-black border border-[#00ff00] w-full py-6 px-3 sm:p-6">
 
 
 <!-- Tabs -->
-<div class="relative flex bg-gray-100 rounded-full p-1 mb-6">
-  <div id="tabIndicator"
-    class="absolute top-1 left-1 w-1/2 h-[calc(100%-8px)] rounded-full bg-gradient-to-r from-teal-300 to-blue-400 transition-all duration-300 ease-in-out">
-  </div>
-  <button id="loginTab" class="flex-1 py-2 relative z-10 text-white font-medium">Login</button>
-  <button id="registerTab" class="flex-1 py-2 relative z-10 text-gray-500 font-medium">Register</button>
+<div class="tabs-wrapper flex mb-6">
+  <div id="tabIndicator"></div>
+  <button type="button" id="loginTab" class="auth-tab-btn active-tab">Login</button>
+  <button type="button" id="registerTab" class="auth-tab-btn inactive-tab">Register</button>
 </div>
 
 <!-- FORMS WRAPPER -->
@@ -240,7 +246,7 @@ body {
   </div>
 
   <div class="flex items-center text-xs text-gray-500">
-    <input type="checkbox" class="mr-2" id="loginAgreement" onchange="toggleLoginBtn()" />
+    <input type="checkbox" class="mr-2" id="loginAgreement" checked onchange="toggleLoginBtn()" />
     I have read and accept the
     <a href="/terms.html" class="text-blue-500 ml-1 cursor-pointer hover:underline">User Agreement</a>
   </div>
@@ -249,9 +255,9 @@ body {
     <a href="/forgotPassword.html">Forgot Password?</a>
   </div>
 
-  <button type="submit" id="loginBtn" disabled
-    class="w-full py-3 rounded-xl btn-gradient text-white font-semibold flex items-center justify-center gap-2 opacity-50 cursor-not-allowed transition-opacity duration-200">
-    <span id="loginBtnText">Sign In</span>
+  <button type="submit" id="loginBtn"
+    class="w-full py-3 rounded-xl btn-gradient text-black font-bold flex items-center justify-center gap-2 cursor-pointer transition-opacity duration-200">
+    <span id="loginBtnText">Login</span>
     <i class="fas fa-spinner fa-spin hidden" id="loginSpinner"></i>
   </button>
 </form>
@@ -316,15 +322,15 @@ body {
 
   <div>
     <div class="flex items-center text-xs text-gray-500">
-      <input type="checkbox" class="mr-2" id="registerAgreement" onchange="toggleRegisterBtn(); clearErr('registerAgreement')" />
+      <input type="checkbox" class="mr-2" id="registerAgreement" checked onchange="toggleRegisterBtn(); clearErr('registerAgreement')" />
       I have read and accept the
       <a href="/terms.html" class="text-blue-500 ml-1 cursor-pointer hover:underline">User Agreement</a>
     </div>
     <p class="text-red-500 text-[11px] mt-1 hidden" id="registerAgreementErr"></p>
   </div>
 
-  <button type="submit" id="registerBtn" disabled
-    class="w-full py-3 rounded-xl btn-gradient text-white font-semibold flex items-center justify-center gap-2 opacity-50 cursor-not-allowed transition-opacity duration-200">
+  <button type="submit" id="registerBtn"
+    class="w-full py-3 rounded-xl btn-gradient text-black font-bold flex items-center justify-center gap-2 cursor-pointer transition-opacity duration-200">
     <span id="registerBtnText">Register</span>
     <i class="fas fa-spinner fa-spin hidden" id="registerSpinner"></i>
   </button>
@@ -619,8 +625,10 @@ loginTab.addEventListener("click", () => {
   registerForm.classList.remove("opacity-100", "translate-x-0");
   registerForm.classList.add("pointer-events-none");
   loginForm.classList.remove("pointer-events-none");
-  loginTab.classList.replace("text-gray-500", "text-white");
-  registerTab.classList.replace("text-white", "text-gray-500");
+  loginTab.classList.add("active-tab");
+  loginTab.classList.remove("inactive-tab");
+  registerTab.classList.add("inactive-tab");
+  registerTab.classList.remove("active-tab");
 });
 
 registerTab.addEventListener("click", () => {
@@ -631,8 +639,10 @@ registerTab.addEventListener("click", () => {
   loginForm.classList.remove("opacity-100", "translate-x-0");
   loginForm.classList.add("pointer-events-none");
   registerForm.classList.remove("pointer-events-none");
-  registerTab.classList.replace("text-gray-500", "text-white");
-  loginTab.classList.replace("text-white", "text-gray-500");
+  registerTab.classList.add("active-tab");
+  registerTab.classList.remove("inactive-tab");
+  loginTab.classList.add("inactive-tab");
+  loginTab.classList.remove("active-tab");
 });
 
 // Password Toggle
@@ -680,24 +690,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-const API_BASE = 'https://api.satrixai.com';
+const API_BASE = window.API_BASE || "http://localhost:5000";
 
 function showToast(msg, type = 'success') {
   window.pToast({ message: msg, type: type });
 }
 
-// ─── BUTTON LOADING STATE ───
 function setLoading(form, loading) {
   const btn     = document.getElementById(form + 'Btn');
   const btnText = document.getElementById(form + 'BtnText');
   const spinner = document.getElementById(form + 'Spinner');
+  if (!btn) return;
   btn.disabled  = loading;
   if (loading) {
-    btnText.textContent = '';
-    spinner.classList.remove('hidden');
+    if (btnText) btnText.textContent = '';
+    if (spinner) spinner.classList.remove('hidden');
   } else {
-    btnText.textContent = (form === 'login') ? 'Sign In' : 'Register';
-    spinner.classList.add('hidden');
+    if (btnText) btnText.textContent = (form === 'login') ? 'Login' : 'Register';
+    if (spinner) spinner.classList.add('hidden');
     // Restore disabled state based on checkbox
     if (form === 'login') toggleLoginBtn();
     if (form === 'register') toggleRegisterBtn();
@@ -796,9 +806,22 @@ async function handleLogin(e) {
       if (userPayload?.username) localStorage.setItem('userName', userPayload.username);
       if (userPayload?.phoneNumber) localStorage.setItem('userPhone', userPayload.phoneNumber);
       showToast('Login successful!', 'success');
-      setTimeout(() => window.location.href = '/index.html', 1200);
+      let targetUrl = localStorage.getItem('redirectAfterLogin') || '/index.html';
+      localStorage.removeItem('redirectAfterLogin');
+      if (!targetUrl || targetUrl.toLowerCase().includes('login')) {
+        targetUrl = '/index.html';
+      }
+      setTimeout(() => window.location.href = targetUrl, 1000);
     } else {
-      showToast(data.message || 'Invalid credentials. Please try again.', 'error');
+      if (res.status === 403 && (data?.requiresVerification || data?.data?.requiresVerification || (data?.message && data.message.toLowerCase().includes("not verified")))) {
+        sessionStorage.setItem("verifyEmail", email);
+        showToast(data.message || "Please verify your email before logging in.", "error");
+        setTimeout(() => {
+          window.location.href = "/otp.html?type=verify-email&email=" + encodeURIComponent(email);
+        }, 1200);
+        return;
+      }
+      showToast(data.message || "Invalid credentials. Please try again.", "error");
     }
   } catch (err) {
     showToast('Network error. Please check your connection.', 'error');
@@ -847,7 +870,20 @@ async function handleRegister(e) {
   if (hasError) return;
 
   const phoneNumber = buildPhone('register');
-  const payload = { username, email, phoneNumber, password };
+  const selectedCountry = selectedCC['register'] || {};
+  const country = selectedCountry.name || 'Canada';
+  const countryCode = selectedCountry.code || '+1';
+  const countryISO = (selectedCountry.iso || 'ca').toUpperCase();
+
+  const payload = {
+    username,
+    email,
+    phoneNumber,
+    password,
+    country,
+    countryCode,
+    countryISO
+  };
   if (referralCode) payload.referralCode = referralCode;
 
   setLoading('register', true);
@@ -860,8 +896,11 @@ async function handleRegister(e) {
     const data = await res.json();
 
     if (res.ok) {
-      showToast('Account created! Please log in.', 'success');
-      setTimeout(() => document.getElementById('loginTab').click(), 1500);
+      sessionStorage.setItem("verifyEmail", email);
+      showToast("Account created! Please verify your email.", "success");
+      setTimeout(() => {
+        window.location.href = "/otp.html?type=verify-email&email=" + encodeURIComponent(email);
+      }, 1000);
     } else {
       showToast(data.message || 'Registration failed. Please try again.', 'error');
     }

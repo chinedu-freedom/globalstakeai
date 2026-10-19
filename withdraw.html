@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
-
   <script src="./protect.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
-  <title>Withdraw - SatrixNow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Withdraw - GlobalStake AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f4f6f8; 
+      font-family: 'Poppins', sans-serif;
+      background-color: #000000; 
       padding-bottom: 70px; 
     }
 
     .header-bg {
-      background-color: #0e7bee; 
-      background: linear-gradient(90deg, #1282ec, #086edf);
+      background: #00ff00 !important;
+      color: #000000 !important;
     }
 
     .bottom-nav {
@@ -29,48 +27,11 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: white;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      background-color: #000000;
       z-index: 50;
-      border-top: 1px solid #f1f5f9;
+      border-top: 2px solid #00ff00;
       height: 64px;
     }
-    
-    
-    
-    
-    
-    .nav-item svg {
-      width: 20px;
-      height: 20px;
-      margin-bottom: 4px;
-      stroke-width: 2;
-    }
-    
-    .nav-item span {
-      font-size: 10px;
-      font-weight: 500;
-    }
-    
-    
-    
-    
-    
-    .nav-item svg {
-      width: 20px;
-      height: 20px;
-      margin-bottom: 4px;
-      stroke-width: 2;
-    }
-    
-    .nav-item span {
-      font-size: 10px;
-      font-weight: 500;
-    }
-    
-    
-    
-    
 
     .overflow-y-auto::-webkit-scrollbar {
       display: none;
@@ -87,133 +48,187 @@
       from { opacity: 0; transform: translateY(-5px); }
       to { opacity: 1; transform: translateY(0); }
     }
+  
+    /* Remove native number input spinners (arrows) across all browsers */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none !important;
+      margin: 0 !important;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield !important;
+      appearance: textfield !important;
+    }
   </style>
 
   <script src="./translator.js"></script>
   <script src="./toast.js"></script>
+  <script src="./shadcn-select.js"></script>
+  <link rel="stylesheet" href="./global.css">
 </head>
-<body class="flex flex-col min-h-screen items-center bg-[#f4f6f8]">
+<body class="flex flex-col min-h-screen items-center bg-black text-white">
 
-  <div class="w-full max-w-md bg-[#eef1f6] min-h-screen relative shadow-2xl mx-auto border-x border-[#e2e8f0] flex flex-col pb-24">
+  <div class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-[#00ff00]/20 flex flex-col pb-24">
 
     <!-- HEADER -->
-    <div class="header-bg text-white px-5 py-4 sticky top-0 z-40 shadow-sm">
+    <div class="bg-[#00ff00] text-black px-5 py-4 sticky top-0 z-40 shadow-[0_0_20px_rgba(0,255,0,0.25)]">
       <div class="flex items-center relative">
-        <a href="javascript:history.back()" class="absolute left-0 p-2 text-white flex items-center pr-4">
-          <i class="fas fa-chevron-left text-sm"></i>
+        <a href="javascript:history.back()" class="absolute left-0 p-2 text-black flex items-center pr-4 hover:opacity-80 transition cursor-pointer">
+          <i class="fas fa-chevron-left text-sm text-black"></i>
         </a>
-        <h1 class="text-[17px] font-bold w-full text-center tracking-wide">Withdraw</h1>
+        <h1 class="text-[17px] font-black w-full text-center tracking-wide text-black">Withdraw</h1>
       </div>
     </div>
 
     <!-- MAIN CONTENT -->
-    <div class="px-3 pt-6 flex-1 space-y-5">
+    <div class="px-4 pt-6 flex-1 space-y-5">
       
       <!-- Available Balance Card -->
-      <div class="bg-[#e4f0fa] rounded-xl px-5 py-4 flex items-center justify-between border border-[#d2e4f7] shadow-sm">
-        <p class="text-[13px] text-gray-500 font-medium tracking-wide">Available Balance</p>
+      <div class="bg-[#0a0f0c] rounded-2xl px-5 py-4 flex items-center justify-between border border-[#00ff00]/30 shadow-md">
+        <p class="text-xs text-gray-400 font-bold tracking-widest uppercase">Available Balance</p>
         <div class="flex items-center">
-            <span id="availableBalanceDisplay" class="text-base font-bold text-[#427ced] tracking-tight">$0.00</span>
+            <span id="availableBalanceDisplay" class="text-lg font-black text-[#00ff00] tracking-tight">$0.00</span>
         </div>
       </div>
 
-
-
-      <!-- Select Payout Method Container -->
-      <div class="space-y-3 pt-1">
-        <!-- <div>
-          <label class="block text-[13px] font-medium text-[#849ab3] mb-2 pl-1">Select Payout Method</label>
-          <div class="relative">
-            <select class="w-full appearance-none bg-[#fbfdfc] border border-[#e2e8f0] text-[#334155] text-[13px] font-medium rounded-xl py-3.5 px-4 focus:outline-none focus:border-[#0e7bee] transition pr-10 shadow-sm cursor-pointer">
-              <option>Select Crypto Method</option>
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#9ca3af]">
-              <i class="fas fa-chevron-down text-xs"></i>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- Select Cryptocurrency Button -->
-        <div class="pt-2">
-          <label class="block text-[13px] font-medium text-[#849ab3] mb-2 pl-1">Select Currency</label>
-          <div class="relative">
-            <select id="crypto-select" class="w-full appearance-none bg-[#fbfdfc] border border-[#e2e8f0] text-[#1e293b] text-[14px] font-bold rounded-xl py-3.5 px-4 focus:outline-none focus:border-[#0e7bee] transition pr-10 shadow-sm cursor-pointer">
-              <option value="USDT">USDT (TRC20)</option>
+      <!-- Withdrawal Form -->
+      <div class="space-y-4 pt-1">
+        
+        <!-- Select Cryptocurrency (Shadcn UI Select) -->
+        <div>
+          <label class="block text-xs font-bold text-gray-300 uppercase tracking-widest mb-2 pl-1">Select Currency</label>
+          <div class="relative w-full shadcn-select" id="crypto-select-wrapper">
+            <select id="crypto-select" class="hidden" tabindex="-1" aria-hidden="true" data-no-shadcn="true">
+              <option value="USDT" selected>USDT (TRC20)</option>
               <option value="USDT-BEP20">USDT (BEP20)</option>
               <option value="BTC">Bitcoin (BTC)</option>
               <option value="LTC">Litecoin (LTC)</option>
             </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#9ca3af]">
-              <i class="fas fa-chevron-down text-xs"></i>
+
+            <!-- Shadcn Trigger Button -->
+            <button
+              type="button"
+              id="crypto-select-trigger"
+              onclick="toggleShadcnSelect('crypto-select-wrapper')"
+              class="shadcn-select-trigger w-full flex items-center justify-between bg-[#0a0f0c] border border-[#00ff00] text-white text-[14px] font-bold rounded-xl py-3.5 px-4 shadow-[0_0_15px_rgba(0,255,0,0.15)] hover:border-[#00ff00] focus:outline-none focus:ring-2 focus:ring-[#00ff00]/30 transition-all duration-200 cursor-pointer text-left"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+            >
+              <span class="select-value-text truncate flex items-center gap-2">USDT (TRC20)</span>
+              <i class="fas fa-chevron-down text-xs text-[#00ff00] transition-transform duration-200 ease-in-out select-chevron ml-2 shrink-0"></i>
+            </button>
+
+            <!-- Shadcn Popover Dropdown -->
+            <div
+              id="crypto-select-content"
+              class="shadcn-select-content absolute left-0 right-0 mt-2 bg-[#0a0f0c] border border-[#00ff00] rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.95),0_0_20px_rgba(0,255,0,0.25)] p-1.5 z-[100] hidden opacity-0 scale-95 -translate-y-1 transition-all duration-150 origin-top overflow-hidden max-h-60 overflow-y-auto no-scrollbar"
+              role="listbox"
+            >
+              <div
+                class="shadcn-select-item group relative flex items-center w-full py-2.5 pl-8 pr-3 text-xs font-semibold rounded-lg text-white hover:bg-[#00ff00] hover:text-black cursor-pointer transition-colors"
+                role="option"
+                data-value="USDT"
+                aria-selected="true"
+                onclick="chooseShadcnOption('crypto-select-wrapper', 'USDT', 'USDT (TRC20)')"
+              >
+                <i class="fas fa-check text-[#00ff00] group-hover:text-black text-xs absolute left-2.5 item-check"></i>
+                <span class="truncate">USDT (TRC20)</span>
+              </div>
+              <div
+                class="shadcn-select-item group relative flex items-center w-full py-2.5 pl-8 pr-3 text-xs font-semibold rounded-lg text-white hover:bg-[#00ff00] hover:text-black cursor-pointer transition-colors"
+                role="option"
+                data-value="USDT-BEP20"
+                aria-selected="false"
+                onclick="chooseShadcnOption('crypto-select-wrapper', 'USDT-BEP20', 'USDT (BEP20)')"
+              >
+                <i class="fas fa-check text-[#00ff00] group-hover:text-black text-xs absolute left-2.5 item-check hidden"></i>
+                <span class="truncate">USDT (BEP20)</span>
+              </div>
+              <div
+                class="shadcn-select-item group relative flex items-center w-full py-2.5 pl-8 pr-3 text-xs font-semibold rounded-lg text-white hover:bg-[#00ff00] hover:text-black cursor-pointer transition-colors"
+                role="option"
+                data-value="BTC"
+                aria-selected="false"
+                onclick="chooseShadcnOption('crypto-select-wrapper', 'BTC', 'Bitcoin (BTC)')"
+              >
+                <i class="fas fa-check text-[#00ff00] group-hover:text-black text-xs absolute left-2.5 item-check hidden"></i>
+                <span class="truncate">Bitcoin (BTC)</span>
+              </div>
+              <div
+                class="shadcn-select-item group relative flex items-center w-full py-2.5 pl-8 pr-3 text-xs font-semibold rounded-lg text-white hover:bg-[#00ff00] hover:text-black cursor-pointer transition-colors"
+                role="option"
+                data-value="LTC"
+                aria-selected="false"
+                onclick="chooseShadcnOption('crypto-select-wrapper', 'LTC', 'Litecoin (LTC)')"
+              >
+                <i class="fas fa-check text-[#00ff00] group-hover:text-black text-xs absolute left-2.5 item-check hidden"></i>
+                <span class="truncate">Litecoin (LTC)</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Withdrawal Form Elements (Always Visible) -->
+        <!-- Withdrawal Form Elements -->
         <div id="expanded-form" class="space-y-4 pt-1 animate-fade-in">
           
           <!-- Amount Input -->
           <div>
             <div class="flex justify-between items-center mb-2 pl-1 pr-1">
-              <label class="block text-[13px] font-medium text-[#849ab3]">Amount (USD)</label>
-              <button id="max-btn" class="text-[#0e7bee] text-[12px] font-bold hover:opacity-80 transition uppercase tracking-wide">MAX</button>
+              <label class="block text-xs font-bold text-gray-300 uppercase tracking-widest">Amount (USD)</label>
+              <button id="max-btn" type="button" class="text-[#00ff00] text-xs font-extrabold hover:underline transition uppercase tracking-wide cursor-pointer">MAX</button>
             </div>
             <div class="relative">
               <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <span class="text-[15px] font-semibold text-[#849ab3]">$</span>
+                <span class="text-[15px] font-bold text-gray-400">$</span>
               </div>
-              <input type="number" id="amount-input" class="w-full bg-[#fbfdfc] border border-[#e2e8f0] text-[#1e293b] text-[15px] font-semibold rounded-xl py-3.5 pl-8 pr-4 focus:outline-none focus:border-[#0e7bee] focus:ring-1 focus:ring-[#0e7bee]/50 transition shadow-sm placeholder:text-[#cbd5e1] placeholder:font-normal" placeholder="0.00" step="0.01">
+              <input type="number" id="amount-input" class="w-full bg-[#050806] border border-[#00ff00]/35 text-white text-[15px] font-bold rounded-xl py-3.5 pl-8 pr-4 focus:outline-none focus:border-[#00ff00] focus:ring-1 focus:ring-[#00ff00] transition shadow-sm placeholder:text-gray-500" placeholder="0.00" step="0.01">
             </div>
-            <p class="text-[11px] text-[#94a3b8] mt-1.5 pl-1 tracking-wide font-medium">Minimum amount: $20.00</p>
+            <p id="min-amount-label" class="text-[11px] text-gray-400 mt-1.5 pl-1 tracking-wide font-medium">Minimum amount: <strong class="text-[#00ff00]">$20.00</strong></p>
           </div>
 
           <!-- Wallet Address Input -->
           <div>
-            <label class="block text-[13px] font-medium text-[#849ab3] mb-2 pl-1">Wallet Address</label>
-            <input type="text" id="wallet-input" class="w-full bg-[#fbfdfc] border border-[#e2e8f0] text-[#1e293b] text-[13px] rounded-xl py-3.5 px-4 focus:outline-none focus:border-[#0e7bee] focus:ring-1 focus:ring-[#0e7bee]/50 transition shadow-sm font-mono tracking-tight" placeholder="Paste your address here">
-            <p class="text-[11px] text-[#94a3b8] mt-1.5 pl-1 font-medium tracking-wide">Make sure to use a BEP20 compatible address</p>
+            <label class="block text-xs font-bold text-gray-300 uppercase tracking-widest mb-2 pl-1">Wallet Address</label>
+            <input type="text" id="wallet-input" class="w-full bg-[#050806] border border-[#00ff00]/35 text-white text-[13px] font-mono rounded-xl py-3.5 px-4 focus:outline-none focus:border-[#00ff00] focus:ring-1 focus:ring-[#00ff00] transition shadow-sm tracking-tight placeholder:text-gray-500" placeholder="Paste your address here">
+            <p id="wallet-network-tip" class="text-[11px] text-gray-400 mt-1.5 pl-1 font-medium tracking-wide">Make sure to use a <span class="text-[#00ff00] font-semibold" id="network-display-name">TRC20</span> compatible address</p>
           </div>
 
           <!-- Dynamic Summary Card -->
-          <div id="summary-card" class="bg-[#fbfdfc] border border-[#e2e8f0] rounded-xl p-5 shadow-sm hidden">
+          <div id="summary-card" class="bg-[#0a0f0c] border border-[#00ff00]/35 rounded-2xl p-5 shadow-lg hidden">
             <div class="space-y-4">
               <div class="flex justify-between items-center text-[13px]">
-                <span class="text-[#64748b] font-medium tracking-wide">Amount</span>
-                <span id="summary-amount" class="font-bold text-[#1e293b] tracking-wide">$0.00</span>
+                <span class="text-gray-400 font-medium tracking-wide">Amount</span>
+                <span id="summary-amount" class="font-bold text-white tracking-wide">$0.00</span>
               </div>
               <div class="flex justify-between items-center text-[13px]">
-                <span id="fee-label" class="text-[#64748b] font-medium tracking-wide">Fee (6%)</span>
-                <span id="summary-fee" class="font-bold text-red-500 tracking-wide">-$0.00</span>
+                <span id="fee-label" class="text-gray-400 font-medium tracking-wide">Fee (6%)</span>
+                <span id="summary-fee" class="font-bold text-red-400 tracking-wide">-$0.00</span>
               </div>
-              <div class="pt-4 border-t border-[#e2e8f0]">
+              <div class="pt-4 border-t border-[#00ff00]/20">
                 <div class="flex justify-between items-end">
-                  <span class="text-[12px] font-medium text-[#64748b] mb-0.5 tracking-wide">You will receive</span>
+                  <span class="text-[12px] font-semibold text-gray-300 mb-0.5 tracking-wide">You will receive</span>
                   <div class="text-right">
-                    <div id="summary-final" class="text-[20px] font-bold text-emerald-500 tracking-tight">0.00 USDT</div>
-                    <div id="summary-fiat" class="text-[11px] text-[#94a3b8] font-medium mt-1">≈ $0.00</div>
+                    <div id="summary-final" class="text-[20px] font-black text-[#00ff00] tracking-tight">0.00 USDT</div>
+                    <div id="summary-fiat" class="text-[11px] text-gray-400 font-medium mt-1">Payout via USDT</div>
                   </div>
                 </div>
               </div>
-              <p class="text-center text-[11px] text-[#94a3b8] font-medium mt-0.5 pt-3">1 USDT = $1.00</p>
+              <p class="text-center text-[11px] text-gray-400 font-medium mt-0.5 pt-3 border-t border-white/5">1 USDT = $1.00</p>
             </div>
           </div>
 
-          <!-- Error Alert removed in favor of Toast -->
-
           <!-- Submit Button -->
           <div class="pt-2">
-            <button id="submit-btn" disabled class="w-full py-3.5 rounded-xl font-bold transition-all duration-300 bg-slate-200 text-slate-400 cursor-not-allowed text-[14px]">
+            <button id="submit-btn" disabled class="w-full py-4 rounded-2xl font-black transition-all duration-300 bg-gray-900 text-gray-500 cursor-not-allowed text-[14px]">
               Submit Withdrawal
             </button>
           </div>
 
-          <!-- Info Warning -->
         </div>
       </div>
       
     </div>
-
-    <!-- CRYPTO SELECTION MODAL REMOVED -->
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
@@ -230,50 +245,66 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
         </a>
-        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>
       </div>
     </div>
   </div>
+
   <script>
     // Elements
     const cryptoSelect = document.getElementById('crypto-select');
-    
-    const expandedForm = document.getElementById('expanded-form');
     const maxBtn = document.getElementById('max-btn');
     const amountInput = document.getElementById('amount-input');
     const walletInput = document.getElementById('wallet-input');
     const summaryCard = document.getElementById('summary-card');
     const submitBtn = document.getElementById('submit-btn');
+    const networkDisplayName = document.getElementById('network-display-name');
     
     // Variables
-    let remainingLimit = 1000000; // Default large
+    let remainingLimit = 1000000;
     let minimumAmount = 20.00;
     let withdrawalFeePercent = 6;
     let availableBalance = 0.00;
 
-    // Crypto Select logic
     function getSelectedCryptoSymbol() {
       const val = cryptoSelect.value;
       if (val === 'USDT-BEP20') return 'USDT';
       return val;
     }
 
-    cryptoSelect.addEventListener('change', validateForm);
+    function updateNetworkTip() {
+      const val = cryptoSelect.value;
+      if (val === 'USDT') {
+        networkDisplayName.innerText = 'TRC20';
+      } else if (val === 'USDT-BEP20') {
+        networkDisplayName.innerText = 'BEP20';
+      } else if (val === 'BTC') {
+        networkDisplayName.innerText = 'Bitcoin';
+      } else if (val === 'LTC') {
+        networkDisplayName.innerText = 'Litecoin';
+      }
+    }
+
+    cryptoSelect.addEventListener('change', () => {
+      updateNetworkTip();
+      validateForm();
+    });
 
     async function fetchWithdrawalConfig() {
       try {
-        // Fetch limits
-        const limitRes = await fetch('https://api.satrixai.com/api/withdrawals/limits', { credentials: 'include' });
+        const limitRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/withdrawals/limits`, { credentials: 'include' });
         if (limitRes.ok) {
           const limitData = await limitRes.json();
           const d = limitData.data;
           minimumAmount = d.minWithdrawal || 20;
           withdrawalFeePercent = d.withdrawalFeePercent || 6;
-          // Update UI helper text
-          document.querySelector('p[class*="Minimum amount"]').innerText = `Minimum amount: $${minimumAmount.toFixed(2)}`;
+          
+          const minLabel = document.getElementById('min-amount-label');
+          if (minLabel) minLabel.innerHTML = `Minimum amount: <strong class="text-[#00ff00]">$${minimumAmount.toFixed(2)}</strong>`;
+          
           const feeLabel = document.getElementById('fee-label');
           if (feeLabel) feeLabel.innerText = `Fee (${withdrawalFeePercent}%)`;
         }
@@ -282,42 +313,38 @@
       }
     }
 
-    // Fetch Dashboard Stats
     async function fetchStats() {
-        try {
-            const statsRes = await fetch('https://api.satrixai.com/api/users/dashboard-stats', {
-                credentials: 'include'
-            });
-            if (statsRes.ok) {
-                const statsData = await statsRes.json();
-                const stats = statsData.data || statsData;
-                
-                if (stats.currentAssets !== undefined) {
-                    // Set available balance to strictly Earnings (Commission)
-                    let comm = stats.totalCommission !== undefined ? stats.totalCommission : (stats.commission || 0);
-                    availableBalance = comm;
-                    
-                    document.getElementById("availableBalanceDisplay").innerText = `$${availableBalance.toFixed(2)}`;
-                }
-            }
-        } catch (error) {
-            console.error("Error fetching dashboard stats:", error);
+      try {
+        const statsRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/dashboard-stats`, {
+          credentials: 'include'
+        });
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          const stats = statsData.data || statsData;
+          
+          if (stats.currentAssets !== undefined) {
+            let comm = stats.totalCommission !== undefined ? stats.totalCommission : (stats.commission || 0);
+            availableBalance = comm;
+            document.getElementById("availableBalanceDisplay").innerText = `$${availableBalance.toFixed(2)}`;
+          }
         }
+      } catch (error) {
+        console.error("Error fetching dashboard stats:", error);
+      }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        fetchStats();
-        fetchWithdrawalConfig();
-        
-        // Load previously saved address
-        const savedAddress = localStorage.getItem('savedWithdrawalAddress');
-        if (savedAddress) {
-            walletInput.value = savedAddress;
-            validateForm();
-        }
+      fetchStats();
+      fetchWithdrawalConfig();
+      updateNetworkTip();
+      
+      const savedAddress = localStorage.getItem('savedWithdrawalAddress');
+      if (savedAddress) {
+        walletInput.value = savedAddress;
+        validateForm();
+      }
     });
 
-    // Validate and update summary on input
     amountInput.addEventListener('input', validateForm);
     walletInput.addEventListener('input', validateForm);
 
@@ -332,69 +359,67 @@
       const hasValidAmount = !isNaN(amount) && amountStr.trim() !== '';
       const hasAddress = walletInput.value.trim().length > 0;
 
-      // Use dynamic fee percentage
       const feePercent = withdrawalFeePercent / 100;
 
-      // Reset states
-      summaryCard.classList.add('hidden');
-      submitBtn.disabled = true;
-      submitBtn.classList.add('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
-      submitBtn.classList.remove('bg-[#0e7bee]', 'text-white', 'shadow-lg', 'shadow-[#0e7bee]/30', 'hover:bg-[#0c6cd6]', 'active:scale-[0.98]');
+      if (!hasValidAmount) {
+        summaryCard.classList.add('hidden');
+        submitBtn.disabled = true;
+        submitBtn.className = "w-full py-4 rounded-2xl font-black transition-all duration-300 bg-gray-900 text-gray-500 cursor-not-allowed text-[14px]";
+        return;
+      }
 
-      if (hasValidAmount) {
-        // Calculate fee
-        const calculatedFee = amount * feePercent;
-        const netAmount = Math.max(0, amount - calculatedFee);
+      const calculatedFee = amount * feePercent;
+      const netAmount = Math.max(0, amount - calculatedFee);
 
-        // Show summary
-        summaryCard.classList.remove('hidden');
-        document.getElementById('summary-amount').innerText = `$${amount.toFixed(2)}`;
-        document.getElementById('summary-fee').innerText = `-$${calculatedFee.toFixed(2)}`;
-        document.getElementById('summary-final').innerText = `$${netAmount.toFixed(2)}`;
-        document.getElementById('summary-fiat').innerText = `Payout via ${getSelectedCryptoSymbol()}`;
+      summaryCard.classList.remove('hidden');
+      document.getElementById('summary-amount').innerText = `$${amount.toFixed(2)}`;
+      document.getElementById('summary-fee').innerText = `-$${calculatedFee.toFixed(2)}`;
+      document.getElementById('summary-final').innerText = `$${netAmount.toFixed(2)}`;
+      document.getElementById('summary-fiat').innerText = `Payout via ${getSelectedCryptoSymbol()}`;
 
-        // Enable button if has amount and address (no toasts here)
-        if (amount > 0 && hasAddress) {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
-          submitBtn.classList.add('bg-[#0e7bee]', 'text-white', 'shadow-lg', 'shadow-[#0e7bee]/30', 'hover:bg-[#0c6cd6]', 'active:scale-[0.98]');
-        }
+      if (amount > 0 && hasAddress) {
+        submitBtn.disabled = false;
+        submitBtn.className = "w-full py-4 rounded-2xl font-black transition-all duration-300 bg-[#00ff00] text-black shadow-[0_0_20px_rgba(0,255,0,0.35)] hover:bg-[#00e000] active:scale-95 cursor-pointer text-[14px]";
+      } else {
+        submitBtn.disabled = true;
+        submitBtn.className = "w-full py-4 rounded-2xl font-black transition-all duration-300 bg-gray-900 text-gray-500 cursor-not-allowed text-[14px]";
       }
     }
 
     function showError(msg) {
-      window.pToast({ message: msg, type: "error" });
+      if (window.pToast) {
+        window.pToast({ message: msg, type: "error" });
+      } else {
+        alert(msg);
+      }
     }
 
     submitBtn.addEventListener('click', async () => {
       const amount = parseFloat(amountInput.value);
       const wallet = walletInput.value.trim();
 
-      // Final validation on click
       if (isNaN(amount) || amount < minimumAmount) {
         showError(`Minimum withdrawal amount is $${minimumAmount.toFixed(2)}`);
         return;
       }
       if (amount > availableBalance) {
-        showError(`Amount exceeds available balance.`);
+        showError("Amount exceeds available balance.");
         return;
       }
       if (wallet.length < 5) {
-        showError(`Please enter a valid wallet address.`);
+        showError("Please enter a valid wallet address.");
         return;
       }
       
-      // Save address locally
       localStorage.setItem('savedWithdrawalAddress', wallet);
       
-      // Update button state
       const originalText = submitBtn.innerText;
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
-      submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+      submitBtn.className = "w-full py-4 rounded-2xl font-black transition-all duration-300 bg-gray-800 text-gray-400 cursor-not-allowed text-[14px]";
       submitBtn.disabled = true;
 
       try {
-        const res = await fetch('https://api.satrixai.com/api/withdrawals', {
+        const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/withdrawals`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -404,20 +429,27 @@
             crypto: getSelectedCryptoSymbol()
           })
         });
-        
-        const data = await res.json();
-        
+
+        const data = await res.json().catch(() => ({}));
+
         if (res.ok) {
-          window.pToast({ message: data.message || "Withdrawal request submitted successfully!", type: "success" });
-          setTimeout(() => { window.location.href = './history.html'; }, 2000);
+          if (window.pToast) {
+            window.pToast({ message: "Withdrawal request submitted successfully!", type: "success" });
+          } else {
+            alert("Withdrawal submitted!");
+          }
+          amountInput.value = '';
+          validateForm();
+          fetchStats();
         } else {
-          showError(data.message || "Failed to submit withdrawal");
+          showError(data.message || "Withdrawal failed. Please try again.");
         }
       } catch (err) {
-        showError("Network error. Please try again.");
+        console.error("Withdrawal error:", err);
+        showError("Network error. Please try again later.");
       } finally {
-        submitBtn.innerHTML = originalText;
-        submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+        submitBtn.innerText = originalText;
+        validateForm();
       }
     });
   </script>

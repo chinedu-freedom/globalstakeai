@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
 
   <script src="./protect.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - SatrixAi</title>
+    <title>About Us - GlobalStake AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f0f4f8; padding-bottom: 70px; }
-        .gradient-top { background: linear-gradient(135deg, #14b8a6, #2563eb); }
+        body { font-family: 'Poppins', sans-serif; background-color: #000000; padding-bottom: 70px; }
+        .gradient-top { background: #00ff00; }
         .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -21,47 +22,74 @@
       background-color: white;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
       z-index: 50;
-      border-top: 1px solid #f1f5f9;
+      border-top: 1px solid #00ff00;
       height: 64px;
     }
-        .nav-item.active { color: #4f8cff; }
+        .nav-item.active { color: #00ff00; }
         .nav-item { color: #94a3b8; transition: color 0.3s ease; }
-        .stat-card { background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); }
-        .feature-card { background: white; border: 1px solid #f1f5f9; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: all 0.3s ease; }
-        .feature-card:hover { transform: translateY(-2px); border-color: #4f8cff; }
+        .stat-card { background: rgba(0, 0, 0, 0.12) !important; backdrop-filter: blur(8px); border: 1px solid rgba(0, 0, 0, 0.22) !important; }
+        .feature-card { background: #0a0f0c !important; border: 1px solid rgba(0, 255, 0, 0.4) !important; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: all 0.3s ease; color: #ffffff !important; }
+        .feature-card:hover { transform: translateY(-3px); border-color: #00ff00 !important; box-shadow: 0 8px 25px rgba(0, 255, 0, 0.25) !important; }
+        .feature-card:hover .feature-icon-box,
+        .feature-card.group:hover .feature-icon-box,
+        .feature-icon-box:hover {
+          background-color: #00ff00 !important;
+          border-color: #00ff00 !important;
+          transform: scale(1.1) !important;
+          box-shadow: 0 0 20px rgba(0, 255, 0, 0.45) !important;
+        }
+        .feature-card:hover .feature-icon-box i,
+        .feature-card:hover .feature-icon-box .fas,
+        .feature-card:hover .feature-icon-box *,
+        .feature-card.group:hover .feature-icon-box i,
+        .feature-card.group:hover .feature-icon-box .fas,
+        .feature-card.group:hover .feature-icon-box *,
+        .feature-icon-box:hover i,
+        .feature-icon-box:hover .fas,
+        .feature-icon-box:hover * {
+          color: #000000 !important;
+          -webkit-text-fill-color: #000000 !important;
+        }
+        .feature-card:hover .feature-card-title,
+        .feature-card.group:hover .feature-card-title,
+        .feature-card:hover .group-hover\:text-\[\#00ff00\],
+        .group:hover .group-hover\:text-\[\#00ff00\] {
+          color: #00ff00 !important;
+        }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
+  <link rel="stylesheet" href="./global.css">
 </head>
 <body class="flex flex-col items-center">
 
-    <div class="w-full max-w-md bg-white min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+    <div class="w-full max-w-md bg-black border border-[#00ff00] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
         
         <!-- HEADER STATS (SCROLLABLE) -->
-        <div class="gradient-top text-white px-5 pt-8 pb-10 rounded-b-[40px] shadow-lg w-full z-20">
+        <div class="gradient-top text-black px-5 pt-8 pb-10 rounded-b-[40px] shadow-lg w-full z-20">
             <div class="flex items-center gap-4 mb-4">
-                <a href="index.html" class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition shadow-sm">
-                    <i class="fas fa-chevron-left text-xs"></i>
+                <a href="index.html" class="w-10 h-10 flex items-center justify-center bg-black/10 rounded-full hover:bg-black/20 transition shadow-sm text-black">
+                    <i class="fas fa-chevron-left text-xs text-black"></i>
                 </a>
-                <h1 class="text-base font-bold tracking-tight">Built for Endurance</h1>
+                <h1 class="text-base font-bold tracking-tight text-black">Built for Endurance</h1>
             </div>
             
-            <p class="text-[10px] text-white/90 text-center mb-5 font-medium leading-relaxed max-w-[85%] mx-auto">
+            <p class="text-xs text-black text-center mb-5 font-semibold leading-relaxed max-w-[85%] mx-auto">
                 Cloud mining infrastructure designed for long-term performance and sustainable digital asset growth.
             </p>
 
             <div class="grid grid-cols-3 gap-2">
                 <div class="stat-card p-3 rounded-2xl flex flex-col items-center text-center">
-                    <p class="text-base font-bold">10M+</p>
-                    <p class="text-[7px] uppercase tracking-widest text-white/70">Active Users</p>
+                    <p class="text-base font-extrabold text-black">10M+</p>
+                    <p class="text-[8px] uppercase tracking-widest text-black/80 font-bold">Active Users</p>
                 </div>
                 <div class="stat-card p-3 rounded-2xl flex flex-col items-center text-center">
-                    <p class="text-base font-bold">99.9%</p>
-                    <p class="text-[7px] uppercase tracking-widest text-white/70">Uptime</p>
+                    <p class="text-base font-extrabold text-black">99.9%</p>
+                    <p class="text-[8px] uppercase tracking-widest text-black/80 font-bold">Uptime</p>
                 </div>
                 <div class="stat-card p-3 rounded-2xl flex flex-col items-center text-center">
-                    <p class="text-base font-bold">24/7</p>
-                    <p class="text-[7px] uppercase tracking-widest text-white/70">Support</p>
+                    <p class="text-base font-extrabold text-black">24/7</p>
+                    <p class="text-[8px] uppercase tracking-widest text-black/80 font-bold">Support</p>
                 </div>
             </div>
         </div>
@@ -70,56 +98,65 @@
         <div class="px-4 mt-6 space-y-8 flex-grow pb-12 overflow-y-auto overflow-x-hidden">
             
             <!-- ABOUT OVERVIEW -->
-            <div class="bg-white rounded-3xl p-6 feature-card text-center relative overflow-hidden">
+            <div class="bg-black border border-[#00ff00] rounded-3xl p-6 feature-card text-center relative overflow-hidden">
                 <div class="w-16 h-16 rounded-3xl bg-teal-50 flex items-center justify-center text-teal-600 mx-auto mb-4 shadow-sm">
                     <i class="fas fa-building text-lg"></i>
                 </div>
-                <h2 class="text-sm font-bold text-slate-800 mb-4 uppercase tracking-widest">About SatrixAi</h2>
+                <h2 class="text-sm font-bold text-slate-800 mb-4 uppercase tracking-widest">About Blockvextrade</h2>
                 <div class="text-[11px] text-slate-500 leading-relaxed font-medium space-y-4 text-left">
-                    <p><strong>SATRIXNOW</strong> was established in 2020 in the United Kingdom. It's a global leader in AI-driven cryptocurrency mining and PoS blockchain infrastructure. We are dedicated to making high-performance digital asset mining accessible, efficient, and profitable for everyone.</p>
-                    <p>Founded by a team of blockchain technology experts and fintech veterans, SatrixNow has built a state-of-the-art ecosystem that leverages cutting-edge hardware and proprietary AI optimization technology to deliver consistent results for its growing global community.</p>
-                    <p>Through advanced automation, intelligent mining systems, and decentralized infrastructure, SatrixAI continues to redefine the future of digital finance and blockchain participation.</p>
-                    <p>By 2025, SatrixAi successfully expanded its digital infrastructure footprint into emerging markets across Africa, prioritizing sustainable energy solutions and decentralized computing power. This expansion reflects the company’s commitment to innovation, accessibility, and global financial inclusion.</p>
-                    <p>SatrixAi believes in building a stronger foundation for a more inclusive, decentralized, and technologically advanced financial ecosystem where individuals worldwide can participate in the future of digital assets.</p>
+                    <p><strong>BLOCKVEXTRADE</strong> was established in 2020 in the United Kingdom. It's a global leader in AI-driven cryptocurrency mining and PoS blockchain infrastructure. We are dedicated to making high-performance digital asset mining accessible, efficient, and profitable for everyone.</p>
+                    <p>Founded by a team of blockchain technology experts and fintech veterans, Blockvextrade has built a state-of-the-art ecosystem that leverages cutting-edge hardware and proprietary AI optimization technology to deliver consistent results for its growing global community.</p>
+                    <p>Through advanced automation, intelligent mining systems, and decentralized infrastructure, Blockvextrade continues to redefine the future of digital finance and blockchain participation.</p>
+                    <p>By 2025, Blockvextrade successfully expanded its digital infrastructure footprint into emerging markets across Africa, prioritizing sustainable energy solutions and decentralized computing power. This expansion reflects the company’s commitment to innovation, accessibility, and global financial inclusion.</p>
+                    <p>Blockvextrade believes in building a stronger foundation for a more inclusive, decentralized, and technologically advanced financial ecosystem where individuals worldwide can participate in the future of digital assets.</p>
                 </div>
             </div>
 
             <!-- OUR CORE FOCUS -->
             <div class="space-y-4 mt-6">
-                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Our Core Focus</h3>
+                <div class="text-center mb-1">
+                    <span class="text-[10px] font-bold text-[#00ff00] uppercase tracking-widest px-3 py-1 rounded-full bg-[#0d1711] border border-[#00ff00]/40 inline-block mb-1.5">Pillars of Excellence</span>
+                    <h3 class="text-sm font-extrabold text-white uppercase tracking-wider">Our Core Focus</h3>
+                </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center text-cyan-600 mb-3 shadow-sm group-hover:scale-110 transition"><i class="fas fa-microchip text-xs"></i></div>
-                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">AI-Powered Mining</p>
+                        <div class="feature-icon-box w-11 h-11 rounded-xl bg-black border border-[#00ff00] flex items-center justify-center text-[#00ff00] mb-2.5 shadow-[0_0_12px_rgba(0,255,0,0.18)] transition-all duration-300"><i class="fas fa-microchip text-base"></i></div>
+                        <p class="text-xs font-bold text-white mb-1 leading-tight feature-card-title group-hover:text-[#00ff00] transition-colors">AI-Powered Mining</p>
+                        <p class="text-[9.5px] text-gray-400 leading-snug">Intelligent hashrate optimization</p>
                     </div>
                     <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-3 shadow-sm group-hover:scale-110 transition"><i class="fas fa-network-wired text-xs"></i></div>
-                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">PoS Infrastructure</p>
+                        <div class="feature-icon-box w-11 h-11 rounded-xl bg-black border border-[#00ff00] flex items-center justify-center text-[#00ff00] mb-2.5 shadow-[0_0_12px_rgba(0,255,0,0.18)] transition-all duration-300"><i class="fas fa-network-wired text-base"></i></div>
+                        <p class="text-xs font-bold text-white mb-1 leading-tight feature-card-title group-hover:text-[#00ff00] transition-colors">PoS Infrastructure</p>
+                        <p class="text-[9.5px] text-gray-400 leading-snug">Enterprise validator nodes</p>
                     </div>
                     <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-3 shadow-sm group-hover:scale-110 transition"><i class="fas fa-robot text-xs"></i></div>
-                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">Smart Trading</p>
+                        <div class="feature-icon-box w-11 h-11 rounded-xl bg-black border border-[#00ff00] flex items-center justify-center text-[#00ff00] mb-2.5 shadow-[0_0_12px_rgba(0,255,0,0.18)] transition-all duration-300"><i class="fas fa-robot text-base"></i></div>
+                        <p class="text-xs font-bold text-white mb-1 leading-tight feature-card-title group-hover:text-[#00ff00] transition-colors">Smart Trading</p>
+                        <p class="text-[9.5px] text-gray-400 leading-snug">Algorithmic risk execution</p>
                     </div>
                     <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
-                        <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-600 mb-3 shadow-sm group-hover:scale-110 transition"><i class="fas fa-leaf text-xs"></i></div>
-                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">Sustainable Solutions</p>
+                        <div class="feature-icon-box w-11 h-11 rounded-xl bg-black border border-[#00ff00] flex items-center justify-center text-[#00ff00] mb-2.5 shadow-[0_0_12px_rgba(0,255,0,0.18)] transition-all duration-300"><i class="fas fa-leaf text-base"></i></div>
+                        <p class="text-xs font-bold text-white mb-1 leading-tight feature-card-title group-hover:text-[#00ff00] transition-colors">Sustainable Solutions</p>
+                        <p class="text-[9.5px] text-gray-400 leading-snug">Eco-friendly renewable power</p>
                     </div>
                     <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
-                        <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 mb-3 shadow-sm group-hover:scale-110 transition"><i class="fas fa-globe text-xs"></i></div>
-                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">Decentralized Tech</p>
+                        <div class="feature-icon-box w-11 h-11 rounded-xl bg-black border border-[#00ff00] flex items-center justify-center text-[#00ff00] mb-2.5 shadow-[0_0_12px_rgba(0,255,0,0.18)] transition-all duration-300"><i class="fas fa-globe text-base"></i></div>
+                        <p class="text-xs font-bold text-white mb-1 leading-tight feature-card-title group-hover:text-[#00ff00] transition-colors">Decentralized Tech</p>
+                        <p class="text-[9.5px] text-gray-400 leading-snug">Robust peer-to-peer security</p>
                     </div>
                     <div class="rounded-2xl p-4 feature-card flex flex-col items-center text-center group">
-                        <div class="w-10 h-10 rounded-xl bg-yellow-50 flex items-center justify-center text-yellow-600 mb-3 shadow-sm group-hover:scale-110 transition"><i class="fas fa-users text-xs"></i></div>
-                        <p class="text-xs font-bold text-slate-800 mb-1 leading-tight">Community Wealth</p>
+                        <div class="feature-icon-box w-11 h-11 rounded-xl bg-black border border-[#00ff00] flex items-center justify-center text-[#00ff00] mb-2.5 shadow-[0_0_12px_rgba(0,255,0,0.18)] transition-all duration-300"><i class="fas fa-users text-base"></i></div>
+                        <p class="text-xs font-bold text-white mb-1 leading-tight feature-card-title group-hover:text-[#00ff00] transition-colors">Community Wealth</p>
+                        <p class="text-[9.5px] text-gray-400 leading-snug">Shared staking distributions</p>
                     </div>
                 </div>
             </div>
 
             <!-- OUR COMMITMENT -->
-            <div class="bg-white rounded-3xl p-6 feature-card border border-slate-100">
+            <div class="bg-black border border-[#00ff00] rounded-3xl p-6 feature-card border border-slate-100">
                 <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center mb-4">Our Commitment</h4>
                 <p class="text-[11px] text-slate-500 leading-relaxed font-medium text-center mb-5">
-                    At SatrixAi, our mission is to combine Artificial Intelligence, blockchain technology, and financial innovation to create smarter earning opportunities for users globally.
+                    At GlobalStake AI, our mission is to combine Artificial Intelligence, blockchain technology, and financial innovation to create smarter earning opportunities for users globally.
                 </p>
                 <div class="grid grid-cols-2 gap-2">
                     <div class="bg-slate-50 rounded-xl p-3 flex items-center justify-center gap-2">
@@ -155,21 +192,21 @@
                 <h3 class="text-base font-bold mb-6 text-center">How It Works</h3>
                 <div class="space-y-6">
                     <div class="flex gap-4 group">
-                        <div class="shrink-0 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">1</div>
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-black border border-[#00ff00]/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">1</div>
                         <div>
                             <p class="text-xs font-bold mb-1">Create Account</p>
                             <p class="text-[10px] text-white/50 leading-relaxed">Sign up for a free account and complete the verification process.</p>
                         </div>
                     </div>
                     <div class="flex gap-4 group">
-                        <div class="shrink-0 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">2</div>
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-black border border-[#00ff00]/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">2</div>
                         <div>
                             <p class="text-xs font-bold mb-1">Choose a Plan</p>
                             <p class="text-[10px] text-white/50 leading-relaxed">Select a mining plan that fits your investment goals and budget.</p>
                         </div>
                     </div>
                     <div class="flex gap-4 group">
-                        <div class="shrink-0 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">3</div>
+                        <div class="shrink-0 w-10 h-10 rounded-full bg-black border border-[#00ff00]/10 flex items-center justify-center text-blue-400 font-bold border border-white/5 group-hover:bg-blue-600 group-hover:text-white transition shadow-lg">3</div>
                         <div>
                             <p class="text-xs font-bold mb-1">Start Earning</p>
                             <p class="text-[10px] text-white/50 leading-relaxed">Watch your earnings grow as our infrastructure works for you 24/7.</p>
@@ -185,28 +222,28 @@
                     <p class="text-[10px] text-slate-400 mt-1">Founding infrastructure in the world's safest jurisdiction.</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-white rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
+                    <div class="bg-black border border-[#00ff00] rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
                         <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500 mb-3 shadow-sm">
                             <i class="fas fa-university text-xs"></i>
                         </div>
                         <p class="text-[11px] font-bold text-slate-800">Financial Discipline</p>
                         <p class="text-[9px] text-slate-400 mt-1">Renowned for strict financial regulations and banking security.</p>
                     </div>
-                    <div class="bg-white rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
+                    <div class="bg-black border border-[#00ff00] rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
                         <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 mb-3 shadow-sm">
                             <i class="fas fa-balance-scale text-xs"></i>
                         </div>
                         <p class="text-[11px] font-bold text-slate-800">Regulatory Clarity</p>
                         <p class="text-[9px] text-slate-400 mt-1">Clear and progressive crypto laws provide stable environment.</p>
                     </div>
-                    <div class="bg-white rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
+                    <div class="bg-black border border-[#00ff00] rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
                         <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500 mb-3 shadow-sm">
                             <i class="fas fa-shield-alt text-xs"></i>
                         </div>
                         <p class="text-[11px] font-bold text-slate-800">Asset Protection</p>
                         <p class="text-[9px] text-slate-400 mt-1">Strong legal frameworks ensure your investments are protected.</p>
                     </div>
-                    <div class="bg-white rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
+                    <div class="bg-black border border-[#00ff00] rounded-2xl p-4 feature-card shadow-sm border border-slate-50 flex flex-col items-center text-center">
                         <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-500 mb-3 shadow-sm">
                             <i class="fas fa-flag text-xs"></i>
                         </div>
@@ -217,7 +254,7 @@
             </div>
 
             <!-- CAPITAL STRENGTH -->
-            <div class="bg-white rounded-3xl p-6 feature-card border border-slate-100">
+            <div class="bg-black border border-[#00ff00] rounded-3xl p-6 feature-card border border-slate-100">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shadow-sm">
                         <i class="fas fa-vault"></i>
@@ -228,17 +265,17 @@
                     </div>
                 </div>
                 <div class="space-y-3">
-                    <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center">
+                    <div class="bg-[#050a07] border border-[#00ff00]/30 rounded-xl p-3 flex justify-between items-center">
                         <p class="text-[10px] font-medium text-slate-600">Strong Reserves</p>
-                        <span class="text-[9px] bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold uppercase tracking-tight">Verified</span>
+                        <span class="text-[9px] bg-black border border-[#00ff00] text-[#00ff00] px-3 py-1 rounded-full font-bold uppercase tracking-wider shadow-[0_0_8px_rgba(0,255,0,0.15)] inline-flex items-center justify-center">Verified</span>
                     </div>
-                    <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center">
+                    <div class="bg-[#050a07] border border-[#00ff00]/30 rounded-xl p-3 flex justify-between items-center">
                         <p class="text-[10px] font-medium text-slate-600">Operational Continuity</p>
-                        <span class="text-[9px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold uppercase tracking-tight">Active</span>
+                        <span class="text-[9px] bg-black border border-[#00ff00] text-[#00ff00] px-3 py-1 rounded-full font-bold uppercase tracking-wider shadow-[0_0_8px_rgba(0,255,0,0.15)] inline-flex items-center justify-center">Active</span>
                     </div>
-                    <div class="bg-slate-50 rounded-xl p-3 flex justify-between items-center">
+                    <div class="bg-[#050a07] border border-[#00ff00]/30 rounded-xl p-3 flex justify-between items-center">
                         <p class="text-[10px] font-medium text-slate-600">User Fund Protection</p>
-                        <span class="text-[9px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-bold uppercase tracking-tight">Insured</span>
+                        <span class="text-[9px] bg-black border border-[#00ff00] text-[#00ff00] px-3 py-1 rounded-full font-bold uppercase tracking-wider shadow-[0_0_8px_rgba(0,255,0,0.15)] inline-flex items-center justify-center">Insured</span>
                     </div>
                 </div>
             </div>
@@ -247,15 +284,15 @@
             <div class="space-y-4">
                 <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Our Partners</h3>
                 <div class="flex overflow-x-auto gap-4 pb-2 no-scrollbar px-2">
-                    <div class="bg-white rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
+                    <div class="bg-black border border-[#00ff00] rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
                         <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-6 h-6 mr-2">
                         <span class="text-[10px] font-bold text-slate-800 uppercase">Binance</span>
                     </div>
-                    <div class="bg-white rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
+                    <div class="bg-black border border-[#00ff00] rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
                         <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" class="w-6 h-6 mr-2">
                         <span class="text-[10px] font-bold text-slate-800 uppercase">Coinbase</span>
                     </div>
-                    <div class="bg-white rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
+                    <div class="bg-black border border-[#00ff00] rounded-2xl px-6 py-4 border border-slate-100 shadow-sm flex items-center justify-center grayscale opacity-60">
                         <i class="fab fa-aws text-base mr-2"></i>
                         <span class="text-[10px] font-bold text-slate-800 uppercase">AWS</span>
                     </div>
@@ -272,7 +309,7 @@
                         <div id="sliderWrapper" class="flex transition-transform duration-500 ease-in-out">
                             <!-- Slide 1: John D. -->
                             <div class="w-full shrink-0 px-2 slide">
-                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                <div class="bg-black border border-[#00ff00] rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
                                     <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
                                     <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
                                         "I've been using this platform for over a year now and the returns have been consistent. The interface is easy to use and withdrawals are processed quickly."
@@ -291,7 +328,7 @@
                             </div>
                             <!-- Slide 2: Sarah M. -->
                             <div class="w-full shrink-0 px-2 slide">
-                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                <div class="bg-black border border-[#00ff00] rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
                                     <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
                                     <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
                                         "Finally found a cloud mining platform I can trust. The transparency and regular updates give me confidence in my investment."
@@ -310,7 +347,7 @@
                             </div>
                             <!-- Slide 3: Michael R. -->
                             <div class="w-full shrink-0 px-2 slide">
-                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                <div class="bg-black border border-[#00ff00] rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
                                     <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
                                     <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
                                         "The customer support team is exceptional. They helped me understand the different plans and choose the right one for my goals."
@@ -329,7 +366,7 @@
                             </div>
                             <!-- Slide 4: Emma L. -->
                             <div class="w-full shrink-0 px-2 slide">
-                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                <div class="bg-black border border-[#00ff00] rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
                                     <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
                                     <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
                                         "As someone who works in finance, I appreciate the detailed reporting and transparency. This platform sets the standard."
@@ -348,7 +385,7 @@
                             </div>
                             <!-- Slide 5: David K. -->
                             <div class="w-full shrink-0 px-2 slide">
-                                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
+                                <div class="bg-black border border-[#00ff00] rounded-3xl p-6 shadow-sm border border-slate-100 relative min-h-[160px] flex flex-col justify-between">
                                     <i class="fas fa-quote-left text-blue-500/10 text-4xl absolute top-4 left-4"></i>
                                     <p class="text-[11px] text-slate-500 leading-relaxed italic relative z-10 mt-2 mb-4">
                                         "The technology behind this platform is impressive. Secure, fast, and reliable. Definitely recommended."
@@ -369,10 +406,10 @@
                     </div>
 
                     <!-- Navigation Arrows -->
-                    <button id="prevBtn" class="absolute top-1/2 -left-2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-400 hover:text-blue-500 transition-opacity opacity-0 group-hover:opacity-100 z-10">
+                    <button id="prevBtn" class="absolute top-1/2 -left-2 -translate-y-1/2 w-8 h-8 bg-black border border-[#00ff00] rounded-full shadow-lg flex items-center justify-center text-slate-400 hover:text-blue-500 transition-opacity opacity-0 group-hover:opacity-100 z-10">
                         <i class="fas fa-chevron-left text-xs"></i>
                     </button>
-                    <button id="nextBtn" class="absolute top-1/2 -right-2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-400 hover:text-blue-500 transition-opacity opacity-0 group-hover:opacity-100 z-10">
+                    <button id="nextBtn" class="absolute top-1/2 -right-2 -translate-y-1/2 w-8 h-8 bg-black border border-[#00ff00] rounded-full shadow-lg flex items-center justify-center text-slate-400 hover:text-blue-500 transition-opacity opacity-0 group-hover:opacity-100 z-10">
                         <i class="fas fa-chevron-right text-xs"></i>
                     </button>
 
@@ -389,18 +426,24 @@
 
             <!-- OUR VISION & MISSION -->
             <div class="space-y-4">
-                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-16 -mt-16"></div>
-                    <h4 class="text-xs font-bold uppercase tracking-widest text-blue-200 mb-2">Our Vision</h4>
-                    <p class="text-[11px] leading-relaxed font-medium relative z-10">
+                <div class="bg-black border-2 border-[#00ff00] rounded-3xl p-6 shadow-[0_0_20px_rgba(0,255,0,0.15)] relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[#00ff00]/10 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none"></div>
+                    <div class="flex items-center gap-2 mb-2.5 relative z-10">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#00ff00] shadow-[0_0_8px_#00ff00]"></span>
+                        <h4 class="text-xs font-extrabold uppercase tracking-widest text-[#00ff00]">Our Vision</h4>
+                    </div>
+                    <p class="text-xs text-white leading-relaxed font-medium relative z-10">
                         To become one of the world’s most trusted and innovative AI-powered digital asset ecosystems, empowering millions through intelligent financial technology and decentralized opportunities.
                     </p>
                 </div>
                 
-                <div class="bg-gradient-to-br from-teal-500 to-emerald-600 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-16 -mt-16"></div>
-                    <h4 class="text-xs font-bold uppercase tracking-widest text-teal-100 mb-2">Our Mission</h4>
-                    <p class="text-[11px] leading-relaxed font-medium relative z-10">
+                <div class="bg-black border-2 border-[#00ff00] rounded-3xl p-6 shadow-[0_0_20px_rgba(0,255,0,0.15)] relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-[#00ff00]/10 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none"></div>
+                    <div class="flex items-center gap-2 mb-2.5 relative z-10">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#00ff00] shadow-[0_0_8px_#00ff00]"></span>
+                        <h4 class="text-xs font-extrabold uppercase tracking-widest text-[#00ff00]">Our Mission</h4>
+                    </div>
+                    <p class="text-xs text-white leading-relaxed font-medium relative z-10">
                         To simplify access to cryptocurrency mining, automated trading, and blockchain-powered earning opportunities while building a secure and rewarding ecosystem for users worldwide.
                     </p>
                 </div>
@@ -423,7 +466,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
         </a>
-        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
+        <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>

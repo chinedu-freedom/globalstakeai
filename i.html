@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
 
   <script src="./protect.js"></script>
@@ -8,7 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <title>Dashboard - SatrixNow</title>
+  <title>Dashboard - Blockvextrade</title>
+  <link rel="stylesheet" href="./global.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js for the market quote chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -228,7 +230,7 @@
       <div class="flex justify-between items-center mb-2">
         <div class="flex items-center gap-2.5">
           <div>
-            <h1 class="text-base sm:text-sm font-bold leading-tight tracking-wide">SatrixNow</h1>
+            <h1 class="text-base sm:text-sm font-bold leading-tight tracking-wide">Blockvextrade</h1>
             <p class="text-[8px] uppercase tracking-widest text-white/90">TECH</p>
           </div>
         </div>
@@ -243,65 +245,95 @@
 
           <div id="langDropdown" class="absolute right-0 mt-2 w-36 origin-top-right rounded-xl bg-white shadow-xl ring-1 ring-black ring-opacity-5 hidden opacity-0 scale-95 transition-all duration-200 overflow-hidden max-h-60 overflow-y-auto no-scrollbar">
             <div class="py-1">
-              <button onclick="selectLang('EN', 'https://flagcdn.com/w20/us.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('EN', 'https://flagcdn.com/w20/us.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/us.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="EN"><span class="text-[11px] font-medium flex-1">English</span>
               </button>
-              <button onclick="selectLang('ES', 'https://flagcdn.com/w20/es.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('ES', 'https://flagcdn.com/w20/es.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/es.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="ES"><span class="text-[11px] font-medium flex-1">Español</span>
               </button>
-              <button onclick="selectLang('FR', 'https://flagcdn.com/w20/fr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('FR', 'https://flagcdn.com/w20/fr.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/fr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="FR"><span class="text-[11px] font-medium flex-1">Français</span>
               </button>
-              <button onclick="selectLang('DE', 'https://flagcdn.com/w20/de.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('DE', 'https://flagcdn.com/w20/de.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/de.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="DE"><span class="text-[11px] font-medium flex-1">Deutsch</span>
               </button>
-              <button onclick="selectLang('IT', 'https://flagcdn.com/w20/it.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('IT', 'https://flagcdn.com/w20/it.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/it.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="IT"><span class="text-[11px] font-medium flex-1">Italiano</span>
               </button>
-              <button onclick="selectLang('PT', 'https://flagcdn.com/w20/pt.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('PT', 'https://flagcdn.com/w20/pt.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/pt.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="PT"><span class="text-[11px] font-medium flex-1">Português</span>
               </button>
-              <button onclick="selectLang('CN', 'https://flagcdn.com/w20/cn.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('CN', 'https://flagcdn.com/w20/cn.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/cn.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="CN"><span class="text-[11px] font-medium flex-1">中文</span>
               </button>
-              <button onclick="selectLang('JP', 'https://flagcdn.com/w20/jp.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('JP', 'https://flagcdn.com/w20/jp.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/jp.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="JP"><span class="text-[11px] font-medium flex-1">日本語</span>
               </button>
-              <button onclick="selectLang('KR', 'https://flagcdn.com/w20/kr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('KR', 'https://flagcdn.com/w20/kr.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/kr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="KR"><span class="text-[11px] font-medium flex-1">한국어</span>
               </button>
-              <button onclick="selectLang('RU', 'https://flagcdn.com/w20/ru.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('RU', 'https://flagcdn.com/w20/ru.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/ru.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="RU"><span class="text-[11px] font-medium flex-1">Русский</span>
               </button>
-              <button onclick="selectLang('IN', 'https://flagcdn.com/w20/in.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('AR', 'https://flagcdn.com/w20/sa.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/sa.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="AR"><span class="text-[11px] font-medium flex-1">العربية</span>
+              </button>
+              <button onclick="selectLang('IN', 'https://flagcdn.com/w20/in.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/in.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="IN"><span class="text-[11px] font-medium flex-1">हिन्दी</span>
               </button>
-              <button onclick="selectLang('SA', 'https://flagcdn.com/w20/sa.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
-                <img src="https://flagcdn.com/w20/sa.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="SA"><span class="text-[11px] font-medium flex-1">العربية</span>
-              </button>
-              <button onclick="selectLang('TR', 'https://flagcdn.com/w20/tr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('TR', 'https://flagcdn.com/w20/tr.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/tr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="TR"><span class="text-[11px] font-medium flex-1">Türkçe</span>
               </button>
-              <button onclick="selectLang('NL', 'https://flagcdn.com/w20/nl.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('NL', 'https://flagcdn.com/w20/nl.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/nl.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="NL"><span class="text-[11px] font-medium flex-1">Nederlands</span>
               </button>
-              <button onclick="selectLang('ID', 'https://flagcdn.com/w20/id.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('ID', 'https://flagcdn.com/w20/id.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/id.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="ID"><span class="text-[11px] font-medium flex-1">Bahasa Indonesia</span>
               </button>
-              <button onclick="selectLang('VN', 'https://flagcdn.com/w20/vn.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('VN', 'https://flagcdn.com/w20/vn.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/vn.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="VN"><span class="text-[11px] font-medium flex-1">Tiếng Việt</span>
               </button>
-              <button onclick="selectLang('TH', 'https://flagcdn.com/w20/th.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('TH', 'https://flagcdn.com/w20/th.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/th.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="TH"><span class="text-[11px] font-medium flex-1">ไทย</span>
               </button>
-              <button onclick="selectLang('GR', 'https://flagcdn.com/w20/gr.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('GR', 'https://flagcdn.com/w20/gr.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/gr.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="GR"><span class="text-[11px] font-medium flex-1">Ελληνικά</span>
               </button>
-              <button onclick="selectLang('SE', 'https://flagcdn.com/w20/se.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('SE', 'https://flagcdn.com/w20/se.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/se.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="SE"><span class="text-[11px] font-medium flex-1">Svenska</span>
               </button>
-              <button onclick="selectLang('PL', 'https://flagcdn.com/w20/pl.png')" class="w-full flex items-center gap-2 px-4 py-2.5 hover:bg-blue-50 transition text-left text-gray-700 active:bg-blue-100">
+              <button onclick="selectLang('PL', 'https://flagcdn.com/w20/pl.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
                 <img src="https://flagcdn.com/w20/pl.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="PL"><span class="text-[11px] font-medium flex-1">Polski</span>
+              </button>
+              <button onclick="selectLang('PH', 'https://flagcdn.com/w20/ph.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/ph.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="PH"><span class="text-[11px] font-medium flex-1">Filipino</span>
+              </button>
+              <button onclick="selectLang('RO', 'https://flagcdn.com/w20/ro.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/ro.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="RO"><span class="text-[11px] font-medium flex-1">Română</span>
+              </button>
+              <button onclick="selectLang('BD', 'https://flagcdn.com/w20/bd.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/bd.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="BD"><span class="text-[11px] font-medium flex-1">বাংলা</span>
+              </button>
+              <button onclick="selectLang('UA', 'https://flagcdn.com/w20/ua.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/ua.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="UA"><span class="text-[11px] font-medium flex-1">Українська</span>
+              </button>
+              <button onclick="selectLang('IR', 'https://flagcdn.com/w20/ir.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/ir.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="IR"><span class="text-[11px] font-medium flex-1">فارسی</span>
+              </button>
+              <button onclick="selectLang('MY', 'https://flagcdn.com/w20/my.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/my.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="MY"><span class="text-[11px] font-medium flex-1">Bahasa Melayu</span>
+              </button>
+              <button onclick="selectLang('CZ', 'https://flagcdn.com/w20/cz.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/cz.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="CZ"><span class="text-[11px] font-medium flex-1">Čeština</span>
+              </button>
+              <button onclick="selectLang('HU', 'https://flagcdn.com/w20/hu.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/hu.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="HU"><span class="text-[11px] font-medium flex-1">Magyar</span>
+              </button>
+              <button onclick="selectLang('KE', 'https://flagcdn.com/w20/ke.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/ke.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="KE"><span class="text-[11px] font-medium flex-1">Kiswahili</span>
+              </button>
+              <button onclick="selectLang('IL', 'https://flagcdn.com/w20/il.png')" class="w-full flex items-center gap-2 px-4 py-2 hover:bg-[#00ff00] hover:text-black transition text-left text-white active:bg-[#00e000]">
+                <img src="https://flagcdn.com/w20/il.png" class="w-4 h-3 object-cover shadow-sm rounded-[2px]" alt="IL"><span class="text-[11px] font-medium flex-1">עברית</span>
               </button>
             </div>
           </div>
@@ -399,14 +431,14 @@
       <div class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-start gap-3">
         <!-- Exact image downloaded -->
         <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
-          <img src="./idea.png" alt="About SatrixNow" class="w-full h-full object-contain">
+          <img src="./idea.png" alt="About Blockvextrade" class="w-full h-full object-contain">
         </div>
         <div class="flex-1">
           <h3 class="text-[9px] sm:text-[10px] font-bold text-gray-800 mb-1 leading-snug">
-            SatrixNow: Leading the Future of Computing Power. Building the Foundation for a Sustainable Digital Infrastructure.
+            Blockvextrade: Leading the Future of Computing Power. Building the Foundation for a Sustainable Digital Infrastructure.
           </h3>
           <p class="text-[8px] sm:text-[9px] text-gray-500 leading-relaxed text-left">
-            SatrixNow (full name: Crypto-Ecosystem Mining) is a global leader in cryptocurrency mining solutions, dedicated to making digital asset mining accessible, efficient, and profitable for everyone. Founded by a team of blockchain technology experts and financial professionals, we have built a state-of-the-art mining ecosystem that leverages the latest advancements in hardware and software to deliver unparalleled results.
+            Blockvextrade (full name: Crypto-Ecosystem Mining) is a global leader in cryptocurrency mining solutions, dedicated to making digital asset mining accessible, efficient, and profitable for everyone. Founded by a team of blockchain technology experts and financial professionals, we have built a state-of-the-art mining ecosystem that leverages the latest advancements in hardware and software to deliver unparalleled results.
           </p>
           <div class="mt-2">
             <a href="about.html" class="inline-block bg-[#4f8cff] text-white text-[8px] font-semibold px-3 py-1.5 rounded-full shadow-sm hover:opacity-90 transition">
@@ -434,23 +466,23 @@
           <p class="font-bold text-gray-800 text-[10px] tracking-wide">BTC</p>
           <p class="text-[8px] text-gray-400 mt-0.5">69,534.00</p>
         </div>
-        <!-- ETH -->
-        <div id="coin-eth" onclick="updateCryptoChart('ETH')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
-          <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="ETH" />
-          <p class="font-bold text-gray-800 text-[10px] tracking-wide">ETH</p>
-          <p class="text-[8px] text-gray-400 mt-0.5">2,135.75</p>
+        <!-- LTC -->
+        <div id="coin-ltc" onclick="updateCryptoChart('LTC')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
+          <img src="https://assets.coingecko.com/coins/images/2/small/litecoin.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="LTC" />
+          <p class="font-bold text-gray-800 text-[10px] tracking-wide">LTC</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">85.40</p>
         </div>
-        <!-- TRX -->
-        <div id="coin-trx" onclick="updateCryptoChart('TRX')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
-          <img src="https://assets.coingecko.com/coins/images/1094/small/tron-logo.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="TRX" />
-          <p class="font-bold text-gray-800 text-[10px] tracking-wide">TRX</p>
-          <p class="text-[8px] text-gray-400 mt-0.5">0.3163</p>
+        <!-- USDT BEP20 -->
+        <div id="coin-usdt-bep20" onclick="updateCryptoChart('USDT-BEP20')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
+          <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="USDT BEP20" />
+          <p class="font-bold text-gray-800 text-[9px] tracking-wide">USDT BEP20</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">1.00</p>
         </div>
-        <!-- DOGE -->
-        <div id="coin-doge" onclick="updateCryptoChart('DOGE')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
-          <img src="https://assets.coingecko.com/coins/images/5/small/dogecoin.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="DOGE" />
-          <p class="font-bold text-gray-800 text-[10px] tracking-wide">DOGE</p>
-          <p class="text-[8px] text-gray-400 mt-0.5">0.0919</p>
+        <!-- USDT TRC20 -->
+        <div id="coin-usdt-trc20" onclick="updateCryptoChart('USDT-TRC20')" class="coin-card bg-white rounded-xl p-2.5 min-w-[75px] flex-1 shadow-sm border border-gray-100 flex flex-col items-center justify-center whitespace-nowrap cursor-pointer hover:border-blue-400 transition-all">
+          <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-7 h-7 mb-1.5 drop-shadow-sm" alt="USDT TRC20" />
+          <p class="font-bold text-gray-800 text-[9px] tracking-wide">USDT TRC20</p>
+          <p class="text-[8px] text-gray-400 mt-0.5">1.00</p>
         </div>
       </div>
     </div>
@@ -521,7 +553,7 @@ const feedData = [
   "Daniel successfully withdrew $4,850",
   "Sophia just invested $22,000 in Standard Plan",
   "James claimed Lucky Spin bonus $750",
-  "Olivia just withdrew $1,980 in ETH",
+  "Olivia just withdrew $1,980 in LTC",
   "William invested $30,000 in Gold Plan",
   "Charlotte successfully withdrew $6,400",
   "Benjamin just invested $12,500 in Basic Plan",
@@ -667,8 +699,8 @@ const feedData = [
                       hidden: false
                   },
                   {
-                      label: 'ETH',
-                      data: [1, 5, 3, 2, 0, -2, -1],
+                      label: 'LTC',
+                      data: [1, 4, 2, 5, 1, -1, 2],
                       borderColor: '#22d3ee',
                       backgroundColor: '#22d3ee22',
                       fill: true,
@@ -680,28 +712,28 @@ const feedData = [
                       hidden: true
                   },
                   {
-                      label: 'TRX',
-                      data: [0, 2, 1, 3, 2, -1, 1],
-                      borderColor: '#ef4444',
-                      backgroundColor: '#ef444422',
+                      label: 'USDT (BEP20)',
+                      data: [0, 0.1, -0.1, 0, 0.05, -0.05, 0],
+                      borderColor: '#10b981',
+                      backgroundColor: '#10b98122',
                       fill: true,
                       tension: 0.4,
                       borderWidth: 2,
                       pointBackgroundColor: '#fff',
-                      pointBorderColor: '#ef4444',
+                      pointBorderColor: '#10b981',
                       pointRadius: 3,
                       hidden: true
                   },
                   {
-                      label: 'DOGE',
-                      data: [1, 3, 2, 1, 0, -1, 0],
-                      borderColor: '#f59e0b',
-                      backgroundColor: '#f59e0b22',
+                      label: 'USDT (TRC20)',
+                      data: [0, -0.05, 0.05, 0, 0.1, -0.1, 0],
+                      borderColor: '#06b6d4',
+                      backgroundColor: '#06b6d422',
                       fill: true,
                       tension: 0.4,
                       borderWidth: 2,
                       pointBackgroundColor: '#fff',
-                      pointBorderColor: '#f59e0b',
+                      pointBorderColor: '#06b6d4',
                       pointRadius: 3,
                       hidden: true
                   }
@@ -753,7 +785,7 @@ const feedData = [
 
       // Function to update the chart based on card selection
       window.updateCryptoChart = function(coin) {
-          const coinIndices = { 'BTC': 0, 'ETH': 1, 'TRX': 2, 'DOGE': 3 };
+          const coinIndices = { 'BTC': 0, 'LTC': 1, 'USDT-BEP20': 2, 'USDT-TRC20': 3 };
           const activeIndex = coinIndices[coin];
 
           // Update chart datasets visibility
@@ -769,14 +801,16 @@ const feedData = [
           });
           
           const selectedCard = document.getElementById(`coin-${coin.toLowerCase()}`);
-          selectedCard.classList.remove('border', 'border-gray-100');
-          selectedCard.classList.add('border-2', 'border-black');
+          if (selectedCard) {
+            selectedCard.classList.remove('border', 'border-gray-100');
+            selectedCard.classList.add('border-2', 'border-black');
+          }
       };
 
       // Fetch Dashboard Stats for index.html
       (async function fetchIndexStats() {
           try {
-              const statsRes = await fetch('https://api.satrixai.com/api/users/dashboard-stats', {
+              const statsRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/dashboard-stats`, {
                   credentials: 'include'
               });
               if (statsRes.ok) {

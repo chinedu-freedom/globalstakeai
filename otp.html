@@ -1,92 +1,93 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Verify OTP - SatrixNow</title>
+<title>Verify Code - Blockvextrade</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
 <script src="./toast.js"></script>
 <style>
 body { font-family: "Poppins", sans-serif; }
-.gradient-bg { background: linear-gradient(135deg, #4f8cff, #6ee7ff); }
-.btn-gradient { background: linear-gradient(90deg, #5eead4, #93c5fd); }
+.gradient-bg { background: #00ff00; }
+.btn-gradient { background: #00ff00; }
 
 .otp-input {
-  width: 52px;
-  height: 58px;
+  width: 46px;
+  height: 54px;
   text-align: center;
   font-size: 22px;
   font-weight: 700;
-  border-radius: 14px;
-  border: 2px solid #e5e7eb;
-  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #00ff00;
+  background: #000000;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
-  font-family: "Poppins", sans-serif;
-  color: #1e293b;
+  font-family: monospace;
+  color: #00ff00 !important;
 }
 .otp-input:focus {
-  border-color: #4f8cff;
-  box-shadow: 0 0 0 3px rgba(79,140,255,0.15);
-}
-.otp-input.err {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+  border-color: #00ff00;
+  box-shadow: 0 0 0 2px rgba(0,255,0,0.3);
 }
 </style>
 
   <script src="./translator.js"></script>
+  <link rel="stylesheet" href="./global.css">
 </head>
 
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-black">
 
 <!-- HEADER -->
-<div class="gradient-bg text-white text-center py-16">
-  <h1 class="text-base font-semibold">SatrixNow</h1>
+<div class="gradient-bg text-black text-center py-12">
+  <div class="flex flex-col items-center">
+    <div class="w-14 h-14 rounded-2xl overflow-hidden shadow-lg mb-2 border border-[#00ff00]/40 bg-black">
+      <img src="./logo.jpeg" alt="Blockvextrade Logo" class="w-full h-full object-cover">
+    </div>
+    <h1 class="text-base font-bold tracking-wide text-black">Blockvextrade</h1>
+  </div>
 </div>
 
 <!-- MAIN -->
-<div class="flex justify-center px-4">
-  <div class="bg-white w-full p-6">
+<div class="flex-1 flex justify-center px-4 py-8">
+  <div class="bg-black border border-[#00ff00] w-full max-w-md p-6 rounded-2xl shadow-xl h-fit">
 
     <!-- Back arrow -->
-    <a href="/forgotPassword.html" class="flex items-center gap-2 text-gray-400 text-xs mb-6">
+    <a href="/login.html" id="backLink" class="flex items-center gap-2 text-[#00ff00] text-xs mb-6 hover:underline">
       <i class="fas fa-chevron-left text-xs"></i>
-      Back
+      Back to Login
     </a>
 
     <!-- Title -->
-    <h2 class="text-xs font-semibold text-center mb-2">Verify Code</h2>
-    <p class="text-xs text-gray-500 text-center mb-1" id="otpSubtitle">
-      Enter the 4-digit code sent to
+    <h2 class="text-base font-bold text-center mb-2 text-white" id="otpTitle">Verify Code</h2>
+    <p class="text-xs text-gray-400 text-center mb-1" id="otpSubtitle">
+      Enter the 6-digit verification code sent to
     </p>
-    <p class="text-xs text-blue-500 font-semibold text-center mb-6" id="otpPhone"></p>
+    <p class="text-sm text-[#00ff00] font-semibold text-center mb-6 break-all" id="otpTarget"></p>
 
     <!-- OTP FORM -->
     <form class="space-y-6" onsubmit="handleVerifyOtp(event)">
 
-      <!-- OTP Inputs -->
+      <!-- OTP Inputs (6 digits) -->
       <div class="flex justify-center gap-2" id="otpInputsWrap">
         <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
         <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
         <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
         <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
-        <!-- <input type="text" inputmode="numeric" maxlength="1" class="otp-input" /> -->
-        <!-- <input type="text" inputmode="numeric" maxlength="1" class="otp-input" /> -->
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
       </div>
-
-      <p class="text-red-500 text-[11px] text-center hidden" id="otpErr"></p>
 
       <!-- Button -->
       <button
         type="submit"
         id="otpBtn"
-        class="w-full py-3 rounded-xl btn-gradient text-white font-semibold flex items-center justify-center gap-2"
+        class="w-full py-3 rounded-xl btn-gradient text-black font-bold flex items-center justify-center gap-2"
       >
-        <span id="otpBtnText">Verify</span>
+        <span id="otpBtnText">Verify Email</span>
         <i class="fas fa-spinner fa-spin hidden" id="otpSpinner"></i>
       </button>
 
@@ -94,31 +95,53 @@ body { font-family: "Poppins", sans-serif; }
 
     <!-- Resend -->
     <div class="text-center mt-6 text-xs">
-      <span class="text-gray-500">Didn't receive code?</span>
-      <button id="resendBtn" class="text-blue-500 ml-1 font-medium" onclick="handleResend()">Resend</button>
+      <span class="text-gray-400">Didn't receive the code?</span>
+      <button id="resendBtn" class="text-[#00ff00] ml-1 font-bold hover:underline" onclick="handleResend()">Resend Code</button>
     </div>
     <p class="text-center text-gray-400 text-xs mt-2 hidden" id="resendCountdown"></p>
 
   </div>
 </div>
 
-
 <script>
-const API_BASE = 'https://api.satrixai.com';
+const API_BASE = window.API_BASE || "http://localhost:5000";
 const inputs   = document.querySelectorAll('.otp-input');
 
-// --- Show stored phone ---
+const urlParams = new URLSearchParams(window.location.search);
+const flowType  = urlParams.get('type') || (sessionStorage.getItem('verifyEmail') ? 'verify-email' : 'reset');
+const targetEmail = urlParams.get('email') || sessionStorage.getItem('verifyEmail') || '';
+const resetPhone  = sessionStorage.getItem('resetPhone') || '';
+
 document.addEventListener('DOMContentLoaded', () => {
-  const phone = sessionStorage.getItem('resetPhone') || '';
-  document.getElementById('otpPhone').textContent = phone;
+  const titleEl = document.getElementById('otpTitle');
+  const subEl   = document.getElementById('otpSubtitle');
+  const targetEl = document.getElementById('otpTarget');
+  const btnText  = document.getElementById('otpBtnText');
+  const backLink = document.getElementById('backLink');
+
+  if (flowType === 'verify-email') {
+    titleEl.textContent = 'Verify Your Email';
+    subEl.textContent = 'Enter the 6-digit code sent to your email:';
+    targetEl.textContent = targetEmail || 'your email';
+    btnText.textContent = 'Verify Email';
+    backLink.href = '/login.html';
+    backLink.innerHTML = '<i class="fas fa-chevron-left text-xs mr-1"></i> Back to Login';
+  } else {
+    titleEl.textContent = 'Reset Password OTP';
+    subEl.textContent = 'Enter the verification code sent to:';
+    targetEl.textContent = targetEmail || resetPhone || 'your contact';
+    btnText.textContent = 'Verify Code';
+    backLink.href = '/forgotPassword.html';
+    backLink.innerHTML = '<i class="fas fa-chevron-left text-xs mr-1"></i> Back to Forgot Password';
+  }
+
+  if (inputs.length > 0) inputs[0].focus();
 });
 
-// --- OTP keyboard nav ---
+// --- OTP keyboard navigation ---
 inputs.forEach((input, index) => {
   input.addEventListener('input', () => {
-    // Only allow digits
     input.value = input.value.replace(/\D/g, '');
-    clearOtpErr();
     if (input.value.length === 1 && index < inputs.length - 1) {
       inputs[index + 1].focus();
     }
@@ -130,7 +153,6 @@ inputs.forEach((input, index) => {
     }
   });
 
-  // Allow pasting full OTP
   input.addEventListener('paste', (e) => {
     e.preventDefault();
     const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
@@ -148,15 +170,11 @@ function getOtpValue() {
 }
 
 function showOtpErr(msg) {
-  const errEl = document.getElementById('otpErr');
-  errEl.textContent = msg;
-  errEl.classList.remove('hidden');
-  inputs.forEach(inp => inp.classList.add('err'));
+  showToast(msg, 'error');
 }
 
 function clearOtpErr() {
-  document.getElementById('otpErr').classList.add('hidden');
-  inputs.forEach(inp => inp.classList.remove('err'));
+  // Toasts handle error display and dismissal
 }
 
 function showToast(msg, type = 'success') {
@@ -164,56 +182,91 @@ function showToast(msg, type = 'success') {
 }
 
 function setLoading(on) {
-  document.getElementById('otpBtn').disabled = on;
-  document.getElementById('otpBtnText').textContent = on ? 'Verifying...' : 'Verify';
-  document.getElementById('otpSpinner').classList.toggle('hidden', !on);
+  const btn = document.getElementById('otpBtn');
+  const btnText = document.getElementById('otpBtnText');
+  const spinner = document.getElementById('otpSpinner');
+  if (!btn) return;
+  btn.disabled = on;
+  if (on) {
+    if (btnText) btnText.textContent = '';
+    if (spinner) spinner.classList.remove('hidden');
+  } else {
+    if (btnText) btnText.textContent = (flowType === 'verify-email') ? 'Verify Email' : 'Verify Code';
+    if (spinner) spinner.classList.add('hidden');
+  }
 }
 
 async function handleVerifyOtp(e) {
   e.preventDefault();
   const otp = getOtpValue();
-  const phone = sessionStorage.getItem('resetPhone') || '';
 
-  if (otp.length < 4) {
-    showOtpErr('Please enter the complete 4-digit code');
-    return;
-  }
-  if (!phone) {
-    showToast('Session expired. Please start over.', 'error');
-    setTimeout(() => window.location.href = '/forgotPassword.html', 1500);
+  if (otp.length < 6) {
+    showToast('Please enter the complete 6-digit code', 'error');
     return;
   }
 
   setLoading(true);
-  try {
-    const res  = await fetch(`${API_BASE}/api/auth/verify-otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phoneNumber: phone, otp })
-    });
-    const data = await res.json();
 
-    if (res.ok) {
-      // Save OTP token/resetToken for the reset page if backend returns one
-      if (data.resetToken) sessionStorage.setItem('resetToken', data.resetToken);
-      sessionStorage.setItem('verifiedOtp', otp);
-      showToast('Code verified! Redirecting...', 'success');
-      setTimeout(() => window.location.href = '/resetPassword.html', 1300);
-    } else {
-      showOtpErr(data.message || 'Invalid code. Please try again.');
+  if (flowType === 'verify-email') {
+    const email = targetEmail;
+    if (!email) {
+      showToast('Session expired. Please register or log in again.', 'error');
+      setTimeout(() => window.location.href = '/login.html', 1500);
+      return;
     }
-  } catch (err) {
-    showToast('Network error. Please check your connection.', 'error');
-  } finally {
-    setLoading(false);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/verify-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp })
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        sessionStorage.removeItem('verifyEmail');
+        showToast('Email verified successfully! You can now log in.', 'success');
+        setTimeout(() => window.location.href = '/login.html', 1500);
+      } else {
+        showToast(data.message || 'Invalid or expired code. Please try again.', 'error');
+      }
+    } catch (err) {
+      showToast('Network error. Please check your connection.', 'error');
+    } finally {
+      setLoading(false);
+    }
+  } else {
+    // Password reset OTP verification
+    const email = targetEmail || resetPhone;
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/verify-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp })
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        if (data.resetToken) sessionStorage.setItem('resetToken', data.resetToken);
+        sessionStorage.setItem('verifiedOtp', otp);
+        showToast('Code verified! Redirecting...', 'success');
+        setTimeout(() => window.location.href = '/resetPassword.html', 1300);
+      } else {
+        showToast(data.message || 'Invalid code. Please try again.', 'error');
+      }
+    } catch (err) {
+      showToast('Network error. Please check your connection.', 'error');
+    } finally {
+      setLoading(false);
+    }
   }
 }
 
 // --- Resend OTP with 60s cooldown ---
 let resendTimer = null;
 async function handleResend() {
-  const phone = sessionStorage.getItem('resetPhone') || '';
-  if (!phone) return;
+  const email = targetEmail || resetPhone;
+  if (!email) return;
 
   const btn = document.getElementById('resendBtn');
   const countdown = document.getElementById('resendCountdown');
@@ -232,19 +285,23 @@ async function handleResend() {
     }
   }, 1000);
 
+  const endpoint = flowType === 'verify-email'
+    ? `${API_BASE}/api/auth/resend-verification`
+    : `${API_BASE}/api/auth/request-otp`;
+
   try {
-    const res = await fetch(`${API_BASE}/api/auth/request-otp`, {
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phoneNumber: phone })
+      body: JSON.stringify({ email })
     });
     const data = await res.json();
     if (res.ok) {
-      showToast('New OTP sent!', 'success');
+      showToast('A new verification code has been sent!', 'success');
       inputs.forEach(inp => inp.value = '');
       inputs[0].focus();
     } else {
-      showToast(data.message || 'Could not resend OTP.', 'error');
+      showToast(data.message || 'Could not resend code.', 'error');
     }
   } catch {
     showToast('Network error.', 'error');
