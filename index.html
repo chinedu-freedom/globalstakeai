@@ -181,6 +181,8 @@
   <script src="./toast.js"></script>
   <script src="./crypto-rates.js"></script>
   <link rel="stylesheet" href="./global.css">
+  <link rel="stylesheet" href="./daily-claim.css">
+  <script src="./daily-claim.js"></script>
 </head>
 <body class="bg-[#000000] text-white">
 
@@ -387,7 +389,24 @@
             <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center mb-1.5 text-[#00ff00] shadow-sm group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
               <i class="fab fa-whatsapp text-base"></i>
             </div>
-            <p class="text-[11px] font-semibold text-white text-center">Whatsapp Group</p>
+            <p class="text-[11px] font-semibold text-white text-center">Whatsapp</p>
+          </a>
+
+          <!-- Daily Claim Bonus ($0.50 Everyday) -->
+          <a href="#" onclick="window.openDailyClaimModal(); return false;" class="flex flex-col items-center group relative cursor-pointer">
+            <div class="w-12 h-12 rounded-2xl bg-[#00ff00]/15 border border-[#00ff00] flex items-center justify-center mb-1.5 text-[#00ff00] shadow-[0_0_12px_rgba(0,255,0,0.35)] group-hover:scale-105 group-hover:bg-[#00ff00]/25 transition-all duration-200">
+              <i class="fas fa-gift text-base animate-pulse"></i>
+            </div>
+            <p class="text-[11px] font-bold text-[#00ff00] text-center leading-tight">Daily Claim</p>
+            <span class="text-[9px] text-[#00ff00] font-mono font-bold">+$0.50</span>
+          </a>
+
+          <!-- Staking Plans -->
+          <a href="./plans.html" class="flex flex-col items-center group">
+            <div class="w-12 h-12 rounded-2xl bg-[#0d1711] border border-[#00ff00]/40 flex items-center justify-center mb-1.5 text-[#00ff00] shadow-sm group-hover:scale-105 group-hover:border-[#00ff00] group-hover:bg-[#15261c] transition-all duration-200">
+              <i class="fas fa-chart-line text-base"></i>
+            </div>
+            <p class="text-[11px] font-semibold text-white">Staking</p>
           </a>
 
         </div>
@@ -718,7 +737,7 @@
       });
 
       // Fetch Dashboard Stats for index.html
-      (async function fetchIndexStats() {
+      async function fetchIndexStats() {
           try {
               const statsRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/dashboard-stats`, {
                   credentials: 'include'
@@ -739,7 +758,14 @@
           } catch (error) {
               console.error("Error fetching dashboard stats:", error);
           }
-      })();
+      }
+      window.fetchDashboardStats = fetchIndexStats;
+      fetchIndexStats();
+
+      // Listen for daily claim to immediately update earnings
+      window.addEventListener('daily-claimed', (e) => {
+          fetchIndexStats();
+      });
 
     });
   </script>

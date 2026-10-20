@@ -87,6 +87,8 @@
   <script src="./translator.js"></script>
   <script src="./toast.js"></script>
   <link rel="stylesheet" href="./global.css">
+  <link rel="stylesheet" href="./daily-claim.css">
+  <script src="./daily-claim.js"></script>
 </head>
 <body class="bg-[#000000]">
 
@@ -120,6 +122,21 @@
         </div>
         
         <!-- Right: Settings Icon -->
+        
+        <!-- Daily Check-in Bonus ($0.50 Everyday) -->
+        <div onclick="window.openDailyClaimModal()" class="flex items-center justify-between p-4 hover:bg-[#0d1811] transition cursor-pointer group first:rounded-t-2xl">
+          <div class="flex items-center gap-3">
+            <div class="w-7 h-7 rounded-full bg-[#00ff00]/15 border border-[#00ff00] flex items-center justify-center text-[#00ff00] group-hover:scale-105 transition-transform shadow-[0_0_8px_rgba(0,255,0,0.4)]">
+              <i class="fas fa-gift text-xs"></i>
+            </div>
+            <div>
+              <span class="text-xs text-white font-bold tracking-wide group-hover:text-[#00ff00] transition-colors">Daily Check-in Bonus</span>
+              <span class="ml-2 text-[10px] text-[#00ff00] bg-[#00ff00]/15 border border-[#00ff00]/40 px-1.5 py-0.5 rounded font-mono font-bold">+$0.50</span>
+            </div>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400 text-xs group-hover:text-[#00ff00] transition-colors"></i>
+        </div>
+
         <a href="/settings.html" class="settings-btn w-9 h-9 rounded-full bg-black flex items-center justify-center text-[#00ff00] border-2 border-black/80 shadow-md hover:scale-105 active:scale-95 transition-transform" title="Settings">
           <i class="fas fa-cog text-sm text-[#00ff00]"></i>
         </a>
@@ -175,7 +192,7 @@
     <div class="px-4 mb-6">
       <div class="bg-black border border-[#00ff00] rounded-2xl shadow-sm border border-gray-50 divide-y divide-white/10 overflow-hidden">
         
-        <a href="/settings.html" class="flex items-center justify-between p-4 hover:bg-[#0d1811] transition first:rounded-t-2xl group">
+        <a href="/settings.html" class="flex items-center justify-between p-4 hover:bg-[#0d1811] transition group">
           <div class="flex items-center gap-3">
             <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#00ff00] group-hover:scale-105 transition-transform">
               <i class="fas fa-cog text-xs"></i>
@@ -459,6 +476,21 @@
         } catch (error) {
             console.error("Error fetching dashboard stats:", error);
         }
+    
+        // Listen for daily claim event to immediately update balances
+        window.addEventListener('daily-claimed', (e) => {
+            const reward = (e.detail && e.detail.rewardAmount) ? Number(e.detail.rewardAmount) : 0.5;
+            const currentAssetsEl = document.getElementById("statCurrentAssets");
+            if (currentAssetsEl) {
+                const currentVal = parseFloat(currentAssetsEl.innerText.replace(/[^0-9.]/g, '')) || 0;
+                currentAssetsEl.innerText = `${(currentVal + reward).toFixed(2)}`;
+            }
+            const commissionEl = document.getElementById("statCommission");
+            if (commissionEl) {
+                const currentVal = parseFloat(commissionEl.innerText.replace(/[^0-9.]/g, '')) || 0;
+                commissionEl.innerText = `${(currentVal + reward).toFixed(2)}`;
+            }
+        });
     });
 
     async function updateAvatar(input) {
