@@ -269,10 +269,10 @@ input[type="number"] {
       <div id="amountSection">
         <label class="block text-[11px] font-bold text-gray-300 uppercase tracking-widest mb-2 pl-1">Amount (USD)</label>
         <div class="relative">
-          <input type="number" id="depositAmount" class="amount-input pl-4 transition-colors" placeholder="Minimum $50" min="50" oninput="clearAmountErr()" />
+          <input type="number" id="depositAmount" class="amount-input pl-4 transition-colors" placeholder="Minimum $1" min="1" oninput="clearAmountErr()" />
         </div>
         <p id="amountError" class="text-red-400 text-[11px] mt-1.5 pl-1 hidden"></p>
-        <p class="text-[9.5px] text-gray-400 mt-1.5 pl-1">Minimum deposit: <strong class="text-[#00ff00]">$50</strong> · Maximum: <strong class="text-[#00ff00]">$1,000,000</strong></p>
+        <p class="text-[9.5px] text-gray-400 mt-1.5 pl-1">Minimum deposit: <strong class="text-[#00ff00]">$1</strong> · Maximum: <strong class="text-[#00ff00]">$1,000,000</strong></p>
       </div>
 
       <!-- Feature pills -->
@@ -515,9 +515,9 @@ input[type="number"] {
       const inputEl = document.getElementById("depositAmount");
       const errEl = document.getElementById("amountError");
 
-      if (isNaN(raw) || raw < 50) {
+      if (isNaN(raw) || raw < 1) {
         inputEl.style.borderColor = "#ef4444";
-        errEl.textContent = "Minimum deposit amount is $50";
+        errEl.textContent = "Minimum deposit amount is $1";
         errEl.classList.remove("hidden");
         inputEl.focus();
         return;
