@@ -644,12 +644,17 @@ input[type="number"] {
         const data = await res.json().catch(() => ({}));
 
         if (res.ok) {
-          showToast("✅ Deposit request received successfully. Your account will be credited automatically once confirmed.", 4000);
-          btn.innerHTML = '<i class="fas fa-check mr-2"></i>Deposit Request Received — Thank you!';
+          if (data?.data?.confirmed) {
+            showToast(`✅ Payment confirmed! $${data.data.creditedAmount || chosenAmount} has been credited to your account!`, 4000);
+            btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Payment Confirmed & Credited!';
+          } else {
+            showToast("✅ Deposit request received! Your account will be credited automatically once confirmed on blockchain.", 4000);
+            btn.innerHTML = '<i class="fas fa-check mr-2"></i>Deposit Request Received — Thank you!';
+          }
           btn.style.background = "#00ff00";
           btn.style.color = "#000000";
           btn.disabled = false; 
-          setTimeout(() => { window.location.href = "./history.html"; }, 3000);
+          setTimeout(() => { window.location.href = "./account.html"; }, 2500);
         } else {
           showToast(data?.message || "⚠️ Could not record payment. Please contact support.");
           btn.disabled = false;
