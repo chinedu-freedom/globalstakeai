@@ -216,11 +216,23 @@
            return d.toLocaleDateString() + ' - ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
        }
 
+       const getToken = () => {
+           let raw = localStorage.getItem('token') || '';
+           return raw.trim().replace(/^['"]+|['"]+$/g, '').replace(/^Bearer\s+/i, '');
+       };
+
        const doFetch = async (url) => {
            try {
-               const res = await fetch(url, { credentials: 'include' });
+               const token = getToken();
+               const headers = { 'Content-Type': 'application/json' };
+               if (token) {
+                   headers['Authorization'] = `Bearer ${token}`;
+               }
+               const res = await fetch(url, { headers, credentials: 'include' });
                if (res.status === 401 || res.status === 403) {
-                   window.location.href = '/login.html';
+                   if (!token) {
+                       window.location.href = '/login.html';
+                   }
                    return null;
                }
                if (!res.ok) return null;
@@ -230,29 +242,31 @@
            }
        };
 
-       const [depRes, withRes] = await Promise.all([
-           doFetch(`${window.API_BASE || "http://localhost:5000"}/api/deposits/my`),
-           doFetch(`${window.API_BASE || "http://localhost:5000"}/api/withdrawals/history`)
-       ]);
-       
-       let deposits    = Array.isArray(depRes?.data?.data) ? depRes.data.data : (Array.isArray(depRes?.data) ? depRes.data : []);
-       let withdrawals = Array.isArray(withRes?.data?.withdrawals) ? withRes.data.withdrawals : (Array.isArray(withRes?.data?.data) ? withRes.data.data : (Array.isArray(withRes?.data) ? withRes.data : []));
+       const apiBase = window.API_BASE || "http://localhost:5000";
+       const token = getToken();
 
        const formatData = (items, type) => {
-           return items.map(item => ({
-               id:       item._id || item.id || Math.random().toString(),
+           const formatted = items.map(item => ({
+               id:       item._id || item.id,
                type,
                status:   String(item.status || 'pending').toLowerCase(),
                amount:   parseFloat(item.amount || 0),
                fee:      parseFloat(item.fee || 0),
                netAmount: parseFloat(item.netAmount || (item.amount ? item.amount * 0.94 : 0)),
                currency: item.crypto || item.currency || item.coinType || 'USDT',
+               network:  item.network || '',
                date:     item._createdAt || item.requestedAt || item.createdAt || item.fundedAt || item.date || new Date().toISOString()
            }));
-       };
 
-       deposits    = formatData(deposits,    'deposit');
-       withdrawals = formatData(withdrawals, 'withdrawal');
+           // Ensure each transaction is rendered on ONE card by deduplicating by transaction ID
+           const seen = new Set();
+           return formatted.filter(item => {
+               if (!item.id) return true;
+               if (seen.has(item.id)) return false;
+               seen.add(item.id);
+               return true;
+           });
+       };
 
        const renderList = (containerId, items) => {
            const container = document.getElementById(containerId);
@@ -289,6 +303,7 @@
 
                const displayAmount = isDeposit ? item.amount : item.netAmount;
                const feeText = isDeposit ? '' : ` • Fee: $${item.fee > 0 ? item.fee.toFixed(2) : (item.amount * 0.06).toFixed(2)}`;
+               const currencyLabel = item.network ? `${item.currency} (${item.network})` : item.currency;
 
                return `
                <div class="tx-row">
@@ -300,7 +315,7 @@
                      <span class="text-xs font-bold text-white">${title}</span>
                      <span class="${badgeClass}">${badgeText}</span>
                    </div>
-                    <p class="text-[10px] text-gray-400 uppercase">${item.currency} • ${formatDate(item.date)}${feeText}</p>
+                    <p class="text-[10px] text-gray-400 uppercase">${currencyLabel} • ${formatDate(item.date)}${feeText}</p>
                  </div>
                  <div class="text-right flex-shrink-0 mr-1">
                    <p class="text-xs font-extrabold ${amountColor}">${amountSign}$${displayAmount.toFixed(2)}</p>
@@ -311,8 +326,44 @@
            }).join('');
        };
 
-       renderList('tab-deposits', deposits.sort((a,b) => new Date(b.date) - new Date(a.date)));
-       renderList('tab-withdrawals', withdrawals.sort((a,b) => new Date(b.date) - new Date(a.date)));
+       const loadTransactions = async () => {
+           const [depRes, withRes] = await Promise.all([
+               doFetch(`${apiBase}/api/deposits/history`),
+               doFetch(`${apiBase}/api/withdrawals/history`)
+           ]);
+           
+           let rawDeposits = Array.isArray(depRes?.data?.data) ? depRes.data.data : (Array.isArray(depRes?.data) ? depRes.data : (Array.isArray(depRes?.deposits) ? depRes.deposits : []));
+           let rawWithdrawals = Array.isArray(withRes?.data?.withdrawals) ? withRes.data.withdrawals : (Array.isArray(withRes?.data?.data) ? withRes.data.data : (Array.isArray(withRes?.data) ? withRes.data : []));
+
+           let deposits    = formatData(rawDeposits,    'deposit');
+           let withdrawals = formatData(rawWithdrawals, 'withdrawal');
+
+           renderList('tab-deposits', deposits.sort((a,b) => new Date(b.date) - new Date(a.date)));
+           renderList('tab-withdrawals', withdrawals.sort((a,b) => new Date(b.date) - new Date(a.date)));
+       };
+
+       // 1. Fetch and render immediately without blocking UI
+       await loadTransactions();
+
+       // 2. Silently sync any confirmed OxaPay blockchain deposits in the background
+       if (token) {
+           fetch(`${apiBase}/api/deposits/sync-status`, {
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json',
+                   'Authorization': `Bearer ${token}`
+               },
+               credentials: 'include'
+           })
+           .then(res => res.ok ? res.json() : null)
+           .then(data => {
+               if (data?.data?.creditedCount > 0) {
+                   // Refresh list silently if status updated
+                   loadTransactions();
+               }
+           })
+           .catch(() => {});
+       }
     });
   </script>
 
