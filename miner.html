@@ -278,10 +278,16 @@
             const startDate = new Date(inv.startDate || inv.createdAt);
             const now = new Date();
             const msPerDay = 1000 * 60 * 60 * 24;
-            let daysPassed = Math.floor((now - startDate) / msPerDay);
+            let daysPassed = inv.daysPassed !== undefined ? inv.daysPassed : Math.floor((now - startDate) / msPerDay);
             if (daysPassed < 0) daysPassed = 0;
             if (daysPassed > duration || status === 'completed') daysPassed = duration;
-            const progressPct = duration > 0 ? (daysPassed / duration) * 100 : 0;
+
+            let daysLeft = inv.daysLeft !== undefined 
+                ? inv.daysLeft 
+                : Math.max(0, duration - daysPassed);
+            if (status === 'completed') daysLeft = 0;
+
+            const progressPct = duration > 0 ? Math.min(100, (daysPassed / duration) * 100) : 0;
             
             let badgeBg = status === 'active' ? 'bg-[#00ff00] text-black font-black shadow-[0_0_12px_rgba(0,255,0,0.3)]' : 'bg-gray-800 text-gray-400 font-bold';
             
@@ -297,7 +303,16 @@
                     <p class="text-gray-400 text-[11px] font-medium">Invested: <span class="text-[#00ff00] font-bold">$${amount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span></p>
                   </div>
                 </div>
-                <span class="${badgeBg} px-3 py-1 rounded-full text-[10px] tracking-wide uppercase">${status}</span>
+                <div class="flex flex-col items-end gap-1.5">
+                  <span class="${badgeBg} px-3 py-0.5 rounded-full text-[10px] tracking-wide uppercase">${status}</span>
+                  ${status === 'active' ? `
+                    <span class="bg-[#00ff00]/15 text-[#00ff00] border border-[#00ff00]/50 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold flex items-center gap-1 shadow-[0_0_10px_rgba(0,255,0,0.2)]">
+                      <i class="fas fa-hourglass-half text-[9px] animate-pulse"></i> ${daysLeft} ${daysLeft === 1 ? 'day' : 'days'} left
+                    </span>
+                  ` : `
+                    <span class="bg-gray-800/80 text-gray-400 border border-gray-700 px-2 py-0.5 rounded-full text-[9px] font-bold">Matured</span>
+                  `}
+                </div>
               </div>
 
               <div class="grid grid-cols-4 gap-2 mt-5 mb-4 text-center divide-x divide-[#00ff00]/20">
@@ -306,26 +321,29 @@
                   <p class="text-gray-400 text-[9px] mt-0.5">Daily Income</p>
                 </div>
                 <div class="flex flex-col items-center justify-center">
+                  <p class="text-[#00ff00] font-black text-[12px]">${status === 'active' ? `${daysLeft} Days` : '0 Days'}</p>
+                  <p class="text-gray-400 text-[9px] mt-0.5">Days Left</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
                   <p class="text-white font-bold text-[12px]">${duration} Days</p>
-                  <p class="text-gray-400 text-[9px] mt-0.5">Revenue Days</p>
+                  <p class="text-gray-400 text-[9px] mt-0.5">Cycle</p>
                 </div>
                 <div class="flex flex-col items-center justify-center">
                   <p class="text-white font-bold text-[12px]">$${totalAmount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
                   <p class="text-gray-400 text-[9px] mt-0.5">Total Return</p>
                 </div>
-                <div class="flex flex-col items-center justify-center">
-                  <p class="text-[#00ff00] font-bold text-[12px]">${isFixed}</p>
-                  <p class="text-gray-400 text-[9px] mt-0.5">Capital Return</p>
-                </div>
               </div>
 
               <div class="w-full mt-2">
-                <div class="w-full bg-gray-900 rounded-full h-[6px] relative overflow-hidden mb-1.5 border border-white/5">
-                  <div class="bg-[#00ff00] h-full rounded-full transition-all duration-1000 shadow-[0_0_8px_#00ff00]" style="width: ${progressPct}%;"></div>
+                <div class="flex justify-between items-center w-full mb-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full ${status === 'active' ? 'bg-[#00ff00] shadow-[0_0_6px_#00ff00]' : 'bg-gray-500'}"></span>
+                    <p class="text-white text-[10px] font-extrabold tracking-wide">${status === 'active' ? `<span class="text-[#00ff00] font-black">${daysLeft}</span> ${daysLeft === 1 ? 'day' : 'days'} remaining` : 'Cycle Finished'}</p>
+                  </div>
+                  <p class="text-gray-400 text-[9px] font-medium">${daysPassed}/${duration} days (${progressPct.toFixed(1)}%)</p>
                 </div>
-                <div class="flex justify-between items-center w-full">
-                  <p class="text-gray-400 text-[9px] font-medium">${daysPassed}/${duration} days</p>
-                  <p class="text-[#00ff00] text-[9px] font-bold">${progressPct.toFixed(1)}%</p>
+                <div class="w-full bg-gray-900 rounded-full h-[6px] relative overflow-hidden mb-1 border border-white/5">
+                  <div class="bg-[#00ff00] h-full rounded-full transition-all duration-1000 shadow-[0_0_8px_#00ff00]" style="width: ${progressPct}%;"></div>
                 </div>
               </div>
             </div>`;
