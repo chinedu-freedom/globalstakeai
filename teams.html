@@ -256,7 +256,7 @@
 
     async function fetchReferralConfig() {
         try {
-            const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referral-config`);
+            const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referral-config`);
             if (res.ok) {
                 const data = await res.json();
                 const config = data.data || data;
@@ -281,7 +281,7 @@
 
     async function fetchUserDataForLink() {
         try {
-            const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, { credentials: 'include' });
+            const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, { credentials: 'include' });
             if (res.ok) {
                 const data = await res.json();
                 const user = data.user || data.data || data;
@@ -295,10 +295,10 @@
 
     async function fetchReferralData() {
         try {
-            const p1 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=1`, { credentials: 'include' });
-            const p2 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=2`, { credentials: 'include' });
-            const p3 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=3`, { credentials: 'include' });
-            const pMe = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, { credentials: 'include' });
+            const p1 = fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referrals?level=1`, { credentials: 'include' });
+            const p2 = fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referrals?level=2`, { credentials: 'include' });
+            const p3 = fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referrals?level=3`, { credentials: 'include' });
+            const pMe = fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, { credentials: 'include' });
 
             const [res1, res2, res3, resMe] = await Promise.all([p1, p2, p3, pMe]);
             

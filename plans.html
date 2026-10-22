@@ -351,7 +351,7 @@ input[type="number"] {
 
     async function fetchInvestmentPlans() {
         try {
-            const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/investment/plans`, {
+            const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/investment/plans`, {
                 credentials: 'include'
             });
 
@@ -470,10 +470,10 @@ input[type="number"] {
         // parallel fetch plan and user data
         try {
             const [planRes, userRes] = await Promise.all([
-                fetch(`${window.API_BASE || "http://localhost:5000"}/api/investment/plans/${planId}`, {
+                fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/investment/plans/${planId}`, {
                     credentials: 'include'
                 }),
-                fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+                fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
                     credentials: 'include'
                 })
             ]);
@@ -619,7 +619,7 @@ input[type="number"] {
         btn.disabled = true;
 
         try {
-            const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/investments`, {
+            const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/investments`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },

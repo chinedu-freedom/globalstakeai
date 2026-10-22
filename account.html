@@ -295,7 +295,7 @@
       label.textContent = 'Logging out...';
 
       try {
-        const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/auth/logout`, {
+        const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/auth/logout`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         });
@@ -345,7 +345,7 @@
 
         // 1. Fetch User Data
         try {
-            const userRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+            const userRes = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
                 credentials: 'include'
             });
             if (userRes.status === 401 || userRes.status === 403) {
@@ -453,7 +453,7 @@
 
         // 2. Fetch Dashboard Stats
         try {
-            const statsRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/dashboard-stats`, {
+            const statsRes = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/dashboard-stats`, {
                 credentials: 'include'
             });
             if (statsRes.ok) {
@@ -523,7 +523,7 @@
             formData.append('image', file);
 
             // Attempt formData:
-            let response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+            let response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
                 method: 'PATCH',
                 credentials: 'include',
                 body: formData
@@ -536,7 +536,7 @@
 
             // If it fails due to payload format, try raw JSON with base64
             if (!response.ok && response.status === 400) {
-                response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+                response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
                     method: 'PATCH',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },

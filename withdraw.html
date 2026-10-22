@@ -295,7 +295,7 @@
 
     async function fetchWithdrawalConfig() {
       try {
-        const limitRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/withdrawals/limits`, { credentials: 'include' });
+        const limitRes = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/withdrawals/limits`, { credentials: 'include' });
         if (limitRes.ok) {
           const limitData = await limitRes.json();
           const d = limitData.data;
@@ -315,7 +315,7 @@
 
     async function fetchStats() {
       try {
-        const statsRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/dashboard-stats`, {
+        const statsRes = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/dashboard-stats`, {
           credentials: 'include'
         });
         if (statsRes.ok) {
@@ -419,7 +419,7 @@
       submitBtn.disabled = true;
 
       try {
-        const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/withdrawals`, {
+        const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/withdrawals`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',

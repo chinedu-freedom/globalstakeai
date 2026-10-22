@@ -448,7 +448,7 @@
 
     async function fetchUserDetails() {
         try {
-            const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+            const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
                 credentials: 'include'
             });
             if (response.ok) {
@@ -585,7 +585,7 @@
             const formData = new FormData();
             formData.append('image', file);
             
-            const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+            const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
                 method: 'PATCH',
                 credentials: 'include',
                 body: formData
@@ -734,7 +734,7 @@
       btn.disabled = true;
 
       try {
-          const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/change-password`, {
+          const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/change-password`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               credentials: 'include',

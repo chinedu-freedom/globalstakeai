@@ -810,7 +810,7 @@ const feedData = [
       // Fetch Dashboard Stats for index.html
       (async function fetchIndexStats() {
           try {
-              const statsRes = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/dashboard-stats`, {
+              const statsRes = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/dashboard-stats`, {
                   credentials: 'include'
               });
               if (statsRes.ok) {

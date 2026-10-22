@@ -10,7 +10,7 @@
  *        as the FIRST script in <head> on every protected page.
  */
 (function () {
-  const API_BASE = window.API_BASE || "http://localhost:5000";
+  const API_BASE = window.API_BASE || "https://api.blockvextrade.com";
   const LOGIN_PAGE = "/login.html";
 
   // Pages that are publicly accessible — no redirect needed.

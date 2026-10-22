@@ -215,7 +215,7 @@
         const historyContainer = document.getElementById("historySection");
 
         try {
-            const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/investments`, {
+            const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/investments`, {
                 credentials: "include"
             });
             
