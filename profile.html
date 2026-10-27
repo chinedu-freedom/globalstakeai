@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
@@ -16,69 +17,67 @@
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #000000; 
-      padding-bottom: 70px; 
+      background-color: #000000;
+      padding-bottom: 70px;
     }
 
     .header-bg {
       background: #00ff00;
     }
-    
+
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       background-color: white;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
       z-index: 50;
       border-top: 1px solid #00ff00;
       height: 64px;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     .nav-item svg {
       width: 20px;
       height: 20px;
       margin-bottom: 4px;
       stroke-width: 2;
     }
-    
+
     .nav-item span {
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     .nav-item svg {
       width: 20px;
       height: 20px;
       margin-bottom: 4px;
       stroke-width: 2;
     }
-    
+
     .nav-item span {
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
   </style>
 
   <script src="./translator.js"></script>
   <link rel="stylesheet" href="./global.css">
 </head>
+
 <body class="flex flex-col min-h-screen items-center">
 
-  <div class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+  <div
+    class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
 
     <!-- HEADER -->
     <div class="header-bg text-white px-5 pt-5 pb-5 sticky top-0 z-40">
@@ -92,30 +91,37 @@
 
     <!-- AVATAR HEADER AREA -->
     <div class="flex flex-col items-center mt-8 mb-6 relative">
-      <div class="relative group cursor-pointer" onclick="document.getElementById('profileAvatarInput').click()" title="Click to update profile picture">
-        <div id="avatarSkeletonContainer" class="w-24 h-24 rounded-full border-4 border-[#00ff00]/40 shadow-lg overflow-hidden bg-gray-200 animate-pulse flex items-center justify-center text-white text-xl font-bold tracking-widest relative">
+      <div class="relative group cursor-pointer" onclick="document.getElementById('profileAvatarInput').click()"
+        title="Click to update profile picture">
+        <div id="avatarSkeletonContainer"
+          class="w-24 h-24 rounded-full border-4 border-[#00ff00]/40 shadow-lg overflow-hidden bg-gray-200 animate-pulse flex items-center justify-center text-white text-xl font-bold tracking-widest relative">
           <span id="profileInitials" class="hidden drop-shadow-md"></span>
-          <img src="" alt="Profile" class="w-full h-full object-cover hidden absolute inset-0 z-10" id="profilePageAvatar">
+          <img src="" alt="Profile" class="w-full h-full object-cover hidden absolute inset-0 z-10"
+            id="profilePageAvatar">
         </div>
         <!-- Camera overlay on hover -->
-        <div class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200 z-20 pointer-events-none">
+        <div
+          class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200 z-20 pointer-events-none">
           <i class="fas fa-camera text-white text-lg"></i>
         </div>
         <!-- Corner Camera Badge -->
-        <div class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#00ff00] text-black flex items-center justify-center shadow-md border-2 border-black z-30 transition-transform group-hover:scale-110 active:scale-95">
+        <div
+          class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-[#00ff00] text-black flex items-center justify-center shadow-md border-2 border-black z-30 transition-transform group-hover:scale-110 active:scale-95">
           <i class="fas fa-camera text-[11px]"></i>
         </div>
       </div>
       <input type="file" id="profileAvatarInput" accept="image/*" class="hidden" onchange="updateProfileAvatar(this)">
-      <h2 class="mt-3 text-sm font-bold text-white tracking-wide flex items-center justify-center h-7" id="profileUsername">
+      <h2 class="mt-3 text-sm font-bold text-white tracking-wide flex items-center justify-center h-7"
+        id="profileUsername">
         <div class="h-5 w-24 bg-gray-200 rounded animate-pulse"></div>
       </h2>
     </div>
 
     <!-- DETAILS CARD -->
     <div class="px-4">
-      <div class="bg-black border border-[#00ff00] rounded-[20px] shadow-sm border border-gray-50 flex flex-col overflow-hidden">
-        
+      <div
+        class="bg-black border border-[#00ff00] rounded-[20px] shadow-sm border border-gray-50 flex flex-col overflow-hidden">
+
         <!-- Row 1: Email -->
         <div class="flex items-center justify-between p-4 border-b border-gray-100">
           <div class="flex items-center gap-3">
@@ -137,7 +143,8 @@
             </div>
             <span class="text-xs text-gray-400 font-medium">Country</span>
           </div>
-          <span class="text-[11px] font-semibold text-white tracking-wide flex items-center h-4" id="profileCountryCode">
+          <span class="text-[11px] font-semibold text-white tracking-wide flex items-center h-4"
+            id="profileCountryCode">
             <div class="h-3 w-24 bg-gray-200 rounded animate-pulse"></div>
           </span>
         </div>
@@ -163,7 +170,8 @@
             </div>
             <span class="text-xs text-gray-400 font-medium">Username</span>
           </div>
-          <span class="text-[11px] font-semibold text-gray-800 tracking-wide flex items-center h-4" id="profileUsernameRow">
+          <span class="text-[11px] font-semibold text-gray-800 tracking-wide flex items-center h-4"
+            id="profileUsernameRow">
             <div class="h-3 w-20 bg-gray-200 rounded animate-pulse"></div>
           </span>
         </div>
@@ -173,10 +181,12 @@
 
     <!-- QUICK LINKS MENU (From Image) -->
     <div class="px-4 mt-6 mb-8">
-      <div class="bg-black border border-[#00ff00] rounded-[24px] shadow-sm border border-gray-50 flex flex-col overflow-hidden">
-        
+      <div
+        class="bg-black border border-[#00ff00] rounded-[24px] shadow-sm border border-gray-50 flex flex-col overflow-hidden">
+
         <!-- Transaction History -->
-        <a href="/history.html" class="flex items-center justify-between p-5 border-b border-gray-50 hover:bg-gray-50 transition">
+        <a href="/history.html"
+          class="flex items-center justify-between p-5 border-b border-gray-50 hover:bg-gray-50 transition">
           <div class="flex items-center gap-4">
             <div class="w-10 h-10 rounded-full bg-[#e8efff] flex items-center justify-center text-[#00ff00]">
               <i class="fas fa-file-invoice-dollar text-xs"></i>
@@ -187,7 +197,8 @@
         </a>
 
         <!-- Active Staking -->
-        <a href="/miner.html" class="flex items-center justify-between p-5 border-b border-gray-50 hover:bg-gray-50 transition">
+        <a href="/miner.html"
+          class="flex items-center justify-between p-5 border-b border-gray-50 hover:bg-gray-50 transition">
           <div class="flex items-center gap-4">
             <div class="w-10 h-10 rounded-full bg-[#e8efff] flex items-center justify-center text-[#00ff00]">
               <i class="fas fa-chart-line text-xs"></i>
@@ -216,225 +227,245 @@
     <div class="bottom-nav">
       <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
         <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
         </a>
         <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" />
+            <path
+              d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
         </a>
         <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
         </a>
         <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>
-          </div>
-  </div>
-  <script>
-    // 1. Instant avatar preview from cache if available
-    const cachedAvatar = localStorage.getItem("userAvatar");
-    if (cachedAvatar) {
-      const avatarEl = document.getElementById("profilePageAvatar");
-      const skeletonContainer = document.getElementById("avatarSkeletonContainer");
-      if (avatarEl && skeletonContainer) {
-        avatarEl.src = cachedAvatar;
-        avatarEl.classList.remove('hidden');
-        skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
+      </div>
+    </div>
+    <script>
+      // 1. Instant avatar preview from cache if available
+      const cachedAvatar = localStorage.getItem("userAvatar");
+      if (cachedAvatar) {
+        const avatarEl = document.getElementById("profilePageAvatar");
+        const skeletonContainer = document.getElementById("avatarSkeletonContainer");
+        if (avatarEl && skeletonContainer) {
+          avatarEl.src = cachedAvatar;
+          avatarEl.classList.remove('hidden');
+          skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
+        }
       }
-    }
 
-    document.addEventListener("DOMContentLoaded", async () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         try {
-            const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
-                credentials: 'include'
-            });
+          const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+            credentials: 'include'
+          });
 
-            if (res.status === 401 || res.status === 403) {
+          if (res.status === 401 || res.status === 403) {
+            window.location.href = '/login.html';
+            return;
+          }
+
+          if (res.ok) {
+            const data = await res.json();
+            const userObj = data.data || data.user || data;
+
+            if (userObj) {
+              if (userObj.email) {
+                const emailEl = document.getElementById("profileEmail");
+                if (emailEl) emailEl.innerText = userObj.email;
+              }
+
+              // Display User's Country Name (not just country code)
+              const countryEl = document.getElementById("profileCountryCode");
+              if (countryEl) {
+                const countryObj = window.resolveCountryObj ? window.resolveCountryObj(userObj) : null;
+                const countryName = window.resolveCountryName ? window.resolveCountryName(userObj) : (userObj.country || "Not specified");
+
+                if (countryObj && countryObj.iso) {
+                  countryEl.innerHTML = `<img src="https://flagcdn.com/w20/${countryObj.iso.toLowerCase()}.png" class="w-4 h-3 object-cover rounded-sm inline-block mr-1.5 shadow-sm" alt="" onerror="this.remove()"><span class="truncate">${countryName}</span>`;
+                } else {
+                  countryEl.innerText = countryName;
+                }
+              }
+
+              if (userObj.phoneNumber || userObj.phone) {
+                const phoneEl = document.getElementById("profilePhone");
+                if (phoneEl) phoneEl.innerText = userObj.phoneNumber || userObj.phone;
+              }
+              if (userObj.username) {
+                const userEl1 = document.getElementById("profileUsername");
+                const userEl2 = document.getElementById("profileUsernameRow");
+                if (userEl1) userEl1.innerText = userObj.username;
+                if (userEl2) userEl2.innerText = userObj.username;
+              }
+
+              const skeletonContainer = document.getElementById("avatarSkeletonContainer");
+              const initialsEl = document.getElementById("profileInitials");
+              const avatarEl = document.getElementById("profilePageAvatar");
+
+              const setInitialsFallback = () => {
+                if (skeletonContainer) {
+                  skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
+                  skeletonContainer.classList.add('bg-[#1fa2d0]');
+                  if (initialsEl && userObj.username) {
+                    const names = userObj.username.trim().split(' ');
+                    let initials = '';
+                    if (names.length >= 2) {
+                      initials = (names[0][0] + names[1][0]).toUpperCase();
+                    } else if (names.length === 1 && names[0].length >= 2) {
+                      initials = names[0].substring(0, 2).toUpperCase();
+                    } else if (names.length === 1) {
+                      initials = names[0].toUpperCase();
+                    }
+                    initialsEl.innerText = initials;
+                    initialsEl.classList.remove('hidden');
+                  }
+                }
+                if (avatarEl) avatarEl.classList.add('hidden');
+              };
+
+              const applyAvatar = (url) => {
+                if (!url) {
+                  setInitialsFallback();
+                  return;
+                }
+                if (avatarEl) {
+                  avatarEl.onload = () => {
+                    avatarEl.classList.remove('hidden');
+                    if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
+                    if (initialsEl) initialsEl.classList.add('hidden');
+                  };
+                  avatarEl.onerror = () => setInitialsFallback();
+                  avatarEl.src = url;
+                }
+                localStorage.setItem('userAvatar', url);
+              };
+
+              if (userObj.imageUrl) {
+                applyAvatar(userObj.imageUrl);
+              } else if (userObj.image && userObj.image.asset && userObj.image.asset._ref) {
+                const ref = userObj.image.asset._ref;
+                const parts = ref.split('-');
+                if (parts.length === 4) {
+                  const assetId = parts[1];
+                  const dimensions = parts[2];
+                  const extension = parts[3];
+                  const projectId = "doihcvcm";
+                  const dataset = "production";
+                  const imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${dimensions}.${extension}`;
+                  applyAvatar(imageUrl);
+                } else {
+                  setInitialsFallback();
+                }
+              } else if (userObj.profilePicture) {
+                applyAvatar(userObj.profilePicture);
+              } else if (!cachedAvatar) {
+                setInitialsFallback();
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching profile details:", error);
+        }
+      });
+
+      async function updateProfileAvatar(input) {
+        if (input.files && input.files[0]) {
+          const file = input.files[0];
+
+          if (file.size > 5 * 1024 * 1024) {
+            if (window.pToast) {
+              window.pToast({ message: "Image size must be less than 5MB", type: "error" });
+            } else {
+              alert("Image size must be less than 5MB");
+            }
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onload = async function (e) {
+            const base64Image = e.target.result;
+            const avatarEl = document.getElementById('profilePageAvatar');
+            const skeletonContainer = document.getElementById('avatarSkeletonContainer');
+            const initialsEl = document.getElementById('profileInitials');
+
+            if (avatarEl) {
+              avatarEl.src = base64Image;
+              avatarEl.classList.remove('hidden');
+            }
+            if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
+            if (initialsEl) initialsEl.classList.add('hidden');
+
+            localStorage.setItem('userAvatar', base64Image);
+
+            if (window.pToast) {
+              window.pToast({ message: "Uploading profile picture...", type: "info", duration: 2500 });
+            }
+
+            try {
+              const formData = new FormData();
+              formData.append('image', file);
+
+              const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+                method: 'PATCH',
+                credentials: 'include',
+                body: formData
+              });
+
+              if (response.status === 401 || response.status === 403) {
                 window.location.href = '/login.html';
                 return;
-            }
+              }
 
-            if (res.ok) {
-                const data = await res.json();
-                const userObj = data.data || data.user || data;
-                
-                if (userObj) {
-                    if (userObj.email) {
-                        const emailEl = document.getElementById("profileEmail");
-                        if (emailEl) emailEl.innerText = userObj.email;
-                    }
-                    
-                    // Display User's Country Name (not just country code)
-                    const countryEl = document.getElementById("profileCountryCode");
-                    if (countryEl) {
-                        const countryObj = window.resolveCountryObj ? window.resolveCountryObj(userObj) : null;
-                        const countryName = window.resolveCountryName ? window.resolveCountryName(userObj) : (userObj.country || "Not specified");
+              const data = await response.json().catch(() => ({}));
 
-                        if (countryObj && countryObj.iso) {
-                            countryEl.innerHTML = `<img src="https://flagcdn.com/w20/${countryObj.iso.toLowerCase()}.png" class="w-4 h-3 object-cover rounded-sm inline-block mr-1.5 shadow-sm" alt="" onerror="this.remove()"><span class="truncate">${countryName}</span>`;
-                        } else {
-                            countryEl.innerText = countryName;
-                        }
-                    }
-
-                    if (userObj.phoneNumber || userObj.phone) {
-                        const phoneEl = document.getElementById("profilePhone");
-                        if (phoneEl) phoneEl.innerText = userObj.phoneNumber || userObj.phone;
-                    }
-                    if (userObj.username) {
-                        const userEl1 = document.getElementById("profileUsername");
-                        const userEl2 = document.getElementById("profileUsernameRow");
-                        if (userEl1) userEl1.innerText = userObj.username;
-                        if (userEl2) userEl2.innerText = userObj.username;
-                    }
-                    
-                    const skeletonContainer = document.getElementById("avatarSkeletonContainer");
-                    const initialsEl = document.getElementById("profileInitials");
-                    const avatarEl = document.getElementById("profilePageAvatar");
-                    
-                    const setInitialsFallback = () => {
-                        if (skeletonContainer) {
-                            skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
-                            skeletonContainer.classList.add('bg-[#1fa2d0]'); 
-                            if (initialsEl && userObj.username) {
-                                const names = userObj.username.trim().split(' ');
-                                let initials = '';
-                                if (names.length >= 2) {
-                                    initials = (names[0][0] + names[1][0]).toUpperCase();
-                                } else if (names.length === 1 && names[0].length >= 2) {
-                                    initials = names[0].substring(0, 2).toUpperCase();
-                                } else if (names.length === 1) {
-                                    initials = names[0].toUpperCase();
-                                }
-                                initialsEl.innerText = initials;
-                                initialsEl.classList.remove('hidden');
-                            }
-                        }
-                        if (avatarEl) avatarEl.classList.add('hidden');
-                    };
-
-                    const applyAvatar = (url) => {
-                        if (!url) {
-                            setInitialsFallback();
-                            return;
-                        }
-                        if (avatarEl) {
-                            avatarEl.onload = () => {
-                                avatarEl.classList.remove('hidden');
-                                if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
-                                if (initialsEl) initialsEl.classList.add('hidden');
-                            };
-                            avatarEl.onerror = () => setInitialsFallback();
-                            avatarEl.src = url;
-                        }
-                        localStorage.setItem('userAvatar', url);
-                    };
-                    
-                    if (userObj.imageUrl) {
-                        applyAvatar(userObj.imageUrl);
-                    } else if (userObj.image && userObj.image.asset && userObj.image.asset._ref) {
-                        const ref = userObj.image.asset._ref;
-                        const parts = ref.split('-'); 
-                        if (parts.length === 4) {
-                            const assetId = parts[1];
-                            const dimensions = parts[2];
-                            const extension = parts[3];
-                            const projectId = "doihcvcm"; 
-                            const dataset = "production"; 
-                            const imageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${dimensions}.${extension}`;
-                            applyAvatar(imageUrl);
-                        } else {
-                            setInitialsFallback();
-                        }
-                    } else if (userObj.profilePicture) {
-                        applyAvatar(userObj.profilePicture);
-                    } else if (!cachedAvatar) {
-                        setInitialsFallback();
-                    }
+              if (response.ok) {
+                const resolvedUrl = data.data?.imageUrl || data.imageUrl;
+                if (resolvedUrl) {
+                  localStorage.setItem('userAvatar', resolvedUrl);
+                  if (avatarEl) avatarEl.src = resolvedUrl;
                 }
-            }
-        } catch (error) {
-            console.error("Error fetching profile details:", error);
-        }
-    });
-
-    async function updateProfileAvatar(input) {
-      if (input.files && input.files[0]) {
-        const file = input.files[0];
-
-        if (file.size > 5 * 1024 * 1024) {
-          if (window.pToast) {
-            window.pToast({ message: "Image size must be less than 5MB", type: "error" });
-          } else {
-            alert("Image size must be less than 5MB");
-          }
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = async function(e) {
-          const base64Image = e.target.result;
-          const avatarEl = document.getElementById('profilePageAvatar');
-          const skeletonContainer = document.getElementById('avatarSkeletonContainer');
-          const initialsEl = document.getElementById('profileInitials');
-
-          if (avatarEl) {
-            avatarEl.src = base64Image;
-            avatarEl.classList.remove('hidden');
-          }
-          if (skeletonContainer) skeletonContainer.classList.remove('animate-pulse', 'bg-gray-200');
-          if (initialsEl) initialsEl.classList.add('hidden');
-
-          localStorage.setItem('userAvatar', base64Image);
-
-          if (window.pToast) {
-            window.pToast({ message: "Uploading profile picture...", type: "info", duration: 2500 });
-          }
-
-          try {
-            const formData = new FormData();
-            formData.append('image', file);
-
-            const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
-              method: 'PATCH',
-              credentials: 'include',
-              body: formData
-            });
-
-            if (response.status === 401 || response.status === 403) {
-              window.location.href = '/login.html';
-              return;
-            }
-
-            const data = await response.json().catch(() => ({}));
-
-            if (response.ok) {
-              const resolvedUrl = data.data?.imageUrl || data.imageUrl;
-              if (resolvedUrl) {
-                localStorage.setItem('userAvatar', resolvedUrl);
-                if (avatarEl) avatarEl.src = resolvedUrl;
+                if (window.pToast) {
+                  window.pToast({ message: "Profile picture updated successfully!", type: "success" });
+                }
+              } else {
+                if (window.pToast) {
+                  window.pToast({ message: data.message || "Failed to update profile picture", type: "error" });
+                }
               }
+            } catch (err) {
+              console.error("Upload error:", err);
               if (window.pToast) {
-                window.pToast({ message: "Profile picture updated successfully!", type: "success" });
-              }
-            } else {
-              if (window.pToast) {
-                window.pToast({ message: data.message || "Failed to update profile picture", type: "error" });
+                window.pToast({ message: "Error uploading profile picture", type: "error" });
               }
             }
-          } catch (err) {
-            console.error("Upload error:", err);
-            if (window.pToast) {
-              window.pToast({ message: "Error uploading profile picture", type: "error" });
-            }
-          }
-        };
-        reader.readAsDataURL(file);
+          };
+          reader.readAsDataURL(file);
+        }
       }
-    }
-  </script>
+    </script>
 </body>
+
 </html>

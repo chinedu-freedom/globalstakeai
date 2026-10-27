@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
@@ -15,44 +16,45 @@
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #f0f4f8; 
-      padding-bottom: 70px; 
+      background-color: #f0f4f8;
+      padding-bottom: 70px;
     }
 
     .header-bg {
       background: linear-gradient(135deg, #1fa2d0, #167bee);
     }
-    
+
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
       background-color: white;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
       z-index: 50;
       border-top: 1px solid #f1f5f9;
       height: 64px;
     }
-    
+
     .nav-item svg {
       width: 20px;
       height: 20px;
       margin-bottom: 4px;
       stroke-width: 2;
     }
-    
+
     .nav-item span {
       font-size: 10px;
       font-weight: 500;
     }
 
-    
+
 
     /* Hide Scrollbar */
     .overflow-y-auto::-webkit-scrollbar {
       display: none;
     }
+
     .overflow-y-auto {
       -ms-overflow-style: none;
       scrollbar-width: none;
@@ -62,6 +64,7 @@
   <script src="./translator.js"></script>
   <script src="./toast.js"></script>
 </head>
+
 <body class="bg-[#f0f4f8]">
 
   <div class="w-full max-w-md bg-[#f0f4f8] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100">
@@ -76,268 +79,319 @@
       </div>
     </div>
 
-  <!-- ===== LANGUAGE MODAL ===== -->
-  <div id="langModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center px-5" onclick="if(event.target === this) toggleLanguageModal(false)">
-    <div id="langOverlay" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300" onclick="toggleLanguageModal(false)"></div>
-    <div id="langModalContent" class="relative w-full max-w-sm bg-white rounded-[32px] shadow-2xl scale-95 opacity-0 transition-all duration-300 max-h-[75vh] flex flex-col" onclick="event.stopPropagation()">
-      <!-- Handle -->
-      <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-4 mb-1 flex-shrink-0"></div>
-      <h3 class="text-xs font-bold text-gray-800 text-center py-4 border-b border-gray-50 flex-shrink-0">Select Language</h3>
+    <!-- ===== LANGUAGE MODAL ===== -->
+    <div id="langModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center px-5"
+      onclick="if(event.target === this) toggleLanguageModal(false)">
+      <div id="langOverlay" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300"
+        onclick="toggleLanguageModal(false)"></div>
+      <div id="langModalContent"
+        class="relative w-full max-w-sm bg-white rounded-[32px] shadow-2xl scale-95 opacity-0 transition-all duration-300 max-h-[75vh] flex flex-col"
+        onclick="event.stopPropagation()">
+        <!-- Handle -->
+        <div class="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-4 mb-1 flex-shrink-0"></div>
+        <h3 class="text-xs font-bold text-gray-800 text-center py-4 border-b border-gray-50 flex-shrink-0">Select
+          Language</h3>
 
-      <!-- Search Bar -->
-      <div class="px-4 py-3 flex-shrink-0 border-b border-gray-50">
-        <div class="relative">
-          <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-xs"></i>
-          <input
-            id="langSearch"
-            type="search"
-            name="site_lang_search_no_autofill"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-            data-lpignore="true"
-            data-form-type="other"
-            placeholder="Search language..."
-            oninput="filterLanguages(this.value)"
-            class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-2xl text-xs text-gray-700 placeholder-gray-300 outline-none focus:border-[#4f8cff] focus:ring-2 focus:ring-[#4f8cff]/10 transition"
-          />
-        </div>
-      </div>
-
-      <div class="overflow-y-auto flex-1 py-2" id="langList" translate="no" data-notranslate="true">
-        <p id="langNoResults" class="text-[11px] text-gray-400 text-center py-6 hidden">No languages found</p>
-        <!-- Language options -->
-        <button onclick="changeLanguage('English', 'https://flagcdn.com/w20/us.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/us.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="EN">
-          <span class="text-xs font-medium text-gray-700 flex-1">English</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs " id="check-English"></i>
-        </button>
-        <button onclick="changeLanguage('Español', 'https://flagcdn.com/w20/es.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/es.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="ES">
-          <span class="text-xs font-medium text-gray-700 flex-1">Español</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Español"></i>
-        </button>
-        <button onclick="changeLanguage('Français', 'https://flagcdn.com/w20/fr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/fr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="FR">
-          <span class="text-xs font-medium text-gray-700 flex-1">Français</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Français"></i>
-        </button>
-        <button onclick="changeLanguage('Deutsch', 'https://flagcdn.com/w20/de.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/de.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="DE">
-          <span class="text-xs font-medium text-gray-700 flex-1">Deutsch</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Deutsch"></i>
-        </button>
-        <button onclick="changeLanguage('Italiano', 'https://flagcdn.com/w20/it.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/it.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IT">
-          <span class="text-xs font-medium text-gray-700 flex-1">Italiano</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Italiano"></i>
-        </button>
-        <button onclick="changeLanguage('Português', 'https://flagcdn.com/w20/pt.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/pt.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="PT">
-          <span class="text-xs font-medium text-gray-700 flex-1">Português</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Português"></i>
-        </button>
-        <button onclick="changeLanguage('中文', 'https://flagcdn.com/w20/cn.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/cn.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="CN">
-          <span class="text-xs font-medium text-gray-700 flex-1">中文</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-中文"></i>
-        </button>
-        <button onclick="changeLanguage('日本語', 'https://flagcdn.com/w20/jp.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="JP">
-          <span class="text-xs font-medium text-gray-700 flex-1">日本語</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-日本語"></i>
-        </button>
-        <button onclick="changeLanguage('한국어', 'https://flagcdn.com/w20/kr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/kr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="KR">
-          <span class="text-xs font-medium text-gray-700 flex-1">한국어</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-한국어"></i>
-        </button>
-        <button onclick="changeLanguage('Русский', 'https://flagcdn.com/w20/ru.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/ru.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="RU">
-          <span class="text-xs font-medium text-gray-700 flex-1">Русский</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Русский"></i>
-        </button>
-        <button onclick="changeLanguage('العربية', 'https://flagcdn.com/w20/sa.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/sa.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="AR">
-          <span class="text-xs font-medium text-gray-700 flex-1">العربية</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-العربية"></i>
-        </button>
-        <button onclick="changeLanguage('हिन्दी', 'https://flagcdn.com/w20/in.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/in.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IN">
-          <span class="text-xs font-medium text-gray-700 flex-1">हिन्दी</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-हिन्दी"></i>
-        </button>
-        <button onclick="changeLanguage('Türkçe', 'https://flagcdn.com/w20/tr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/tr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="TR">
-          <span class="text-xs font-medium text-gray-700 flex-1">Türkçe</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Türkçe"></i>
-        </button>
-        <button onclick="changeLanguage('Nederlands', 'https://flagcdn.com/w20/nl.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/nl.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="NL">
-          <span class="text-xs font-medium text-gray-700 flex-1">Nederlands</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Nederlands"></i>
-        </button>
-        <button onclick="changeLanguage('Bahasa Indonesia', 'https://flagcdn.com/w20/id.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/id.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="ID">
-          <span class="text-xs font-medium text-gray-700 flex-1">Bahasa Indonesia</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Bahasa Indonesia"></i>
-        </button>
-        <button onclick="changeLanguage('Tiếng Việt', 'https://flagcdn.com/w20/vn.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/vn.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="VN">
-          <span class="text-xs font-medium text-gray-700 flex-1">Tiếng Việt</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Tiếng Việt"></i>
-        </button>
-        <button onclick="changeLanguage('ไทย', 'https://flagcdn.com/w20/th.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/th.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="TH">
-          <span class="text-xs font-medium text-gray-700 flex-1">ไทย</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-ไทย"></i>
-        </button>
-        <button onclick="changeLanguage('Ελληνικά', 'https://flagcdn.com/w20/gr.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/gr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="GR">
-          <span class="text-xs font-medium text-gray-700 flex-1">Ελληνικά</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Ελληνικά"></i>
-        </button>
-        <button onclick="changeLanguage('Svenska', 'https://flagcdn.com/w20/se.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/se.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="SE">
-          <span class="text-xs font-medium text-gray-700 flex-1">Svenska</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Svenska"></i>
-        </button>
-        <button onclick="changeLanguage('Polski', 'https://flagcdn.com/w20/pl.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/pl.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="PL">
-          <span class="text-xs font-medium text-gray-700 flex-1">Polski</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Polski"></i>
-        </button>
-        <button onclick="changeLanguage('Filipino', 'https://flagcdn.com/w20/ph.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/ph.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="PH">
-          <span class="text-xs font-medium text-gray-700 flex-1">Filipino</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Filipino"></i>
-        </button>
-        <button onclick="changeLanguage('Română', 'https://flagcdn.com/w20/ro.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/ro.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="RO">
-          <span class="text-xs font-medium text-gray-700 flex-1">Română</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Română"></i>
-        </button>
-        <button onclick="changeLanguage('বাংলা', 'https://flagcdn.com/w20/bd.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/bd.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="BD">
-          <span class="text-xs font-medium text-gray-700 flex-1">বাংলা</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-বাংলা"></i>
-        </button>
-        <button onclick="changeLanguage('Українська', 'https://flagcdn.com/w20/ua.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/ua.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="UA">
-          <span class="text-xs font-medium text-gray-700 flex-1">Українська</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Українська"></i>
-        </button>
-        <button onclick="changeLanguage('فارسی', 'https://flagcdn.com/w20/ir.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/ir.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IR">
-          <span class="text-xs font-medium text-gray-700 flex-1">فارسی</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-فارسی"></i>
-        </button>
-        <button onclick="changeLanguage('Bahasa Melayu', 'https://flagcdn.com/w20/my.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/my.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="MY">
-          <span class="text-xs font-medium text-gray-700 flex-1">Bahasa Melayu</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Bahasa Melayu"></i>
-        </button>
-        <button onclick="changeLanguage('Čeština', 'https://flagcdn.com/w20/cz.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/cz.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="CZ">
-          <span class="text-xs font-medium text-gray-700 flex-1">Čeština</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Čeština"></i>
-        </button>
-        <button onclick="changeLanguage('Magyar', 'https://flagcdn.com/w20/hu.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/hu.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="HU">
-          <span class="text-xs font-medium text-gray-700 flex-1">Magyar</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Magyar"></i>
-        </button>
-        <button onclick="changeLanguage('Kiswahili', 'https://flagcdn.com/w20/ke.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/ke.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="KE">
-          <span class="text-xs font-medium text-gray-700 flex-1">Kiswahili</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Kiswahili"></i>
-        </button>
-        <button onclick="changeLanguage('עברית', 'https://flagcdn.com/w20/il.png')" class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
-          <img src="https://flagcdn.com/w20/il.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IL">
-          <span class="text-xs font-medium text-gray-700 flex-1">עברית</span>
-          <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-עברית"></i>
-        </button>
-      </div>
-
-      <div class="flex-shrink-0 px-5 py-4 border-t border-gray-50">
-        <button onclick="toggleLanguageModal(false)" class="w-full py-3 rounded-2xl text-xs font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 transition">
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== PASSWORD MODAL ===== -->
-  <div id="pwdModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center px-5" onclick="if(event.target === this) togglePasswordModal(false)">
-    <div id="pwdOverlay" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300" onclick="togglePasswordModal(false)"></div>
-    <div id="pwdModalContent" class="relative w-full max-w-sm bg-white rounded-[32px] shadow-2xl scale-95 opacity-0 transition-all duration-300 max-h-[75vh] flex flex-col p-6" onclick="event.stopPropagation()">
-      
-      <h3 class="text-[15px] font-bold text-gray-800 text-center mb-6">Change Password</h3>
-
-      <form id="pwdForm" autocomplete="off" onsubmit="event.preventDefault(); changePasswordSubmit();" class="space-y-4 mb-6">
-        <div>
-          <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">Current Password</label>
-          <div class="relative flex items-center">
-            <input type="password" id="currentPasswordInput" name="current_password_input" autocomplete="current-password" class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter current password">
-            <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
-              <i class="far fa-eye text-xs"></i>
-            </button>
+        <!-- Search Bar -->
+        <div class="px-4 py-3 flex-shrink-0 border-b border-gray-50">
+          <div class="relative">
+            <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300 text-xs"></i>
+            <input id="langSearch" type="search" name="site_lang_search_no_autofill" autocomplete="off"
+              autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-form-type="other"
+              placeholder="Search language..." oninput="filterLanguages(this.value)"
+              class="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-2xl text-xs text-gray-700 placeholder-gray-300 outline-none focus:border-[#4f8cff] focus:ring-2 focus:ring-[#4f8cff]/10 transition" />
           </div>
         </div>
 
-        <div>
-           <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">New Password</label>
-           <div class="relative flex items-center">
-             <input type="password" id="newPasswordInput" name="new_password_input" autocomplete="new-password" class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter new password">
-             <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
-               <i class="far fa-eye text-xs"></i>
-             </button>
-           </div>
+        <div class="overflow-y-auto flex-1 py-2" id="langList" translate="no" data-notranslate="true">
+          <p id="langNoResults" class="text-[11px] text-gray-400 text-center py-6 hidden">No languages found</p>
+          <!-- Language options -->
+          <button onclick="changeLanguage('English', 'https://flagcdn.com/w20/us.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/us.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="EN">
+            <span class="text-xs font-medium text-gray-700 flex-1">English</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs " id="check-English"></i>
+          </button>
+          <button onclick="changeLanguage('Español', 'https://flagcdn.com/w20/es.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/es.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="ES">
+            <span class="text-xs font-medium text-gray-700 flex-1">Español</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Español"></i>
+          </button>
+          <button onclick="changeLanguage('Français', 'https://flagcdn.com/w20/fr.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/fr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="FR">
+            <span class="text-xs font-medium text-gray-700 flex-1">Français</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Français"></i>
+          </button>
+          <button onclick="changeLanguage('Deutsch', 'https://flagcdn.com/w20/de.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/de.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="DE">
+            <span class="text-xs font-medium text-gray-700 flex-1">Deutsch</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Deutsch"></i>
+          </button>
+          <button onclick="changeLanguage('Italiano', 'https://flagcdn.com/w20/it.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/it.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IT">
+            <span class="text-xs font-medium text-gray-700 flex-1">Italiano</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Italiano"></i>
+          </button>
+          <button onclick="changeLanguage('Português', 'https://flagcdn.com/w20/pt.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/pt.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="PT">
+            <span class="text-xs font-medium text-gray-700 flex-1">Português</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Português"></i>
+          </button>
+          <button onclick="changeLanguage('中文', 'https://flagcdn.com/w20/cn.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/cn.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="CN">
+            <span class="text-xs font-medium text-gray-700 flex-1">中文</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-中文"></i>
+          </button>
+          <button onclick="changeLanguage('日本語', 'https://flagcdn.com/w20/jp.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/jp.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="JP">
+            <span class="text-xs font-medium text-gray-700 flex-1">日本語</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-日本語"></i>
+          </button>
+          <button onclick="changeLanguage('한국어', 'https://flagcdn.com/w20/kr.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/kr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="KR">
+            <span class="text-xs font-medium text-gray-700 flex-1">한국어</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-한국어"></i>
+          </button>
+          <button onclick="changeLanguage('Русский', 'https://flagcdn.com/w20/ru.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/ru.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="RU">
+            <span class="text-xs font-medium text-gray-700 flex-1">Русский</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Русский"></i>
+          </button>
+          <button onclick="changeLanguage('العربية', 'https://flagcdn.com/w20/sa.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/sa.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="AR">
+            <span class="text-xs font-medium text-gray-700 flex-1">العربية</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-العربية"></i>
+          </button>
+          <button onclick="changeLanguage('हिन्दी', 'https://flagcdn.com/w20/in.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/in.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IN">
+            <span class="text-xs font-medium text-gray-700 flex-1">हिन्दी</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-हिन्दी"></i>
+          </button>
+          <button onclick="changeLanguage('Türkçe', 'https://flagcdn.com/w20/tr.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/tr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="TR">
+            <span class="text-xs font-medium text-gray-700 flex-1">Türkçe</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Türkçe"></i>
+          </button>
+          <button onclick="changeLanguage('Nederlands', 'https://flagcdn.com/w20/nl.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/nl.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="NL">
+            <span class="text-xs font-medium text-gray-700 flex-1">Nederlands</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Nederlands"></i>
+          </button>
+          <button onclick="changeLanguage('Bahasa Indonesia', 'https://flagcdn.com/w20/id.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/id.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="ID">
+            <span class="text-xs font-medium text-gray-700 flex-1">Bahasa Indonesia</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Bahasa Indonesia"></i>
+          </button>
+          <button onclick="changeLanguage('Tiếng Việt', 'https://flagcdn.com/w20/vn.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/vn.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="VN">
+            <span class="text-xs font-medium text-gray-700 flex-1">Tiếng Việt</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Tiếng Việt"></i>
+          </button>
+          <button onclick="changeLanguage('ไทย', 'https://flagcdn.com/w20/th.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/th.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="TH">
+            <span class="text-xs font-medium text-gray-700 flex-1">ไทย</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-ไทย"></i>
+          </button>
+          <button onclick="changeLanguage('Ελληνικά', 'https://flagcdn.com/w20/gr.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/gr.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="GR">
+            <span class="text-xs font-medium text-gray-700 flex-1">Ελληνικά</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Ελληνικά"></i>
+          </button>
+          <button onclick="changeLanguage('Svenska', 'https://flagcdn.com/w20/se.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/se.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="SE">
+            <span class="text-xs font-medium text-gray-700 flex-1">Svenska</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Svenska"></i>
+          </button>
+          <button onclick="changeLanguage('Polski', 'https://flagcdn.com/w20/pl.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/pl.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="PL">
+            <span class="text-xs font-medium text-gray-700 flex-1">Polski</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Polski"></i>
+          </button>
+          <button onclick="changeLanguage('Filipino', 'https://flagcdn.com/w20/ph.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/ph.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="PH">
+            <span class="text-xs font-medium text-gray-700 flex-1">Filipino</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Filipino"></i>
+          </button>
+          <button onclick="changeLanguage('Română', 'https://flagcdn.com/w20/ro.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/ro.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="RO">
+            <span class="text-xs font-medium text-gray-700 flex-1">Română</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Română"></i>
+          </button>
+          <button onclick="changeLanguage('বাংলা', 'https://flagcdn.com/w20/bd.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/bd.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="BD">
+            <span class="text-xs font-medium text-gray-700 flex-1">বাংলা</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-বাংলা"></i>
+          </button>
+          <button onclick="changeLanguage('Українська', 'https://flagcdn.com/w20/ua.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/ua.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="UA">
+            <span class="text-xs font-medium text-gray-700 flex-1">Українська</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Українська"></i>
+          </button>
+          <button onclick="changeLanguage('فارسی', 'https://flagcdn.com/w20/ir.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/ir.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IR">
+            <span class="text-xs font-medium text-gray-700 flex-1">فارسی</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-فارسی"></i>
+          </button>
+          <button onclick="changeLanguage('Bahasa Melayu', 'https://flagcdn.com/w20/my.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/my.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="MY">
+            <span class="text-xs font-medium text-gray-700 flex-1">Bahasa Melayu</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Bahasa Melayu"></i>
+          </button>
+          <button onclick="changeLanguage('Čeština', 'https://flagcdn.com/w20/cz.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/cz.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="CZ">
+            <span class="text-xs font-medium text-gray-700 flex-1">Čeština</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Čeština"></i>
+          </button>
+          <button onclick="changeLanguage('Magyar', 'https://flagcdn.com/w20/hu.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/hu.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="HU">
+            <span class="text-xs font-medium text-gray-700 flex-1">Magyar</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Magyar"></i>
+          </button>
+          <button onclick="changeLanguage('Kiswahili', 'https://flagcdn.com/w20/ke.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/ke.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="KE">
+            <span class="text-xs font-medium text-gray-700 flex-1">Kiswahili</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-Kiswahili"></i>
+          </button>
+          <button onclick="changeLanguage('עברית', 'https://flagcdn.com/w20/il.png')"
+            class="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition text-left">
+            <img src="https://flagcdn.com/w20/il.png" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" alt="IL">
+            <span class="text-xs font-medium text-gray-700 flex-1">עברית</span>
+            <i class="fas fa-check text-[#4f8cff] text-xs hidden" id="check-עברית"></i>
+          </button>
         </div>
 
-        <div>
-           <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">Confirm New Password</label>
-           <div class="relative flex items-center">
-             <input type="password" id="confirmPasswordInput" name="confirm_password_input" autocomplete="new-password" class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Confirm new password">
-             <button type="button" class="absolute right-4 text-gray-400 focus:outline-none" onclick="toggleVisibility(this)">
-               <i class="far fa-eye text-xs"></i>
-             </button>
-           </div>
+        <div class="flex-shrink-0 px-5 py-4 border-t border-gray-50">
+          <button onclick="toggleLanguageModal(false)"
+            class="w-full py-3 rounded-2xl text-xs font-semibold text-gray-500 bg-gray-100 hover:bg-gray-200 transition">
+            Cancel
+          </button>
         </div>
-      </form>
-      <div class="flex flex-col gap-3">
-        <button onclick="changePasswordSubmit()" id="changePwdBtn" class="w-full header-bg active:scale-[0.98] text-black font-extrabold py-4 rounded-xl text-xs transition shadow-sm">
-          Save Changes
-        </button>
       </div>
-
     </div>
-  </div>
+
+    <!-- ===== PASSWORD MODAL ===== -->
+    <div id="pwdModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center px-5"
+      onclick="if(event.target === this) togglePasswordModal(false)">
+      <div id="pwdOverlay" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300"
+        onclick="togglePasswordModal(false)"></div>
+      <div id="pwdModalContent"
+        class="relative w-full max-w-sm bg-white rounded-[32px] shadow-2xl scale-95 opacity-0 transition-all duration-300 max-h-[75vh] flex flex-col p-6"
+        onclick="event.stopPropagation()">
+
+        <h3 class="text-[15px] font-bold text-gray-800 text-center mb-6">Change Password</h3>
+
+        <form id="pwdForm" autocomplete="off" onsubmit="event.preventDefault(); changePasswordSubmit();"
+          class="space-y-4 mb-6">
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">Current Password</label>
+            <div class="relative flex items-center">
+              <input type="password" id="currentPasswordInput" name="current_password_input"
+                autocomplete="current-password"
+                class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition"
+                placeholder="Enter current password">
+              <button type="button" class="absolute right-4 text-gray-400 focus:outline-none"
+                onclick="toggleVisibility(this)">
+                <i class="far fa-eye text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">New Password</label>
+            <div class="relative flex items-center">
+              <input type="password" id="newPasswordInput" name="new_password_input" autocomplete="new-password"
+                class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition"
+                placeholder="Enter new password">
+              <button type="button" class="absolute right-4 text-gray-400 focus:outline-none"
+                onclick="toggleVisibility(this)">
+                <i class="far fa-eye text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-500 mb-1.5 ml-1">Confirm New Password</label>
+            <div class="relative flex items-center">
+              <input type="password" id="confirmPasswordInput" name="confirm_password_input" autocomplete="new-password"
+                class="w-full bg-[#f0f4f8] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 pl-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-400 transition"
+                placeholder="Confirm new password">
+              <button type="button" class="absolute right-4 text-gray-400 focus:outline-none"
+                onclick="toggleVisibility(this)">
+                <i class="far fa-eye text-xs"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="flex flex-col gap-3">
+          <button onclick="changePasswordSubmit()" id="changePwdBtn"
+            class="w-full header-bg active:scale-[0.98] text-black font-extrabold py-4 rounded-xl text-xs transition shadow-sm">
+            Save Changes
+          </button>
+        </div>
+
+      </div>
+    </div>
 
     <!-- MAIN CONTENT START -->
     <div class="px-3 pt-5 pb-24 space-y-4">
-      
+
       <!-- User Info Top Card -->
-      <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center gap-4 transition overflow-hidden">
-        <div class="relative group cursor-pointer shrink-0" onclick="document.getElementById('settingAvatarInput').click()">
-          <div class="w-12 h-12 rounded-full border-2 border-white/20 shadow-sm overflow-hidden bg-gray-100 animate-pulse transition active:scale-95 flex items-center justify-center relative" id="settingAvatarContainer">
-            <img src="" alt="Profile" class="w-full h-full object-cover hidden absolute inset-0 z-10" id="settingAvatar">
+      <div
+        class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center gap-4 transition overflow-hidden">
+        <div class="relative group cursor-pointer shrink-0"
+          onclick="document.getElementById('settingAvatarInput').click()">
+          <div
+            class="w-12 h-12 rounded-full border-2 border-white/20 shadow-sm overflow-hidden bg-gray-100 animate-pulse transition active:scale-95 flex items-center justify-center relative"
+            id="settingAvatarContainer">
+            <img src="" alt="Profile" class="w-full h-full object-cover hidden absolute inset-0 z-10"
+              id="settingAvatar">
           </div>
-          <div class="absolute inset-0 bg-black/10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition pointer-events-none z-20">
+          <div
+            class="absolute inset-0 bg-black/10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition pointer-events-none z-20">
             <i class="fas fa-camera text-white text-[9px]"></i>
           </div>
         </div>
         <input type="file" id="settingAvatarInput" accept="image/*" class="hidden" onchange="updateSettingAvatar(this)">
         <a href="/profile.html" class="flex-1">
-          <h2 class="text-[13px] font-bold text-gray-800 animate-pulse bg-gray-100 h-4 w-24 rounded-md mb-1" id="settingUsername"></h2>
-          <p class="text-[10px] text-gray-400 mt-0.5 animate-pulse bg-gray-100 h-3 w-36 rounded-md" id="settingEmail"></p>
+          <h2 class="text-[13px] font-bold text-gray-800 animate-pulse bg-gray-100 h-4 w-24 rounded-md mb-1"
+            id="settingUsername"></h2>
+          <p class="text-[10px] text-gray-400 mt-0.5 animate-pulse bg-gray-100 h-3 w-36 rounded-md" id="settingEmail">
+          </p>
         </a>
         <i class="fas fa-chevron-right text-gray-200 text-[10px]"></i>
       </div>
 
       <!-- My Wallets -->
-      <a href="/wallets.html" class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition cursor-pointer">
+      <a href="/wallets.html"
+        class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition cursor-pointer">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
             <i class="far fa-credit-card text-[13px]"></i>
@@ -348,7 +402,8 @@
       </a>
 
       <!-- Account Verification -->
-      <a href="#" class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition">
+      <a href="#"
+        class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
             <i class="far fa-check-circle text-[13px]"></i>
@@ -356,13 +411,15 @@
           <span class="text-[11px] font-semibold text-gray-800">Account Verification</span>
         </div>
         <div class="flex items-center gap-2" id="verificationBadgeContainer">
-          <span id="verificationStatus" class="animate-pulse bg-gray-100 text-transparent text-[9px] font-bold px-4 py-0.5 rounded-full">Loading</span>
+          <span id="verificationStatus"
+            class="animate-pulse bg-gray-100 text-transparent text-[9px] font-bold px-4 py-0.5 rounded-full">Loading</span>
           <i class="fas fa-chevron-right text-gray-300 text-[10px]"></i>
         </div>
       </a>
 
       <!-- Language -->
-      <a href="javascript:void(0)" onclick="toggleLanguageModal(true)" class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition cursor-pointer">
+      <a href="javascript:void(0)" onclick="toggleLanguageModal(true)"
+        class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition cursor-pointer">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
             <i class="fas fa-language text-[13px]"></i>
@@ -370,14 +427,16 @@
           <span class="text-[11px] font-semibold text-gray-800">Language</span>
         </div>
         <div class="flex items-center gap-2">
-          <img src="https://flagcdn.com/w20/us.png" id="activeLangFlag" class="w-4 h-auto rounded-sm shadow-sm" alt="EN">
+          <img src="https://flagcdn.com/w20/us.png" id="activeLangFlag" class="w-4 h-auto rounded-sm shadow-sm"
+            alt="EN">
           <span class="text-[10px] text-gray-500 font-medium" id="activeLangText">English</span>
           <i class="fas fa-chevron-right text-gray-300 text-[10px]"></i>
         </div>
       </a>
 
       <!-- Change Password -->
-      <a href="javascript:void(0)" onclick="togglePasswordModal(true)" class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition cursor-pointer">
+      <a href="javascript:void(0)" onclick="togglePasswordModal(true)"
+        class="bg-white rounded-2xl p-4 shadow-sm border border-gray-50 flex items-center justify-between hover:bg-gray-50 transition cursor-pointer">
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-full bg-[#e8efff] flex items-center justify-center text-[#4f8cff]">
             <i class="fas fa-lock text-[13px]"></i>
@@ -405,19 +464,38 @@
     <div class="bottom-nav">
       <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
         <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
         </a>
         <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" />
+            <path
+              d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
         </a>
         <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
         </a>
         <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#4f8cff] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>
       </div>
@@ -426,118 +504,118 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-        // FETCH REAL DATA
-        await fetchUserDetails();
+      // FETCH REAL DATA
+      await fetchUserDetails();
 
-        // Restore active language checkmark after page reload
-        const reverseMapFull = {
-          'en':'English','es':'Español','fr':'Français','de':'Deutsch',
-          'it':'Italiano','pt':'Português','zh-CN':'中文','ja':'日本語',
-          'ko':'한국어','ru':'Русский','hi':'हिन्दी','ar':'العربية',
-          'tr':'Türkçe','nl':'Nederlands','id':'Bahasa Indonesia',
-          'vi':'Tiếng Việt','th':'ไทย','el':'Ελληνικά','sv':'Svenska','pl':'Polski'
-        };
-        const savedGCode = localStorage.getItem('siteLangGCode');
-        const activeLangName = reverseMapFull[savedGCode] || 'English';
-        // Hide all checkmarks first
-        document.querySelectorAll('[id^="check-"]').forEach(el => el.classList.add('hidden'));
-        // Show the active one
-        const activeCheck = document.getElementById('check-' + activeLangName);
-        if (activeCheck) activeCheck.classList.remove('hidden');
+      // Restore active language checkmark after page reload
+      const reverseMapFull = {
+        'en': 'English', 'es': 'Español', 'fr': 'Français', 'de': 'Deutsch',
+        'it': 'Italiano', 'pt': 'Português', 'zh-CN': '中文', 'ja': '日本語',
+        'ko': '한국어', 'ru': 'Русский', 'hi': 'हिन्दी', 'ar': 'العربية',
+        'tr': 'Türkçe', 'nl': 'Nederlands', 'id': 'Bahasa Indonesia',
+        'vi': 'Tiếng Việt', 'th': 'ไทย', 'el': 'Ελληνικά', 'sv': 'Svenska', 'pl': 'Polski'
+      };
+      const savedGCode = localStorage.getItem('siteLangGCode');
+      const activeLangName = reverseMapFull[savedGCode] || 'English';
+      // Hide all checkmarks first
+      document.querySelectorAll('[id^="check-"]').forEach(el => el.classList.add('hidden'));
+      // Show the active one
+      const activeCheck = document.getElementById('check-' + activeLangName);
+      if (activeCheck) activeCheck.classList.remove('hidden');
     });
 
     async function fetchUserDetails() {
-        try {
-            const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
-                credentials: 'include'
-            });
-            if (response.ok) {
-                const data = await response.json();
-                const user = data.user || data.data || data;
-                
-                if (user) {
-                    const usernameEl = document.getElementById("settingUsername");
-                    const emailEl = document.getElementById("settingEmail");
-                    
-                    usernameEl.innerText = user.username || "User";
-                    usernameEl.classList.remove('animate-pulse', 'bg-gray-100', 'h-4', 'w-24', 'rounded-md', 'mb-1');
-                    
-                    emailEl.innerText = user.email || "";
-                    emailEl.classList.remove('animate-pulse', 'bg-gray-100', 'h-3', 'w-36', 'rounded-md');
+      try {
+        const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+          credentials: 'include'
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const user = data.user || data.data || data;
 
-                    // Verification logic
-                    const verifyEl = document.getElementById("verificationStatus");
-                    verifyEl.classList.remove('animate-pulse', 'bg-gray-100', 'text-transparent');
-                    if (user.emailVerified) {
-                        verifyEl.innerText = "Verified";
-                        verifyEl.classList.add('bg-green-100', 'text-green-700');
-                        verifyEl.classList.remove('bg-[#fef3c7]', 'text-[#92400e]');
-                    } else {
-                        verifyEl.innerText = "Not Verified";
-                        verifyEl.classList.add('bg-[#fef3c7]', 'text-[#92400e]');
-                        verifyEl.classList.remove('bg-green-100', 'text-green-700');
-                    }
+          if (user) {
+            const usernameEl = document.getElementById("settingUsername");
+            const emailEl = document.getElementById("settingEmail");
 
-                    // Avatar logic
-                    const avatarImg = document.getElementById("settingAvatar");
-                    const avatarContainer = document.getElementById("settingAvatarContainer");
-                    avatarContainer.classList.remove('animate-pulse', 'bg-gray-100'); 
+            usernameEl.innerText = user.username || "User";
+            usernameEl.classList.remove('animate-pulse', 'bg-gray-100', 'h-4', 'w-24', 'rounded-md', 'mb-1');
 
-                    if (user.imageUrl) {
-                        avatarImg.src = user.imageUrl;
-                        avatarImg.classList.remove('hidden');
-                        const existingFallback = avatarContainer.querySelector('.initials-fallback');
-                        if (existingFallback) existingFallback.remove();
-                        avatarImg.onerror = () => {
-                            showInitialsFallback(user.username, avatarContainer, avatarImg);
-                        };
-                        localStorage.setItem('userAvatar', user.imageUrl);
-                    } else if (user.image && user.image.asset && user.image.asset._ref) {
-                        const ref = user.image.asset._ref;
-                        const parts = ref.split('-');
-                        const id = parts[1];
-                        const dimensions = parts[2];
-                        const format = parts[3];
-                        const url = `https://cdn.sanity.io/images/doihcvcm/production/${id}-${dimensions}.${format}`;
-                        
-                        avatarImg.src = url;
-                        avatarImg.classList.remove('hidden');
-                        
-                        const existingFallback = avatarContainer.querySelector('.initials-fallback');
-                        if (existingFallback) existingFallback.remove();
+            emailEl.innerText = user.email || "";
+            emailEl.classList.remove('animate-pulse', 'bg-gray-100', 'h-3', 'w-36', 'rounded-md');
 
-                        avatarImg.onerror = () => {
-                            showInitialsFallback(user.username, avatarContainer, avatarImg);
-                        };
-                    } else if (user.profilePicture) {
-                        avatarImg.src = user.profilePicture;
-                        avatarImg.classList.remove('hidden');
-                        const existingFallback = avatarContainer.querySelector('.initials-fallback');
-                        if (existingFallback) existingFallback.remove();
-                    } else {
-                        showInitialsFallback(user.username, avatarContainer, avatarImg);
-                    }
-                }
-            } else if (response.status === 401 || response.status === 403) {
-                window.location.href = '/login.html';
+            // Verification logic
+            const verifyEl = document.getElementById("verificationStatus");
+            verifyEl.classList.remove('animate-pulse', 'bg-gray-100', 'text-transparent');
+            if (user.emailVerified) {
+              verifyEl.innerText = "Verified";
+              verifyEl.classList.add('bg-green-100', 'text-green-700');
+              verifyEl.classList.remove('bg-[#fef3c7]', 'text-[#92400e]');
+            } else {
+              verifyEl.innerText = "Not Verified";
+              verifyEl.classList.add('bg-[#fef3c7]', 'text-[#92400e]');
+              verifyEl.classList.remove('bg-green-100', 'text-green-700');
             }
-        } catch (error) {
-            console.error("Error fetching user details:", error);
+
+            // Avatar logic
+            const avatarImg = document.getElementById("settingAvatar");
+            const avatarContainer = document.getElementById("settingAvatarContainer");
+            avatarContainer.classList.remove('animate-pulse', 'bg-gray-100');
+
+            if (user.imageUrl) {
+              avatarImg.src = user.imageUrl;
+              avatarImg.classList.remove('hidden');
+              const existingFallback = avatarContainer.querySelector('.initials-fallback');
+              if (existingFallback) existingFallback.remove();
+              avatarImg.onerror = () => {
+                showInitialsFallback(user.username, avatarContainer, avatarImg);
+              };
+              localStorage.setItem('userAvatar', user.imageUrl);
+            } else if (user.image && user.image.asset && user.image.asset._ref) {
+              const ref = user.image.asset._ref;
+              const parts = ref.split('-');
+              const id = parts[1];
+              const dimensions = parts[2];
+              const format = parts[3];
+              const url = `https://cdn.sanity.io/images/doihcvcm/production/${id}-${dimensions}.${format}`;
+
+              avatarImg.src = url;
+              avatarImg.classList.remove('hidden');
+
+              const existingFallback = avatarContainer.querySelector('.initials-fallback');
+              if (existingFallback) existingFallback.remove();
+
+              avatarImg.onerror = () => {
+                showInitialsFallback(user.username, avatarContainer, avatarImg);
+              };
+            } else if (user.profilePicture) {
+              avatarImg.src = user.profilePicture;
+              avatarImg.classList.remove('hidden');
+              const existingFallback = avatarContainer.querySelector('.initials-fallback');
+              if (existingFallback) existingFallback.remove();
+            } else {
+              showInitialsFallback(user.username, avatarContainer, avatarImg);
+            }
+          }
+        } else if (response.status === 401 || response.status === 403) {
+          window.location.href = '/login.html';
         }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
     }
 
     function showInitialsFallback(username, container, imgElement) {
-        imgElement.classList.add('hidden');
-        const initials = (username || "U").substring(0, 2).toUpperCase();
-        
-        // Remove existing fallback
-        const old = container.querySelector('.initials-fallback');
-        if (old) old.remove();
+      imgElement.classList.add('hidden');
+      const initials = (username || "U").substring(0, 2).toUpperCase();
 
-        const fallback = document.createElement('div');
-        fallback.className = 'initials-fallback w-full h-full flex items-center justify-center bg-[#1fa2d0] text-white font-bold text-xs';
-        fallback.innerText = initials;
-        container.appendChild(fallback);
+      // Remove existing fallback
+      const old = container.querySelector('.initials-fallback');
+      if (old) old.remove();
+
+      const fallback = document.createElement('div');
+      fallback.className = 'initials-fallback w-full h-full flex items-center justify-center bg-[#1fa2d0] text-white font-bold text-xs';
+      fallback.innerText = initials;
+      container.appendChild(fallback);
     }
 
     function filterLanguages(query) {
@@ -556,19 +634,19 @@
     async function updateSettingAvatar(input) {
       if (input.files && input.files[0]) {
         const file = input.files[0];
-        
+
         if (file.size > 5 * 1024 * 1024) {
           if (window.pToast) window.pToast({ message: "Image size must be less than 5MB", type: "error" });
           return;
         }
 
         const reader = new FileReader();
-        reader.onload = async function(e) {
+        reader.onload = async function (e) {
           const base64Image = e.target.result;
-          
+
           const avatarImg = document.getElementById('settingAvatar');
           const container = document.getElementById('settingAvatarContainer');
-          
+
           avatarImg.src = base64Image;
           avatarImg.classList.remove('hidden');
           const fallback = container.querySelector('.initials-fallback');
@@ -584,11 +662,11 @@
           try {
             const formData = new FormData();
             formData.append('image', file);
-            
-            const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
-                method: 'PATCH',
-                credentials: 'include',
-                body: formData
+
+            const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+              method: 'PATCH',
+              credentials: 'include',
+              body: formData
             });
 
             if (response.status === 401 || response.status === 403) {
@@ -628,7 +706,7 @@
       const modalContent = document.getElementById('pwdModalContent');
       const overlay = document.getElementById('pwdOverlay');
 
-      if(show) {
+      if (show) {
         modal.classList.remove('hidden');
         setTimeout(() => {
           overlay.classList.remove('opacity-0');
@@ -653,7 +731,7 @@
       const overlay = document.getElementById('langOverlay');
       const searchInput = document.getElementById('langSearch');
 
-      if(show) {
+      if (show) {
         if (searchInput) {
           searchInput.value = '';
           filterLanguages('');
@@ -682,7 +760,7 @@
 
     function changeLanguage(langName, flagUrl) {
       if (window.setSiteLanguage) {
-          window.setSiteLanguage(langName, flagUrl);
+        window.setSiteLanguage(langName, flagUrl);
       }
       document.getElementById('activeLangText').innerText = langName;
       document.getElementById('activeLangFlag').src = flagUrl;
@@ -698,7 +776,7 @@
     function toggleVisibility(btn) {
       const input = btn.previousElementSibling;
       const icon = btn.querySelector('i');
-      if(input.type === 'password') {
+      if (input.type === 'password') {
         input.type = 'text';
         icon.classList.remove('fa-eye');
         icon.classList.add('fa-eye-slash');
@@ -716,17 +794,17 @@
       const btn = document.getElementById('changePwdBtn');
 
 
-      if(!currentPwd || !newPwd || !confirmPwd) {
-          window.pToast({ message: "Please fill out all fields", type: "warning" });
-          return;
+      if (!currentPwd || !newPwd || !confirmPwd) {
+        window.pToast({ message: "Please fill out all fields", type: "warning" });
+        return;
       }
-      if(newPwd.length < 6) {
-          window.pToast({ message: "New password must be at least 6 characters", type: "warning" });
-          return;
+      if (newPwd.length < 6) {
+        window.pToast({ message: "New password must be at least 6 characters", type: "warning" });
+        return;
       }
-      if(newPwd !== confirmPwd) {
-          window.pToast({ message: "New password and Confirm password do not match", type: "warning" });
-          return;
+      if (newPwd !== confirmPwd) {
+        window.pToast({ message: "New password and Confirm password do not match", type: "warning" });
+        return;
       }
 
       const oldText = btn.innerText;
@@ -734,33 +812,34 @@
       btn.disabled = true;
 
       try {
-          const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/change-password`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              credentials: 'include',
-              body: JSON.stringify({
-                  currentPassword: currentPwd,
-                  newPassword: confirmPwd
-              })
-          });
+        const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/change-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            currentPassword: currentPwd,
+            newPassword: confirmPwd
+          })
+        });
 
-          const data = await response.json();
-          if(response.ok || data.success) {
-              window.pToast({ message: data.message || "Password successfully updated!", type: "success" });
-              document.getElementById('currentPasswordInput').value = '';
-              document.getElementById('newPasswordInput').value = '';
-              document.getElementById('confirmPasswordInput').value = '';
-              setTimeout(() => togglePasswordModal(false), 1500);
-          } else {
-              window.pToast({ message: data.message || "Failed to update password", type: "error" });
-          }
+        const data = await response.json();
+        if (response.ok || data.success) {
+          window.pToast({ message: data.message || "Password successfully updated!", type: "success" });
+          document.getElementById('currentPasswordInput').value = '';
+          document.getElementById('newPasswordInput').value = '';
+          document.getElementById('confirmPasswordInput').value = '';
+          setTimeout(() => togglePasswordModal(false), 1500);
+        } else {
+          window.pToast({ message: data.message || "Failed to update password", type: "error" });
+        }
       } catch (error) {
-          window.pToast({ message: "A network error occurred. Please try again later.", type: "error" });
+        window.pToast({ message: "A network error occurred. Please try again later.", type: "error" });
       } finally {
-          btn.innerText = oldText;
-          btn.disabled = false;
+        btn.innerText = oldText;
+        btn.disabled = false;
       }
     }
   </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
@@ -14,14 +15,14 @@
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background-color: #000000; 
-      padding-bottom: 70px; 
+      background-color: #000000;
+      padding-bottom: 70px;
     }
 
     .header-bg {
       background: #00ff00;
     }
-    
+
     .btn-gradient {
       background: #00ff00;
     }
@@ -32,53 +33,54 @@
       left: 0;
       width: 100%;
       background-color: white;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
       z-index: 50;
       border-top: 1px solid #00ff00;
       height: 64px;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     .nav-item svg {
       width: 20px;
       height: 20px;
       margin-bottom: 4px;
       stroke-width: 2;
     }
-    
+
     .nav-item span {
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     .nav-item svg {
       width: 20px;
       height: 20px;
       margin-bottom: 4px;
       stroke-width: 2;
     }
-    
+
     .nav-item span {
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
+
+
+
+
 
     /* Modal Animation */
     .modal-enter {
       opacity: 0;
       transform: scale(0.95);
     }
+
     .modal-enter-active {
       opacity: 1;
       transform: scale(1);
@@ -89,6 +91,7 @@
     .overflow-y-auto::-webkit-scrollbar {
       display: none;
     }
+
     .overflow-y-auto {
       -ms-overflow-style: none;
       scrollbar-width: none;
@@ -98,9 +101,11 @@
   <script src="./translator.js"></script>
   <link rel="stylesheet" href="./global.css">
 </head>
+
 <body class="flex flex-col min-h-screen items-center">
 
-  <div class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
+  <div
+    class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100 flex flex-col">
 
     <!-- HEADER -->
     <div class="header-bg text-white px-5 pt-5 pb-5 sticky top-0 z-40">
@@ -114,9 +119,10 @@
 
     <!-- MAIN CONTENT -->
     <div class="px-3 pt-6 flex-1 flex flex-col relative z-10">
-      
+
       <!-- Add Wallet Button -->
-      <button id="addWalletBtn" class="w-full btn-gradient text-black font-bold py-4 rounded-2xl text-xs transition shadow-md flex items-center justify-center gap-2 mb-10 active:scale-[0.98] cursor-pointer relative z-20">
+      <button id="addWalletBtn"
+        class="w-full btn-gradient text-black font-bold py-4 rounded-2xl text-xs transition shadow-md flex items-center justify-center gap-2 mb-10 active:scale-[0.98] cursor-pointer relative z-20">
         <i class="fas fa-plus text-xs"></i>
         <span>Add Wallet</span>
       </button>
@@ -143,19 +149,38 @@
     <div class="bottom-nav">
       <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
         <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
         </a>
         <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" />
+            <path
+              d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
         </a>
         <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
         </a>
         <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>
       </div>
@@ -164,18 +189,23 @@
   </div>
 
   <!-- MODALS SECTION (Outside main wrapper) -->
-  
+
   <!-- ADD WALLET MODAL -->
   <div id="addModal" class="fixed inset-0 z-[100] flex flex-col justify-center hidden px-4">
-    <div id="modalOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" onclick="toggleAddModal(false)"></div>
-    <div class="relative w-full max-w-sm mx-auto bg-black border border-[#00ff00] rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out px-6 py-8" id="addModalContent">
+    <div id="modalOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300"
+      onclick="toggleAddModal(false)"></div>
+    <div
+      class="relative w-full max-w-sm mx-auto bg-black border border-[#00ff00] rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out px-6 py-8"
+      id="addModalContent">
       <h3 class="text-base font-bold text-gray-800 text-center mb-6">Add Wallet</h3>
       <div class="space-y-5">
         <div class="relative">
           <label class="block text-[10px] font-semibold text-gray-500 mb-1.5 ml-1">Select Cryptocurrency</label>
-          <button type="button" id="coinTrigger" onclick="toggleCurrencyModal(true)" class="w-full flex items-center justify-between bg-[#000000] border border-gray-100 text-gray-700 text-xs font-medium rounded-xl py-4 px-4 focus:outline-none transition cursor-pointer">
+          <button type="button" id="coinTrigger" onclick="toggleCurrencyModal(true)"
+            class="w-full flex items-center justify-between bg-[#000000] border border-gray-100 text-gray-700 text-xs font-medium rounded-xl py-4 px-4 focus:outline-none transition cursor-pointer">
             <div class="flex items-center gap-2">
-              <img id="selectedCoinImg" src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-4 h-4 hidden" alt="Coin">
+              <img id="selectedCoinImg" src="https://assets.coingecko.com/coins/images/325/small/Tether.png"
+                class="w-4 h-4 hidden" alt="Coin">
               <span id="selectedCoinText">Choose a cryptocurrency</span>
             </div>
             <i class="fas fa-chevron-down text-[10px] text-gray-400"></i>
@@ -184,16 +214,23 @@
         </div>
         <div>
           <label class="block text-[10px] font-semibold text-gray-500 mb-1.5 ml-1">Wallet Address</label>
-          <input type="text" id="walletAddressInput" class="w-full bg-[#000000] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="Enter wallet address">
+          <input type="text" id="walletAddressInput"
+            class="w-full bg-[#000000] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400 transition"
+            placeholder="Enter wallet address">
           <p id="addressError" class="text-[9px] text-red-500 mt-1 ml-1 hidden">Please enter a valid wallet address</p>
         </div>
         <div>
           <label class="block text-[10px] font-semibold text-gray-500 mb-1.5 ml-1">Label (Optional)</label>
-          <input type="text" id="walletLabelInput" class="w-full bg-[#000000] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400 transition" placeholder="e.g. My main wallet">
+          <input type="text" id="walletLabelInput"
+            class="w-full bg-[#000000] border border-gray-100 text-gray-800 text-xs rounded-xl py-4 px-4 focus:outline-none focus:ring-1 focus:ring-blue-400 transition"
+            placeholder="e.g. My main wallet">
         </div>
         <div class="flex flex-col gap-3 pt-2">
-          <button onclick="addWalletSubmit()" class="w-full btn-gradient active:scale-[0.98] text-black font-bold py-4 rounded-xl text-xs transition shadow-sm">Add Wallet</button>
-          <button onclick="toggleAddModal(false)" class="w-full text-gray-400 font-semibold py-2 text-xs transition hover:text-gray-600">Cancel</button>
+          <button onclick="addWalletSubmit()"
+            class="w-full btn-gradient active:scale-[0.98] text-black font-bold py-4 rounded-xl text-xs transition shadow-sm">Add
+            Wallet</button>
+          <button onclick="toggleAddModal(false)"
+            class="w-full text-gray-400 font-semibold py-2 text-xs transition hover:text-gray-600">Cancel</button>
         </div>
       </div>
     </div>
@@ -201,39 +238,64 @@
 
   <!-- CURRENCY SELECTOR MODAL -->
   <div id="currencyModal" class="fixed inset-0 z-[110] flex flex-col justify-center hidden px-4">
-    <div id="currencyOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" onclick="toggleCurrencyModal(false)"></div>
-    <div class="relative w-full max-w-sm mx-auto bg-black border border-[#00ff00] rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out" id="currencyModalContent">
+    <div id="currencyOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300"
+      onclick="toggleCurrencyModal(false)"></div>
+    <div
+      class="relative w-full max-w-sm mx-auto bg-black border border-[#00ff00] rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out"
+      id="currencyModalContent">
       <div class="flex justify-between items-center px-6 py-5 border-b border-gray-50">
         <h3 class="text-xs font-bold text-gray-800">Select Currency</h3>
-        <button onclick="toggleCurrencyModal(false)" class="text-gray-400 hover:text-gray-600 transition p-1"><i class="fas fa-times text-xs"></i></button>
+        <button onclick="toggleCurrencyModal(false)" class="text-gray-400 hover:text-gray-600 transition p-1"><i
+            class="fas fa-times text-xs"></i></button>
       </div>
       <div class="px-6 py-5 space-y-3 max-h-[60vh] overflow-y-auto">
         <!-- BTC -->
-        <button onclick="selectCurrency('BTC_BITCOIN', 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png')" class="w-full flex items-center justify-between p-3.5 border border-[#00ff00]/40 hover:bg-[#00ff00]/10 rounded-2xl transition cursor-pointer">
+        <button onclick="selectCurrency('BTC_BITCOIN', 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png')"
+          class="w-full flex items-center justify-between p-3.5 border border-[#00ff00]/40 hover:bg-[#00ff00]/10 rounded-2xl transition cursor-pointer">
           <div class="flex items-center gap-3">
-            <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-6 h-6 object-contain" alt="BTC">
-            <div class="text-left"><p class="text-xs font-bold text-white">BTC</p><p class="text-[10px] text-gray-400 font-medium">Bitcoin</p></div>
+            <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" class="w-6 h-6 object-contain"
+              alt="BTC">
+            <div class="text-left">
+              <p class="text-xs font-bold text-white">BTC</p>
+              <p class="text-[10px] text-gray-400 font-medium">Bitcoin</p>
+            </div>
           </div>
         </button>
         <!-- LTC -->
-        <button onclick="selectCurrency('LTC_LITECOIN', 'https://assets.coingecko.com/coins/images/2/small/litecoin.png')" class="w-full flex items-center justify-between p-3.5 border border-[#00ff00]/40 hover:bg-[#00ff00]/10 rounded-2xl transition cursor-pointer">
+        <button
+          onclick="selectCurrency('LTC_LITECOIN', 'https://assets.coingecko.com/coins/images/2/small/litecoin.png')"
+          class="w-full flex items-center justify-between p-3.5 border border-[#00ff00]/40 hover:bg-[#00ff00]/10 rounded-2xl transition cursor-pointer">
           <div class="flex items-center gap-3">
-            <img src="https://assets.coingecko.com/coins/images/2/small/litecoin.png" class="w-6 h-6 object-contain" alt="LTC">
-            <div class="text-left"><p class="text-xs font-bold text-white">LTC</p><p class="text-[10px] text-gray-400 font-medium">Litecoin</p></div>
+            <img src="https://assets.coingecko.com/coins/images/2/small/litecoin.png" class="w-6 h-6 object-contain"
+              alt="LTC">
+            <div class="text-left">
+              <p class="text-xs font-bold text-white">LTC</p>
+              <p class="text-[10px] text-gray-400 font-medium">Litecoin</p>
+            </div>
           </div>
         </button>
         <!-- USDT BEP20 -->
-        <button onclick="selectCurrency('USDT_BEP20', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')" class="w-full flex items-center justify-between p-3.5 border border-[#00ff00]/40 hover:bg-[#00ff00]/10 rounded-2xl transition cursor-pointer">
+        <button onclick="selectCurrency('USDT_BEP20', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')"
+          class="w-full flex items-center justify-between p-3.5 border border-[#00ff00]/40 hover:bg-[#00ff00]/10 rounded-2xl transition cursor-pointer">
           <div class="flex items-center gap-3">
-            <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-6 h-6 object-contain" alt="USDT">
-            <div class="text-left"><p class="text-xs font-bold text-white">USDT</p><p class="text-[10px] text-gray-400 font-medium">BEP20</p></div>
+            <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-6 h-6 object-contain"
+              alt="USDT">
+            <div class="text-left">
+              <p class="text-xs font-bold text-white">USDT</p>
+              <p class="text-[10px] text-gray-400 font-medium">BEP20</p>
+            </div>
           </div>
         </button>
         <!-- USDT TRC20 -->
-        <button onclick="selectCurrency('USDT_TRC20', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')" class="w-full flex items-center justify-between p-3.5 border border-[#00ff00]/40 hover:bg-[#00ff00]/10 rounded-2xl transition cursor-pointer">
+        <button onclick="selectCurrency('USDT_TRC20', 'https://assets.coingecko.com/coins/images/325/small/Tether.png')"
+          class="w-full flex items-center justify-between p-3.5 border border-[#00ff00]/40 hover:bg-[#00ff00]/10 rounded-2xl transition cursor-pointer">
           <div class="flex items-center gap-3">
-            <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-6 h-6 object-contain" alt="USDT">
-            <div class="text-left"><p class="text-xs font-bold text-white">USDT</p><p class="text-[10px] text-gray-400 font-medium">TRC20</p></div>
+            <img src="https://assets.coingecko.com/coins/images/325/small/Tether.png" class="w-6 h-6 object-contain"
+              alt="USDT">
+            <div class="text-left">
+              <p class="text-xs font-bold text-white">USDT</p>
+              <p class="text-[10px] text-gray-400 font-medium">TRC20</p>
+            </div>
           </div>
         </button>
       </div>
@@ -242,16 +304,23 @@
 
   <!-- DELETE CONFIRMATION MODAL -->
   <div id="deleteModal" class="fixed inset-0 z-[120] flex flex-col justify-center hidden px-8">
-    <div id="deleteOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300" onclick="toggleDeleteModal(false)"></div>
-    <div class="relative w-full max-w-[280px] mx-auto bg-black border border-[#00ff00] rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out px-6 py-8 text-center" id="deleteModalContent">
+    <div id="deleteOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300"
+      onclick="toggleDeleteModal(false)"></div>
+    <div
+      class="relative w-full max-w-[280px] mx-auto bg-black border border-[#00ff00] rounded-[32px] shadow-xl transform transition-all scale-95 opacity-0 duration-300 ease-in-out px-6 py-8 text-center"
+      id="deleteModalContent">
       <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
         <i class="fas fa-trash-alt text-red-500 text-base"></i>
       </div>
       <h3 class="text-xs font-bold text-gray-800 mb-2">Delete Wallet?</h3>
-      <p class="text-[10px] text-gray-400 leading-relaxed mb-6">Are you sure you want to remove <span id="deleteWalletName" class="font-bold text-gray-600">this wallet</span>? This action cannot be undone.</p>
+      <p class="text-[10px] text-gray-400 leading-relaxed mb-6">Are you sure you want to remove <span
+          id="deleteWalletName" class="font-bold text-gray-600">this wallet</span>? This action cannot be undone.</p>
       <div class="flex flex-col gap-2">
-        <button onclick="confirmDelete()" class="w-full bg-red-500 hover:bg-red-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-xl text-[11px] transition shadow-sm">Delete Wallet</button>
-        <button onclick="toggleDeleteModal(false)" class="w-full text-gray-400 font-semibold py-2 text-[11px] transition hover:text-gray-600">Cancel</button>
+        <button onclick="confirmDelete()"
+          class="w-full bg-red-500 hover:bg-red-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-xl text-[11px] transition shadow-sm">Delete
+          Wallet</button>
+        <button onclick="toggleDeleteModal(false)"
+          class="w-full text-gray-400 font-semibold py-2 text-[11px] transition hover:text-gray-600">Cancel</button>
       </div>
     </div>
   </div>
@@ -263,7 +332,7 @@
       const modalContent = document.getElementById('addModalContent');
       const overlay = document.getElementById('modalOverlay');
 
-      if(show) {
+      if (show) {
         modal.classList.remove('hidden');
         setTimeout(() => {
           overlay.classList.remove('opacity-0');
@@ -287,7 +356,7 @@
       const modalContent = document.getElementById('currencyModalContent');
       const overlay = document.getElementById('currencyOverlay');
 
-      if(show) {
+      if (show) {
         modal.classList.remove('hidden');
         setTimeout(() => {
           overlay.classList.remove('opacity-0');
@@ -343,7 +412,7 @@
         isValid = false;
       }
 
-      if(!isValid) return;
+      if (!isValid) return;
 
       const submitBtn = document.querySelector('button[onclick="addWalletSubmit()"]');
       const oldText = submitBtn.innerText;
@@ -351,34 +420,34 @@
       submitBtn.disabled = true;
 
       try {
-          const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/wallets`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              credentials: 'include',
-              body: JSON.stringify({
-                  crypto: coin,
-                  walletAddress: address,
-                  label: label || 'My Wallet',
-                  img: coinImg
-              })
-          });
+        const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/wallets`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            crypto: coin,
+            walletAddress: address,
+            label: label || 'My Wallet',
+            img: coinImg
+          })
+        });
 
-          const data = await response.json();
-          if (response.ok || data.success) {
-              toggleAddModal(false);
-              document.getElementById('walletAddressInput').value = '';
-              document.getElementById('walletLabelInput').value = '';
-              document.getElementById('selectedCoinText').innerText = 'Choose a cryptocurrency';
-              document.getElementById('selectedCoinImg').classList.add('hidden');
-              renderWallets(); 
-          } else {
-              alert(data.message || "Failed to save wallet.");
-          }
+        const data = await response.json();
+        if (response.ok || data.success) {
+          toggleAddModal(false);
+          document.getElementById('walletAddressInput').value = '';
+          document.getElementById('walletLabelInput').value = '';
+          document.getElementById('selectedCoinText').innerText = 'Choose a cryptocurrency';
+          document.getElementById('selectedCoinImg').classList.add('hidden');
+          renderWallets();
+        } else {
+          alert(data.message || "Failed to save wallet.");
+        }
       } catch (error) {
-          alert("A network error occurred. Please try again.");
+        alert("A network error occurred. Please try again.");
       } finally {
-          submitBtn.innerText = oldText;
-          submitBtn.disabled = false;
+        submitBtn.innerText = oldText;
+        submitBtn.disabled = false;
       }
     }
 
@@ -387,41 +456,41 @@
       const emptyState = document.getElementById('emptyState');
 
       try {
-          const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/wallets`, {
-              credentials: 'include'
-          });
-          
-          if (res.status === 401 || res.status === 403) {
-              window.location.href = '/login.html';
-              return;
-          }
-          
-          if (res.ok) {
-              const data = await res.json();
-              let wallets = [];
-              if (Array.isArray(data.data)) { wallets = data.data; } 
-              else if (data.data?.wallets && Array.isArray(data.data.wallets)) { wallets = data.data.wallets; } 
-              else if (Array.isArray(data.wallets)) { wallets = data.wallets; }
+        const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/wallets`, {
+          credentials: 'include'
+        });
 
-              if (wallets.length === 0) {
-                  emptyState.classList.remove('hidden');
-                  listContainer.classList.add('hidden');
-              } else {
-                  emptyState.classList.add('hidden');
-                  listContainer.classList.remove('hidden');
-                  listContainer.innerHTML = '';
+        if (res.status === 401 || res.status === 403) {
+          window.location.href = '/login.html';
+          return;
+        }
 
-                  wallets.forEach(w => {
-                      const coinName = w.crypto || w.coin || 'Crypto_Network';
-                      const label = w.label || "Main Wallet";
-                      const address = w.walletAddress || w.address || "";
-                      const safeLabel = label.replace(/'/g, "\\'");
-                      const parts = coinName.split('_');
-                      const baseCoin = parts[0] || 'Crypto'; 
-                      const networkName = parts[1] || baseCoin;
-                      const initials = baseCoin.substring(0, 2).toUpperCase();
+        if (res.ok) {
+          const data = await res.json();
+          let wallets = [];
+          if (Array.isArray(data.data)) { wallets = data.data; }
+          else if (data.data?.wallets && Array.isArray(data.data.wallets)) { wallets = data.data.wallets; }
+          else if (Array.isArray(data.wallets)) { wallets = data.wallets; }
 
-                      const card = `
+          if (wallets.length === 0) {
+            emptyState.classList.remove('hidden');
+            listContainer.classList.add('hidden');
+          } else {
+            emptyState.classList.add('hidden');
+            listContainer.classList.remove('hidden');
+            listContainer.innerHTML = '';
+
+            wallets.forEach(w => {
+              const coinName = w.crypto || w.coin || 'Crypto_Network';
+              const label = w.label || "Main Wallet";
+              const address = w.walletAddress || w.address || "";
+              const safeLabel = label.replace(/'/g, "\\'");
+              const parts = coinName.split('_');
+              const baseCoin = parts[0] || 'Crypto';
+              const networkName = parts[1] || baseCoin;
+              const initials = baseCoin.substring(0, 2).toUpperCase();
+
+              const card = `
                         <div class="bg-black border border-[#00ff00] border border-gray-200 rounded-xl p-4 flex items-center justify-between mb-3 hover:shadow-sm transition">
                           <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-semibold text-xs">${initials}</div>
@@ -439,19 +508,19 @@
                           </div>
                         </div>
                       `;
-                      listContainer.innerHTML += card;
-                  });
-              }
+              listContainer.innerHTML += card;
+            });
           }
+        }
       } catch (error) {
-          console.error("Fetch error:", error);
+        console.error("Fetch error:", error);
       }
     }
 
     let walletToDeleteId = null;
 
     function deleteWallet(id, label) {
-      if(!id) return;
+      if (!id) return;
       walletToDeleteId = id;
       document.getElementById('deleteWalletName').innerText = `"${label || 'wallet'}"`;
       toggleDeleteModal(true);
@@ -462,7 +531,7 @@
       const modalContent = document.getElementById('deleteModalContent');
       const overlay = document.getElementById('deleteOverlay');
 
-      if(show) {
+      if (show) {
         modal.classList.remove('hidden');
         setTimeout(() => {
           overlay.classList.remove('opacity-0');
@@ -482,30 +551,30 @@
     }
 
     async function confirmDelete() {
-      if(!walletToDeleteId) return;
+      if (!walletToDeleteId) return;
       const btn = document.querySelector('#deleteModalContent .bg-red-500');
       const oldText = btn.innerText;
       btn.innerText = "Deleting...";
       btn.disabled = true;
 
       try {
-          const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/wallets/${walletToDeleteId}`, {
-              method: 'DELETE',
-              credentials: 'include'
-          });
-          if (response.ok) {
-              toggleDeleteModal(false);
-              renderWallets();
-          } else {
-              const data = await response.json();
-              alert(data.message || "Failed to delete wallet.");
-          }
+        const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/wallets/${walletToDeleteId}`, {
+          method: 'DELETE',
+          credentials: 'include'
+        });
+        if (response.ok) {
+          toggleDeleteModal(false);
+          renderWallets();
+        } else {
+          const data = await response.json();
+          alert(data.message || "Failed to delete wallet.");
+        }
       } catch (error) {
-          alert("Network error occurred");
+        alert("Network error occurred");
       } finally {
-          btn.innerText = oldText;
-          btn.disabled = false;
-          walletToDeleteId = null;
+        btn.innerText = oldText;
+        btn.disabled = false;
+        walletToDeleteId = null;
       }
     }
 
@@ -521,4 +590,5 @@
     });
   </script>
 </body>
-</html>  
+
+</html>

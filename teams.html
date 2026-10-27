@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
@@ -8,20 +9,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
   <title>My Team - Blockvextrade</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: "Poppins", sans-serif;
       background-color: #000000;
-      padding-bottom: 70px; 
+      padding-bottom: 70px;
     }
 
     .gradient-bg {
       background: #00ff00;
     }
-    
+
     .btn-gradient {
       background: #00ff00;
       transition: all 0.3s ease;
@@ -40,7 +42,7 @@
       text-align: center;
       transition: all 0.3s ease;
     }
-    
+
     .stat-card:hover {
       border-color: #00ff00;
       transform: translateY(-2px);
@@ -50,14 +52,18 @@
       background: white;
       border-radius: 20px;
       border: 1px solid #00ff00;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 14px 16px;
       transition: transform 0.2s ease;
     }
-    .member-card:hover { transform: translateY(-2px); }
+
+    .member-card:hover {
+      transform: translateY(-2px);
+    }
+
     .member-avatar {
       width: 46px;
       height: 46px;
@@ -71,11 +77,13 @@
       font-weight: 700;
       flex-shrink: 0;
     }
+
     .level-tab {
       transition: all 0.3s ease;
       color: #ffffff !important;
       font-weight: 600;
     }
+
     .level-tab.active {
       background: #00ff00 !important;
       color: #000000 !important;
@@ -89,52 +97,49 @@
       left: 0;
       width: 100%;
       background-color: white;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
       z-index: 50;
       border-top: 1px solid #00ff00;
       height: 64px;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     .nav-item svg {
       width: 20px;
       height: 20px;
       margin-bottom: 4px;
       stroke-width: 2;
     }
-    
+
     .nav-item span {
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
     .nav-item svg {
       width: 20px;
       height: 20px;
       margin-bottom: 4px;
       stroke-width: 2;
     }
-    
+
     .nav-item span {
       font-size: 10px;
       font-weight: 500;
     }
-    
-    
-    
-    
   </style>
 
   <script src="./translator.js"></script>
   <link rel="stylesheet" href="./global.css">
 </head>
+
 <body class="flex flex-col min-h-screen items-center">
 
   <div class="w-full max-w-md mx-auto border-x border-gray-100 bg-[#000000] min-h-screen relative shadow-xl">
@@ -147,7 +152,7 @@
           <i class="fas fa-users text-lg text-white/80"></i>
         </div>
       </div>
-      
+
       <!-- <div class="text-center mt-2">
         <p class="text-xs text-white/80">Total Invites</p>
         <p class="text-base font-bold mt-1">0</p>
@@ -159,7 +164,8 @@
       <div class="w-full rounded-2xl p-5 bg-black border border-[#00ff00] shadow-lg border border-gray-100">
         <p class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">My Referral Link</p>
         <div class="flex bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
-          <input type="text" id="referralCode" class="w-full bg-transparent p-3 text-gray-700 text-xs outline-none" value="" placeholder="Fetching referral link..." readonly />
+          <input type="text" id="referralCode" class="w-full bg-transparent p-3 text-gray-700 text-xs outline-none"
+            value="" placeholder="Fetching referral link..." readonly />
           <button onclick="copyLink()" class="btn-gradient text-black font-bold px-5 text-xs">
             Copy
           </button>
@@ -190,31 +196,35 @@
     <!-- LEVELS -->
     <div class="px-3 mb-6">
       <div class="flex bg-[#0a0f0c] rounded-full p-1.5 mb-4 border border-[#00ff00]/30 shadow-md">
-        <button class="level-tab active flex-1 py-2 text-xs rounded-full text-black font-extrabold" onclick="switchLevel(this, 1)">Level 1 (10%)</button>
-        <button class="level-tab flex-1 py-2 text-xs rounded-full text-white font-medium hover:text-[#00ff00]" onclick="switchLevel(this, 2)">Level 2 (5%)</button>
-        <button class="level-tab flex-1 py-2 text-xs rounded-full text-white font-medium hover:text-[#00ff00]" onclick="switchLevel(this, 3)">Level 3 (1%)</button>
+        <button class="level-tab active flex-1 py-2 text-xs rounded-full text-black font-extrabold"
+          onclick="switchLevel(this, 1)">Level 1 (10%)</button>
+        <button class="level-tab flex-1 py-2 text-xs rounded-full text-white font-medium hover:text-[#00ff00]"
+          onclick="switchLevel(this, 2)">Level 2 (5%)</button>
+        <button class="level-tab flex-1 py-2 text-xs rounded-full text-white font-medium hover:text-[#00ff00]"
+          onclick="switchLevel(this, 3)">Level 3 (1%)</button>
       </div>
 
       <!-- MEMBER LIST: Level panels -->
       <div id="level-1" class="level-panel space-y-3">
         <!-- Dynmically loaded -->
         <div class="py-10 text-center">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00ff00] mx-auto mb-3"></div>
-            <p class="text-xs text-gray-400">Fetching team...</p>
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00ff00] mx-auto mb-3"></div>
+          <p class="text-xs text-gray-400">Fetching team...</p>
         </div>
       </div>
 
       <div id="level-2" class="level-panel space-y-3 hidden">
-          <!-- Dynmically loaded -->
+        <!-- Dynmically loaded -->
       </div>
 
       <div id="level-3" class="level-panel space-y-3 hidden">
-          <!-- Dynmically loaded -->
+        <!-- Dynmically loaded -->
       </div>
     </div>
 
     <!-- NOTIFICATION TOAST -->
-    <div id="toast" class="fixed top-10 right-1/2 translate-x-1/2 bg-[#00ff00] text-black font-bold text-xs px-6 py-3 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+    <div id="toast"
+      class="fixed top-10 right-1/2 translate-x-1/2 bg-[#00ff00] text-black font-bold text-xs px-6 py-3 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50">
       Link Copied successfully!
     </div>
 
@@ -222,138 +232,157 @@
     <div class="bottom-nav">
       <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
         <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_home">Home</span>
         </a>
         <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" />
+            <path
+              d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_staking">Staking Plans</span>
         </a>
         <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_team">Team</span>
         </a>
         <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
           <span class="text-[10px] font-medium translator" data-key="nav_account">Account</span>
         </a>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
 
   </div>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-        fetchReferralData();
-        fetchUserDataForLink();
-        fetchReferralConfig();
+      fetchReferralData();
+      fetchUserDataForLink();
+      fetchReferralConfig();
     });
 
     async function fetchReferralConfig() {
-        try {
-            const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referral-config`);
-            if (res.ok) {
-                const data = await res.json();
-                const config = data.data || data;
-                
-                // Update button labels
-                const tabs = document.querySelectorAll('.level-tab');
-                if (tabs.length >= 3) {
-                    tabs[0].innerHTML = `Level 1 (${config.level1}%)`;
-                    tabs[1].innerHTML = `Level 2 (${config.level2}%)`;
-                    tabs[2].innerHTML = `Level 3 (${config.level3}%)`;
-                }
+      try {
+        const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referral-config`);
+        if (res.ok) {
+          const data = await res.json();
+          const config = data.data || data;
 
-                // Update "earn up to" text
-                const totalMax = Number(config.level1) + Number(config.level2) + Number(config.level3);
-                const earnText = document.querySelector('.px-3.-mt-10 p.text-xs.text-gray-400');
-                if (earnText) {
-                    earnText.innerText = `Share this link to earn up to ${totalMax}% commissions`;
-                }
-            }
-        } catch (e) { console.error("Error fetching referral config:", e); }
+          // Update button labels
+          const tabs = document.querySelectorAll('.level-tab');
+          if (tabs.length >= 3) {
+            tabs[0].innerHTML = `Level 1 (${config.level1}%)`;
+            tabs[1].innerHTML = `Level 2 (${config.level2}%)`;
+            tabs[2].innerHTML = `Level 3 (${config.level3}%)`;
+          }
+
+          // Update "earn up to" text
+          const totalMax = Number(config.level1) + Number(config.level2) + Number(config.level3);
+          const earnText = document.querySelector('.px-3.-mt-10 p.text-xs.text-gray-400');
+          if (earnText) {
+            earnText.innerText = `Share this link to earn up to ${totalMax}% commissions`;
+          }
+        }
+      } catch (e) { console.error("Error fetching referral config:", e); }
     }
 
     async function fetchUserDataForLink() {
-        try {
-            const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, { credentials: 'include' });
-            if (res.ok) {
-                const data = await res.json();
-                const user = data.user || data.data || data;
-                if (user && user.referralCode) {
-                    const link = `https://blockvextrade.com/login.html?ref=${user.referralCode}`;
-                    document.getElementById("referralCode").value = link;
-                }
-            }
-        } catch (e) { console.error(e); }
+      try {
+        const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, { credentials: 'include' });
+        if (res.ok) {
+          const data = await res.json();
+          const user = data.user || data.data || data;
+          if (user && user.referralCode) {
+            const link = `https://blockvextrade.com/login.html?ref=${user.referralCode}`;
+            document.getElementById("referralCode").value = link;
+          }
+        }
+      } catch (e) { console.error(e); }
     }
 
     async function fetchReferralData() {
-        try {
-            const p1 = fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referrals?level=1`, { credentials: 'include' });
-            const p2 = fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referrals?level=2`, { credentials: 'include' });
-            const p3 = fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referrals?level=3`, { credentials: 'include' });
-            const pMe = fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, { credentials: 'include' });
+      try {
+        const p1 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=1`, { credentials: 'include' });
+        const p2 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=2`, { credentials: 'include' });
+        const p3 = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=3`, { credentials: 'include' });
+        const pMe = fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, { credentials: 'include' });
 
-            const [res1, res2, res3, resMe] = await Promise.all([p1, p2, p3, pMe]);
-            
-            if (res1.status === 401 || res1.status === 403) {
-                window.location.href = '/login.html';
-                return;
-            }
+        const [res1, res2, res3, resMe] = await Promise.all([p1, p2, p3, pMe]);
 
-            let totalInvites = 0;
-            let totalDeposit = 0;
-
-            if (resMe.ok) {
-                const meData = await resMe.json();
-                const userObj = meData.user || meData.data || meData;
-                if (userObj.totalReferralEarnings !== undefined) {
-                    document.getElementById("totalEarnings").innerText = `$${Number(userObj.totalReferralEarnings).toFixed(2)}`;
-                }
-            }
-
-            if (res1.ok) {
-                const d1 = await res1.json();
-                const members1 = d1.data?.referrals || [];
-                totalInvites += d1.data?.pagination?.totalItems || members1.length || 0;
-                members1.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
-                renderLevel(1, members1);
-            }
-            if (res2.ok) {
-                const d2 = await res2.json();
-                const members2 = d2.data?.referrals || [];
-                totalInvites += d2.data?.pagination?.totalItems || members2.length || 0;
-                members2.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
-                renderLevel(2, members2);
-            }
-            if (res3.ok) {
-                const d3 = await res3.json();
-                const members3 = d3.data?.referrals || [];
-                totalInvites += d3.data?.pagination?.totalItems || members3.length || 0;
-                members3.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
-                renderLevel(3, members3);
-            }
-
-            document.getElementById("totalInvites").innerText = totalInvites;
-            document.getElementById("totalDeposit").innerText = `$${totalDeposit.toFixed(2)}`;
-
-        } catch (error) {
-            console.error("Error fetching referrals:", error);
+        if (res1.status === 401 || res1.status === 403) {
+          window.location.href = '/login.html';
+          return;
         }
+
+        let totalInvites = 0;
+        let totalDeposit = 0;
+
+        if (resMe.ok) {
+          const meData = await resMe.json();
+          const userObj = meData.user || meData.data || meData;
+          if (userObj.totalReferralEarnings !== undefined) {
+            document.getElementById("totalEarnings").innerText = `$${Number(userObj.totalReferralEarnings).toFixed(2)}`;
+          }
+        }
+
+        if (res1.ok) {
+          const d1 = await res1.json();
+          const members1 = d1.data?.referrals || [];
+          totalInvites += d1.data?.pagination?.totalItems || members1.length || 0;
+          members1.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
+          renderLevel(1, members1);
+        }
+        if (res2.ok) {
+          const d2 = await res2.json();
+          const members2 = d2.data?.referrals || [];
+          totalInvites += d2.data?.pagination?.totalItems || members2.length || 0;
+          members2.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
+          renderLevel(2, members2);
+        }
+        if (res3.ok) {
+          const d3 = await res3.json();
+          const members3 = d3.data?.referrals || [];
+          totalInvites += d3.data?.pagination?.totalItems || members3.length || 0;
+          members3.forEach(m => totalDeposit += Number(m.totalInvestment || 0));
+          renderLevel(3, members3);
+        }
+
+        document.getElementById("totalInvites").innerText = totalInvites;
+        document.getElementById("totalDeposit").innerText = `$${totalDeposit.toFixed(2)}`;
+
+      } catch (error) {
+        console.error("Error fetching referrals:", error);
+      }
     }
 
     function renderLevel(levelNum, members) {
-        const container = document.getElementById(`level-${levelNum}`);
-        if (!container) return;
+      const container = document.getElementById(`level-${levelNum}`);
+      if (!container) return;
 
-        if (!members || members.length === 0) {
-            container.innerHTML = `
+      if (!members || members.length === 0) {
+        container.innerHTML = `
                 <div class="py-12 text-center bg-black border border-[#00ff00] rounded-2xl border border-dashed border-gray-200">
                     <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
                         <i class="fas fa-user-friends text-gray-300"></i>
@@ -361,22 +390,22 @@
                     <p class="text-xs text-gray-400">No referrals at Level ${levelNum} yet</p>
                 </div>
             `;
-            return;
-        }
+        return;
+      }
 
-        container.innerHTML = members.map(m => {
-            const name = m.username || "Investor";
-            const initial = name.charAt(0).toUpperCase();
-            const dateStr = m._createdAt || m.createdAt;
-            const date = dateStr ? new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently";
-            const status = m.accountStatus || "active";
-            
-            const balance = m.accountBalance !== undefined ? Number(m.accountBalance).toFixed(2) : '0.00';
-            const invested = m.totalInvestment !== undefined ? Number(m.totalInvestment).toFixed(2) : '0.00';
-            const statusDisplay = (status.charAt(0).toUpperCase() + status.slice(1));
-            const statusColor = status.toLowerCase() === 'active' ? 'text-emerald-500' : (status.toLowerCase() === 'pending' ? 'text-orange-500' : 'text-gray-500');
+      container.innerHTML = members.map(m => {
+        const name = m.username || "Investor";
+        const initial = name.charAt(0).toUpperCase();
+        const dateStr = m._createdAt || m.createdAt;
+        const date = dateStr ? new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "Recently";
+        const status = m.accountStatus || "active";
 
-            return `
+        const balance = m.accountBalance !== undefined ? Number(m.accountBalance).toFixed(2) : '0.00';
+        const invested = m.totalInvestment !== undefined ? Number(m.totalInvestment).toFixed(2) : '0.00';
+        const statusDisplay = (status.charAt(0).toUpperCase() + status.slice(1));
+        const statusColor = status.toLowerCase() === 'active' ? 'text-emerald-500' : (status.toLowerCase() === 'pending' ? 'text-orange-500' : 'text-gray-500');
+
+        return `
                 <div class="member-card">
                   <div class="member-avatar">${initial}</div>
                   <div class="flex-1 min-w-0">
@@ -392,15 +421,15 @@
                   </div>
                 </div>
             `;
-        }).join('');
+      }).join('');
     }
 
     function copyLink() {
       const copyText = document.getElementById("referralCode");
       copyText.select();
-      copyText.setSelectionRange(0, 99999); 
+      copyText.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(copyText.value);
-      
+
       const toast = document.getElementById("toast");
       toast.classList.remove("opacity-0");
       setTimeout(() => {
@@ -424,4 +453,5 @@
     }
   </script>
 </body>
+
 </html>

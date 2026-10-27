@@ -759,7 +759,7 @@
       // Fetch Dashboard Stats for index.html
       async function fetchIndexStats() {
           try {
-              const apiBase = window.API_BASE || "https://api.blockvextrade.com";
+              const apiBase = window.API_BASE || "http://localhost:5000";
               let rawToken = localStorage.getItem('token');
               const cleanToken = rawToken ? rawToken.trim().replace(/^['"]+|['"]+$/g, '').replace(/^Bearer\s+/i, '') : '';
               const headers = { 'Content-Type': 'application/json' };

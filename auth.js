@@ -32,7 +32,7 @@ export async function authFetch(url, options = {}) {
 // Optional helper: check auth status on page load
 export async function checkAuth() {
   try {
-    const res = await authFetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`);
+    const res = await authFetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`);
 
     if (!res || !res.ok) {
       // authFetch already redirected, but just in case:

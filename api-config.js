@@ -1,23 +1,20 @@
 /**
  * api-config.js - Centralized API Configuration for Blockvextrade
  *
- * Production Live URLs:
- * Site: https://blockvextrade.com
- * API:  https://api.blockvextrade.com
+ * Automatically detects whether you are developing locally or in production.
+ * You can toggle USE_LOCAL_BACKEND between true (local backend on port 5000)
+ * and false (live remote backend).
  */
 (function () {
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-  // Live production API endpoint
-  const LIVE_API = 'https://api.blockvextrade.com';
+  // Set to true to route to local stakewiseai-server (http://localhost:5000)
+  // Set to false to route to the live production server (https://stakewiseai-server.onrender.com)
+  const USE_LOCAL_BACKEND = true;
 
-  // In local development, connect to live API by default.
-  // To connect to a local server on port 5000: localStorage.setItem('USE_LOCAL_API', 'true')
-  const useLocalOverride = isLocal && (localStorage.getItem('USE_LOCAL_API') === 'true');
-
-  window.API_BASE = useLocalOverride
+  window.API_BASE = (isLocal && USE_LOCAL_BACKEND)
     ? 'http://localhost:5000'
-    : LIVE_API;
+    : 'https://stakewiseai-server.onrender.com';
 
   // Backward compatibility alias
   window.API = window.API_BASE;

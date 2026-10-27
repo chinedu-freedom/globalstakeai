@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
@@ -10,7 +11,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <title>Staking Plans - Blockvextrade</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./global.css">
@@ -20,7 +22,7 @@
       background-color: #000000;
       padding-bottom: 70px;
     }
-    
+
     body.modal-open {
       overflow: hidden;
       padding-right: var(--scrollbar-width, 0px);
@@ -29,7 +31,7 @@
     .gradient-bg {
       background: #00ff00;
     }
-    
+
     .btn-gradient {
       background: #00ff00;
       transition: all 0.3s ease;
@@ -52,6 +54,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       border: 1px solid rgba(0, 255, 0, 0.3);
     }
+
     .plan-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px -5px rgba(0, 255, 0, 0.15);
@@ -64,14 +67,23 @@
       left: 0;
       width: 100%;
       background-color: #000000 !important;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
       z-index: 50;
       border-top: 1px solid #00ff00;
       height: 64px;
     }
 
-    .nav-item svg { width: 20px; height: 20px; margin-bottom: 4px; stroke-width: 2; }
-    .nav-item span { font-size: 10px; font-weight: 500; }
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+      stroke-width: 2;
+    }
+
+    .nav-item span {
+      font-size: 10px;
+      font-weight: 500;
+    }
 
     /* Modal - Pure Dark Mode */
     .modal-overlay {
@@ -91,7 +103,7 @@
       visibility: hidden;
       pointer-events: none;
     }
-    
+
     .modal-overlay.active {
       background: rgba(0, 0, 0, 0.8) !important;
       backdrop-filter: blur(6px);
@@ -99,7 +111,7 @@
       pointer-events: auto;
       cursor: pointer;
     }
-    
+
     .modal-container {
       cursor: default;
       background: #0a0f0c !important;
@@ -116,12 +128,12 @@
       color: #ffffff !important;
       overflow: hidden;
     }
-    
+
     .modal-overlay.active .modal-container {
       opacity: 1;
       transform: scale(1);
     }
-    
+
     .amount-input {
       width: 100%;
       padding: 10px 14px 10px 28px;
@@ -133,14 +145,14 @@
       background-color: #050806 !important;
       transition: all 0.2s ease;
     }
-    
+
     .amount-input:focus {
       outline: none;
       border-color: #00ff00 !important;
       background-color: #0d1611 !important;
       box-shadow: 0 0 12px rgba(0, 255, 0, 0.3) !important;
     }
-    
+
     .detail-row {
       display: flex;
       justify-content: space-between;
@@ -148,13 +160,13 @@
       padding: 9px 0;
       border-bottom: 1px solid rgba(0, 255, 0, 0.2) !important;
     }
-    
+
     .detail-label {
       font-size: 12px;
       color: #e5e7eb !important;
       font-weight: 500;
     }
-    
+
     .detail-value {
       font-size: 13px;
       font-weight: 700;
@@ -175,30 +187,35 @@
     }
 
     @keyframes loading {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
     }
 
     /* Hide elements during loading */
     .hidden-content {
       display: none;
     }
-  
-/* Remove native number input spinners (arrows) across all browsers */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0 !important;
-}
 
-input[type="number"] {
-  -moz-appearance: textfield !important;
-  appearance: textfield !important;
-}
+    /* Remove native number input spinners (arrows) across all browsers */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none !important;
+      margin: 0 !important;
+    }
 
+    input[type="number"] {
+      -moz-appearance: textfield !important;
+      appearance: textfield !important;
+    }
   </style>
   <link rel="stylesheet" href="./global.css">
 </head>
+
 <body>
 
   <div class="w-full max-w-md bg-[#000000] min-h-screen relative shadow-2xl mx-auto border-x border-gray-100">
@@ -215,29 +232,48 @@ input[type="number"] {
 
     <!-- PLANS CONTENT -->
     <div id="plansContainer" class="px-3 pb-3 mt-3 relative z-20 space-y-3">
-        <div class="py-20 text-center">
-            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#00ff00] mx-auto mb-4"></div>
-            <p class="text-gray-400 font-medium text-xs">Fetching investment plans...</p>
-        </div>
+      <div class="py-20 text-center">
+        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#00ff00] mx-auto mb-4"></div>
+        <p class="text-gray-400 font-medium text-xs">Fetching investment plans...</p>
+      </div>
     </div>
 
     <!-- BOTTOM NAV -->
     <div class="bottom-nav">
       <div class="w-full max-w-[28rem] mx-auto flex justify-around items-center h-full pt-1">
         <a href="/index.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
           <span class="text-[8px] font-medium">Home</span>
         </a>
         <a href="/plans.html" class="nav-item flex flex-col items-center w-1/4 text-[#00ff00] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" /><path d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M14.531 12.469 6.619 20.381l-4-4 7.912-7.912" />
+            <path
+              d="M15.686 11.314c.839.839 2.158.888 3.037.125l2.313-2.313a2.673 2.673 0 0 0 0-3.776L18.65 3.015a2.673 2.673 0 0 0-3.776 0L12.56 5.33c-.763.879-.714 2.198.125 3.037Z" />
+          </svg>
           <span class="text-[8px] font-medium">Staking Plans</span>
         </a>
         <a href="/teams.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
           <span class="text-[8px] font-medium">Team</span>
         </a>
         <a href="/account.html" class="nav-item flex flex-col items-center w-1/4 text-[#94a3b8] transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
           <span class="text-[8px] font-medium">Account</span>
         </a>
       </div>
@@ -247,7 +283,7 @@ input[type="number"] {
   <!-- ===== MODAL WITH LOADING SKELETON ===== -->
   <div id="stakeModal" class="modal-overlay" onclick="handleStakeOverlayClick(event)">
     <div class="modal-container" onclick="event.stopPropagation()">
-      
+
       <div class="p-6">
         <!-- Loading Skeleton (visible initially) -->
         <div id="loadingSkeleton">
@@ -274,13 +310,14 @@ input[type="number"] {
         <div id="actualContent" style="display: none;">
           <!-- Plan Name with Gradient Color -->
           <h2 id="modalPlanName" class="text-base font-extrabold text-center text-[#00ff00] mb-3 tracking-wide"></h2>
-          
+
           <!-- Plan Details List -->
           <div class="mb-4">
             <div class="detail-row">
               <span class="detail-label">Daily Return</span>
               <div class="flex items-center gap-0.5">
-                <span class="detail-value text-[#00ff00]" id="modalRate"></span><span class="text-xs text-[#00ff00] font-bold">%</span>
+                <span class="detail-value text-[#00ff00]" id="modalRate"></span><span
+                  class="text-xs text-[#00ff00] font-bold">%</span>
               </div>
             </div>
             <div class="detail-row">
@@ -308,28 +345,25 @@ input[type="number"] {
               <label class="text-xs font-semibold text-white mb-1.5 block">Enter Amount</label>
               <div class="relative">
                 <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-bold text-[#00ff00]">$</span>
-                <input
-                  id="stakeAmountInput"
-                  type="number"
-                  placeholder="0"
-                  class="amount-input pl-8"
-                />
+                <input id="stakeAmountInput" type="number" placeholder="0" class="amount-input pl-8" />
               </div>
               <p id="amountHint" class="text-[11px] text-gray-400 mt-1.5 font-medium">Min: $0 | Max: Unlimited</p>
             </div>
           </div>
-          
+
           <!-- Error Message -->
           <p id="stakeError" class="text-[11px] text-red-400 font-semibold mb-3 hidden text-center"></p>
 
           <!-- Stake Now Button -->
-          <button id="stakeConfirmBtn" onclick="confirmStake()" class="w-full bg-[#00ff00] hover:bg-[#00e000] text-black py-3 rounded-xl font-extrabold text-xs shadow-lg active:scale-95 transition-all">
+          <button id="stakeConfirmBtn" onclick="confirmStake()"
+            class="w-full bg-[#00ff00] hover:bg-[#00e000] text-black py-3 rounded-xl font-extrabold text-xs shadow-lg active:scale-95 transition-all">
             Stake Now
           </button>
         </div>
 
         <!-- Cancel Button (always visible) -->
-        <button onclick="closeStakeModal()" class="w-full text-center text-xs text-gray-400 hover:text-white font-medium mt-3 py-2 rounded-lg hover:bg-white/5 transition">
+        <button onclick="closeStakeModal()"
+          class="w-full text-center text-xs text-gray-400 hover:text-white font-medium mt-3 py-2 rounded-lg hover:bg-white/5 transition">
           Cancel
         </button>
       </div>
@@ -346,72 +380,72 @@ input[type="number"] {
     document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
 
     document.addEventListener("DOMContentLoaded", () => {
-        fetchInvestmentPlans();
+      fetchInvestmentPlans();
     });
 
     async function fetchInvestmentPlans() {
-        try {
-            const response = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/investment/plans`, {
-                credentials: 'include'
-            });
+      try {
+        const response = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/investment/plans`, {
+          credentials: 'include'
+        });
 
-            if (response.status === 401 || response.status === 403) {
-                window.location.href = '/login.html';
-                return;
-            }
+        if (response.status === 401 || response.status === 403) {
+          window.location.href = '/login.html';
+          return;
+        }
 
-            if (response.ok || response.status === 304) {
-                const totalData = await response.json();
-                allPlans = (totalData.data && totalData.data.plans) ? totalData.data.plans : 
-                          (totalData.data && Array.isArray(totalData.data)) ? totalData.data :
-                          (totalData.plans) ? totalData.plans : [];
-                renderPlans(allPlans);
-            } else {
-                throw new Error(`Server returned ${response.status}`);
-            }
-        } catch (error) {
-            console.error("Error fetching plans:", error);
-            document.getElementById('plansContainer').innerHTML = `
+        if (response.ok || response.status === 304) {
+          const totalData = await response.json();
+          allPlans = (totalData.data && totalData.data.plans) ? totalData.data.plans :
+            (totalData.data && Array.isArray(totalData.data)) ? totalData.data :
+              (totalData.plans) ? totalData.plans : [];
+          renderPlans(allPlans);
+        } else {
+          throw new Error(`Server returned ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Error fetching plans:", error);
+        document.getElementById('plansContainer').innerHTML = `
                 <div class="bg-black border border-[#00ff00] rounded-2xl p-8 text-center shadow-sm border border-gray-100 italic text-gray-400 text-xs">
                    <i class="fas fa-exclamation-triangle text-lg mb-2 block"></i>
                    Unable to load plans. Please try again later.
                 </div>
             `;
-        }
+      }
     }
 
     function renderPlans(plans) {
-        const container = document.getElementById('plansContainer');
-        if (!container) return;
+      const container = document.getElementById('plansContainer');
+      if (!container) return;
 
-        if (!plans || plans.length === 0) {
-            container.innerHTML = `
+      if (!plans || plans.length === 0) {
+        container.innerHTML = `
                 <div class="bg-black border border-[#00ff00] rounded-2xl p-8 text-center shadow-sm border border-gray-100 italic text-gray-400 text-xs">
                    No staking plans available currently.
                 </div>
             `;
-            return;
-        }
+        return;
+      }
 
-        container.innerHTML = plans.map((plan, idx) => {
-            const isFD = plan.isFixedDeposit || false;
-            const title = plan.title || "Investment Plan";
-            const badgeText = isFD ? 'FIXED DEPOSIT' : 'HOT DEALS';
-            
-            const iconMap = [
-                {bg: 'bg-black border border-[#00ff00]', text: 'text-[#00ff00]', icon: 'fa-layer-group'},
-                {bg: 'bg-black border border-[#00ff00]', text: 'text-[#00ff00]', icon: 'fa-award'},
-                {bg: 'bg-black border border-[#00ff00]', text: 'text-[#00ff00]', icon: 'fa-crown'},
-                {bg: 'bg-black border border-[#00ff00]', text: 'text-[#00ff00]', icon: 'fa-gem'}
-            ];
-            const style = iconMap[idx % iconMap.length];
+      container.innerHTML = plans.map((plan, idx) => {
+        const isFD = plan.isFixedDeposit || false;
+        const title = plan.title || "Investment Plan";
+        const badgeText = isFD ? 'FIXED DEPOSIT' : 'HOT DEALS';
 
-            const min = Number(plan.minDeposit || 0);
-            const max = plan.maxDeposit ? Number(plan.maxDeposit) : null;
-            const roi = Number(plan.dailyProfit || 0);
-            const duration = Number(plan.contractDuration || 30);
+        const iconMap = [
+          { bg: 'bg-black border border-[#00ff00]', text: 'text-[#00ff00]', icon: 'fa-layer-group' },
+          { bg: 'bg-black border border-[#00ff00]', text: 'text-[#00ff00]', icon: 'fa-award' },
+          { bg: 'bg-black border border-[#00ff00]', text: 'text-[#00ff00]', icon: 'fa-crown' },
+          { bg: 'bg-black border border-[#00ff00]', text: 'text-[#00ff00]', icon: 'fa-gem' }
+        ];
+        const style = iconMap[idx % iconMap.length];
 
-            return `
+        const min = Number(plan.minDeposit || 0);
+        const max = plan.maxDeposit ? Number(plan.maxDeposit) : null;
+        const roi = Number(plan.dailyProfit || 0);
+        const duration = Number(plan.contractDuration || 30);
+
+        return `
               <div class="plan-card bg-black border border-[#00ff00] rounded-xl p-3 shadow-sm relative overflow-hidden">
                 <div class="absolute top-0 right-0 ${isFD ? 'bg-[#fef08a] text-yellow-800' : 'bg-orange-100 text-orange-600'} text-[8px] font-bold px-2 py-0.5 rounded-bl-md">
                   ${badgeText}
@@ -450,231 +484,232 @@ input[type="number"] {
                 </button>
               </div>
             `;
-        }).join('');
+      }).join('');
     }
 
-    window.handleStakeClick = async function(planId) {
-        console.log("Clicked Stake Now. Plan ID:", planId);
-        
-        if (!planId) {
-            console.error("No planId provided.");
-            return;
+    window.handleStakeClick = async function (planId) {
+      console.log("Clicked Stake Now. Plan ID:", planId);
+
+      if (!planId) {
+        console.error("No planId provided.");
+        return;
+      }
+
+      // Reset modal - show loading skeleton
+      document.getElementById('loadingSkeleton').style.display = 'block';
+      document.getElementById('actualContent').style.display = 'none';
+
+      openStakeModal();
+
+      // parallel fetch plan and user data
+      try {
+        const [planRes, userRes] = await Promise.all([
+          fetch(`${window.API_BASE || "http://localhost:5000"}/api/investment/plans/${planId}`, {
+            credentials: 'include'
+          }),
+          fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/me`, {
+            credentials: 'include'
+          })
+        ]);
+
+        if (planRes.status === 401 || userRes.status === 401) {
+          window.location.href = '/login.html';
+          return;
         }
 
-        // Reset modal - show loading skeleton
-        document.getElementById('loadingSkeleton').style.display = 'block';
-        document.getElementById('actualContent').style.display = 'none';
-        
-        openStakeModal();
+        if (planRes.ok && userRes.ok) {
+          const planResult = await planRes.json();
+          const userResult = await userRes.json();
 
-        // parallel fetch plan and user data
-        try {
-            const [planRes, userRes] = await Promise.all([
-                fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/investment/plans/${planId}`, {
-                    credentials: 'include'
-                }),
-                fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/me`, {
-                    credentials: 'include'
-                })
-            ]);
+          const plan = planResult.data?.plan || planResult.data || planResult;
+          const user = userResult.data || userResult;
 
-            if (planRes.status === 401 || userRes.status === 401) {
-                window.location.href = '/login.html';
-                return;
-            }
+          // Combined balance (accountBalance + availableProfit)
+          const balance = Number(user.accountBalance || 0);
+          const profit = Number(user.availableProfit || 0);
+          userBalance = balance + profit;
+          document.getElementById('modalBalance').textContent = `$${userBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-            if (planRes.ok && userRes.ok) {
-                const planResult = await planRes.json();
-                const userResult = await userRes.json();
-                
-                const plan = planResult.data?.plan || planResult.data || planResult;
-                const user = userResult.data || userResult;
-                
-                // Combined balance (accountBalance + availableProfit)
-                const balance = Number(user.accountBalance || 0);
-                const profit = Number(user.availableProfit || 0);
-                userBalance = balance + profit;
-                document.getElementById('modalBalance').textContent = `$${userBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+          const title = plan.title || "Investment Plan";
+          const min = Number(plan.minDeposit || 0);
+          const max = plan.maxDeposit ? Number(plan.maxDeposit) : null;
+          const roi = Number(plan.dailyProfit || 0);
+          const days = Number(plan.contractDuration || 30);
 
-                const title = plan.title || "Investment Plan";
-                const min = Number(plan.minDeposit || 0);
-                const max = plan.maxDeposit ? Number(plan.maxDeposit) : null;
-                const roi = Number(plan.dailyProfit || 0);
-                const days = Number(plan.contractDuration || 30);
+          currentPlan = {
+            id: planId,
+            name: title,
+            rate: roi,
+            min: min,
+            max: max,
+            days: days
+          };
 
-                currentPlan = {
-                    id: planId,
-                    name: title,
-                    rate: roi,
-                    min: min,
-                    max: max,
-                    days: days
-                };
+          // Populate actual content
+          document.getElementById('modalPlanName').innerHTML = `<span class="gradient-text">${title}</span>`;
+          document.getElementById('modalRate').textContent = roi.toFixed(1);
+          document.getElementById('minEntry').textContent = `$${min.toLocaleString()}`;
+          document.getElementById('maxEntry').textContent = max ? `$${max.toLocaleString()}` : 'Unlimited';
+          document.getElementById('cycleDays').textContent = `${days} Days`;
+          document.getElementById('amountHint').innerHTML = `Min: $${min.toLocaleString()} | Max: ${max ? '$' + max.toLocaleString() : 'Unlimited'}`;
 
-                // Populate actual content
-                document.getElementById('modalPlanName').innerHTML = `<span class="gradient-text">${title}</span>`;
-                document.getElementById('modalRate').textContent = roi.toFixed(1);
-                document.getElementById('minEntry').textContent = `$${min.toLocaleString()}`;
-                document.getElementById('maxEntry').textContent = max ? `$${max.toLocaleString()}` : 'Unlimited';
-                document.getElementById('cycleDays').textContent = `${days} Days`;
-                document.getElementById('amountHint').innerHTML = `Min: $${min.toLocaleString()} | Max: ${max ? '$' + max.toLocaleString() : 'Unlimited'}`;
-                
-                // Reset input and error
-                document.getElementById('stakeAmountInput').value = '';
-                document.getElementById('stakeError').classList.add('hidden');
-                
-                // Hide skeleton, show actual content
-                document.getElementById('loadingSkeleton').style.display = 'none';
-                document.getElementById('actualContent').style.display = 'block';
-                
-            } else {
-                console.error("Fetch failed with status:", response.status);
-                window.pToast({ message: "Failed to fetch plan details. Please try again.", type: "error" });
-                setTimeout(() => closeStakeModal(), 2000);
-            }
-        } catch (err) {
-            console.error("Fetch Error:", err);
-            window.pToast({ message: "Network error. Try again.", type: "error" });
-            setTimeout(() => closeStakeModal(), 2000);
+          // Reset input and error
+          document.getElementById('stakeAmountInput').value = '';
+          document.getElementById('stakeError').classList.add('hidden');
+
+          // Hide skeleton, show actual content
+          document.getElementById('loadingSkeleton').style.display = 'none';
+          document.getElementById('actualContent').style.display = 'block';
+
+        } else {
+          console.error("Fetch failed with status:", response.status);
+          window.pToast({ message: "Failed to fetch plan details. Please try again.", type: "error" });
+          setTimeout(() => closeStakeModal(), 2000);
         }
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        window.pToast({ message: "Network error. Try again.", type: "error" });
+        setTimeout(() => closeStakeModal(), 2000);
+      }
     }
 
     function showModalError(message) {
-        const errorEl = document.getElementById('stakeError');
-        errorEl.textContent = message;
-        errorEl.classList.remove('hidden');
+      const errorEl = document.getElementById('stakeError');
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
     }
 
     let modalOpenTime = 0;
 
     function openStakeModal() {
-        const modal = document.getElementById('stakeModal');
-        modalOpenTime = Date.now();
-        document.body.classList.add('modal-open');
-        modal.classList.add('active');
+      const modal = document.getElementById('stakeModal');
+      modalOpenTime = Date.now();
+      document.body.classList.add('modal-open');
+      modal.classList.add('active');
     }
 
     function closeStakeModal() {
-        const modal = document.getElementById('stakeModal');
-        if (!modal) return;
-        modal.classList.remove('active');
-        document.body.classList.remove('modal-open');
-        setTimeout(() => {
-            currentPlan = {};
-            // Reset to skeleton view for next time
-            const skeleton = document.getElementById('loadingSkeleton');
-            const content = document.getElementById('actualContent');
-            if (skeleton) skeleton.style.display = 'block';
-            if (content) content.style.display = 'none';
-        }, 300);
+      const modal = document.getElementById('stakeModal');
+      if (!modal) return;
+      modal.classList.remove('active');
+      document.body.classList.remove('modal-open');
+      setTimeout(() => {
+        currentPlan = {};
+        // Reset to skeleton view for next time
+        const skeleton = document.getElementById('loadingSkeleton');
+        const content = document.getElementById('actualContent');
+        if (skeleton) skeleton.style.display = 'block';
+        if (content) content.style.display = 'none';
+      }, 300);
     }
     window.closeStakeModal = closeStakeModal;
 
-    window.handleStakeOverlayClick = function(e) {
-        if (Date.now() - modalOpenTime < 200) return;
-        if (!e.target.closest('.modal-container')) {
-            closeStakeModal();
-        }
+    window.handleStakeOverlayClick = function (e) {
+      if (Date.now() - modalOpenTime < 200) return;
+      if (!e.target.closest('.modal-container')) {
+        closeStakeModal();
+      }
     };
 
-    window.confirmStake = async function() {
-        const amount = parseFloat(document.getElementById('stakeAmountInput').value);
-        const errorEl = document.getElementById('stakeError');
-        const btn = document.getElementById('stakeConfirmBtn');
-        errorEl.classList.add('hidden');
+    window.confirmStake = async function () {
+      const amount = parseFloat(document.getElementById('stakeAmountInput').value);
+      const errorEl = document.getElementById('stakeError');
+      const btn = document.getElementById('stakeConfirmBtn');
+      errorEl.classList.add('hidden');
 
-        if (!currentPlan.name) {
-            showModalError('Please select a valid plan first.');
-            return;
-        }
+      if (!currentPlan.name) {
+        showModalError('Please select a valid plan first.');
+        return;
+      }
 
-        if (!amount || amount <= 0) {
-            showModalError('Please enter a valid investment amount.');
-            return;
-        }
-        
-        if (amount < currentPlan.min) {
-            showModalError(`Minimum investment is $${currentPlan.min.toLocaleString()}.`);
-            return;
-        }
-        
-        if (currentPlan.max && amount > currentPlan.max) {
-            showModalError(`Maximum investment is $${currentPlan.max.toLocaleString()}.`);
-            return;
-        }
+      if (!amount || amount <= 0) {
+        showModalError('Please enter a valid investment amount.');
+        return;
+      }
 
-        // --- SMART LOGIC ---
-        if (amount > userBalance) {
-            // Insufficient balance -> Redirect to deposit with pre-fill
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Redirecting to Deposit...';
-            btn.disabled = true;
-            setTimeout(() => {
-                window.location.href = `deposit.html?plan=${encodeURIComponent(currentPlan.name)}&amount=${amount}&planId=${currentPlan.id}`;
-            }, 1000);
-            return;
-        }
+      if (amount < currentPlan.min) {
+        showModalError(`Minimum investment is $${currentPlan.min.toLocaleString()}.`);
+        return;
+      }
 
-        // Sufficient balance -> Direct Stake
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Staking...';
+      if (currentPlan.max && amount > currentPlan.max) {
+        showModalError(`Maximum investment is $${currentPlan.max.toLocaleString()}.`);
+        return;
+      }
+
+      // --- SMART LOGIC ---
+      if (amount > userBalance) {
+        // Insufficient balance -> Redirect to deposit with pre-fill
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Redirecting to Deposit...';
         btn.disabled = true;
+        setTimeout(() => {
+          window.location.href = `deposit.html?plan=${encodeURIComponent(currentPlan.name)}&amount=${amount}&planId=${currentPlan.id}`;
+        }, 1000);
+        return;
+      }
 
-        try {
-            const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/investments`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    planId: currentPlan.id,
-                    amount: amount
-                })
-            });
+      // Sufficient balance -> Direct Stake
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Staking...';
+      btn.disabled = true;
 
-            const data = await res.json();
+      try {
+        const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/investments`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            planId: currentPlan.id,
+            amount: amount
+          })
+        });
 
-            if (res.ok) {
-                window.pToast({ message: "Investment started successfully!", type: "success" });
-                btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Success!';
-                btn.style.background = "#00ff00";
-                setTimeout(() => {
-                    closeStakeModal();
-                    window.location.href = '/miner.html';
-                }, 1500);
-            } else {
-                showModalError(data.message || "Staking failed. Please try again.");
-                btn.innerHTML = 'Stake Now';
-                btn.disabled = false;
-            }
-        } catch (err) {
-            console.error("Staking error:", err);
-            window.pToast({ message: "Network error occurred.", type: "error" });
-            btn.innerHTML = 'Stake Now';
-            btn.disabled = false;
+        const data = await res.json();
+
+        if (res.ok) {
+          window.pToast({ message: "Investment started successfully!", type: "success" });
+          btn.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Success!';
+          btn.style.background = "#00ff00";
+          setTimeout(() => {
+            closeStakeModal();
+            window.location.href = '/miner.html';
+          }, 1500);
+        } else {
+          showModalError(data.message || "Staking failed. Please try again.");
+          btn.innerHTML = 'Stake Now';
+          btn.disabled = false;
         }
+      } catch (err) {
+        console.error("Staking error:", err);
+        window.pToast({ message: "Network error occurred.", type: "error" });
+        btn.innerHTML = 'Stake Now';
+        btn.disabled = false;
+      }
     }
 
     // Close modal on clicking or tapping outside the pop out container
     function handleOutsideInteraction(e) {
-        const modal = document.getElementById('stakeModal');
-        if (modal && modal.classList.contains('active')) {
-            if (Date.now() - modalOpenTime < 200) return;
-            if (!e.target.closest('.modal-container') && !e.target.closest('button[onclick*="handleStakeClick"]')) {
-                closeStakeModal();
-            }
+      const modal = document.getElementById('stakeModal');
+      if (modal && modal.classList.contains('active')) {
+        if (Date.now() - modalOpenTime < 200) return;
+        if (!e.target.closest('.modal-container') && !e.target.closest('button[onclick*="handleStakeClick"]')) {
+          closeStakeModal();
         }
+      }
     }
 
     document.addEventListener('click', handleOutsideInteraction, true);
     document.addEventListener('touchend', handleOutsideInteraction, true);
 
     // Close modal on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const modal = document.getElementById('stakeModal');
-            if (modal && modal.classList.contains('active')) {
-                closeStakeModal();
-            }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('stakeModal');
+        if (modal && modal.classList.contains('active')) {
+          closeStakeModal();
         }
+      }
     });
   </script>
 </body>
+
 </html>

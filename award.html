@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script src="./api-config.js"></script>
   <script src="./loader.js"></script>
@@ -7,7 +8,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
   <title>Task Center - Blockvextrade</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -76,7 +78,7 @@
       background: #00e000 !important;
       transform: scale(1.01);
     }
-    
+
     .progress-bar-bg {
       background-color: #162219;
       height: 8px;
@@ -84,7 +86,7 @@
       overflow: hidden;
       border: 1px solid rgba(0, 255, 0, 0.15);
     }
-    
+
     .progress-bar-fill {
       height: 100%;
       background: #00ff00;
@@ -97,13 +99,17 @@
   <script src="./toast.js"></script>
   <link rel="stylesheet" href="./global.css">
 </head>
+
 <body class="bg-[#000000] text-white">
 
-  <div class="w-full max-w-md mx-auto bg-[#000000] min-h-screen relative shadow-2xl border-x border-[#00ff00]/20 flex flex-col">
+  <div
+    class="w-full max-w-md mx-auto bg-[#000000] min-h-screen relative shadow-2xl border-x border-[#00ff00]/20 flex flex-col">
 
     <!-- HEADER -->
-    <div class="gradient-header px-6 pt-10 pb-16 flex items-center gap-4 text-black rounded-b-[40px] shadow-[0_0_25px_rgba(0,255,0,0.3)] relative z-0">
-      <a href="javascript:history.back()" class="w-10 h-10 flex items-center justify-center bg-black/15 rounded-full hover:bg-black/25 text-black transition cursor-pointer">
+    <div
+      class="gradient-header px-6 pt-10 pb-16 flex items-center gap-4 text-black rounded-b-[40px] shadow-[0_0_25px_rgba(0,255,0,0.3)] relative z-0">
+      <a href="javascript:history.back()"
+        class="w-10 h-10 flex items-center justify-center bg-black/15 rounded-full hover:bg-black/25 text-black transition cursor-pointer">
         <i class="fas fa-chevron-left text-sm"></i>
       </a>
       <div>
@@ -111,37 +117,38 @@
         <p class="text-black/80 text-[11px] font-semibold mt-0.5">Invite active users to earn extra rewards</p>
       </div>
       <div class="absolute right-6 top-8 text-black/15 transform rotate-12 pointer-events-none">
-          <i class="fas fa-trophy text-6xl"></i>
+        <i class="fas fa-trophy text-6xl"></i>
       </div>
     </div>
 
     <!-- MAIN CONTENT -->
     <div class="px-4 -mt-10 relative z-10 flex-1">
-      
+
       <!-- USER STATS SUMMARY -->
-      <div class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-5 shadow-[0_0_20px_rgba(0,255,0,0.12)] mb-6 flex justify-between items-center">
-          <div>
-              <p class="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-1">Active Referrals</p>
-              <div class="flex items-baseline gap-2">
-                  <span id="activeCount" class="text-3xl font-black text-white">0</span>
-                  <span class="text-gray-400 text-xs font-semibold">People</span>
-              </div>
+      <div
+        class="bg-[#0a0f0c] border border-[#00ff00] rounded-2xl p-5 shadow-[0_0_20px_rgba(0,255,0,0.12)] mb-6 flex justify-between items-center">
+        <div>
+          <p class="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-1">Active Referrals</p>
+          <div class="flex items-baseline gap-2">
+            <span id="activeCount" class="text-3xl font-black text-white">0</span>
+            <span class="text-gray-400 text-xs font-semibold">People</span>
           </div>
-          <div class="h-12 w-[1px] bg-[#00ff00]/25"></div>
-          <div class="text-right">
-              <p class="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-1">Bonus Potential</p>
-              <p id="potentialBonus" class="text-xl font-black text-[#00ff00]">$130.00</p>
-          </div>
+        </div>
+        <div class="h-12 w-[1px] bg-[#00ff00]/25"></div>
+        <div class="text-right">
+          <p class="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-1">Bonus Potential</p>
+          <p id="potentialBonus" class="text-xl font-black text-[#00ff00]">$130.00</p>
+        </div>
       </div>
 
       <h2 class="text-white font-extrabold text-sm mb-4 px-1">Available Rewards</h2>
 
       <!-- TASK LIST -->
       <div id="taskList" class="space-y-4">
-          <!-- skeleton loaders -->
-          <div class="animate-pulse bg-[#0a0f0c] border border-[#00ff00]/30 h-36 rounded-2xl mb-4"></div>
-          <div class="animate-pulse bg-[#0a0f0c] border border-[#00ff00]/30 h-36 rounded-2xl mb-4"></div>
-          <div class="animate-pulse bg-[#0a0f0c] border border-[#00ff00]/30 h-36 rounded-2xl mb-4"></div>
+        <!-- skeleton loaders -->
+        <div class="animate-pulse bg-[#0a0f0c] border border-[#00ff00]/30 h-36 rounded-2xl mb-4"></div>
+        <div class="animate-pulse bg-[#0a0f0c] border border-[#00ff00]/30 h-36 rounded-2xl mb-4"></div>
+        <div class="animate-pulse bg-[#0a0f0c] border border-[#00ff00]/30 h-36 rounded-2xl mb-4"></div>
       </div>
 
     </div>
@@ -164,23 +171,23 @@
 
     async function initAwardPage() {
       try {
-        const res = await fetch(`${window.API_BASE || "https://api.blockvextrade.com"}/api/users/referrals?level=1`, { 
-            credentials: 'include' 
+        const res = await fetch(`${window.API_BASE || "http://localhost:5000"}/api/users/referrals?level=1`, {
+          credentials: 'include'
         });
-        
+
         if (!res.ok) {
-            if (res.status === 401) window.location.href = 'login.html';
-            throw new Error("Failed to fetch referrals");
+          if (res.status === 401) window.location.href = 'login.html';
+          throw new Error("Failed to fetch referrals");
         }
 
         const data = await res.json();
         const referrals = data.data?.referrals || [];
-        
+
         const activeCount = referrals.filter(ref => (ref.totalInvested && ref.totalInvested > 0) || ref.accountStatus === 'active').length;
-        
+
         document.getElementById("activeCount").innerText = activeCount;
         renderTasks(activeCount);
-        
+
       } catch (error) {
         console.error(error);
         renderTasks(0);
@@ -233,21 +240,22 @@
 
     function claimReward(threshold, amount, isCompleted) {
       if (!isCompleted) return;
-      
-      window.pToast({ 
-          message: `Claiming reward for ${threshold} invites...`, 
-          type: "info",
-          duration: 2000
+
+      window.pToast({
+        message: `Claiming reward for ${threshold} invites...`,
+        type: "info",
+        duration: 2000
       });
 
       setTimeout(() => {
-          window.pToast({ 
-              message: `Bonus of $${amount} submitted! Our team will credit your wallet upon verification.`, 
-              type: "success",
-              duration: 4000
-          });
+        window.pToast({
+          message: `Bonus of $${amount} submitted! Our team will credit your wallet upon verification.`,
+          type: "success",
+          duration: 4000
+        });
       }, 1500);
     }
   </script>
 </body>
+
 </html>

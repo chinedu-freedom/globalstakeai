@@ -92,7 +92,7 @@
 
   // --- API Base Helper ---
   function getApiBase() {
-    return window.API_BASE || window.API || 'https://api.blockvextrade.com';
+    return window.API_BASE || window.API || 'http://localhost:5000';
   }
 
   function getToken() {
