@@ -114,7 +114,7 @@
         </div>
         <div>
           <p class="text-xs font-bold text-white tracking-wide">Withdrawal Schedule</p>
-          <p class="text-[11px] text-gray-400 mt-0.5">Withdrawals are available on <span class="text-[#00ff00] font-semibold">Monday, Wednesday & Thursday</span></p>
+          <p class="text-[11px] text-gray-400 mt-0.5">Withdrawals are available on <span class="text-[#00ff00] font-semibold">Monday, Wednesday & Friday</span></p>
         </div>
       </div>
 
@@ -310,7 +310,7 @@
     let minimumAmount = 15.00;
     let withdrawalFeePercent = 4;
     let availableBalance = 0.00;
-    let isWithdrawalDay = [1, 3, 4].includes(new Date().getUTCDay()); // 1=Mon, 3=Wed, 4=Thu
+    let isWithdrawalDay = [1, 3, 5].includes(new Date().getUTCDay()); // 1=Mon, 3=Wed, 5=Fri
 
     function updateScheduleNotice() {
       const noticeContainer = document.getElementById('schedule-notice');
@@ -327,7 +327,7 @@
               <span class="inline-block w-2 h-2 rounded-full bg-[#00ff00] animate-pulse"></span>
               <p class="text-xs font-bold text-white tracking-wide">Withdrawals Open Today</p>
             </div>
-            <p class="text-[11px] text-gray-400 mt-0.5">Withdrawal requests are processed on <strong class="text-white">Monday, Wednesday & Thursday</strong>.</p>
+            <p class="text-[11px] text-gray-400 mt-0.5">Withdrawal requests are processed on <strong class="text-white">Monday, Wednesday & Friday</strong>.</p>
           </div>
         `;
       } else {
@@ -341,7 +341,7 @@
               <span class="inline-block w-2 h-2 rounded-full bg-amber-400"></span>
               <p class="text-xs font-bold text-amber-400 tracking-wide">Withdrawals Closed Today</p>
             </div>
-            <p class="text-[11px] text-gray-300 mt-0.5">Withdrawals are only accepted on <strong class="text-white">Monday, Wednesday & Thursday</strong>.</p>
+            <p class="text-[11px] text-gray-300 mt-0.5">Withdrawals are only accepted on <strong class="text-white">Monday, Wednesday & Friday</strong>.</p>
           </div>
         `;
       }
@@ -448,7 +448,7 @@
 
       if (!isWithdrawalDay) {
         submitBtn.disabled = true;
-        submitBtn.innerText = "Withdrawals Closed (Mon, Wed, Thu only)";
+        submitBtn.innerText = "Withdrawals Closed (Mon, Wed, Fri only)";
         submitBtn.className = "w-full py-4 rounded-2xl font-black transition-all duration-300 bg-gray-900 text-gray-500 cursor-not-allowed text-[14px]";
         if (hasValidAmount) {
           const calculatedFee = amount * feePercent;
@@ -501,7 +501,7 @@
 
     submitBtn.addEventListener('click', async () => {
       if (!isWithdrawalDay) {
-        showError("Withdrawals are only permitted on Mondays, Wednesdays, and Thursdays.");
+        showError("Withdrawals are only permitted on Mondays, Wednesdays, and Fridays.");
         return;
       }
 
