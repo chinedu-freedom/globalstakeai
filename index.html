@@ -338,13 +338,17 @@
             <span>Deposit</span>
           </a>
         </div>
-        <div class="flex justify-between items-center pt-2.5 border-t border-black/15">
-          <div>
+        <div class="grid grid-cols-3 items-center pt-2.5 border-t border-black/15">
+          <div class="text-left">
             <p class="text-[9px] text-black/80 mb-0.5 font-bold uppercase tracking-wider">Total Earnings</p>
             <p class="text-sm font-extrabold text-black" id="dashboardTotalEarning">$0.00</p>
           </div>
-          <div class="text-right">
+          <div class="text-center">
             <p class="text-[9px] text-black/80 mb-0.5 font-bold uppercase tracking-wider">Commission</p>
+            <p class="text-sm font-extrabold text-black" id="dashboardCommission">$0.00</p>
+          </div>
+          <div class="text-right">
+            <p class="text-[9px] text-black/80 mb-0.5 font-bold uppercase tracking-wider">Total Investment</p>
             <p class="text-sm font-extrabold text-black" id="dashboardTotalInvestment">$0.00</p>
           </div>
         </div>
@@ -795,9 +799,13 @@
                       const roi = stats.totalRoi !== undefined ? stats.totalRoi : 0;
                       document.getElementById("dashboardTotalEarning").innerText = `$${Number(roi).toFixed(2)}`;
                   }
-                  if (document.getElementById("dashboardTotalInvestment")) {
+                  if (document.getElementById("dashboardCommission")) {
                       const comm = stats.referralCommission !== undefined ? stats.referralCommission : 0;
-                      document.getElementById("dashboardTotalInvestment").innerText = `$${Number(comm).toFixed(2)}`;
+                      document.getElementById("dashboardCommission").innerText = `$${Number(comm).toFixed(2)}`;
+                  }
+                  if (document.getElementById("dashboardTotalInvestment")) {
+                      const staked = stats.totalStaked !== undefined ? stats.totalStaked : 0;
+                      document.getElementById("dashboardTotalInvestment").innerText = `$${Number(staked).toFixed(2)}`;
                   }
               }
           } catch (error) {
