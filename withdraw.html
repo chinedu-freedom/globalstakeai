@@ -406,10 +406,13 @@
           const statsData = await statsRes.json();
           const stats = statsData.data || statsData;
 
-          if (stats.currentAssets !== undefined) {
-            let comm = stats.totalCommission !== undefined ? stats.totalCommission : (stats.commission || 0);
-            availableBalance = comm;
-            document.getElementById("availableBalanceDisplay").innerText = `$${availableBalance.toFixed(2)}`;
+          const spendable = stats.commission !== undefined
+            ? stats.commission
+            : (stats.availableProfit !== undefined ? stats.availableProfit : (stats.totalCommission || 0));
+          availableBalance = Number(spendable) || 0;
+          const displayEl = document.getElementById("availableBalanceDisplay");
+          if (displayEl) {
+            displayEl.innerText = `$${availableBalance.toFixed(2)}`;
           }
         }
       } catch (error) {
