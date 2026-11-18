@@ -334,7 +334,7 @@
             </div>
             <!-- Added Balance Display -->
             <div class="detail-row mt-2 pt-2 border-t border-[#00ff00]/30">
-              <span class="detail-label text-[#00ff00] font-semibold">Available Balance:</span>
+              <span class="detail-label text-[#00ff00] font-semibold">Deposit Balance:</span>
               <span class="detail-value text-[#00ff00] font-bold" id="modalBalance">$0.00</span>
             </div>
           </div>
@@ -524,10 +524,9 @@
           const plan = planResult.data?.plan || planResult.data || planResult;
           const user = userResult.data || userResult;
 
-          // Combined balance (accountBalance + availableProfit)
+          // Deposit balance only (profits cannot be reinvested)
           const balance = Number(user.accountBalance || 0);
-          const profit = Number(user.availableProfit || 0);
-          userBalance = balance + profit;
+          userBalance = balance;
           document.getElementById('modalBalance').textContent = `$${userBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
           const title = plan.title || "Investment Plan";
