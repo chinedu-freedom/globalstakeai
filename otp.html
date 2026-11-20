@@ -109,7 +109,7 @@ const inputs   = document.querySelectorAll('.otp-input');
 
 const urlParams = new URLSearchParams(window.location.search);
 const flowType  = urlParams.get('type') || (sessionStorage.getItem('verifyEmail') ? 'verify-email' : 'reset');
-const targetEmail = urlParams.get('email') || sessionStorage.getItem('verifyEmail') || '';
+const targetEmail = urlParams.get('email') || sessionStorage.getItem('resetEmail') || sessionStorage.getItem('verifyEmail') || '';
 const resetPhone  = sessionStorage.getItem('resetPhone') || '';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -237,7 +237,13 @@ async function handleVerifyOtp(e) {
     }
   } else {
     // Password reset OTP verification
-    const email = targetEmail || resetPhone;
+    const email = targetEmail || sessionStorage.getItem('resetEmail') || resetPhone;
+    if (!email) {
+      showToast('Email address not found. Please request OTP again.', 'error');
+      setTimeout(() => window.location.href = '/forgotPassword.html', 1500);
+      return;
+    }
+
     try {
       const res = await fetch(`${API_BASE}/api/auth/verify-otp`, {
         method: 'POST',
@@ -249,8 +255,9 @@ async function handleVerifyOtp(e) {
       if (res.ok) {
         if (data.resetToken) sessionStorage.setItem('resetToken', data.resetToken);
         sessionStorage.setItem('verifiedOtp', otp);
+        sessionStorage.setItem('resetEmail', email);
         showToast('Code verified! Redirecting...', 'success');
-        setTimeout(() => window.location.href = '/resetPassword.html', 1300);
+        setTimeout(() => window.location.href = `/resetPassword.html?email=${encodeURIComponent(email)}`, 1300);
       } else {
         showToast(data.message || 'Invalid code. Please try again.', 'error');
       }
@@ -265,7 +272,7 @@ async function handleVerifyOtp(e) {
 // --- Resend OTP with 60s cooldown ---
 let resendTimer = null;
 async function handleResend() {
-  const email = targetEmail || resetPhone;
+  const email = targetEmail || sessionStorage.getItem('resetEmail') || resetPhone;
   if (!email) return;
 
   const btn = document.getElementById('resendBtn');
